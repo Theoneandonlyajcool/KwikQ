@@ -1,15 +1,15 @@
 import React from "react";
 import "./GetStarted.css";
 import { FaArrowRight } from "react-icons/fa";
-import Kwikq from "../../assets/Kwiq.png";
-import img1 from "../../assets/img1.png";
+// import Kwikq from "../../assets/Kwiq.png";
+// import img1 from "../../assets/img1.png";
 
 const GetStarted = () => {
   return (
     <div className="onboarding">
       <nav className="nav">
         <div className="logo">
-          <img src={Kwikq} alt="Company Logo" />
+          <img alt="Company Logo" style={{ fontSize: "30px" }} />
         </div>
         <div className="signin">
           Have an account? <a href="#">Sign in</a>
@@ -21,19 +21,21 @@ const GetStarted = () => {
         <p className="main-subtitle">Which of these best describes you?</p>
         <div className="cards">
           <Card
-            image={img1}
+            image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783257/6deb3f53715c252d7279ab294c1fc5bf1b3e46d3_wjp2w1.jpg"
             title="I'm a Business"
-            desc="Register your business and manage queues easily."
+            desc="I want to let my clients wait from
+anywhere or schedule appointments."
           />
           <Card
-            image={img1}
+            image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783258/374da1b547a439fa5c2a4ee0f923a871458d0381_1_pfvxvt.png"
             title="I'm a Customer"
-            desc="Book queues from your phone without stress."
+            desc=" I’m trying to join a queue."
           />
           <Card
-            image={img1}
+            image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783258/00b3d0ee57c80d978da5663d9527775dd153430e_lvedc4.png"
             title="I'm a Staff Member"
-            desc="Help manage and attend to customers faster."
+            desc="I want to let my clients wait from
+anywhere or schedule appointments"
           />
         </div>
       </main>
@@ -45,7 +47,7 @@ const Card = ({ image, title, desc }) => {
   return (
     <div className="card">
       <div className="Card_description">
-        <h3 className="card-title">{title}</h3>
+        <h1 className="card-title">{title}</h1>
         <p className="card-desc">{desc}</p>
       </div>
       <img src={image} alt={title} className="card-image" />

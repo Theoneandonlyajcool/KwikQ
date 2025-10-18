@@ -1,10 +1,12 @@
 import React from "react";
 import Router from "./Routes/Router";
+import GetStarted from "./Components/GetStarted/GetStarted";
 
 const App = () => {
   return (
     <div>
-      <Router />
+      {/* <Router /> */}
+      <GetStarted />
     </div>
   );
 };
