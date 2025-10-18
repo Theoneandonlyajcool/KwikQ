@@ -5,14 +5,17 @@ import {
   LogoHolder,
   VerifyEmailHolderRight,
 } from "./VerifyEmailStyle";
-import KwwikQLogo from "../assets/KwikQ.png";
 import { MdOutlineVerifiedUser } from "react-icons/md";
+
 const VerifyEmail = () => {
   return (
     <VerifyEmailContainer>
       <VerifyEmailHolder>
         <LogoHolder>
-          <img src={KwwikQLogo} alt="" />
+          <img
+            src="https://res.cloudinary.com/dp75oveuw/image/upload/v1760468659/logo-removebg-preview_mouzpd.png"
+            alt=""
+          />
         </LogoHolder>
         <VerifyEmailHolderRight>
           <div className="top_holder">

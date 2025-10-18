@@ -19,9 +19,9 @@ export const LogoHolder = styled.div`
   height: 20vh;
 
   img {
-    width: 80%;
+    width: 100%;
     height: 30vh;
-    margin-left: 50px;
+    margin-left: 45px;
   }
 `;
 
