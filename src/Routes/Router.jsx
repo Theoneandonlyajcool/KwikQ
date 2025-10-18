@@ -13,10 +13,10 @@ const Router = () => {
       <Routes>
         <Route path="*" element={<PageNotFound />} />
         <Route path="/" element={<LandingPage />} />
-        <Route path="sign-up" element={<SignUp />} />
-        <Route path="sign-in" element={<SignIn />} />
-        <Route path="forget-psw" element={<ForgetPsw />} />
-        <Route path="email-verify" element={<EmailVerify />} />
+        <Route path="/signUp" element={<SignUp />} />
+        <Route path="/signIn" element={<SignIn />} />
+        <Route path="/forgetPsw" element={<ForgetPsw />} />
+        <Route path="/emailVerify" element={<EmailVerify />} />
       </Routes>
     </BrowserRouter>
   );
