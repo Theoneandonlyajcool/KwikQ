@@ -11,18 +11,40 @@ const SignIn = () => {
     email: "",
     password: "",
   });
-  const [error, setError] = useState("")
+
+ const [err, setErr] = useState({
+    email: "",
+    password: "",
+  });
+
   const [eyePassword, setEyePassword] = useState(false);
 
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginput((prev) => ({ ...prev, [name]: value }));
+    if (!value.trim()) {
+      setErr((prev) => ({ ...prev, [name]: "This field is required" }));
+    } else {
+      setErr((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
 
-  const handlesumit = (e)=> {
-    e.preventDefault();
-    setError("")
-    if(!loginput.email ||  !loginput.password){
-    setError("Please enter both email and password")
-    return;
-     }
-  }
+
+  const validate = () => {
+    let valid = true;
+    const newErr = { email: "", password: "" };
+
+    if (!inputs.email.trim()) {
+      newErr.email = "This field is required";
+      valid = false;
+    }
+    if (!inputs.password.trim()) {
+      newErr.password = "This field is required";
+      valid = false;
+    }
+    setErr(newErr);
+    return valid;
+  };
 
 
 //   console.log("this is my input", loginput);
@@ -45,7 +67,7 @@ const SignIn = () => {
                     <span className="text2">Enter your credentials to access your account</span>
                 </div>
 
-                <form action="" className="frominfor" onSubmit={handlesumit}>
+                <form action="" className="frominfor" >
                     <label htmlFor="Email"> Email
                     </label>
                     <input
@@ -53,10 +75,13 @@ const SignIn = () => {
                         name="email"
                         placeholder="Enter your email"
                         value={loginput.email}
-                        onChange={(e) => setLoginput(e.target.value)}
+                        onChange={handleLoginChange}
                         required
                         className="inputstyled"
                     />
+                    {err.email && (
+                     <p style={{ color: "red", fontSize: "14px", fontFamily: "Inter" }}>{err.email}</p>
+                    )}
                     
                     
                         <label htmlFor="Password">
@@ -68,7 +93,7 @@ const SignIn = () => {
                             name="password"
                             placeholder="Enter your Password"
                             value={loginput.password}
-                            onChange={(e) => setLoginput(e.target.value)}
+                            onChange={handleLoginChange}
                             required
                             className="inputstyled2"
                         />
@@ -76,8 +101,11 @@ const SignIn = () => {
                             <TbEyeFilled className="EyeClosed2" onClick={toggleEye} />
                             ) : (
                             <RiEyeOffFill className="EyeClosed" onClick={toggleEye} />
-                        )}
+                        )};
                     </div>
+                    {err.password && (
+                      <p style={{ color: "red", fontSize: "14px", fontFamily: "Inter" }}>{err.password}</p>
+                    )}
 
                     <div className="forgetpass">
                         <div className="checkbox-rpass">
