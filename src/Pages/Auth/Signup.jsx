@@ -11,7 +11,7 @@ const Signup = () => {
   const BaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const [inputValues, SetInputValues] = useState({
-    name: "",
+    businessName: "",
     // lastName: "",
     email: "",
     password: "",
@@ -29,7 +29,7 @@ const Signup = () => {
   const validation = () => {
     const newErrors = {};
 
-    if (inputValues.name == "") {
+    if (inputValues.buisnessName == "") {
       newErrors.NameError = "Name is required";
     }
 
@@ -117,7 +117,7 @@ const Signup = () => {
                   height: "3rem",
                   objectFit: "cover",
                 }}
-                src="https://res.cloudinary.com/dp75oveuw/image/upload/v1760468659/logo-removebg-preview_mouzpd.png"
+                src="https://res.cloudinary.com/dmqhseusw/image/upload/v1760739526/35379ce965af990a259b5b98b745a14f6d61bddc_edhy49.png"
                 alt=""
               />
               <h2>Sign up</h2>
@@ -135,17 +135,17 @@ const Signup = () => {
             >
               <div className="inputs-cont">
                 <label htmlFor="" style={{ fontSize: "1.1rem" }}>
-                  Name
+                  Buisness Name
                 </label>
                 <input
                   type="text"
                   className="sign-up-input"
                   placeholder="Enter your first name"
-                  value={inputValues.name}
+                  value={inputValues.businessName}
                   onChange={(e) => {
                     SetInputValues({
                       ...inputValues,
-                      name: e.target.value,
+                      businessName: e.target.value,
                     });
                   }}
                 />
