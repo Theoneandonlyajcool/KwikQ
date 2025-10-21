@@ -6,6 +6,7 @@ import SignUp from "../Pages/SignUp";
 import SignIn from "../Pages/SignIn";
 import ForgetPsw from "../Pages/ForgetPsw";
 import EmailVerify from "../Pages/EmailVerify";
+import GetStarted from "../Components/GetStarted/GetStarted";
 
 const Router = () => {
   return (
@@ -17,6 +18,7 @@ const Router = () => {
         <Route path="/signIn" element={<SignIn />} />
         <Route path="/forgetPsw" element={<ForgetPsw />} />
         <Route path="/emailVerify" element={<EmailVerify />} />
+        <Route path="/businessCategory" element={<GetStarted />}></Route>
       </Routes>
     </BrowserRouter>
   );

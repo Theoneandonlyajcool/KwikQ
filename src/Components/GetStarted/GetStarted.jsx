@@ -1,8 +1,11 @@
 import React from "react";
 import "./GetStarted.css";
 import { FaArrowRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const GetStarted = () => {
+  const nav = useNavigate();
+
   return (
     <div className="onboarding">
       <nav className="nav">
@@ -15,7 +18,10 @@ const GetStarted = () => {
         </div>
 
         <div className="signin">
-          Have an account? <a href="#">Sign in</a>
+          Have an account?{" "}
+          <a href="#" onClick={() => nav("/signIn")}>
+            Sign in
+          </a>
         </div>
       </nav>
       <div className="v-line"></div>
