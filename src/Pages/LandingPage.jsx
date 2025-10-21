@@ -84,6 +84,22 @@ const LandingPage = () => {
         onClick={() => navigate("/verification")}
       >
         Verify email
+      </button>{" "}
+      <br />
+      <button
+        style={{
+          width: "fit-content",
+          padding: "0 .5rem",
+          backgroundColor: "teal",
+          border: "none",
+          height: "2rem",
+          fontSize: "1.1rem",
+          color: "white",
+          margin: "1rem",
+        }}
+        onClick={() => navigate("/businessCategory")}
+      >
+        business Category
       </button>
     </div>
   );
