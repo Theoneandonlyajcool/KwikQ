@@ -67,7 +67,7 @@ const Signup = () => {
       const res = await axios.post(`${BaseUrl}/api/v1/create`, inputValues);
       SetLoadingState(false);
       toast.success(res?.data?.message);
-      JSON.stringify(localStorage.setItem("OrgEmail", inputValues.email));
+      localStorage.setItem("OrgEmail", JSON.stringify(inputValues.email));
       setTimeout(() => {
         nav("/verification");
       }, 3000);
