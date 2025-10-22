@@ -65,12 +65,11 @@ const Signup = () => {
     try {
       SetLoadingState(true);
       const res = await axios.post(`${BaseUrl}/api/v1/create`, inputValues);
-      console.log(res.data);
       SetLoadingState(false);
       toast.success(res?.data?.message);
-
+      JSON.stringify(localStorage.setItem("OrgEmail", inputValues.email));
       setTimeout(() => {
-        nav("/sign_in");
+        nav("/verification");
       }, 3000);
       // const tosignin = await nav("/sign_in");
     } catch (error) {
