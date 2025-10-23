@@ -6,12 +6,37 @@ export const VerifyEmailContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 360px) {
+    height: auto;
+    padding: 20px;
+  }
+
+  @media screen and (min-width: 361px) and (max-width: 768px) {
+    height: auto;
+    padding: 30px;
+  }
 `;
+
 export const VerifyEmailHolder = styled.div`
   width: 90%;
   height: 90vh;
   background-color: white;
   display: flex;
+
+  @media screen and (max-width: 360px) {
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+    padding: 20px 0;
+  }
+
+  @media screen and (min-width: 361px) and (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+    padding: 25px 0;
+  }
 `;
 
 export const LogoHolder = styled.div`
@@ -22,6 +47,32 @@ export const LogoHolder = styled.div`
     width: 100%;
     height: 30vh;
     margin-left: 45px;
+  }
+
+  @media screen and (max-width: 360px) {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 120px;
+      height: auto;
+      margin: 0;
+    }
+  }
+
+  @media screen and (min-width: 361px) and (max-width: 768px) {
+    width: 50%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 160px;
+      height: auto;
+      margin: 0;
+    }
   }
 `;
 
@@ -44,10 +95,13 @@ export const VerifyEmailHolderRight = styled.div`
       font-weight: 600;
       font-size: 31px;
       color: #222222;
+      text-align: center;
     }
+
     p {
       font-weight: 400;
       font-size: 16px;
+      text-align: center;
     }
   }
 
@@ -115,12 +169,76 @@ export const VerifyEmailHolderRight = styled.div`
       font-size: 16px;
       font-weight: 400;
       color: #222222;
+      text-align: center;
     }
 
     span {
       font-size: 16px;
       color: #5962ff;
       font-weight: 400;
+      cursor: pointer;
+    }
+  }
+
+  @media screen and (max-width: 360px) {
+    width: 100%;
+    padding: 10px;
+    gap: 1.5rem;
+
+    .InputHolder {
+      width: 80%;
+      height: auto;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      p {
+        margin: 0;
+        text-align: left;
+        width: 100%;
+      }
+
+      input {
+        width: 55px;
+        height: 65px;
+        margin: 4px;
+      }
+    }
+
+    .button-holder button {
+      width: 100%;
+      height: 55px;
+      font-size: 18px;
+    }
+  }
+
+  @media screen and (min-width: 361px) and (max-width: 768px) {
+    width: 90%;
+    gap: 2rem;
+    padding: 15px;
+
+    .InputHolder {
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+
+      p {
+        margin: 0;
+        text-align: left;
+        width: 100%;
+      }
+
+      input {
+        width: 70px;
+        height: 85px;
+        margin: 5px;
+      }
+    }
+
+    .button-holder button {
+      width: 80%;
+      height: 58px;
+      font-size: 19px;
     }
   }
 `;
