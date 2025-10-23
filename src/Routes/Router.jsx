@@ -7,6 +7,7 @@ import SignIn from "../Pages/Auth/SignIn";
 import SignUpCategory from "../Pages/Auth/SignUpCategory";
 import VerifyEmail from "../Pages/Auth/VerifyEmail";
 import ForgetPassword from "../Pages/Auth/ForgetPassword";
+import ResetPassword from "../Pages/Auth/ResetPassword";
 
 const Router = () => {
   return (
@@ -20,6 +21,7 @@ const Router = () => {
           <Route path="/category" element={<SignUpCategory />} />
           <Route path="/verification" element={<VerifyEmail />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
+          <Route path="/reset_password" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
     </div>
