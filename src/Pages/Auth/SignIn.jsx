@@ -2,24 +2,68 @@ import React from "react";
 import { Loginbackground } from "./SignInStyle";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { TbEyeFilled } from "react-icons/tb";
+import { TbEyeFilled  } from "react-icons/tb";
 import { RiEyeOffFill } from "react-icons/ri";
 import { toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+  const nav = useNavigate();
   const [loginput, setLoginput] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
+
+  const [err, setErr] = useState({
+    email: "",
+    password: "",
+  });
+
   const [eyePassword, setEyePassword] = useState(false);
 
-  const handlesumit = (e) => {
+  const BaseUrl = import.meta.env.VITE_BaseUrl;
+
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginput((prev) => ({ ...prev, [name]: value }));
+    if (!value.trim()) {
+      setErr((prev) => ({ ...prev, [name]: "This field is required" }));
+    } else {
+      setErr((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const validate = () => {
+    let valid = true;
+    const newErr = { email: "", password: "" };
+
+    if (!loginput.email.trim()) {
+      newErr.email = "This field is required";
+      valid = false;
+    }
+    if (!loginput.password.trim()) {
+      newErr.password = "This field is required";
+      valid = false;
+    }
+    setErr(newErr);
+    return valid;
+  };
+
+  const handlesubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    if (!loginput.email || !loginput.password) {
-      setError("Please enter both email and password");
-      return;
+    if (!validate()) return;
+
+    try {
+      const res = await axios.post(`${BaseUrl}/api/v1/login`, loginput, {
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log(res);
+      toast.success(res?.data?.message);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -42,32 +86,43 @@ const SignIn = () => {
 
           <div className="aligment_to_logo">
             <div className="singintext">
-              <p className="text1">Sing In</p>
+              <p className="text1">Sign In</p>
               <span className="text2">
                 Enter your credentials to access your account
               </span>
             </div>
 
-            <form action="" className="frominfor" onSubmit={handlesumit}>
-              <label htmlFor="Email"> Email</label>
+            <form action="" className="frominfor" onSubmit={handlesubmit}>
+              <label htmlFor="email"> Business Email</label>
               <input
                 type="email"
                 name="email"
                 placeholder="Enter your email"
                 value={loginput.email}
-                onChange={(e) => setLoginput(e.target.value)}
+                onChange={handleLoginChange}
                 required
                 className="inputstyled"
               />
+              {err.email && (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "14px",
+                    fontFamily: "Inter",
+                  }}
+                >
+                  {err.email}
+                </p>
+              )}
 
-              <label htmlFor="Password">Password</label>
+              <label htmlFor="password">Password</label>
               <div className="for_eye1">
                 <input
                   type={eyePassword ? "text" : "password"}
                   name="password"
                   placeholder="Enter your Password"
                   value={loginput.password}
-                  onChange={(e) => setLoginput(e.target.value)}
+                  onChange={handleLoginChange}
                   required
                   className="inputstyled2"
                 />
@@ -77,13 +132,24 @@ const SignIn = () => {
                   <RiEyeOffFill className="EyeClosed" onClick={toggleEye} />
                 )}
               </div>
+              {err.password && (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "14px",
+                    fontFamily: "Inter",
+                  }}
+                >
+                  {err.password}
+                </p>
+              )}
 
               <div className="forgetpass">
                 <div className="checkbox-rpass">
                   <input type="checkbox" className="checkbox" />
                   <span>Remember password</span>
                 </div>
-                <div className="Forgot_password">Forgot password?</div>
+                <div className="Forgot_password" onClick={()=> nav('/forget_password')}>Forgot password?</div>
               </div>
 
               <div className="google_or">
@@ -101,7 +167,7 @@ const SignIn = () => {
               </button>
               <div className="linksignup">
                 <span>Don’t have an account?</span>{" "}
-                <span className="linkssignup">Sign in</span>
+                <span className="linkssignup"  onClick={()=> nav('/sign_up')}>Sign Up</span>
               </div>
             </form>
           </div>
@@ -122,6 +188,7 @@ const SignIn = () => {
           </div>
         </div>
       </section>
+      <ToastContainer />
     </Loginbackground>
     // </div>
   );

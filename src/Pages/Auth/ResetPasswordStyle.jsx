@@ -7,7 +7,7 @@ const device = {
   desktop: '(min-width: 1024px)'
 };
 
-export const Forgetpasswordbackgroud = styled.div`
+export const Resetpasswordbackground = styled.div`
     width: 100%;
     height: 100vh;
     /* background: red; */
@@ -84,7 +84,7 @@ export const Forgetpasswordbackgroud = styled.div`
             }
         }
 
-        .Forgetpassword {
+        .ResetPassword {
             width: 60%;
             height: 100%;
             /* background: skyblue; */
@@ -111,262 +111,344 @@ export const Forgetpasswordbackgroud = styled.div`
             }
 
             .body_fg {
-                width: 90%;
+                width: 70%;
                 height: 80%;
                 background: white;
                 display: flex;
                 align-items: center;
                 flex-direction: column;
+                gap: 5px;
 
                 @media ${device.android} {
                     width: 90%;
-                    height: 75%;
+                    height: 85%;
                 }
 
                 @media ${device.iphone} {
                     width: 90%;
-                    height: 75%;
+                    height: 85%;
                 }
 
                 @media ${device.tablet} {
-                    width: 85%;
-                    height: 78%;
+                    width: 80%;
+                    height: 82%;
                 }
 
                 @media ${device.desktop} {
-                    width: 90%;
+                    width: 70%;
                     height: 80%;
                 }
 
                 .FG_text {
                     width: 100%;
-                    height: 28%;
+                    height: 30%;
                     /* background: brown; */
                     display: flex;
                     align-items: center;
                     flex-direction: column;
 
-                    @media ${device.android} {
-                        height: 35%;
-                        justify-content: space-around;
-                    }
-
-                    @media ${device.iphone} {
-                        height: 35%;
-                        justify-content: space-around;
-                    }
-
-                    @media ${device.tablet} {
-                        height: 30%;
-                    }
-
-                    @media ${device.desktop} {
-                        height: 28%;
-                    }
-
                     .FG_icon {
-                        width: 8%;
+                        width: 11%;
                         height: 35%;
                         border-radius: 10px;
                         background: white;
                         border: 1.5px solid #000000;
-                        font-size: 24px;
+                        font-size: 28px;
                         display: flex;
                         justify-content: center;
                         align-items: center;
 
                         @media ${device.android} {
-                            width: 15%;
-                            height: 25%;
-                            font-size: 20px;
-                        }
-
-                        @media ${device.iphone} {
-                            width: 15%;
-                            height: 25%;
-                            font-size: 20px;
-                        }
-
-                        @media ${device.tablet} {
-                            width: 10%;
-                            height: 30%;
+                            width: 18%;
+                            height: 28%;
                             font-size: 22px;
                         }
 
-                        @media ${device.desktop} {
-                            width: 8%;
-                            height: 35%;
-                            font-size: 24px;
-                        }
-                    }
-
-                    .FG_1 {
-                        font-family: Inter;
-                        font-weight: 600;
-                        font-style: Semi Bold;
-                        font-size: 39px;
-                        line-height: 150%;
-                        letter-spacing: 0%;
-                        text-align: center;
-
-                        @media ${device.android} {
-                            font-size: 24px;
-                            line-height: 130%;
-                        }
-
                         @media ${device.iphone} {
-                            font-size: 26px;
-                            line-height: 130%;
+                            width: 18%;
+                            height: 28%;
+                            font-size: 24px;
                         }
 
                         @media ${device.tablet} {
-                            font-size: 32px;
-                            line-height: 140%;
+                            width: 14%;
+                            height: 32%;
+                            font-size: 26px;
                         }
 
                         @media ${device.desktop} {
+                            width: 11%;
+                            height: 35%;
+                            font-size: 28px;
+                        }
+                    }
+
+                    .RP_rap {
+                        width: 100%;
+                        height: 60%;
+                        /* background: gray; */
+                        display: flex;
+                        align-items: center;
+                        flex-direction: column;
+                        justify-content: space-around;
+                        /* gap: 15px; */
+
+                        .FG_1 {
+                            font-family: Inter;
+                            font-weight: 600;
+                            font-style: Semi Bold;
                             font-size: 39px;
                             line-height: 150%;
-                        }
-                    }
+                            letter-spacing: 0%;
+                            text-align: center;
 
-                    .FG_2 {
-                        font-family: Inter;
-                        font-weight: 400;
-                        font-style: Regular;
-                        font-size: 16px;
-                        line-height: 100%;
-                        letter-spacing: 0%;
-                        text-align: center;
+                            @media ${device.android} {
+                                font-size: 24px;
+                                line-height: 130%;
+                            }
 
-                        @media ${device.android} {
-                            font-size: 13px;
-                            line-height: 120%;
-                            padding: 0 10px;
-                        }
+                            @media ${device.iphone} {
+                                font-size: 26px;
+                                line-height: 130%;
+                            }
 
-                        @media ${device.iphone} {
-                            font-size: 14px;
-                            line-height: 120%;
-                            padding: 0 10px;
-                        }
+                            @media ${device.tablet} {
+                                font-size: 32px;
+                                line-height: 140%;
+                            }
 
-                        @media ${device.tablet} {
-                            font-size: 15px;
-                            line-height: 110%;
+                            @media ${device.desktop} {
+                                font-size: 39px;
+                                line-height: 150%;
+                            }
                         }
 
-                        @media ${device.desktop} {
+                        .FG_2 {
+                            font-family: Inter;
+                            font-weight: 400;
+                            font-style: Regular;
                             font-size: 16px;
                             line-height: 100%;
+                            letter-spacing: 0%;
+                            text-align: center;
+
+                            @media ${device.android} {
+                                font-size: 13px;
+                                line-height: 120%;
+                            }
+
+                            @media ${device.iphone} {
+                                font-size: 14px;
+                                line-height: 120%;
+                            }
+
+                            @media ${device.tablet} {
+                                font-size: 15px;
+                                line-height: 110%;
+                            }
+
+                            @media ${device.desktop} {
+                                font-size: 16px;
+                                line-height: 100%;
+                            }
                         }
                     }
                 }
 
-                .FG_Input {
+                .RP_Input {
                     width: 100%;
-                    height: 48%;
+                    height: 58%;
                     /* background: green; */
                     font-family: Inter;
                     font-weight: 500;
                     font-style: Medium;
-                    font-size: 16px;
+                    font-size: 17px;
                     line-height: 200%;
                     letter-spacing: 0%;
-                    gap: 10.2px;
+                    gap: 5.2px;
                     display: flex;
                     flex-direction: column;
 
                     @media ${device.android} {
-                        height: 45%;
-                        gap: 12px;
+                        height: 60%;
+                        gap: 8px;
                     }
 
                     @media ${device.iphone} {
-                        height: 45%;
-                        gap: 12px;
+                        height: 60%;
+                        gap: 8px;
                     }
 
                     @media ${device.tablet} {
-                        height: 47%;
-                        gap: 11px;
+                        height: 59%;
+                        gap: 6px;
                     }
 
                     @media ${device.desktop} {
-                        height: 48%;
-                        gap: 10.2px;
+                        height: 58%;
+                        gap: 5.2px;
                     }
 
-                    .FG_email {
+                    .for_eye1 {
                         width: 100%;
-                        height: 25%;
-                        font-family: Inter;
-                        font-weight: 500;
-                        font-style: Medium;
-                        font-size: 13px;
-                        line-height: 140%;
-                        letter-spacing: 0%;
-                        padding: 5px;
-                        border: 0.52px solid #848181;
-                        color: #848181;
-                        border-radius: 5.21px;
-                        background: #ffffff;
-                        outline: none;
+                        height: 3.5rem;
+                        border-radius: 5.29px;
+                        border: 0.71px solid #848181;
+                        display: flex;
+                        font-size: 20px;
+                        align-items: center;
+                        outline: 3px;
+                        background: #eeeeee;
 
                         @media ${device.android} {
                             height: 3rem;
-                            font-size: 12px;
-                            padding: 10px;
+                            font-size: 18px;
                         }
 
                         @media ${device.iphone} {
                             height: 3rem;
-                            font-size: 12px;
-                            padding: 10px;
+                            font-size: 18px;
                         }
 
                         @media ${device.tablet} {
-                            height: 3.2rem;
-                            font-size: 13px;
-                            padding: 8px;
+                            height: 3.3rem;
+                            font-size: 19px;
                         }
 
                         @media ${device.desktop} {
-                            height: 25%;
+                            height: 3.5rem;
+                            font-size: 20px;
+                        }
+
+                        .RP_password1 {
+                            width: 93%;
+                            height: 100%;
+                            font-family: Inter;
+                            font-weight: 500;
+                            font-style: Medium;
                             font-size: 13px;
+                            line-height: 140%;
+                            letter-spacing: 0%;
                             padding: 5px;
+                            color: #848181;
+                            border-radius: 5.21px;
+                            background: none;
+                            border: none;
+                            outline: none;
+
+                            @media ${device.android} {
+                                font-size: 12px;
+                            }
+
+                            @media ${device.iphone} {
+                                font-size: 12px;
+                            }
+
+                            @media ${device.tablet} {
+                                font-size: 13px;
+                            }
+
+                            @media ${device.desktop} {
+                                font-size: 13px;
+                            }
+                        }
+                    }
+
+                    .for_eye2 {
+                        width: 100%;
+                        height: 3.5rem;
+                        border-radius: 5.29px;
+                        border: 0.71px solid #848181;
+                        display: flex;
+                        font-size: 20px;
+                        align-items: center;
+                        outline: 3px;
+                        background: #eeeeee;
+
+                        @media ${device.android} {
+                            height: 3rem;
+                            font-size: 18px;
+                        }
+
+                        @media ${device.iphone} {
+                            height: 3rem;
+                            font-size: 18px;
+                        }
+
+                        @media ${device.tablet} {
+                            height: 3.3rem;
+                            font-size: 19px;
+                        }
+
+                        @media ${device.desktop} {
+                            height: 3.5rem;
+                            font-size: 20px;
+                        }
+
+                        .RP_password {
+                            width: 93%;
+                            height: 100%;
+                            font-family: Inter;
+                            font-weight: 500;
+                            font-style: Medium;
+                            font-size: 13px;
+                            line-height: 140%;
+                            letter-spacing: 0%;
+                            padding: 5px;
+                            color: #848181;
+                            border-radius: 5.21px;
+                            background: none;
+                            /* border: 0.71px solid #848181; */
+                            outline: none;
+                            border: none;
+
+                            @media ${device.android} {
+                                font-size: 12px;
+                            }
+
+                            @media ${device.iphone} {
+                                font-size: 12px;
+                            }
+
+                            @media ${device.tablet} {
+                                font-size: 13px;
+                            }
+
+                            @media ${device.desktop} {
+                                font-size: 13px;
+                            }
                         }
                     }
 
                     .FG_Btn1rap {
                         width: 100%;
-                        height: 25%;
+                        height: 18%;
                         border-radius: 5.21px;
                         outline: none;
                         border: none;
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        margin-top: 8px;
+                        margin-top: 12px;
 
                         @media ${device.android} {
-                            height: 3rem;
-                            margin-top: 10px;
+                            height: 16%;
+                            margin-top: 8px;
                         }
 
                         @media ${device.iphone} {
-                            height: 3rem;
-                            margin-top: 10px;
+                            height: 16%;
+                            margin-top: 8px;
                         }
 
                         @media ${device.tablet} {
-                            height: 3.2rem;
-                            margin-top: 9px;
+                            height: 17%;
+                            margin-top: 10px;
                         }
 
                         @media ${device.desktop} {
-                            height: 25%;
-                            margin-top: 8px;
+                            height: 18%;
+                            margin-top: 12px;
                         }
 
                         .FG_Btn2 {
@@ -427,29 +509,26 @@ export const Forgetpasswordbackgroud = styled.div`
 
                         @media ${device.android} {
                             font-size: 14px;
-                            margin-top: 10px;
-                            height: auto;
+                            margin-top: 5px;
                         }
 
                         @media ${device.iphone} {
                             font-size: 15px;
-                            margin-top: 10px;
-                            height: auto;
+                            margin-top: 5px;
                         }
 
                         @media ${device.tablet} {
                             font-size: 18px;
-                            margin-top: 8px;
+                            margin-top: 6px;
                         }
 
                         @media ${device.desktop} {
                             font-size: 20px;
                             margin-top: 7px;
-                            height: 15%;
                         }
 
-                        .FG_linkrap {
-                            width: 30%;
+                        .RP_linkrap {
+                            width: 40%;
                             height: 100%;
                             /* background: black; */
                             display: flex;
@@ -460,19 +539,19 @@ export const Forgetpasswordbackgroud = styled.div`
                             text-decoration: none;
 
                             @media ${device.android} {
-                                width: 50%;
+                                width: 60%;
                             }
 
                             @media ${device.iphone} {
-                                width: 50%;
+                                width: 60%;
                             }
 
                             @media ${device.tablet} {
-                                width: 40%;
+                                width: 50%;
                             }
 
                             @media ${device.desktop} {
-                                width: 30%;
+                                width: 40%;
                             }
                         }
                     }
