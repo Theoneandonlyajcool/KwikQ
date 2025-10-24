@@ -62,6 +62,7 @@ const Works = () => {
 };
 
 export default Works;
+
 const WorksContainer = styled.div`
   width: 100%;
   height: 100vh;
@@ -71,16 +72,16 @@ const WorksContainer = styled.div`
   gap: 30px;
   flex-direction: column;
 
-  @media screen and (max-width: 360px) {
+  @media (max-width: 768px) {
+    height: auto;
+    gap: 40px;
+    padding: 50px 0;
+  }
+
+  @media (max-width: 480px) {
     height: auto;
     gap: 40px;
     padding: 40px 0;
-  }
-
-  @media screen and (min-width: 361px) and (max-width: 768px) {
-    height: auto;
-    gap: 50px;
-    padding: 50px 0;
   }
 `;
 
@@ -110,23 +111,7 @@ const TopSection = styled.div`
     font-weight: 400;
   }
 
-  @media screen and (max-width: 360px) {
-    text-align: center;
-    height: auto;
-
-    h1 {
-      font-size: 28px;
-      line-height: 150%;
-    }
-
-    p {
-      font-size: 14px;
-      width: 90%;
-      line-height: 140%;
-    }
-  }
-
-  @media screen and (min-width: 361px) and (max-width: 768px) {
+  @media (max-width: 768px) {
     text-align: center;
     height: auto;
 
@@ -139,6 +124,22 @@ const TopSection = styled.div`
       font-size: 16px;
       width: 80%;
       line-height: 150%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    text-align: center;
+    height: auto;
+
+    h1 {
+      font-size: 28px;
+      line-height: 150%;
+    }
+
+    p {
+      font-size: 14px;
+      width: 90%;
+      line-height: 140%;
     }
   }
 `;
@@ -183,12 +184,46 @@ const FirstSection = styled.div`
     }
   }
 
-  @media screen and (max-width: 360px) {
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    gap: 60px;
+    justify-content: space-around;
+    padding: 0 20px;
+
+    .Textholder {
+      width: 45%;
+      gap: 12px;
+
+      .circle {
+        width: 70px;
+        height: 70px;
+        font-size: 25px;
+      }
+
+      h4 {
+        font-size: 18px;
+        text-align: center;
+      }
+
+      p {
+        width: 100%;
+        font-size: 15px;
+        line-height: 130%;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
     flex-direction: column;
     gap: 40px;
     height: auto;
+    padding: 0 15px;
 
     .Textholder {
+      width: 100%;
+      gap: 10px;
+
       .circle {
         width: 60px;
         height: 60px;
@@ -202,29 +237,6 @@ const FirstSection = styled.div`
       p {
         width: 90%;
         font-size: 14px;
-      }
-    }
-  }
-
-  @media screen and (min-width: 361px) and (max-width: 768px) {
-    flex-wrap: wrap;
-    gap: 80px;
-    height: auto;
-
-    .Textholder {
-      .circle {
-        width: 70px;
-        height: 70px;
-        font-size: 25px;
-      }
-
-      h4 {
-        font-size: 18px;
-      }
-
-      p {
-        width: 80%;
-        font-size: 15px;
       }
     }
   }
@@ -271,12 +283,46 @@ const SecondSection = styled.div`
     }
   }
 
-  @media screen and (max-width: 360px) {
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+    gap: 60px;
+    justify-content: space-around;
+    padding: 0 20px;
+
+    .Textholder {
+      width: 45%;
+      gap: 12px;
+
+      .circle {
+        width: 70px;
+        height: 70px;
+        font-size: 25px;
+      }
+
+      h4 {
+        font-size: 18px;
+        text-align: center;
+      }
+
+      p {
+        width: 100%;
+        font-size: 15px;
+        line-height: 130%;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
     flex-direction: column;
     gap: 40px;
     height: auto;
+    padding: 0 15px;
 
     .Textholder {
+      width: 100%;
+      gap: 10px;
+
       .circle {
         width: 60px;
         height: 60px;
@@ -290,29 +336,6 @@ const SecondSection = styled.div`
       p {
         width: 90%;
         font-size: 14px;
-      }
-    }
-  }
-
-  @media screen and (min-width: 361px) and (max-width: 768px) {
-    flex-wrap: wrap;
-    gap: 80px;
-    height: auto;
-
-    .Textholder {
-      .circle {
-        width: 70px;
-        height: 70px;
-        font-size: 25px;
-      }
-
-      h4 {
-        font-size: 18px;
-      }
-
-      p {
-        width: 80%;
-        font-size: 15px;
       }
     }
   }

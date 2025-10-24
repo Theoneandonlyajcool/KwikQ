@@ -12,15 +12,15 @@ const Faq = () => {
     {
       text: "How does KwikQ improve customer experience and reduce wait times?",
       title:
-        "Kwik Q makes check-ins simple, manages virtual queues, shares live wait updates, and shows Organized queue so organization always know know users place.",
+        "Kwik Q makes check-ins simple, manages virtual queues, shares live wait updates, and shows Organized queue so organization always know users place.",
     },
     {
       text: "Is KwikQ suitable for my industry or organization size?",
       title:
-        "Yes, with its highly scalable and flexible features, KwikQ is suitable for all industries bank, healthcare, government, education, and many others.",
+        "Yes, with its highly scalable and flexible features, KwikQ is suitable for all industries bank, healthcare, government, education, and many others.",
     },
     {
-      text: "What’s included in the free trial, and how do I get started?",
+      text: "What's included in the free trial, and how do I get started?",
       title:
         "The 14-day free trial offers you full access to KwikQ core features like virtual queues, appointment booking, and live dashboards. No credit card needed.",
     },
@@ -32,27 +32,29 @@ const Faq = () => {
   ];
 
   const [dropDown, setDropDown] = useState(null);
-  console.log(dropDown);
+
   const handleDrop = (index) => {
     setDropDown(dropDown === index ? null : index);
   };
+
   return (
     <MainContainer>
       <h2>Frequently Asked Questions</h2>
 
       <CardHolder>
         {questions.map((item, index) => (
-          <QuestionsHolder>
+          <QuestionsHolder key={index}>
             <QuestionsCard>
               <QuestionText>{item.text}</QuestionText>
               <IoIosArrowDown
-                className="dropdown_icon"
+                className={`dropdown_icon ${
+                  dropDown === index ? "rotate" : ""
+                }`}
                 onClick={() => handleDrop(index)}
-                key={index}
                 style={{ color: "black" }}
               />
             </QuestionsCard>
-            {dropDown === index ? <AnswerCard>{item.title}</AnswerCard> : null}
+            {dropDown === index && <AnswerCard>{item.title}</AnswerCard>}
           </QuestionsHolder>
         ))}
       </CardHolder>
@@ -82,27 +84,27 @@ const MainContainer = styled.div`
     font-weight: 600;
   }
 
-  @media screen and (max-width: 360px) {
-    gap: 25px;
-    padding: 15px;
-    height: auto;
-
-    h2 {
-      font-size: 26px;
-      text-align: center;
-      line-height: 130%;
-    }
-  }
-
-  @media screen and (min-width: 361px) and (max-width: 768px) {
+  @media (max-width: 768px) {
     gap: 35px;
-    padding: 25px;
+    padding: 30px 20px;
     height: auto;
 
     h2 {
       font-size: 36px;
       text-align: center;
       line-height: 140%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    gap: 25px;
+    padding: 20px 15px;
+    height: auto;
+
+    h2 {
+      font-size: 28px;
+      text-align: center;
+      line-height: 130%;
     }
   }
 `;
@@ -115,46 +117,40 @@ const CardHolder = styled.div`
   align-items: center;
   background-color: #ffffff;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 
-  @media screen and (max-width: 360px) {
-    width: 95%;
-    gap: 20px;
+  @media (max-width: 768px) {
+    width: 80%;
+    gap: 18px;
   }
 
-  @media screen and (min-width: 361px) and (max-width: 768px) {
-    width: 80%;
-    gap: 25px;
+  @media (max-width: 480px) {
+    width: 95%;
+    gap: 15px;
   }
 `;
 
 const QuestionsHolder = styled.div`
   width: 100%;
-  height: 57px;
+  height: auto;
   border-radius: 10px;
   min-height: max-content;
   background-color: #222222;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  @media screen and (max-width: 360px) {
-    height: auto;
-  }
-
-  @media screen and (min-width: 361px) and (max-width: 768px) {
-    height: auto;
-  }
+  overflow: hidden;
 `;
 
 const QuestionsCard = styled.div`
   width: 100%;
-  height: 57px;
+  min-height: 70px;
   border-radius: 10px;
-  padding-inline: 25px;
+  padding: 0 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 
   .dropdown_icon {
     cursor: pointer;
@@ -162,50 +158,57 @@ const QuestionsCard = styled.div`
     height: 24px;
     background-color: #ffffff;
     border-radius: 10px;
+    transition: transform 0.3s ease;
   }
 
-  @media screen and (max-width: 360px) {
-    padding-inline: 15px;
-    height: 10vh;
-
-    .dropdown_icon {
-      width: 20px;
-      height: 20px;
-    }
+  .dropdown_icon.rotate {
+    transform: rotate(180deg);
   }
 
-  @media screen and (min-width: 361px) and (max-width: 768px) {
-    padding-inline: 20px;
+  @media (max-width: 768px) {
+    padding: 0 20px;
+    min-height: 65px;
 
     .dropdown_icon {
       width: 22px;
       height: 22px;
     }
   }
+
+  @media (max-width: 480px) {
+    padding: 0 15px;
+    min-height: 60px;
+
+    .dropdown_icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
 `;
 
 const AnswerCard = styled.div`
   width: 100%;
-  height: 57px;
-  min-height: max-content;
+  min-height: 80px;
   background-color: #222222;
-  padding-inline: 25px;
+  padding: 20px 25px;
   display: flex;
   color: #ffffff;
-  justify-content: space-between;
   align-items: center;
-  border-radius: 0 0 10px 10px;
+  border-top: 1px solid #444;
+  animation: slideDown 0.3s ease-out;
 
-  @media screen and (max-width: 360px) {
-    padding-inline: 15px;
-    min-height: 15vh;
-    font-size: 14px;
+  @media (max-width: 768px) {
+    padding: 18px 20px;
+    min-height: 70px;
+    font-size: 15px;
+    line-height: 140%;
   }
 
-  @media screen and (min-width: 361px) and (max-width: 768px) {
-    padding-inline: 20px;
-    height: auto;
-    font-size: 15px;
+  @media (max-width: 480px) {
+    padding: 15px;
+    min-height: 60px;
+    font-size: 14px;
+    line-height: 130%;
   }
 `;
 
@@ -213,13 +216,16 @@ const QuestionText = styled.h4`
   font-size: 15px;
   font-weight: 700;
   color: white;
+  line-height: 140%;
+  width: 90%;
 
-  @media screen and (max-width: 360px) {
-    font-size: 13px;
+  @media (max-width: 768px) {
+    font-size: 14px;
     width: 85%;
   }
 
-  @media screen and (min-width: 361px) and (max-width: 768px) {
-    font-size: 14px;
+  @media (max-width: 480px) {
+    font-size: 13px;
+    width: 80%;
   }
 `;
