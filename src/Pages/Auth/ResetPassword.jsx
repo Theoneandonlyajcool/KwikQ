@@ -4,6 +4,8 @@ import { CiLock } from "react-icons/ci";
 import { IoIosArrowBack } from "react-icons/io";
 import { TbEyeFilled } from "react-icons/tb";
 import { RiEyeOffFill } from "react-icons/ri";
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 
 const ResetPassword = () => {
   const [seset, setSeset] = useState({
@@ -22,7 +24,7 @@ const ResetPassword = () => {
 
   const handlesubmit = async (e) => {
     try {
-      const res = await axios.post(`${BaseUrl}/api/v1/change-password`, seset, {
+      const res = await axios.put(`${BaseUrl}/api/v1/change-password`, seset, {
         headers: { "Content-Type": "application/json" },
       });
       console.log(res);

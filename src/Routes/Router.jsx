@@ -9,6 +9,7 @@ import ForgetPassword from "../Pages/Auth/ForgetPassword";
 import GetStarted from "../Pages/Auth/GetStarted";
 import Landing from "../Pages/Landing";
 import ResetPassword from "../Pages/Auth/ResetPassword";
+import Sevendayfree from "../Pages/Auth/Sevendayfree";
 
 const Router = () => {
   return (
@@ -22,6 +23,9 @@ const Router = () => {
           <Route path="/category" element={<SignUpCategory />} />
           <Route path="/verification" element={<VerifyEmail />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
+          <Route path="businessCategory" element={<GetStarted />}></Route>
+          <Route path="/reset_password" element={<ResetPassword />} />
+          <Route path="/Sevenday_free" element={<Sevendayfree />} />
         </Routes>
       </BrowserRouter>
     </div>

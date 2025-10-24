@@ -7,8 +7,10 @@ import { RiEyeOffFill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+  const nav = useNavigate();
   const [loginput, setLoginput] = useState({
     email: "",
     password: "",
@@ -147,7 +149,7 @@ const SignIn = () => {
                   <input type="checkbox" className="checkbox" />
                   <span>Remember password</span>
                 </div>
-                <div className="Forgot_password">Forgot password?</div>
+                <div className="Forgot_password" onClick={()=> nav('/forget_password')}>Forgot password?</div>
               </div>
 
               <div className="google_or">
@@ -165,7 +167,7 @@ const SignIn = () => {
               </button>
               <div className="linksignup">
                 <span>Don’t have an account?</span>{" "}
-                <span className="linkssignup">Sign Up</span>
+                <span className="linkssignup"  onClick={()=> nav('/sign_up')}>Sign Up</span>
               </div>
             </form>
           </div>
