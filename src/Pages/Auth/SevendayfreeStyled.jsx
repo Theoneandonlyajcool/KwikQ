@@ -332,8 +332,8 @@ export const ImageContainer = styled.div`
   position: relative;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  background: black;
+  /* box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  background: black; */
 
   img {
     width: 100%;
