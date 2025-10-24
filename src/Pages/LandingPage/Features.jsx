@@ -45,6 +45,7 @@ const FeaturesContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #eaedff;
+  border: 2px solid red;
 
   @media (max-width: 768px) {
     height: auto;
@@ -59,7 +60,8 @@ const FeaturesContainer = styled.div`
 
 const FeaturesWrapper = styled.div`
   width: 90%;
-  height: 90vh;
+  height: 100vh;
+
   display: flex;
   align-items: center;
   flex-direction: column;
