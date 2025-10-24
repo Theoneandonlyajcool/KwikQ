@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import PageNotFound from "../Pages/PageNotFound";
 import Signup from "../Pages/Auth/Signup";
 import SignIn from "../Pages/Auth/SignIn";
@@ -14,7 +14,7 @@ import Sevendayfree from "../Pages/Auth/Sevendayfree";
 const Router = () => {
   return (
     <div>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="*" element={<PageNotFound />} />
           <Route path="/" element={<Landing />} />
@@ -27,7 +27,7 @@ const Router = () => {
           <Route path="/reset_password" element={<ResetPassword />} />
           <Route path="/Sevenday_free" element={<Sevendayfree />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 };

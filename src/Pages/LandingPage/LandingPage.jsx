@@ -8,8 +8,11 @@ import Faq from "./Faq";
 import GetStarted from "./GetStarted";
 import styled from "styled-components";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const nav = useNavigate();
+
   const headerRef = useRef(null);
   const homeRef = useRef(null);
   const worksRef = useRef(null);
@@ -41,8 +44,8 @@ const LandingPage = () => {
               </ul>
             </div>
             <div className="login">
-              <p>Sign in</p>
-              <button>Sign up</button>
+              <p onClick={() => nav("/sign_in")}>Sign in</p>
+              <button onClick={() => nav("/sign_up")}>Sign up</button>
             </div>
           </Header>
         </HeaderHolder>
