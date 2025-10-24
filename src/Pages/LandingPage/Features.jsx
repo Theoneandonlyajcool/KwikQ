@@ -37,6 +37,7 @@ const Features = () => {
 };
 
 export default Features;
+
 const FeaturesContainer = styled.div`
   width: 100%;
   height: 100vh;
@@ -45,14 +46,14 @@ const FeaturesContainer = styled.div`
   align-items: center;
   background-color: #eaedff;
 
-  @media screen and (max-width: 360px) {
-    height: auto;
-    padding: 20px 0;
-  }
-
-  @media screen and (min-width: 361px) and (max-width: 768px) {
+  @media (max-width: 768px) {
     height: auto;
     padding: 30px 0;
+  }
+
+  @media (max-width: 480px) {
+    height: auto;
+    padding: 20px 0;
   }
 `;
 
@@ -86,31 +87,14 @@ const FeaturesWrapper = styled.div`
     }
   }
 
-  @media screen and (max-width: 360px) {
+  @media (max-width: 768px) {
     height: auto;
+    gap: 30px;
 
     .main {
       width: 100%;
       height: auto;
-      gap: 8px;
-
-      h4 {
-        font-size: 28px;
-      }
-
-      p {
-        font-size: 14px;
-        width: 95%;
-      }
-    }
-  }
-
-  @media screen and (min-width: 361px) and (max-width: 768px) {
-    height: auto;
-
-    .main {
-      width: 100%;
-      height: auto;
+      gap: 15px;
 
       h4 {
         font-size: 36px;
@@ -119,6 +103,28 @@ const FeaturesWrapper = styled.div`
       p {
         font-size: 16px;
         width: 90%;
+        line-height: 130%;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    height: auto;
+    gap: 20px;
+
+    .main {
+      width: 100%;
+      height: auto;
+      gap: 10px;
+
+      h4 {
+        font-size: 28px;
+      }
+
+      p {
+        font-size: 14px;
+        width: 95%;
+        line-height: 120%;
       }
     }
   }
@@ -183,51 +189,72 @@ const CardHolder = styled.div`
     }
   }
 
-  @media screen and (max-width: 360px) {
+  @media (max-width: 768px) {
     height: auto;
-    gap: 15px;
+    gap: 20px;
     padding: 20px 0;
 
     .Cards {
-      width: 90%;
+      width: calc(50% - 10px);
       height: auto;
+      min-height: 300px;
       padding: 20px 15px;
 
       .icon {
         margin-left: 0;
+        align-self: flex-start;
       }
 
       .text {
+        gap: 15px;
+
         h3 {
-          font-size: 16px;
+          font-size: 17px;
           width: 100%;
+          text-align: left;
         }
 
         p {
-          font-size: 14px;
+          font-size: 15px;
           width: 100%;
+          text-align: left;
         }
       }
     }
   }
 
-  @media screen and (min-width: 361px) and (max-width: 768px) {
+  @media (max-width: 480px) {
     height: auto;
-    gap: 20px;
-    padding: 30px 0;
+    gap: 15px;
+    padding: 20px 0;
+    flex-direction: column;
 
     .Cards {
-      width: 45%;
+      width: 100%;
+      max-width: 350px;
       height: auto;
+      min-height: 250px;
       padding: 20px 15px;
 
+      .icon {
+        margin-left: 0;
+        align-self: flex-start;
+      }
+
       .text {
+        gap: 12px;
+
         h3 {
-          font-size: 17px;
+          font-size: 16px;
+          width: 100%;
+          text-align: left;
         }
 
         p {
-          font-size: 15px;
+          font-size: 14px;
+          width: 100%;
+          text-align: left;
+          line-height: 140%;
         }
       }
     }

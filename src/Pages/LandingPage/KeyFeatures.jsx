@@ -34,14 +34,13 @@ const KeyFeaturesWraper = styled.div`
   justify-content: center;
   padding: 40px 0;
 
-  @media screen and (max-width: 360px) {
-    padding: 30px 10px;
+  @media (max-width: 768px) {
+    padding: 30px 0;
     min-height: auto;
   }
 
-  @media screen and (min-width: 361px) and (max-width: 768px) {
-    padding: 40px 20px;
-    min-height: auto;
+  @media (max-width: 480px) {
+    padding: 20px 0;
   }
 `;
 
@@ -107,69 +106,65 @@ const KeyFeaturesHolder = styled.div`
     }
   }
 
-  @media screen and (max-width: 360px) {
+  @media (max-width: 768px) {
     gap: 30px;
-    flex-direction: column;
+    padding: 0 20px;
 
     h1 {
-      font-size: 28px;
+      font-size: 38px;
+      line-height: 150%;
       text-align: center;
-      line-height: 140%;
+      width: 100%;
     }
 
     .cards {
-      width: 100%;
-      max-width: 320px;
-      padding: 15px;
-      min-height: 230px;
-
-      img {
-        width: 40px;
-        height: 40px;
-      }
+      width: calc(50% - 15px);
+      min-height: 220px;
+      gap: 15px;
 
       .Text_holder {
         h3 {
-          font-size: 18px;
+          font-size: 22px;
           line-height: 150%;
         }
 
         p {
-          width: 90%;
-          font-size: 14px;
-          line-height: 140%;
+          width: 100%;
+          font-size: 16px;
+          line-height: 120%;
         }
       }
     }
   }
 
-  @media screen and (min-width: 361px) and (max-width: 768px) {
-    gap: 40px;
+  @media (max-width: 480px) {
+    gap: 20px;
+    padding: 0 15px;
 
     h1 {
-      font-size: 36px;
-      text-align: center;
-      line-height: 160%;
+      font-size: 28px;
+      line-height: 130%;
     }
 
     .cards {
-      width: 90%;
-      max-width: 380px;
-      min-height: 240px;
-
-      img {
-        width: 45px;
-        height: 45px;
-      }
+      width: 100%;
+      max-width: 350px;
+      min-height: 200px;
+      padding: 15px;
 
       .Text_holder {
+        gap: 8px;
+
         h3 {
           font-size: 20px;
+          line-height: 130%;
+          text-align: center;
         }
 
         p {
-          width: 90%;
-          font-size: 15px;
+          width: 100%;
+          font-size: 14px;
+          line-height: 120%;
         }
       }
     }

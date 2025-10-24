@@ -9,7 +9,8 @@ const GetStarted = () => {
         <HeroText>
           <h1>Get rid of long line and wait times</h1>
           <button>
-            Get started <MdKeyboardArrowRight />{" "}
+            Get started today
+            <MdKeyboardArrowRight className="arrow-icon" />
           </button>
         </HeroText>
       </GetStartedWrapper>
@@ -24,13 +25,14 @@ const GetStartedBody = styled.div`
   height: 100vh;
   display: flex;
 
-  @media screen and (max-width: 360px) {
+  @media (max-width: 768px) {
     height: auto;
-    min-height: 100vh;
+    min-height: 60vh;
   }
 
-  @media screen and (min-width: 361px) and (max-width: 768px) {
+  @media (max-width: 480px) {
     height: auto;
+    min-height: 50vh;
   }
 `;
 
@@ -48,18 +50,20 @@ const GetStartedWrapper = styled.div`
   background-position: center;
   background-size: cover;
 
-  @media screen and (max-width: 360px) {
-    height: auto;
-    padding: 40px 20px;
-    gap: 25px;
-    text-align: center;
-  }
-
-  @media screen and (min-width: 361px) and (max-width: 768px) {
+  @media (max-width: 768px) {
     height: auto;
     padding: 60px 40px;
     gap: 30px;
     text-align: center;
+    min-height: 60vh;
+  }
+
+  @media (max-width: 480px) {
+    height: auto;
+    padding: 40px 20px;
+    gap: 25px;
+    text-align: center;
+    min-height: 50vh;
   }
 `;
 
@@ -85,12 +89,10 @@ const HeroText = styled.div`
     border-radius: 20px;
     border: none;
     gap: 5px;
-    line-height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    line-height: 100%;
     transition: all 0.3s ease;
 
     &:hover {
@@ -110,19 +112,7 @@ const HeroText = styled.div`
     }
   }
 
-  @media screen and (max-width: 360px) {
-    align-items: center;
-    gap: 30px;
-
-    h1 {
-      font-size: 36px;
-      width: 100%;
-      line-height: 110%;
-      text-align: center;
-    }
-  }
-
-  @media screen and (min-width: 361px) and (max-width: 768px) {
+  @media (max-width: 768px) {
     align-items: center;
     gap: 40px;
 
@@ -138,6 +128,29 @@ const HeroText = styled.div`
       height: 55px;
       font-size: 18px;
       border-radius: 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    align-items: center;
+    gap: 30px;
+
+    h1 {
+      font-size: 36px;
+      width: 100%;
+      line-height: 110%;
+      text-align: center;
+    }
+
+    button {
+      width: 200px;
+      height: 50px;
+      font-size: 16px;
+      border-radius: 15px;
+
+      .arrow-icon {
+        font-size: 20px;
+      }
     }
   }
 `;

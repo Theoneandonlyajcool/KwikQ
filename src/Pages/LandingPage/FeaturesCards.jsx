@@ -2,8 +2,7 @@
 import { IoTimeOutline } from "react-icons/io5";
 import { BsQrCodeScan } from "react-icons/bs";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import { LuChartColumnIncreasing } from "react-icons/lu";
-import { TbBackground } from "react-icons/tb";
+import { TbChartBar } from "react-icons/tb";
 
 export const CardsDisplay = [
   {
@@ -35,7 +34,7 @@ export const CardsDisplay = [
 
   {
     id: 4,
-    icons: <LuChartColumnIncreasing />,
+    icons: <TbChartBar />,
     Title: " Analytics & Data Insights",
     Description:
       "Gain valuable insights with real-time analytics on customer flow, wait times, and service performance. Track trends, identify bottlenecks, and make data-driven decisions to improve operational efficiency.",
