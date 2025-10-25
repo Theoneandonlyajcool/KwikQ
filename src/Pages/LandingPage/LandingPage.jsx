@@ -6,6 +6,7 @@ import Clients from "./Clients";
 import KeyFeatures from "./KeyFeatures";
 import Faq from "./Faq";
 import GetStarted from "./GetStarted";
+import Footer from "../Footer/Footer";
 import styled from "styled-components";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -78,6 +79,7 @@ const LandingPage = () => {
       <Clients />
       <Faq />
       <GetStarted />
+      <Footer />
     </>
   );
 };
