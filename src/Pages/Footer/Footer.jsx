@@ -4,6 +4,7 @@ import { IoLogoFacebook } from "react-icons/io5";
 import { TfiTwitter } from "react-icons/tfi";
 import { LuInstagram } from "react-icons/lu";
 import { BsLinkedin } from "react-icons/bs";
+
 const Footer = () => {
   return (
     <FooterBody>
