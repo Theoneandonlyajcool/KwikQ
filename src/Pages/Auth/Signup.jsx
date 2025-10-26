@@ -3,7 +3,7 @@ import "../../Styles/SignUp.css";
 import { FaEyeSlash } from "react-icons/fa6";
 import { FaEye } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Signup = () => {
@@ -29,7 +29,7 @@ const Signup = () => {
   const validation = () => {
     const newErrors = {};
 
-    if (inputValues.buisnessName == "") {
+    if (inputValues.businessName == "") {
       newErrors.NameError = "Name is required";
     }
 
@@ -93,6 +93,7 @@ const Signup = () => {
   return (
     <div className="sign-up-screen-cont">
       <div className="signup-container">
+        <ToastContainer />
         {/* Left Section - Form */}
         <div className="signup-form-section">
           <div className="signup-form-wrapper">
@@ -117,29 +118,48 @@ const Signup = () => {
             </div>
           )} */}
 
-            <form onSubmit={(e) => e.preventDefault()} className="signup-form">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                HandleSubmit();
+              }}
+              className="signup-form"
+            >
               <div className="form-group">
                 <label htmlFor="firstName"> Business name</label>
                 <input
                   type="text"
-                  id="firstName"
-                  placeholder="Enter your first name"
-                  // value={firstName}
-                  // onChange={(e) => setFirstName(e.target.value)}
-                  required
+                  placeholder="buisness name"
+                  value={inputValues.businessName}
+                  onChange={(e) =>
+                    SetInputValues({
+                      ...inputValues,
+                      businessName: e.target.value,
+                    })
+                  }
                 />
+                <p
+                  style={{ height: ".2rem", color: "red", alignSelf: "center" }}
+                >
+                  {ErrorMsg.NameError}
+                </p>
               </div>
 
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
                   type="email"
-                  id="email"
                   placeholder="Enter your email"
-                  // value={email}
-                  // onChange={(e) => setEmail(e.target.value)}
-                  required
+                  value={inputValues.email}
+                  onChange={(e) =>
+                    SetInputValues({ ...inputValues, email: e.target.value })
+                  }
                 />
+                <p
+                  style={{ height: ".2rem", color: "red", alignSelf: "center" }}
+                >
+                  {ErrorMsg.EmailError}
+                </p>
               </div>
 
               <div className="form-group">
@@ -149,9 +169,13 @@ const Signup = () => {
                     type={ShowPsw ? "text" : "password"}
                     id="password"
                     placeholder="Enter your password"
-                    // value={password}
-                    // onChange={(e) => setPassword(e.target.value)}
-                    required
+                    value={inputValues.password}
+                    onChange={(e) =>
+                      SetInputValues({
+                        ...inputValues,
+                        password: e.target.value,
+                      })
+                    }
                   />
 
                   {ShowPsw ? (
@@ -159,7 +183,6 @@ const Signup = () => {
                       type="button"
                       className="password-toggle"
                       onClick={() => SetShowPsw(!ShowPsw)}
-                      // onClick={() => setShowPassword(!showPassword)}
                       aria-label="Toggle password visibility"
                     >
                       <FaEye />
@@ -169,17 +192,25 @@ const Signup = () => {
                       type="button"
                       className="password-toggle"
                       onClick={() => SetShowPsw(!ShowPsw)}
-                      // onClick={() => setShowPassword(!showPassword)}
                       aria-label="Toggle password visibility"
                     >
                       <FaEyeSlash />
                     </button>
                   )}
                 </div>
+                <p
+                  style={{ height: ".2rem", color: "red", alignSelf: "center" }}
+                >
+                  {ErrorMsg.PswError}
+                </p>
               </div>
 
-              <button type="submit" className="signup-button">
-                sign up
+              <button
+                type="submit"
+                disabled={LoadingState}
+                className="signup-button"
+              >
+                {LoadingState ? "loading....." : "Sign up"}
               </button>
 
               <div className="divider">
@@ -214,7 +245,7 @@ const Signup = () => {
               </button>
 
               <p className="signin-link">
-                Already have an account? <a href="#">Sign in</a>
+                Already have an account? <Link to={"/sign_in"}>sign in</Link>
               </p>
             </form>
           </div>
@@ -230,55 +261,6 @@ https://res.cloudinary.com/dp75oveuw/image/upload/v1760744406/sign-up-image_rz6r
                 alt=""
                 className="queue-illustration"
               />
-
-              {/* <svg
-              className="queue-illustration"
-              viewBox="0 0 400 400"
-              fill="none"
-            >
-              <path
-                d="M 50 100 Q 150 80, 250 100 T 350 100"
-                stroke="#2DD4BF"
-                strokeWidth="40"
-                fill="none"
-                strokeLinecap="round"
-              />
-              <path
-                d="M 50 200 Q 150 180, 250 200 T 350 200"
-                stroke="#2DD4BF"
-                strokeWidth="40"
-                fill="none"
-                strokeLinecap="round"
-              />
-
-              <circle cx="60" cy="100" r="18" fill="#FF6B6B" />
-              <circle cx="140" cy="95" r="18" fill="#4ECDC4" />
-              <circle cx="200" cy="100" r="18" fill="#FFD93D" />
-              <circle cx="280" cy="95" r="18" fill="#95E1D3" />
-              <circle cx="340" cy="100" r="18" fill="#F38181" />
-
-              <circle cx="60" cy="200" r="18" fill="#AA96DA" />
-              <circle cx="140" cy="195" r="18" fill="#FCBAD3" />
-              <circle cx="200" cy="200" r="18" fill="#A8D8EA" />
-              <circle cx="280" cy="195" r="18" fill="#FFD93D" />
-              <circle cx="340" cy="200" r="18" fill="#6BCB77" />
-
-              <path
-                d="M 350 280 L 370 300 L 350 320"
-                stroke="#2DD4BF"
-                strokeWidth="8"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M 330 300 L 370 300"
-                stroke="#2DD4BF"
-                strokeWidth="8"
-                fill="none"
-                strokeLinecap="round"
-              />
-            </svg> */}
             </div>
 
             <div className="illustration-text">
