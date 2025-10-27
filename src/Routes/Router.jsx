@@ -10,7 +10,8 @@ import GetStarted from "../Pages/Auth/GetStarted";
 import Landing from "../Pages/Landing";
 import ResetPassword from "../Pages/Auth/ResetPassword";
 import Sevendayfree from "../Pages/Auth/Sevendayfree";
-
+import QueueForm from "../Pages/QueueForm";
+import QueueSuccess from "../Pages/QueueSuccess";
 const Router = () => {
   return (
     <div>
@@ -26,6 +27,8 @@ const Router = () => {
           <Route path="businessCategory" element={<GetStarted />}></Route>
           <Route path="/reset_password" element={<ResetPassword />} />
           <Route path="/Sevenday_free" element={<Sevendayfree />} />
+          <Route path="/queue_form" element={<QueueForm />} />
+          <Route path="/queue_success" element={<QueueSuccess />} />
         </Routes>
       </HashRouter>
     </div>
