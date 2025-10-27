@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import PageNotFound from "../Pages/PageNotFound";
 import Signup from "../Pages/Auth/Signup";
 import SignIn from "../Pages/Auth/SignIn";
@@ -10,6 +10,14 @@ import GetStarted from "../Pages/Auth/GetStarted";
 import Landing from "../Pages/Landing";
 import ResetPassword from "../Pages/Auth/ResetPassword";
 import Sevendayfree from "../Pages/Auth/Sevendayfree";
+
+import LayoutShell from "../Pages/branchdashboard/LayoutShell";
+import BranchOverview from "../Pages/pagesbranch/BranchOverview";
+import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
+// import BranchManagement from "../Pages/pagesbranch/BranchManagement";
+
+import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
+import BranchManagement from "../Pages/pagesbranch/BranchManagement";
 
 const Router = () => {
   return (
@@ -26,6 +34,17 @@ const Router = () => {
           <Route path="businessCategory" element={<GetStarted />}></Route>
           <Route path="/reset_password" element={<ResetPassword />} />
           <Route path="/Sevenday_free" element={<Sevendayfree />} />
+
+         <Route path="/dashboard/*" element={<LayoutShell />}>
+          <Route index element={<Navigate to="overview" />} />
+          <Route path="overview" element={<BranchOverview />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="branch-management" element={<BranchManagement />} />
+          <Route path="settings" element={<OrganizationSettings />} />
+        </Route>
+          
+
+
         </Routes>
       </HashRouter>
     </div>

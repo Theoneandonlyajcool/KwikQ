@@ -139,7 +139,7 @@ const ForgetPassword = () => {
               </div>
               <div className="FG_link">
                 <a
-                  href="/sign_in"
+                  href="/#/sign_in"
                   className="FG_linkrap"
                   style={{
                     pointerEvents: isLoading ? "none" : "auto",

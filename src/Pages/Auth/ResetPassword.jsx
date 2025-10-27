@@ -105,7 +105,7 @@ const ResetPassword = () => {
                 <button className="FG_Btn2">Reset Password</button>
               </div>
               <div className="FG_link">
-                <a href="/sign_in" className="RP_linkrap">
+                <a href="/#/sign_in" className="RP_linkrap">
                   <IoIosArrowBack />
                   <span>Back to log in</span>
                 </a>
