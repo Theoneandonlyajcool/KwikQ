@@ -45,7 +45,6 @@ const FeaturesContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #eaedff;
-  border: 2px solid red;
 
   @media (max-width: 768px) {
     height: auto;
@@ -60,8 +59,7 @@ const FeaturesContainer = styled.div`
 
 const FeaturesWrapper = styled.div`
   width: 90%;
-  height: 100vh;
-
+  height: 90vh;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -131,62 +129,127 @@ const FeaturesWrapper = styled.div`
     }
   }
 `;
-
 const CardHolder = styled.div`
   width: 100%;
-  height: 398px;
-  gap: 11px;
-  flex-wrap: wrap;
-  min-height: max-content;
-  justify-content: center;
-  align-items: center;
   display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: nowrap;
+  padding: 40px 0;
+  background-color: #eef1ff;
 
   .Cards {
-    width: 295.3px;
-    height: 326px;
+    width: 260px;
+    min-height: 330px;
     display: flex;
     flex-direction: column;
-    padding: 15px 10px;
-    gap: 13px;
-    border-radius: 10px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 25px 20px;
+    border-radius: 21.67px;
+    gap: 25px;
     background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
     .icon {
-      width: 50.57px;
-      height: 60px;
-      padding: 10px;
-      margin-left: 25px;
-      display: flex;
+      width: 50px;
+      height: 50px;
       border-radius: 14.45px;
+      display: flex;
       align-items: center;
       justify-content: center;
       font-size: 25px;
       color: white;
-      background-color: red;
+      background-color: #009688;
+      margin-bottom: 10px;
     }
 
     .text {
-      width: 100%;
-      height: 100%;
-      min-height: max-content;
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      align-items: center;
+      align-items: flex-start;
+      gap: 15px;
 
       h3 {
         font-weight: 600;
-        font-size: 18px;
-        width: 80%;
-        line-height: 140%;
+        font-size: 17px;
+        line-height: 130%;
+        color: #14196b;
+        margin: 0;
       }
 
       p {
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 400;
         line-height: 150%;
-        width: 80%;
+        color: #333;
+        /* margin: 0; */
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px 0;
+
+    .Cards {
+      width: calc(50% - 10px);
+      height: auto;
+      min-height: 300px;
+      padding: 20px 15px;
+
+      .icon {
+        align-self: flex-start;
+      }
+
+      .text {
+        gap: 15px;
+
+        h3 {
+          font-size: 17px;
+          width: 100%;
+          text-align: left;
+        }
+
+        p {
+          font-size: 15px;
+          width: 100%;
+          text-align: left;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px 0;
+
+    .Cards {
+      width: 100%;
+      max-width: 350px;
+      min-height: 250px;
+      padding: 20px 15px;
+
+      .icon {
+        align-self: flex-start;
+      }
+
+      .text {
+        gap: 12px;
+
+        h3 {
+          font-size: 16px;
+          text-align: left;
+        }
+
+        p {
+          font-size: 14px;
+          text-align: left;
+          line-height: 140%;
+        }
       }
     }
   }
