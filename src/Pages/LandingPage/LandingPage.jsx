@@ -9,8 +9,10 @@ import GetStarted from "./GetStarted";
 import FooterPage from "../Footer/Footer";
 import styled from "styled-components";
 import { MdKeyboardArrowRight, MdMenu, MdClose } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
+  const nav = useNavigate();
   const headerRef = useRef(null);
   const homeRef = useRef(null);
   const worksRef = useRef(null);
@@ -58,8 +60,8 @@ const LandingPage = () => {
             </DesktopMenu>
 
             <DesktopLogin className="login">
-              <p>Sign in</p>
-              <button>Sign up</button>
+              <p onClick={() => nav("/sign_in")}>Sign in</p>
+              <button onClick={() => nav("/businessCategory2")}>Sign up</button>
             </DesktopLogin>
 
             <MobileMenuContainer isOpen={isMenuOpen} onClick={toggleMenu}>
@@ -71,7 +73,7 @@ const LandingPage = () => {
                   <li>Pricing</li>
                 </ul>
                 <MobileAuthButtons>
-                  <button className="sign-in">Sign in</button>
+                  <button className="sign-in">Sign</button>
                   <button className="sign-up">Sign up</button>
                 </MobileAuthButtons>
               </MobileMenuContent>
@@ -88,8 +90,13 @@ const LandingPage = () => {
             </p>
           </Text>
           <ButtonHolder>
-            <button>Get Started</button>
-            <button className="Onboard">
+            <button onClick={() => nav("/businessCategory2")}>
+              Get Started
+            </button>
+            <button
+              className="Onboard"
+              onClick={() => nav("/businessCategory2")}
+            >
               Onboard Your Business <MdKeyboardArrowRight />
             </button>
           </ButtonHolder>
