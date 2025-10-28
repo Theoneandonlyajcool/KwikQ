@@ -12,7 +12,7 @@ const Footer = () => {
         <div className="LogoHolder">
           <div className="Logo">
             <img
-              src="https://res.cloudinary.com/dp75oveuw/image/upload/v1760854502/Mask_group_wsdoqc.png"
+              src="https://res.cloudinary.com/dp75oveuw/image/upload/v1761207428/Group_1_lnfxe0.png"
               alt=""
             />
           </div>
