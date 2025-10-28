@@ -60,7 +60,7 @@ const LandingPage = () => {
             </DesktopMenu>
 
             <DesktopLogin className="login">
-              <p onClick={() => nav("/sign_in")}>Sign in</p>
+              <p onClick={() => nav("/businessCategory")}>Sign in</p>
               <button onClick={() => nav("/businessCategory2")}>Sign up</button>
             </DesktopLogin>
 
