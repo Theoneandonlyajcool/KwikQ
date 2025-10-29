@@ -6,12 +6,14 @@ import { TbEyeFilled } from "react-icons/tb";
 import { RiEyeOffFill } from "react-icons/ri";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
   const [seset, setSeset] = useState({
     password: "",
-    ConfirmPassword: "",
+    confirmPassword: "",
   });
+
   const [eyePassword, setEyePassword] = useState(false);
   const [eyePassword2, setEyePassword2] = useState(false);
 
@@ -20,15 +22,19 @@ const ResetPassword = () => {
     setSeset((prev) => ({ ...prev, [name]: value }));
   };
 
+  const nav = useNavigate()
+  const userEmail = JSON.parse(localStorage.getItem("ResetEmail"));
+
   const BaseUrl = import.meta.env.VITE_BaseUrl;
 
   const handlesubmit = async (e) => {
     try {
-      const res = await axios.put(`${BaseUrl}/api/v1/change-password`, seset, {
+      const res = await axios.post(`${BaseUrl}/api/v1/reset-password`,   { email: userEmail, password: seset.password, confirmPassword: seset.confirmPassword}, {
         headers: { "Content-Type": "application/json" },
       });
       console.log(res);
       toast.success(res?.data?.message);
+      nav("/businessCategory")
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -43,6 +49,7 @@ const ResetPassword = () => {
   };
 
   console.log("my data", seset);
+  
   return (
     <Resetpasswordbackground>
       <div className="rapperfp">
@@ -70,7 +77,7 @@ const ResetPassword = () => {
               <label For="password">Password</label>
               <div className="for_eye1">
                 <input
-                  type="password"
+                  type={eyePassword ? "text" : "password"}
                   name="password"
                   placeholder="enter your password"
                   value={seset.password}
@@ -87,10 +94,10 @@ const ResetPassword = () => {
               <label For="password">Confirm Password</label>
               <div className="for_eye2">
                 <input
-                  type="password"
-                  name="ConfirmPassword"
+                  type= {eyePassword2 ? "text" : "password"}
+                  name="confirmPassword"
                   placeholder="Confirm Password"
-                  value={seset.ConfirmPassword}
+                  value={seset.confirmPassword}
                   onChange={handlechange}
                   className="RP_password"
                 />
@@ -102,7 +109,7 @@ const ResetPassword = () => {
               </div>
 
               <div className="FG_Btn1rap">
-                <button className="FG_Btn2">Reset Password</button>
+                <button className="FG_Btn2" onClick={()=> handlesubmit()}>Reset Password</button>
               </div>
               <div className="FG_link">
                 <a href="/#/sign_in" className="RP_linkrap">
@@ -113,6 +120,7 @@ const ResetPassword = () => {
             </div>
           </section>
         </div>
+        <ToastContainer />
       </div>
     </Resetpasswordbackground>
   );

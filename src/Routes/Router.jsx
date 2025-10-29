@@ -20,6 +20,8 @@ import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
 import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
 import BranchManagement from "../Pages/pagesbranch/BranchManagement";
 import GetStarted2 from "../Pages/Auth/GetStarted2";
+import VerifyForgetpassword from "../Pages/Auth/VerifyForgetpassword";
+// import ChangePassword from "../Pages/Auth/ChangePassword";
 
 const Router = () => {
   return (
@@ -39,6 +41,7 @@ const Router = () => {
           <Route path="/Sevenday_free" element={<Sevendayfree />} />
           <Route path="/queue_form" element={<QueueForm />} />
           <Route path="/queue_success" element={<QueueSuccess />} />
+          <Route path="/verification_forgetpassword" element={<VerifyForgetpassword />} />
 
           <Route path="/dashboard/*" element={<LayoutShell />}>
             <Route index element={<Navigate to="overview" />} />
