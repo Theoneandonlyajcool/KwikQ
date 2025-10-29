@@ -2,7 +2,7 @@ import React from "react";
 // import "../../Styles/GetStarted.css";
 import "../../Styles/GetStarted.css";
 import { FaArrowRight } from "react-icons/fa";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const GetStarted = () => {
   const nav = useNavigate();
@@ -18,7 +18,10 @@ const GetStarted = () => {
         </div>
 
         <div className="signin">
-          Don't have an account? <Link to={"/businessCategory2"}>Sign up</Link>
+          Have an account?{" "}
+          <a href="#" onClick={() => nav("/SignIn")}>
+            Sign in
+          </a>
         </div>
       </nav>
       <div className="v-line"></div>
@@ -28,19 +31,19 @@ const GetStarted = () => {
         </h1>
         <div className="cards">
           <Card
-            image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783258/374da1b547a439fa5c2a4ee0f923a871458d0381_1_pfvxvt.png"
-            title="Independent Organization"
-            desc="A single, independent entity that operates from one main location or unit"
-          />
-          <Card
             image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783257/6deb3f53715c252d7279ab294c1fc5bf1b3e46d3_wjp2w1.jpg"
-            title="Multi-Branch organization"
-            desc=" A parent oranization that operates multiple physical or functional branches"
+            title="Independent organization"
+            desc="A single, independent entity that operates from one main location or unitu"
           />
           <Card
-            image="https://res.cloudinary.com/dp75oveuw/image/upload/v1761682523/Single_brnach_Image_ehl9lb.png"
-            title="Single-Branch"
-            desc="Individual organization that operates under an entity"
+            image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783258/374da1b547a439fa5c2a4ee0f923a871458d0381_1_pfvxvt.png"
+            title="I'm a Customer"
+            desc=" I’m trying to join a queue."
+          />
+          <Card
+            image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783258/00b3d0ee57c80d978da5663d9527775dd153430e_lvedc4.png"
+            title="I'm a Staff Member"
+            desc="I want to let my clients wait from anywhere or schedule appointments"
           />
         </div>
       </main>
@@ -49,7 +52,6 @@ const GetStarted = () => {
 };
 
 const Card = ({ image, title, desc }) => {
-  const nav = useNavigate();
   return (
     <div className="card">
       <div className="Card_description">
@@ -58,7 +60,7 @@ const Card = ({ image, title, desc }) => {
       </div>
       <img src={image} alt={title} className="card-image" />
 
-      <div className="arrow-circle" onClick={() => nav("/sign_in")}>
+      <div className="arrow-circle">
         <FaArrowRight className="arrow-icon" />
       </div>
     </div>
