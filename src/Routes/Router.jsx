@@ -16,9 +16,11 @@ import LayoutShell from "../Pages/branchdashboard/LayoutShell";
 import BranchOverview from "../Pages/pagesbranch/BranchOverview";
 import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
 // import BranchManagement from "../Pages/pagesbranch/BranchManagement";
+import PriceLandingPage from "../Pages/Pricing/PriceLandingPage";
 
 import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
 import BranchManagement from "../Pages/pagesbranch/BranchManagement";
+import GetStarted2 from "../Pages/Auth/GetStarted2";
 
 const Router = () => {
   return (
@@ -32,22 +34,20 @@ const Router = () => {
           <Route path="/category" element={<SignUpCategory />} />
           <Route path="/verification" element={<VerifyEmail />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
-          <Route path="businessCategory" element={<GetStarted />}></Route>
+          <Route path="/businessCategory" element={<GetStarted />}></Route>
+          <Route path="/businessCategory2" element={<GetStarted2 />}></Route>
           <Route path="/reset_password" element={<ResetPassword />} />
           <Route path="/Sevenday_free" element={<Sevendayfree />} />
           <Route path="/queue_form" element={<QueueForm />} />
           <Route path="/queue_success" element={<QueueSuccess />} />
-
-         <Route path="/dashboard/*" element={<LayoutShell />}>
-          <Route index element={<Navigate to="overview" />} />
-          <Route path="overview" element={<BranchOverview />} />
-          <Route path="analytics" element={<Analytics />} />
-          <Route path="branch-management" element={<BranchManagement />} />
-          <Route path="settings" element={<OrganizationSettings />} />
-        </Route>
-          
-
-
+          <Route path="/pricing" element={<PriceLandingPage />} />
+          <Route path="/dashboard/*" element={<LayoutShell />}>
+            <Route index element={<Navigate to="overview" />} />
+            <Route path="overview" element={<BranchOverview />} />
+            <Route path="analytics" element={<Analytics />} />
+            <Route path="branch-management" element={<BranchManagement />} />
+            <Route path="settings" element={<OrganizationSettings />} />
+          </Route>
         </Routes>
       </HashRouter>
     </div>

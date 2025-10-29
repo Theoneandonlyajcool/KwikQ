@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import Monthly from "./MonthlyPrice";
-import Clients from "../Landing/Clients";
+import Clients from "./Clients";
 import Plans from "./Plan";
 import Faq from "./Faq";
 import GetStarted from "./GetStarted";
