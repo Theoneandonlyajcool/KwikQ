@@ -3,12 +3,13 @@ import {
   VerifyEmailContainer,
   VerifyEmailHolder,
   LogoHolder,
-  // VerifyEmailHolderRight,
+  VerifyEmailHolderRight,
 } from "./VerifyEmailStyle";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const VerifyEmail = ({ length = 6 }) => {
   const nav = useNavigate();
@@ -58,11 +59,12 @@ const VerifyEmail = ({ length = 6 }) => {
       setOtp("");
       setTimeout(() => {
         nav("/sign_in");
+        window.location.reload();
       }, 2000);
     } catch (error) {
       console.log(error);
       SetBtnLoadingState(false);
-      toast.error(error?.message);
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -74,32 +76,42 @@ const VerifyEmail = ({ length = 6 }) => {
     }
   };
 
-  let timeLeft = 120; // total seconds (2 minutes)
-
-  const countdown = setInterval(() => {
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
-
-    console.log(`${minutes}:${seconds < 10 ? "0" : ""}${seconds}`);
-    timeLeft--;
-
-    if (timeLeft < 0) {
-      clearInterval(countdown);
-      console.log("Countdown finished!");
-    }
-  }, 1000);
-
   const handleResetOtp = async () => {
-    SetBtnLoadingState(true);
+    // SetBtnLoadingState(true);
     try {
       const response = await axios.post(`${BaseURL}/api/v1/resend-otp`, {
         email: userEmail,
       });
       console.log(response.data);
+      toast.success(response?.data?.message);
+      setOtp(new Array(length).fill(""));
+      setTimeLeft(2 * 60);
     } catch (error) {
       console.log(error);
     }
   };
+
+  // Counter part
+  const [timeLeft, setTimeLeft] = useState(2 * 60); // 5 minutes in seconds
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  // Convert seconds → MM:SS format
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+
+  // Add leading zeros (e.g. 05:09 instead of 5:9)
+  const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
+    seconds
+  ).padStart(2, "0")}`;
 
   return (
     <VerifyEmailContainer>
@@ -107,53 +119,62 @@ const VerifyEmail = ({ length = 6 }) => {
       <VerifyEmailHolder>
         <LogoHolder>
           <img
-            src="https://res.cloudinary.com/dp75oveuw/image/upload/v1760468659/logo-removebg-preview_mouzpd.png"
+            src="https://res.cloudinary.com/dp75oveuw/image/upload/v1761195059/kwikq_logo-removebg-preview_ilmsvd.png"
             alt=""
           />
         </LogoHolder>
-        {/* <VerifyEmailHolderRight> */}
-        <div className="top_holder">
-          <div className="Icons">
-            <MdOutlineVerifiedUser />
+        <VerifyEmailHolderRight>
+          <div className="top_holder">
+            <div className="Icons">
+              <MdOutlineVerifiedUser />
+            </div>
+            <h2>Verify Email</h2>
+            <p>Please input code sent to your email</p>
           </div>
-          <h2>Verify Email</h2>
-          <p>Please input code sent to your email</p>
-        </div>
 
-        <div className="InputHolder">
-          <p>Input code</p>
-          <div>
-            {otp.map((length, index) => (
-              <input
-                type="text"
-                inputMode="numeric"
-                maxLength={1}
-                key={index}
-                ref={(ref) => (inputRefs.current[index] = ref)}
-                value={length}
-                onChange={(e) => handleInputChange(e.target, index)}
-                onKeyDown={(e) => handleKeyPress(e, index)}
-                autoFocus={index === 0}
-              />
-            ))}
+          <div className="InputHolder">
+            <p>Input code</p>
+            <div>
+              {otp.map((length, index) => (
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={1}
+                  key={index}
+                  ref={(ref) => (inputRefs.current[index] = ref)}
+                  value={length}
+                  onChange={(e) => handleInputChange(e.target, index)}
+                  onKeyDown={(e) => handleKeyPress(e, index)}
+                  autoFocus={index === 0}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="button-holder">
-          <button
-            onClick={() => Validation()}
-            style={{
-              backgroundColor: `${BtnLoadingState ? "gray" : "blue"}`,
-              cursor: `${BtnLoadingState ? "not-allowed" : "pointer"}`,
-            }}
-          >
-            Verify
-          </button>
-          <p>
-            Didn't receive any code?{" "}
-            <span onClick={handleResetOtp}>Resend codes (59s)</span>
-          </p>
-        </div>
-        {/* </VerifyEmailHolderRight> */}
+          <div className="button-holder">
+            <button
+              onClick={() => Validation()}
+              style={{
+                backgroundColor: `${BtnLoadingState ? "gray" : "blue"}`,
+                cursor: `${BtnLoadingState ? "not-allowed" : "pointer"}`,
+              }}
+            >
+              Verify
+            </button>
+            <p>
+              Didn't receive any code?{" "}
+              <span>
+                {timeLeft > 0 ? (
+                  <span>
+                    Resend code in (
+                    {timeLeft > 0 ? formattedTime : "Time’s up!"})
+                  </span>
+                ) : (
+                  <span onClick={handleResetOtp}>Resend code</span>
+                )}
+              </span>
+            </p>
+          </div>
+        </VerifyEmailHolderRight>
       </VerifyEmailHolder>
     </VerifyEmailContainer>
   );

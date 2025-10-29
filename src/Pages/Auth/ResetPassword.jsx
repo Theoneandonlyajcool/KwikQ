@@ -22,19 +22,29 @@ const ResetPassword = () => {
     setSeset((prev) => ({ ...prev, [name]: value }));
   };
 
-  const nav = useNavigate()
+  const nav = useNavigate();
   const userEmail = JSON.parse(localStorage.getItem("ResetEmail"));
 
   const BaseUrl = import.meta.env.VITE_BaseUrl;
 
   const handlesubmit = async (e) => {
     try {
-      const res = await axios.post(`${BaseUrl}/api/v1/reset-password`,   { email: userEmail, password: seset.password, confirmPassword: seset.confirmPassword}, {
-        headers: { "Content-Type": "application/json" },
-      });
+      const res = await axios.post(
+        `${BaseUrl}/api/v1/reset-password`,
+        {
+          email: userEmail,
+          password: seset.password,
+          confirmPassword: seset.confirmPassword,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       console.log(res);
       toast.success(res?.data?.message);
-      nav("/businessCategory")
+      setTimeout(() => {
+        nav("/sign_in");
+      }, timeout);
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -49,7 +59,7 @@ const ResetPassword = () => {
   };
 
   console.log("my data", seset);
-  
+
   return (
     <Resetpasswordbackground>
       <div className="rapperfp">
@@ -94,7 +104,7 @@ const ResetPassword = () => {
               <label For="password">Confirm Password</label>
               <div className="for_eye2">
                 <input
-                  type= {eyePassword2 ? "text" : "password"}
+                  type={eyePassword2 ? "text" : "password"}
                   name="confirmPassword"
                   placeholder="Confirm Password"
                   value={seset.confirmPassword}
@@ -109,7 +119,9 @@ const ResetPassword = () => {
               </div>
 
               <div className="FG_Btn1rap">
-                <button className="FG_Btn2" onClick={()=> handlesubmit()}>Reset Password</button>
+                <button className="FG_Btn2" onClick={() => handlesubmit()}>
+                  Reset Password
+                </button>
               </div>
               <div className="FG_link">
                 <a href="/#/sign_in" className="RP_linkrap">
