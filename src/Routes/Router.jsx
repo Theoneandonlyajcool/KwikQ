@@ -21,6 +21,7 @@ import PriceLandingPage from "../Pages/Pricing/PriceLandingPage";
 import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
 import BranchManagement from "../Pages/pagesbranch/BranchManagement";
 import GetStarted2 from "../Pages/Auth/GetStarted2";
+import GetStarted2 from "../Pages/Auth/GetStarted2";
 
 const Router = () => {
   return (
