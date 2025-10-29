@@ -16,9 +16,11 @@ import LayoutShell from "../Pages/branchdashboard/LayoutShell";
 import BranchOverview from "../Pages/pagesbranch/BranchOverview";
 import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
 // import BranchManagement from "../Pages/pagesbranch/BranchManagement";
+import PriceLandingPage from "../Pages/Pricing/PriceLandingPage";
 
 import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
 import BranchManagement from "../Pages/pagesbranch/BranchManagement";
+import GetStarted2 from "../Pages/Auth/GetStarted2";
 import GetStarted2 from "../Pages/Auth/GetStarted2";
 
 const Router = () => {
@@ -39,7 +41,7 @@ const Router = () => {
           <Route path="/Sevenday_free" element={<Sevendayfree />} />
           <Route path="/queue_form" element={<QueueForm />} />
           <Route path="/queue_success" element={<QueueSuccess />} />
-
+          <Route path="/pricing" element={<PriceLandingPage />} />
           <Route path="/dashboard/*" element={<LayoutShell />}>
             <Route index element={<Navigate to="overview" />} />
             <Route path="overview" element={<BranchOverview />} />

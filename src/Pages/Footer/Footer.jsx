@@ -96,7 +96,7 @@ const FooterWrapper = styled.div`
     flex-direction: column;
 
     .Logo {
-      width: 94px;
+      width: 150px;
       height: 50px;
 
       img {
