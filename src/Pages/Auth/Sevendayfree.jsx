@@ -33,8 +33,10 @@ import {
   IoSparkles,
   IoInformationCircle,
 } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const FreeTrialPage = () => {
+  const nav =useNavigate();
   const handleContinueTrial = () => {
     console.log("Starting free trial...");
     // Add your trial start logic here
@@ -46,8 +48,7 @@ const FreeTrialPage = () => {
   };
 
   const handleBack = () => {
-    console.log("Going back...");
-    // Add your navigation logic here
+    nav("/businessCategory")
   };
 
   return (

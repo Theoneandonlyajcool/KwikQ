@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 const device = {
-  android: '(min-width: 360px)',
-  iphone: '(min-width: 375px)',
-  tablet: '(min-width: 768px)',
-  desktop: '(min-width: 1024px)'
+  android: "(min-width: 360px)",
+  iphone: "(min-width: 375px)",
+  tablet: "(min-width: 768px)",
+  desktop: "(min-width: 1024px)",
 };
 
 export const Loginbackground = styled.div`
@@ -17,7 +17,7 @@ export const Loginbackground = styled.div`
   .loginrap {
     width: 88%;
     height: 90%;
-    /* background: red; */
+    /* background: green; */
     display: flex;
     border-radius: 5px;
     box-shadow: 0px 35px 77px 0px #0000001a, 0px 140px 140px 0px #00000017,
@@ -64,13 +64,11 @@ export const Loginbackground = styled.div`
       @media ${device.android} {
         width: 100%;
         height: 100%;
-        overflow-y: auto;
       }
 
       @media ${device.iphone} {
         width: 100%;
         height: 100%;
-        overflow-y: auto;
       }
 
       @media ${device.tablet} {
@@ -163,7 +161,7 @@ export const Loginbackground = styled.div`
 
         .singintext {
           width: 100%;
-          height: 15%;
+          height: 18%;
           /* background: blue; */
           font-family: "Inter", sans-serif;
 
@@ -183,11 +181,11 @@ export const Loginbackground = styled.div`
           }
 
           @media ${device.desktop} {
-            height: 15%;
+            height: 18%;
           }
 
           .text1 {
-            font-size: 39px;
+            font-size: 35px;
             font-weight: 700;
             line-height: 100%;
             font-style: Bold;
@@ -245,7 +243,7 @@ export const Loginbackground = styled.div`
           font-size: 14px;
           display: flex;
           flex-direction: column;
-          gap: 7.5px;
+          gap: 15.5px;
 
           @media ${device.android} {
             height: auto;
@@ -263,23 +261,25 @@ export const Loginbackground = styled.div`
 
           @media ${device.desktop} {
             height: 85%;
-            gap: 7.5px;
+            /* background: blue; */
+            gap: 15.5px;
           }
 
-          .inputstyled {
+          .inpuled {
             width: 100%;
-            height: 3rem;
+            min-height: 3rem;
             border-radius: 11.29px;
-            border: 0.71px solid #848181;
-            padding: 14.11px;
+            border: 0.01px solid #84818182;
+            padding: 11.11px;
             background: #eeeeee;
             outline: none;
             font-family: Inter;
             font-weight: 400;
             font-style: Regular;
             font-size: 11px;
-            line-height: 200%;
+            line-height: 100%;
             letter-spacing: 0%;
+            /* border: none; */
 
             @media ${device.android} {
               height: 3.2rem;
@@ -346,7 +346,7 @@ export const Loginbackground = styled.div`
             width: 100%;
             height: 3rem;
             border-radius: 11.29px;
-            border: 0.71px solid #848181;
+            border: 0.01px solid #84818182;
             display: flex;
             font-size: 20px;
             align-items: center;
@@ -615,6 +615,7 @@ export const Loginbackground = styled.div`
             line-height: 100%;
             letter-spacing: 0%;
             cursor: pointer;
+            margin-top: 45px;
 
             @media ${device.android} {
               height: 3.5rem;
@@ -709,6 +710,7 @@ export const Loginbackground = styled.div`
 
       @media ${device.desktop} {
         width: 45%;
+        height: 100%;
         display: flex;
       }
 

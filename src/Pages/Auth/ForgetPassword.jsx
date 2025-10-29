@@ -4,18 +4,45 @@ import { CiLock } from "react-icons/ci";
 import { IoIosArrowBack } from "react-icons/io";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ForgetPassword = () => {
   const [useremail, setUseremail] = useState({
     email: "",
   });
 
+  const [ErrorMsg, SetErrorMsg] = useState({
+      EmailError: "",
+    });
+
   const [isLoading, setIsLoading] = useState(false);
+  const nav = useNavigate()
 
   const BaseUrl = import.meta.env.VITE_BaseUrl;
 
+
+  const validation = () => {
+    const newErrors = {};
+
+    if (useremail.email === "") {
+      newErrors.EmailError = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(useremail.email)) {
+      newErrors.EmailError = "Invalid Email Format";
+    }
+
+    SetErrorMsg(newErrors);
+    setTimeout(() => {
+      SetErrorMsg({
+        EmailError: "",
+      });
+    }, 4000);
+    return Object.keys(newErrors).length === 0;
+  };
+
+
   const handlesubmit = async (e) => {
     e.preventDefault();
+    validation()
     setIsLoading(true);
     try {
       const res = await axios.post(
@@ -27,6 +54,8 @@ const ForgetPassword = () => {
       );
       console.log("this is my res", res);
       toast.success(res?.data?.message);
+      localStorage.setItem("ResetEmail", JSON.stringify(useremail.email));
+      nav("/verification_forgetpassword");
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -110,6 +139,13 @@ const ForgetPassword = () => {
                 className="FG_email"
                 disabled={isLoading}
               />
+
+                <p
+                  style={{ color: "red", }}
+                >
+                  {ErrorMsg.EmailError}
+                </p>
+
               <div className="FG_Btn1rap">
                 <button
                   className="FG_Btn2"
