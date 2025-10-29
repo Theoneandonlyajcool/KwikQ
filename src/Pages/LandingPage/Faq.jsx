@@ -157,7 +157,7 @@ const QuestionsCard = styled.div`
     width: 24px;
     height: 24px;
     background-color: #ffffff;
-    border-radius: 10px;
+    border-radius: 15px;
     transition: transform 0.3s ease;
   }
 

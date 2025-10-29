@@ -1,10 +1,9 @@
 import React from "react";
-// import "../../Styles/GetStarted.css";
 import "../../Styles/GetStarted.css";
 import { FaArrowRight } from "react-icons/fa";
 import { useNavigate, Link } from "react-router-dom";
 
-const GetStarted = () => {
+const GetStarted2 = () => {
   const nav = useNavigate();
   return (
     <div className="onboarding">
@@ -18,7 +17,7 @@ const GetStarted = () => {
         </div>
 
         <div className="signin">
-          Don't have an account? <Link to={"/businessCategory2"}>Sign up</Link>
+          Have an account? <Link to={"/businessCategory"}>Sign in</Link>
         </div>
       </nav>
       <div className="v-line"></div>
@@ -37,11 +36,11 @@ const GetStarted = () => {
             title="Multi-Branch organization"
             desc=" A parent oranization that operates multiple physical or functional branches"
           />
-          <Card
+          {/* <Card
             image="https://res.cloudinary.com/dp75oveuw/image/upload/v1761682523/Single_brnach_Image_ehl9lb.png"
             title="Single-Branch"
             desc="Individual organization that operates under an entity"
-          />
+          /> */}
         </div>
       </main>
     </div>
@@ -58,11 +57,11 @@ const Card = ({ image, title, desc }) => {
       </div>
       <img src={image} alt={title} className="card-image" />
 
-      <div className="arrow-circle" onClick={() => nav("/sign_in")}>
+      <div className="arrow-circle" onClick={() => nav("/sign_up")}>
         <FaArrowRight className="arrow-icon" />
       </div>
     </div>
   );
 };
 
-export default GetStarted;
+export default GetStarted2;
