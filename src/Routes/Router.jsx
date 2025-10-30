@@ -20,6 +20,8 @@ import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
 import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
 import BranchManagement from "../Pages/pagesbranch/BranchManagement";
 import AdminDash from "../Pages/Admin/AdminDash";
+import GetStarted2 from "../Pages/Auth/GetStarted2";
+import LoginForm from "../Pages/Auth/SingleBranchLogin";
 
 const Router = () => {
   return (
@@ -34,10 +36,12 @@ const Router = () => {
           <Route path="/verification" element={<VerifyEmail />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
           <Route path="/businessCategory" element={<GetStarted />}></Route>
+          <Route path="/businessCategory2" element={<GetStarted2 />}></Route>
           <Route path="/reset_password" element={<ResetPassword />} />
           <Route path="/Sevenday_free" element={<Sevendayfree />} />
           <Route path="/queue_form" element={<QueueForm />} />
           <Route path="/queue_success" element={<QueueSuccess />} />
+          <Route path="/singleBranch" element={<LoginForm />} />
 
           <Route path="/dashboard/*" element={<LayoutShell />}>
             <Route index element={<Navigate to="overview" />} />
@@ -47,7 +51,7 @@ const Router = () => {
             <Route path="settings" element={<OrganizationSettings />} />
           </Route>
 
-          <Route path="admin_dashboard" element={<AdminDash />} />
+          <Route path="/admin_dashboard" element={<AdminDash />} />
         </Routes>
       </HashRouter>
     </div>
