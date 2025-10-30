@@ -139,7 +139,7 @@ const CardHolder = styled.div`
   gap: 20px;
   flex-wrap: nowrap;
   padding: 30px 0;
-  background-color: yellow;
+  /* background-color: yellow;/ */
 
   .Cards {
     width: 23%;
