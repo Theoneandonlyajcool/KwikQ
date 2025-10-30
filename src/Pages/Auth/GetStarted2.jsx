@@ -17,7 +17,7 @@ const GetStarted2 = () => {
         </div>
 
         <div className="signin">
-          Have an account? <Link to={"/businessCategory"}>Sign in</Link>
+          Already Have an account? <Link to={"/businessCategory"}>Sign in</Link>
         </div>
       </nav>
       <div className="v-line"></div>
