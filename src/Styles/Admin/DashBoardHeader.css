@@ -1,0 +1,63 @@
+.dashboard-header {
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: hsl(var(--foreground));
+}
+
+.dashboard-date {
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.trial-card {
+  background: linear-gradient(
+    to right,
+    hsl(var(--primary) / 0.1),
+    hsl(var(--primary) / 0.05)
+  );
+  border: 10px solid hsl(var(--primary) / 0.2);
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+}
+
+.trial-card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trial-text {
+  color: hsl(var(--foreground));
+  font-weight: 500;
+}
+
+.trial-text-bold {
+  font-weight: bold;
+}
+
+.trial-button {
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.trial-button:hover {
+  background-color: hsl(var(--primary) / 0.9);
+}
