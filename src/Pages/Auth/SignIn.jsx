@@ -2,7 +2,7 @@ import React from "react";
 import { Loginbackground } from "./SignInStyle";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { TbEyeFilled  } from "react-icons/tb";
+import { TbEyeFilled } from "react-icons/tb";
 import { RiEyeOffFill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
@@ -22,6 +22,7 @@ const SignIn = () => {
   });
 
   const [eyePassword, setEyePassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const BaseUrl = import.meta.env.VITE_BaseUrl;
 
@@ -36,10 +37,16 @@ const SignIn = () => {
   };
 
   const validate = () => {
+    setIsLoading(true);
     let valid = true;
     const newErr = { email: "", password: "" };
 
-    if (!loginput.email.trim()) {
+    if (
+      !loginput.email.trim() ||
+      !loginput.email.includes("@") ||
+      !loginput.email.includes(".com")
+    ) {
+      toast.error("Invalid email formart");
       newErr.email = "This field is required";
       valid = false;
     }
@@ -61,9 +68,14 @@ const SignIn = () => {
       });
       console.log(res);
       toast.success(res?.data?.message);
+      setTimeout(() => {
+        nav("/Sevenday_free");
+      }, 2000);
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -71,6 +83,7 @@ const SignIn = () => {
   const toggleEye = () => {
     setEyePassword((prev) => !prev);
   };
+
   return (
     // <div>
     <Loginbackground>
@@ -101,7 +114,7 @@ const SignIn = () => {
                 value={loginput.email}
                 onChange={handleLoginChange}
                 required
-                className="inputstyled"
+                className="inpuled"
               />
               {err.email && (
                 <p
@@ -149,10 +162,15 @@ const SignIn = () => {
                   <input type="checkbox" className="checkbox" />
                   <span>Remember password</span>
                 </div>
-                <div className="Forgot_password" onClick={()=> nav('/forget_password')}>Forgot password?</div>
+                <div
+                  className="Forgot_password"
+                  onClick={() => nav("/forget_password")}
+                >
+                  Forgot password?
+                </div>
               </div>
 
-              <div className="google_or">
+              {/* <div className="google_or">
                 <div className="or_">
                   <span>or</span>
                 </div>
@@ -160,14 +178,67 @@ const SignIn = () => {
                   <FcGoogle className="gogole_icon" />
                   <span>Sign in with google</span>
                 </div>
-              </div>
+              </div> */}
 
-              <button type="submit" className="btn">
-                Sign in
+              <button type="submit" className="btn" disabled={isLoading}>
+                {isLoading ? (
+                  <div
+                    style={{
+                      position: "fixed",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      background: "rgba(0, 0, 0, 0.5)",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      zIndex: 9999,
+                      backdropFilter: "blur(3px)",
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: "35%",
+                        height: "40%",
+                        background: "white",
+                        borderRadius: "17px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        border: "red",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "60px",
+                          height: "60px",
+                          border: "4px solid #f3f3f3",
+                          borderTop: "4px solid #1466FF",
+                          borderRadius: "50%",
+                          animation: "spin 0.8s linear infinite",
+                          background: "white",
+                        }}
+                      />
+                      <style>
+                        {`
+                      @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                      }
+                    `}
+                      </style>
+                    </div>
+                  </div>
+                ) : (
+                  "Sign in"
+                )}
               </button>
               <div className="linksignup">
                 <span>Don’t have an account?</span>{" "}
-                <span className="linkssignup"  onClick={()=> nav('/sign_up')}>Sign Up</span>
+                <span className="linkssignup" onClick={() => nav("/sign_up")}>
+                  Sign Up
+                </span>
               </div>
             </form>
           </div>

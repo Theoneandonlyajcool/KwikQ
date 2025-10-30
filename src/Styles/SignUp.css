@@ -32,14 +32,15 @@
 
 .brand-logo {
   /* border: 2px solid red; */
-  width: 18rem;
+  width: 17rem;
   height: 4rem;
   object-fit: cover;
+  margin-left: -3rem;
   /* font-size: 2rem;
   font-weight: 700;
   color: #3b3bff;
-  margin-bottom: 0.5rem;
   font-style: italic; */
+  margin-bottom: 0.5rem;
 }
 
 .signup-title {

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Features from "./Features";
 import About from "./About";
 import Works from "./Works";
@@ -6,22 +6,28 @@ import Clients from "./Clients";
 import KeyFeatures from "./KeyFeatures";
 import Faq from "./Faq";
 import GetStarted from "./GetStarted";
+import FooterPage from "../Footer/Footer";
 import styled from "styled-components";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { MdKeyboardArrowRight, MdMenu, MdClose } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
   const nav = useNavigate();
-
   const headerRef = useRef(null);
   const homeRef = useRef(null);
   const worksRef = useRef(null);
   const aboutRef = useRef(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const scrollToRef = (ref) => {
     if (!ref?.current) return;
     const top = ref.current.getBoundingClientRect().top + window.scrollY;
     window.scrollTo({ top, behavior: "smooth" });
+    setIsMenuOpen(false);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   return (
@@ -32,23 +38,49 @@ const LandingPage = () => {
             <div className="Logo">
               <img
                 src="https://res.cloudinary.com/dp75oveuw/image/upload/v1761207428/Group_1_lnfxe0.png"
-                alt=""
+                alt="Logo"
               />
             </div>
-            <div className="Menu">
+
+            <MobileMenuButton onClick={toggleMenu}>
+              {isMenuOpen ? (
+                <MdClose style={{ color: "#222222" }} />
+              ) : (
+                <MdMenu />
+              )}
+            </MobileMenuButton>
+
+            <DesktopMenu className="Menu">
               <ul>
                 <li onClick={() => scrollToRef(homeRef)}>Home</li>
                 <li onClick={() => scrollToRef(aboutRef)}>About</li>
                 <li onClick={() => scrollToRef(worksRef)}>How it works</li>
                 <li>Pricing</li>
               </ul>
-            </div>
-            <div className="login">
+            </DesktopMenu>
+
+            <DesktopLogin className="login">
               <p onClick={() => nav("/sign_in")}>Sign in</p>
-              <button onClick={() => nav("/sign_up")}>Sign up</button>
-            </div>
+              <button onClick={() => nav("/businessCategory2")}>Sign up</button>
+            </DesktopLogin>
+
+            <MobileMenuContainer isOpen={isMenuOpen} onClick={toggleMenu}>
+              <MobileMenuContent onClick={(e) => e.stopPropagation()}>
+                <ul>
+                  <li onClick={() => scrollToRef(homeRef)}>Home</li>
+                  <li onClick={() => scrollToRef(aboutRef)}>About</li>
+                  <li onClick={() => scrollToRef(worksRef)}>How it works</li>
+                  <li>Pricing</li>
+                </ul>
+                <MobileAuthButtons>
+                  <button className="sign-in">Sign</button>
+                  <button className="sign-up">Sign up</button>
+                </MobileAuthButtons>
+              </MobileMenuContent>
+            </MobileMenuContainer>
           </Header>
         </HeaderHolder>
+
         <ContentWrapper>
           <Text>
             <h1>Smart Queue Management System For Modern Enterprise</h1>
@@ -58,8 +90,13 @@ const LandingPage = () => {
             </p>
           </Text>
           <ButtonHolder>
-            <button>Get Started</button>
-            <button className="Onboard">
+            <button onClick={() => nav("/businessCategory2")}>
+              Get Started
+            </button>
+            <button
+              className="Onboard"
+              onClick={() => nav("/businessCategory2")}
+            >
               Onboard Your Business <MdKeyboardArrowRight />
             </button>
           </ButtonHolder>
@@ -78,6 +115,7 @@ const LandingPage = () => {
       <Clients />
       <Faq />
       <GetStarted />
+      <FooterPage />
     </>
   );
 };
@@ -153,151 +191,268 @@ const Header = styled.div`
   border-radius: 60px;
   background: linear-gradient(to right, #303bff, #96f7e4);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   pointer-events: auto;
   margin-top: 15px;
+  position: relative;
+  padding: 0 20px;
 
   .Logo {
-    width: 30%;
+    width: auto;
     height: 70%;
     display: flex;
     align-items: center;
 
     img {
-      width: 35%;
-      height: 70%;
-      object-fit: cover;
+      width: 120px;
+      height: auto;
+      object-fit: contain;
       color: white;
-      margin-right: auto;
     }
 
     @media (max-width: 768px) and (min-width: 481px) {
-      width: 25%;
+      img {
+        width: 100px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      width: 50%;
 
       img {
-        width: 50%;
-        height: 75%;
-        object-fit: contain;
-      }
-    }
-  }
-
-  .Menu {
-    width: 50%;
-    min-height: 100%;
-    display: flex;
-    align-items: center;
-
-    ul {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-
-      li {
-        color: #ffffff;
-        line-height: 150%;
-        font-weight: 600;
-        cursor: pointer;
-      }
-    }
-
-    @media (max-width: 768px) and (min-width: 481px) {
-      width: 55%;
-
-      ul {
-        gap: 15px;
-
-        li {
-          font-size: 14px;
-        }
-      }
-    }
-  }
-
-  .login {
-    width: 17%;
-    min-height: 100%;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-
-    p {
-      font-weight: 600;
-      cursor: pointer;
-      color: #ffffff;
-    }
-
-    button {
-      width: 109px;
-      height: 34px;
-      background-color: #303bff;
-      border-radius: 40px;
-      font-size: 16px;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      outline: none;
-      color: #ffffff;
-      line-height: 150%;
-    }
-    button:hover {
-      background-color: #ffffff;
-      color: #303bff;
-    }
-
-    @media (max-width: 768px) and (min-width: 481px) {
-      width: 20%;
-      gap: 15px;
-
-      p {
-        font-size: 14px;
-      }
-
-      button {
-        width: 95px;
-        height: 32px;
-        font-size: 14px;
+        width: 80px;
       }
     }
   }
 
   @media (max-width: 768px) and (min-width: 481px) {
     height: 62px;
+    padding: 0 15px;
   }
 
   @media (max-width: 480px) {
     height: 50px;
-    justify-content: space-between;
     padding: 0 15px;
     margin-top: 10px;
+    border-radius: 0;
+  }
+`;
 
-    .Logo {
-      width: 50%;
+const DesktopMenu = styled.div`
+  width: auto;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
 
-      img {
-        width: 50%;
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+
+    li {
+      color: #ffffff;
+      line-height: 150%;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+      font-size: 16px;
+      white-space: nowrap;
+
+      &:hover {
+        opacity: 0.8;
       }
     }
+  }
 
-    .Menu {
-      display: none;
-    }
+  @media (max-width: 768px) and (min-width: 481px) {
+    ul {
+      gap: 20px;
 
-    .login {
-      width: 50%;
-      justify-content: flex-end;
-      gap: 12px;
-
-      p {
+      li {
         font-size: 14px;
       }
+    }
+  }
 
-      button {
-        width: 80px;
-        height: 30px;
-        font-size: 12px;
+  @media (max-width: 480px) {
+    display: none;
+  }
+`;
+
+const DesktopLogin = styled.div`
+  width: auto;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  p {
+    font-weight: 600;
+    cursor: pointer;
+    color: #ffffff;
+    transition: opacity 0.3s ease;
+    font-size: 16px;
+    white-space: nowrap;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  button {
+    width: 100px;
+    height: 34px;
+    background-color: #303bff;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: #ffffff;
+    line-height: 150%;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  button:hover {
+    background-color: #ffffff;
+    color: #303bff;
+  }
+
+  @media (max-width: 768px) and (min-width: 481px) {
+    gap: 12px;
+
+    p {
+      font-size: 14px;
+    }
+
+    button {
+      width: 90px;
+      height: 32px;
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    display: none;
+  }
+`;
+
+const MobileMenuButton = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 1001;
+
+  @media (max-width: 480px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+const MobileMenuContainer = styled.div`
+  display: none;
+
+  @media (max-width: 480px) {
+    display: ${(props) => (props.isOpen ? "flex" : "none")};
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 65%;
+    height: 100vh;
+    background: #ffffff;
+    z-index: 999;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 0;
+    padding-top: 80px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const MobileMenuContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+  width: 100%;
+  padding: 0 20px;
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+    width: 100%;
+
+    li {
+      color: #000000;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 6px;
+
+      &:hover {
+        background-color: #303bff;
+        color: #ffffff;
+        transform: translateX(5px);
       }
+    }
+  }
+`;
+
+const MobileAuthButtons = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0 20px;
+  margin-top: 20px;
+
+  button {
+    width: 100%;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .sign-in {
+    background: transparent;
+    border: 2px solid #303bff;
+    color: #303bff;
+
+    &:hover {
+      background: #303bff;
+      color: #ffffff;
+    }
+  }
+
+  .sign-up {
+    background: #303bff;
+    color: #ffffff;
+
+    &:hover {
+      background: #1a2ac0;
+      transform: translateY(-2px);
     }
   }
 `;
@@ -323,8 +478,8 @@ const Text = styled.div`
   p {
     font-weight: 500;
     font-size: 20px;
-    line-height: 140%;
-    width: 40%;
+    line-height: 200%;
+    width: 48%;
     text-align: center;
     color: #ffffff;
   }
@@ -339,7 +494,7 @@ const Text = styled.div`
 
     p {
       font-size: 18px;
-      width: 60%;
+      width: 80%;
     }
   }
 
@@ -354,7 +509,8 @@ const Text = styled.div`
 
     p {
       font-size: 16px;
-      width: 90%;
+      width: 100%;
+      margin-bottom: 15px;
     }
   }
 `;
@@ -390,11 +546,7 @@ const ButtonHolder = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 73px;
-    padding-top: 13px;
-    padding-bottom: 13px;
-    padding-right: 73px;
-    gap: 2px;
+    gap: 1.5rem;
   }
 
   @media (max-width: 768px) {
@@ -410,7 +562,6 @@ const ButtonHolder = styled.div`
     .Onboard {
       width: 350px;
       height: 58px;
-      padding: 10px 60px;
       font-size: 18px;
     }
   }
@@ -423,13 +574,13 @@ const ButtonHolder = styled.div`
     margin-top: 20px;
 
     button {
-      width: 200px;
+      width: 300px;
       height: 45px;
       font-size: 16px;
     }
 
     .Onboard {
-      width: 200px;
+      width: 300px;
       height: 45px;
       padding: 10px 10px;
       font-size: 14px;

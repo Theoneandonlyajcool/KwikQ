@@ -197,6 +197,7 @@ export const Resetpasswordbackground = styled.div`
                             font-family: Inter;
                             font-weight: 600;
                             font-style: Semi Bold;
+                            color: #222222;
                             font-size: 39px;
                             line-height: 150%;
                             letter-spacing: 0%;

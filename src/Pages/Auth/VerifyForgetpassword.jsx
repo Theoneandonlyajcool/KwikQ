@@ -1,24 +1,23 @@
 import React, { useRef, useState } from "react";
 import {
-  VerifyEmailContainer,
-  VerifyEmailHolder,
-  LogoHolder,
-  VerifyEmailHolderRight,
-} from "./VerifyEmailStyle";
+  VerifyForgetpassworddiv,
+  VerifyFGHolder,
+  VFGLogoHolder,
+  VerifyFGHolderRight,
+} from "./VerifyForgetpasswordStyle";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
-const VerifyEmail = ({ length = 6 }) => {
+const VerifyForgetpassword = ({ length = 6 }) => {
   const nav = useNavigate();
   const [BtnLoadingState, SetBtnLoadingState] = useState(false);
 
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const [otp, setOtp] = useState(new Array(length).fill(""));
   const inputRefs = useRef([]);
-  const userEmail = JSON.parse(localStorage.getItem("OrgEmail"));
+  const userEmail = JSON.parse(localStorage.getItem("ResetEmail"));
   console.log(otp);
 
   const handleInputChange = (element, index) => {
@@ -50,7 +49,7 @@ const VerifyEmail = ({ length = 6 }) => {
   const SendOTP = async () => {
     try {
       SetBtnLoadingState(true);
-      const res = await axios.post(`${BaseURL}/api/v1/verify`, {
+      const res = await axios.post(`${BaseURL}/api/v1/reset-password-otp`, {
         email: userEmail,
         otp: otp.join(""),
       });
@@ -58,13 +57,12 @@ const VerifyEmail = ({ length = 6 }) => {
       SetBtnLoadingState(false);
       setOtp("");
       setTimeout(() => {
-        nav("/sign_in");
-        window.location.reload();
       }, 2000);
+      nav("/reset_password");
     } catch (error) {
       console.log(error);
       SetBtnLoadingState(false);
-      toast.error(error?.response?.data?.message);
+      toast.error(error?.message);
     }
   };
 
@@ -76,63 +74,53 @@ const VerifyEmail = ({ length = 6 }) => {
     }
   };
 
+  let timeLeft = 120; // total seconds (2 minutes)
+
+  const countdown = setInterval(() => {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+
+    console.log(`${minutes}:${seconds < 10 ? "0" : ""}${seconds}`);
+    timeLeft--;
+
+    if (timeLeft < 0) {
+      clearInterval(countdown);
+      console.log("Countdown finished!");
+    }
+  }, 1000);
+
   const handleResetOtp = async () => {
-    // SetBtnLoadingState(true);
+    SetBtnLoadingState(true);
     try {
       const response = await axios.post(`${BaseURL}/api/v1/resend-otp`, {
         email: userEmail,
       });
       console.log(response.data);
-      toast.success(response?.data?.message);
-      setOtp(new Array(length).fill(""));
-      setTimeLeft(2 * 60);
     } catch (error) {
       console.log(error);
     }
   };
 
-  // Counter part
-  const [timeLeft, setTimeLeft] = useState(2 * 60); // 5 minutes in seconds
-
-  useEffect(() => {
-    if (timeLeft <= 0) return;
-
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [timeLeft]);
-
-  // Convert seconds → MM:SS format
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-
-  // Add leading zeros (e.g. 05:09 instead of 5:9)
-  const formattedTime = `${String(minutes).padStart(2, "0")}:${String(
-    seconds
-  ).padStart(2, "0")}`;
-
   return (
-    <VerifyEmailContainer>
+    <VerifyForgetpassworddiv>
       <ToastContainer />
-      <VerifyEmailHolder>
-        <LogoHolder>
+      <VerifyFGHolder>
+        <VFGLogoHolder>
           <img
-            src="https://res.cloudinary.com/dp75oveuw/image/upload/v1761195059/kwikq_logo-removebg-preview_ilmsvd.png"
-            alt=""
+            src="https://res.cloudinary.com/dp75oveuw/image/upload/v1760468659/logo-removebg-preview_mouzpd.png"
+            alt="KWIKQLogo"
           />
-        </LogoHolder>
-        <VerifyEmailHolderRight>
-          <div className="top_holder">
-            <div className="Icons">
+        </VFGLogoHolder>
+        <VerifyFGHolderRight>
+          <div className="VFGtop_holder">
+            <div className="VFGIcons">
               <MdOutlineVerifiedUser />
             </div>
             <h2>Verify Email</h2>
             <p>Please input code sent to your email</p>
           </div>
 
-          <div className="InputHolder">
+          <div className="VFGInputHolder">
             <p>Input code</p>
             <div>
               {otp.map((length, index) => (
@@ -150,7 +138,7 @@ const VerifyEmail = ({ length = 6 }) => {
               ))}
             </div>
           </div>
-          <div className="button-holder">
+          <div className="VFGbutton-holder">
             <button
               onClick={() => Validation()}
               style={{
@@ -162,22 +150,13 @@ const VerifyEmail = ({ length = 6 }) => {
             </button>
             <p>
               Didn't receive any code?{" "}
-              <span>
-                {timeLeft > 0 ? (
-                  <span>
-                    Resend code in (
-                    {timeLeft > 0 ? formattedTime : "Time’s up!"})
-                  </span>
-                ) : (
-                  <span onClick={handleResetOtp}>Resend code</span>
-                )}
-              </span>
+              <span onClick={handleResetOtp}>Resend codes (59s)</span>
             </p>
           </div>
-        </VerifyEmailHolderRight>
-      </VerifyEmailHolder>
-    </VerifyEmailContainer>
+        </VerifyFGHolderRight>
+      </VerifyFGHolder>
+    </VerifyForgetpassworddiv>
   );
 };
 
-export default VerifyEmail;
+export default VerifyForgetpassword;

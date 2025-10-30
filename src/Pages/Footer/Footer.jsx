@@ -4,6 +4,7 @@ import { IoLogoFacebook } from "react-icons/io5";
 import { TfiTwitter } from "react-icons/tfi";
 import { LuInstagram } from "react-icons/lu";
 import { BsLinkedin } from "react-icons/bs";
+
 const Footer = () => {
   return (
     <FooterBody>
@@ -11,7 +12,7 @@ const Footer = () => {
         <div className="LogoHolder">
           <div className="Logo">
             <img
-              src="https://res.cloudinary.com/dp75oveuw/image/upload/v1760854502/Mask_group_wsdoqc.png"
+              src="https://res.cloudinary.com/dp75oveuw/image/upload/v1761207428/Group_1_lnfxe0.png"
               alt=""
             />
           </div>

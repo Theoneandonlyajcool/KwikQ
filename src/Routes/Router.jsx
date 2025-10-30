@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
 import PageNotFound from "../Pages/PageNotFound";
 import Signup from "../Pages/Auth/Signup";
 import SignIn from "../Pages/Auth/SignIn";
@@ -10,6 +10,18 @@ import GetStarted from "../Pages/Auth/GetStarted";
 import Landing from "../Pages/Landing";
 import ResetPassword from "../Pages/Auth/ResetPassword";
 import Sevendayfree from "../Pages/Auth/Sevendayfree";
+import QueueForm from "../Pages/QueueForm";
+import QueueSuccess from "../Pages/QueueSuccess";
+import LayoutShell from "../Pages/branchdashboard/LayoutShell";
+import BranchOverview from "../Pages/pagesbranch/BranchOverview";
+import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
+// import BranchManagement from "../Pages/pagesbranch/BranchManagement";
+
+import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
+import BranchManagement from "../Pages/pagesbranch/BranchManagement";
+import GetStarted2 from "../Pages/Auth/GetStarted2";
+import VerifyForgetpassword from "../Pages/Auth/VerifyForgetpassword";
+// import ChangePassword from "../Pages/Auth/ChangePassword";
 
 const Router = () => {
   return (
@@ -23,9 +35,21 @@ const Router = () => {
           <Route path="/category" element={<SignUpCategory />} />
           <Route path="/verification" element={<VerifyEmail />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
-          <Route path="businessCategory" element={<GetStarted />}></Route>
+          <Route path="/businessCategory" element={<GetStarted />}></Route>
+          <Route path="/businessCategory2" element={<GetStarted2 />}></Route>
           <Route path="/reset_password" element={<ResetPassword />} />
           <Route path="/Sevenday_free" element={<Sevendayfree />} />
+          <Route path="/queue_form" element={<QueueForm />} />
+          <Route path="/queue_success" element={<QueueSuccess />} />
+          <Route path="/verification_forgetpassword" element={<VerifyForgetpassword />} />
+
+          <Route path="/dashboard/*" element={<LayoutShell />}>
+            <Route index element={<Navigate to="overview" />} />
+            <Route path="overview" element={<BranchOverview />} />
+            <Route path="analytics" element={<Analytics />} />
+            <Route path="branch-management" element={<BranchManagement />} />
+            <Route path="settings" element={<OrganizationSettings />} />
+          </Route>
         </Routes>
       </HashRouter>
     </div>
