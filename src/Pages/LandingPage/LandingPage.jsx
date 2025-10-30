@@ -73,8 +73,18 @@ const LandingPage = () => {
                   <li>Pricing</li>
                 </ul>
                 <MobileAuthButtons>
-                  <button className="sign-in">Sign</button>
-                  <button className="sign-up">Sign up</button>
+                  <button
+                    className="sign-in"
+                    onClick={() => nav("/businessCategory")}
+                  >
+                    Sign in
+                  </button>
+                  <button
+                    className="sign-up"
+                    onClick={() => nav("/businessCategory2")}
+                  >
+                    Sign up
+                  </button>
                 </MobileAuthButtons>
               </MobileMenuContent>
             </MobileMenuContainer>
