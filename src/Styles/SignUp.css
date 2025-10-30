@@ -73,7 +73,7 @@
   font-size: 0.95rem;
   border: 1px solid hsl(var(--input));
   border-radius: var(--radius);
-  background: white;
+  background: #f3f3f5;
   color: hsl(var(--foreground));
   transition: all 0.2s ease;
   outline: none;

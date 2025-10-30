@@ -2,10 +2,9 @@ import React from "react";
 // import "../../Styles/GetStarted.css";
 import "../../Styles/GetStarted.css";
 import { FaArrowRight } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const GetStarted = () => {
-  const nav = useNavigate();
   return (
     <div className="onboarding">
       <nav className="nav">
@@ -18,16 +17,13 @@ const GetStarted = () => {
         </div>
 
         <div className="signin">
-          Have an account?{" "}
-          <a href="#" onClick={() => nav("/SignIn")}>
-            Sign in
-          </a>
+          Don't Have an account? <Link to={"/businessCategory2"}>Sign up</Link>
         </div>
       </nav>
       <div className="v-line"></div>
       <main className="main">
         <h1 className="main-title">
-          Let's get Started! <br /> Which of these best describes you?
+          Welcome Back ! <br /> Which of these best describes you?
         </h1>
         <div className="cards">
           <Card
@@ -52,8 +48,9 @@ const GetStarted = () => {
 };
 
 const Card = ({ image, title, desc }) => {
+  const nav = useNavigate();
   return (
-    <div className="card">
+    <div className="card" onClick={() => nav("/sign_in")}>
       <div className="Card_description">
         <h1 className="card-title">{title}</h1>
         <p className="card-desc">{desc}</p>
