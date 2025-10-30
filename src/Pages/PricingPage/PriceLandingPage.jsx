@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Monthly from "./MonthlyPrice";
 import Clients from "./Clients";
 import Plans from "./Plan";
@@ -7,21 +7,27 @@ import GetStarted from "./GetStarted";
 import styled from "styled-components";
 import Footer from "../Footer/Footer";
 import { MdMenu, MdClose } from "react-icons/md";
+import { useNavigate, Link } from "react-router-dom";
 
 const PriceLandingPage = () => {
+  const nav = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <LandingContainer>
         <HeaderHolder>
           <Header>
-            <div className="Logo">
+            <div className="Logo" onClick={() => nav("/")}>
               <img
+                style={{ cursor: "pointer" }}
                 src="https://res.cloudinary.com/dp75oveuw/image/upload/v1761207428/Group_1_lnfxe0.png"
                 alt="Logo"
               />
