@@ -51,7 +51,7 @@ const Router = () => {
             <Route path="settings" element={<OrganizationSettings />} />
           </Route>
 
-          <Route path="admin_dashboard" element={<AdminDash />} />
+          <Route path="/admin_dashboard" element={<AdminDash />} />
         </Routes>
       </HashRouter>
     </div>
