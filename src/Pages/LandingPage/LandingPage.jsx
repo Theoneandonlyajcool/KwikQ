@@ -478,8 +478,8 @@ const Text = styled.div`
   p {
     font-weight: 500;
     font-size: 20px;
-    line-height: 140%;
-    width: 40%;
+    line-height: 200%;
+    width: 48%;
     text-align: center;
     color: #ffffff;
   }
@@ -494,7 +494,7 @@ const Text = styled.div`
 
     p {
       font-size: 18px;
-      width: 60%;
+      width: 80%;
     }
   }
 
@@ -509,7 +509,8 @@ const Text = styled.div`
 
     p {
       font-size: 16px;
-      width: 90%;
+      width: 100%;
+      margin-bottom: 15px;
     }
   }
 `;
@@ -545,11 +546,7 @@ const ButtonHolder = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 73px;
-    padding-top: 13px;
-    padding-bottom: 13px;
-    padding-right: 73px;
-    gap: 2px;
+    gap: 1.5rem;
   }
 
   @media (max-width: 768px) {
@@ -565,7 +562,6 @@ const ButtonHolder = styled.div`
     .Onboard {
       width: 350px;
       height: 58px;
-      padding: 10px 60px;
       font-size: 18px;
     }
   }
@@ -578,13 +574,13 @@ const ButtonHolder = styled.div`
     margin-top: 20px;
 
     button {
-      width: 200px;
+      width: 300px;
       height: 45px;
       font-size: 16px;
     }
 
     .Onboard {
-      width: 200px;
+      width: 300px;
       height: 45px;
       padding: 10px 10px;
       font-size: 14px;
