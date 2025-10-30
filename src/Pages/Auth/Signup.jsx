@@ -118,6 +118,7 @@ const Signup = () => {
                 Business name
               </label>
               <input
+                style={{ backgroundColor: "#f2f2f5" }}
                 type="text"
                 placeholder="Enter your name"
                 className="form-input"
@@ -140,6 +141,7 @@ const Signup = () => {
               </label>
               <input
                 type="email"
+                style={{ backgroundColor: "#f2f2f5" }}
                 placeholder="Enter your email"
                 className="form-input"
                 value={inputValues.email}
@@ -159,7 +161,10 @@ const Signup = () => {
               <label htmlFor="password" className="form-label">
                 Password
               </label>
-              <div className="password-input-wrapper">
+              <div
+                className="password-input-wrapper"
+                style={{ backgroundColor: "#f2f2f5" }}
+              >
                 <input
                   type={ShowPsw ? "password" : "text"}
                   placeholder="Create your password"
@@ -199,6 +204,7 @@ const Signup = () => {
               className="submit-button"
               style={{
                 backgroundColor: `${LoadingState ? "gray" : "#303bff"}`,
+                color: "white",
               }}
             >
               {LoadingState ? "Loading....." : "sign up"}
