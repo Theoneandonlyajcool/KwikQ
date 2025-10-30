@@ -51,8 +51,8 @@ const PriceLandingPage = () => {
             </DesktopMenu>
 
             <DesktopLogin className="login">
-              <p>Sign in</p>
-              <button>Sign up</button>
+              <p onClick={() => nav("/businessCategory")}>Sign in</p>
+              <button onClick={() => nav("/businessCategory2")}>Sign up</button>
             </DesktopLogin>
 
             <MobileMenuContainer isOpen={isMenuOpen} onClick={toggleMenu}>
