@@ -7,19 +7,22 @@ const GetStarted2 = () => {
   const nav = useNavigate();
   return (
     <div className="onboarding">
-      <nav className="nav">
-        <div className="logo">
-          <img
-            src="https://res.cloudinary.com/dp75oveuw/image/upload/v1760854502/Mask_group_wsdoqc.png"
-            alt="company_logo"
-            className="img-cover"
-          />
+      <header className="bc-heading-cont">
+        <div className="bc-heading-child">
+          <div className="image-cont">
+            <img
+              style={{ width: "100%" }}
+              src="
+                 https://res.cloudinary.com/dp75oveuw/image/upload/v1760854502/Mask_group_wsdoqc.png"
+              alt=""
+            />
+          </div>
+          <div className="signin">
+            already an account? <Link to={"/businessCategory"}>Sign in</Link>
+          </div>
         </div>
+      </header>
 
-        <div className="signin">
-          Already Have an account? <Link to={"/businessCategory"}>Sign in</Link>
-        </div>
-      </nav>
       <div className="v-line"></div>
       <main className="main">
         <h1 className="main-title">

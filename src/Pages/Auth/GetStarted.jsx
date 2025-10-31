@@ -21,7 +21,7 @@ const GetStarted = () => {
         <div className="bc-heading-child">
           <div className="image-cont">
             <img
-              style={{ width: "40%" }}
+              style={{ width: "100%" }}
               src="
             https://res.cloudinary.com/dp75oveuw/image/upload/v1760854502/Mask_group_wsdoqc.png"
               alt=""
