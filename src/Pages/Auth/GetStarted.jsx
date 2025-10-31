@@ -7,7 +7,7 @@ import { useNavigate, Link } from "react-router-dom";
 const GetStarted = () => {
   return (
     <div className="onboarding">
-      <nav className="nav">
+      {/* <nav className="nav">
         <div className="logo">
           <img
             src="https://res.cloudinary.com/dp75oveuw/image/upload/v1760854502/Mask_group_wsdoqc.png"
@@ -15,11 +15,25 @@ const GetStarted = () => {
             className="img-cover"
           />
         </div>
+      </nav> */}
 
-        <div className="signin">
-          Don't Have an account? <Link to={"/businessCategory2"}>Sign up</Link>
+      <header className="bc-heading-cont">
+        <div className="bc-heading-child">
+          <div className="image-cont">
+            <img
+              style={{ width: "40%" }}
+              src="
+            https://res.cloudinary.com/dp75oveuw/image/upload/v1760854502/Mask_group_wsdoqc.png"
+              alt=""
+            />
+          </div>
+          <div className="signin">
+            Don't Have an account?{" "}
+            <Link to={"/businessCategory2"}>Sign up</Link>
+          </div>
         </div>
-      </nav>
+      </header>
+
       <div className="v-line"></div>
       <main className="main">
         <h1 className="main-title">
@@ -33,13 +47,13 @@ const GetStarted = () => {
           />
           <Card
             image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783258/374da1b547a439fa5c2a4ee0f923a871458d0381_1_pfvxvt.png"
-            title="I'm a Customer"
-            desc=" I’m trying to join a queue."
+            title="Multi-Branch Organization"
+            desc="A parent organization that operates multiple physical or functional branches"
           />
           <Card
             image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783258/00b3d0ee57c80d978da5663d9527775dd153430e_lvedc4.png"
-            title="I'm a Staff Member"
-            desc="I want to let my clients wait from anywhere or schedule appointments"
+            title="Single-Branch"
+            desc="Individual organization that operates under an entity"
           />
         </div>
       </main>
