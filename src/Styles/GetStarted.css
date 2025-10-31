@@ -6,7 +6,7 @@
 }
 
 .bc-heading-cont {
-  border: 2px solid red;
+  /* border: 2px solid red; */
   width: 100%;
   height: 15vh;
   margin-bottom: 0.2rem;
@@ -15,7 +15,7 @@
 }
 
 .bc-heading-child {
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
   height: 100%;
   width: 60%;
   display: flex;
@@ -24,8 +24,8 @@
 }
 
 .image-cont {
-  width: 50%;
-  border: 2px solid green;
+  width: 30%;
+  /* border: 2px solid green; */
 }
 
 .nav {
@@ -173,8 +173,15 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 680px) {
   .bc-heading-child {
     width: 100%;
+  }
+  .image-cont {
+    width: 20%;
+  }
+
+  .main-title {
+    font-size: 1rem;
   }
 }
