@@ -12,6 +12,11 @@ import ResetPassword from "../Pages/Auth/ResetPassword";
 import Sevendayfree from "../Pages/Auth/Sevendayfree";
 import QueueForm from "../Pages/QueueForm";
 import QueueSuccess from "../Pages/QueueSuccess";
+import LoginModal from "../Components/LoginModal";
+import Onboarding from "../Pages/OnboardingBusiness/OnboardingBus";
+import BranchInfo from "../Pages/BranchInfo/BranchInfo";
+import BranchLogin from "../Pages/Auth/BranchLogin";
+
 const Router = () => {
   return (
     <div>
@@ -29,6 +34,10 @@ const Router = () => {
           <Route path="/Sevenday_free" element={<Sevendayfree />} />
           <Route path="/queue_form" element={<QueueForm />} />
           <Route path="/queue_success" element={<QueueSuccess />} />
+          <Route path="/login_modal" element={<LoginModal />} />
+          <Route path="/onboarding_business" element={<Onboarding />} />
+          <Route path="/branch_info" element={<BranchInfo />} />
+          <Route path="/branch_login" element={<BranchLogin />} />
         </Routes>
       </HashRouter>
     </div>

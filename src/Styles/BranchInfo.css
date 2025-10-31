@@ -1,0 +1,206 @@
+.branchinfo-container {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f7fee7;
+  height: max-content;
+}
+
+/* ================= HEADER SECTION ================= */
+.branchinfo-header {
+  width: 100%;
+  height: 5rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 2rem;
+  background-color: #f3f4f6;
+}
+
+.branchinfo-header-section {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.branchinfo-back-btn {
+  width: 60px;
+  height: 40px;
+  background: none;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 35%;
+  border: 1px solid #cccccc50;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.branchinfo-logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 5px;
+  border-radius: 8px;
+  margin-bottom: 4rem;
+  margin-left: 2rem;
+}
+
+.branchinfo-logo {
+  width: 170px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 5px;
+  margin-bottom: -3rem;
+}
+
+.branchinfo-logo-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin-left: 2.1rem;
+  margin-top: -35px;
+}
+
+/* ================= STEPPER ================= */
+.branchinfo-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  gap: 1rem;
+}
+
+.branchinfo-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #999;
+}
+
+.branchinfo-step.active {
+  color: #3b52f5;
+}
+
+.branchinfo-icon-holder {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  border: 1px solid #777;
+  align-items: center;
+  justify-content: center;
+}
+
+.branchinfo-icon-holder.active {
+  color: #3b52f5;
+  border: 1px solid #3b52f5;
+}
+
+.branchinfo-step svg {
+  width: 24px;
+  height: 24px;
+}
+
+.branchinfo-divider {
+  width: 80px;
+  height: 1.5px;
+  background: #ddd;
+}
+
+.branchinfo-divider.active {
+  background: #3b52f5;
+}
+
+g.branchinfo-form-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2.5rem;
+  margin: 3rem auto;
+  max-width: 850px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  height: max-content;
+}
+
+.branchinfo-form-title {
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.462);
+}
+
+.branchinfo-form-subtitle {
+  color: #777;
+  margin-bottom: 2rem;
+}
+
+.branchinfo-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  background-color: #f3f3f5;
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.branchinfo-subheading {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #444;
+}
+
+/* ================= INPUT ICONS ================= */
+.branchinfo-input-with-icon {
+  position: relative;
+}
+
+.branchinfo-input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+  width: 18px;
+}
+
+.branchinfo-input-with-icon input {
+  padding-left: 2.2rem;
+}
+
+/* ================= BUTTON ================= */
+.branchinfo-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-left: 60rem;
+  margin-bottom: 100rem;
+}
+
+.branchinfo-continue-btn {
+  background: #3b52f5;
+  color: white;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.branchinfo-continue-btn:hover {
+  background: #2a3fd9;
+}
