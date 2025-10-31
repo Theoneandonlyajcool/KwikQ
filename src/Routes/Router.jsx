@@ -17,6 +17,7 @@ import BranchOverview from "../Pages/pagesbranch/BranchOverview";
 import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
 // import BranchManagement from "../Pages/pagesbranch/BranchManagement";
 import Pricepage from "../Pages/PricingPage/PriceLandingPage";
+import AdminLandingPage from "../Pages/AdminLandingPage/AdminLandingPage";
 
 import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
 import BranchManagement from "../Pages/pagesbranch/BranchManagement";
