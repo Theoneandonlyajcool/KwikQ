@@ -17,7 +17,7 @@ const GetStarted2 = () => {
         </div>
 
         <div className="signin">
-          Have an account? <Link to={"/businessCategory"}>Sign in</Link>
+          Already Have an account? <Link to={"/businessCategory"}>Sign in</Link>
         </div>
       </nav>
       <div className="v-line"></div>
@@ -50,14 +50,14 @@ const GetStarted2 = () => {
 const Card = ({ image, title, desc }) => {
   const nav = useNavigate();
   return (
-    <div className="card">
+    <div className="card" onClick={() => nav("/sign_up")}>
       <div className="Card_description">
         <h1 className="card-title">{title}</h1>
         <p className="card-desc">{desc}</p>
       </div>
       <img src={image} alt={title} className="card-image" />
 
-      <div className="arrow-circle" onClick={() => nav("/sign_up")}>
+      <div className="arrow-circle">
         <FaArrowRight className="arrow-icon" />
       </div>
     </div>

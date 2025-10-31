@@ -13,7 +13,7 @@ const Footer = () => {
           <div className="Logo">
             <img
               src="https://res.cloudinary.com/dp75oveuw/image/upload/v1761207428/Group_1_lnfxe0.png"
-              alt=""
+              alt="KwikQ Logo"
             />
           </div>
           <p>Making queue management simple and efficient for all Nigerians.</p>
@@ -72,13 +72,16 @@ const FooterBody = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 60px;
+  padding: 40px 0;
 
   @media (max-width: 1024px) {
     gap: 40px;
+    padding: 30px 0;
   }
 
   @media (max-width: 768px) {
     gap: 30px;
+    padding: 20px 0;
   }
 `;
 
@@ -96,13 +99,13 @@ const FooterWrapper = styled.div`
     flex-direction: column;
 
     .Logo {
-      width: 94px;
+      width: 150px;
       height: 50px;
 
       img {
-        width: 100%;
+        width: 70%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
       }
     }
     p {
@@ -124,7 +127,7 @@ const FooterWrapper = styled.div`
     flex-direction: column;
     gap: 15px;
 
-    h1 {
+    h3 {
       color: #ffffff;
       font-weight: 600;
     }
@@ -144,7 +147,7 @@ const FooterWrapper = styled.div`
     flex-direction: column;
     gap: 15px;
 
-    h1 {
+    h3 {
       color: #ffffff;
       font-weight: 600;
     }
@@ -164,7 +167,7 @@ const FooterWrapper = styled.div`
     flex-direction: column;
     gap: 15px;
 
-    h1 {
+    h3 {
       color: #ffffff;
       font-weight: 600;
     }
@@ -204,14 +207,29 @@ const FooterWrapper = styled.div`
     .LogoHolder {
       width: 100%;
       align-items: flex-start;
+      min-height: auto;
+      gap: 15px;
+
+      .Logo {
+        width: 120px;
+        height: 40px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+        }
+      }
 
       p {
         width: 100%;
         font-size: 14px;
+        margin: 0;
       }
 
       .icons {
         font-size: 22px;
+        gap: 8px;
       }
     }
 
@@ -221,12 +239,29 @@ const FooterWrapper = styled.div`
       width: 100%;
       align-items: flex-start;
 
-      h1 {
+      h3 {
         font-size: 16px;
       }
 
       li {
         font-size: 14px;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    .LogoHolder {
+      .Logo {
+        width: 100px;
+        height: 35px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+
+      .icons {
+        font-size: 20px;
       }
     }
   }
@@ -244,7 +279,7 @@ const FooterRight = styled.div`
     margin-top: 2.5rem;
     font-weight: 400;
     font-size: 16px;
-    line-height: 24%;
+    line-height: 24px;
     color: #9ca3af;
   }
 

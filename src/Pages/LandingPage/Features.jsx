@@ -59,7 +59,7 @@ const FeaturesContainer = styled.div`
 
 const FeaturesWrapper = styled.div`
   width: 90%;
-  height: 90vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -80,9 +80,9 @@ const FeaturesWrapper = styled.div`
     }
 
     p {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 500;
-      width: 80%;
+      width: 90%;
       line-height: 140%;
     }
   }
@@ -131,16 +131,18 @@ const FeaturesWrapper = styled.div`
 `;
 const CardHolder = styled.div`
   width: 100%;
+  height: 68vh;
+  min-height: max-content;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   gap: 20px;
   flex-wrap: nowrap;
-  padding: 40px 0;
-  background-color: #eef1ff;
+  padding: 30px 0;
+  /* background-color: yellow;/ */
 
   .Cards {
-    width: 260px;
+    width: 23%;
     min-height: 330px;
     display: flex;
     flex-direction: column;
@@ -184,7 +186,6 @@ const CardHolder = styled.div`
         font-weight: 400;
         line-height: 150%;
         color: #333;
-        /* margin: 0; */
       }
     }
   }

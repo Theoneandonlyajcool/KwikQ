@@ -1,0 +1,56 @@
+.admin-content-container {
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  width: 100%;
+  /* height: 100vh; */
+  /* border: 5px solid indigo; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-content-child {
+  width: 100%;
+  max-width: 95%;
+  height: 100%;
+
+  /* border: 2px solid red; */
+}
+
+.admin-content-container::-webkit-scrollbar {
+  display: none;
+}
+
+.profile-item {
+  padding: 0 !important;
+  height: 6rem !important;
+  cursor: default !important;
+  /* border: 2px solid red; */
+  width: 100% !important;
+  margin-left: 0 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.user-info-cont {
+  border: 2px solid green;
+  width: 100% !important;
+  display: flex;
+  /* align-self: flex-end; */
+  /* justify-self: flex-end; */
+  height: 20% !important;
+  margin-left: 0 !important;
+}
+
+.menu-side-bar {
+  width: 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media screen and (min-width: 1600px) {
+  .menu-side-bar {
+    width: 29rem;
+  }
+}

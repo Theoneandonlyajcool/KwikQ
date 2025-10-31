@@ -2,13 +2,12 @@ import React from "react";
 // import "../../Styles/GetStarted.css";
 import "../../Styles/GetStarted.css";
 import { FaArrowRight } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const GetStarted = () => {
-  const nav = useNavigate();
   return (
     <div className="onboarding">
-      <nav className="nav">
+      {/* <nav className="nav">
         <div className="logo">
           <img
             src="https://res.cloudinary.com/dp75oveuw/image/upload/v1760854502/Mask_group_wsdoqc.png"
@@ -16,18 +15,29 @@ const GetStarted = () => {
             className="img-cover"
           />
         </div>
+      </nav> */}
 
-        <div className="signin">
-          Have an account?{" "}
-          <a href="#" onClick={() => nav("/SignIn")}>
-            Sign in
-          </a>
+      <header className="bc-heading-cont">
+        <div className="bc-heading-child">
+          <div className="image-cont">
+            <img
+              style={{ width: "40%" }}
+              src="
+            https://res.cloudinary.com/dp75oveuw/image/upload/v1760854502/Mask_group_wsdoqc.png"
+              alt=""
+            />
+          </div>
+          <div className="signin">
+            Don't Have an account?{" "}
+            <Link to={"/businessCategory2"}>Sign up</Link>
+          </div>
         </div>
-      </nav>
+      </header>
+
       <div className="v-line"></div>
       <main className="main">
         <h1 className="main-title">
-          Let's get Started! <br /> Which of these best describes you?
+          Welcome Back ! <br /> Which of these best describes you?
         </h1>
         <div className="cards">
           <Card
@@ -37,13 +47,13 @@ const GetStarted = () => {
           />
           <Card
             image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783258/374da1b547a439fa5c2a4ee0f923a871458d0381_1_pfvxvt.png"
-            title="I'm a Customer"
-            desc=" I’m trying to join a queue."
+            title="Multi-Branch Organization"
+            desc="A parent organization that operates multiple physical or functional branches"
           />
           <Card
             image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783258/00b3d0ee57c80d978da5663d9527775dd153430e_lvedc4.png"
-            title="I'm a Staff Member"
-            desc="I want to let my clients wait from anywhere or schedule appointments"
+            title="Single-Branch"
+            desc="Individual organization that operates under an entity"
           />
         </div>
       </main>
@@ -52,8 +62,9 @@ const GetStarted = () => {
 };
 
 const Card = ({ image, title, desc }) => {
+  const nav = useNavigate();
   return (
-    <div className="card">
+    <div className="card" onClick={() => nav("/sign_in")}>
       <div className="Card_description">
         <h1 className="card-title">{title}</h1>
         <p className="card-desc">{desc}</p>
