@@ -36,9 +36,7 @@ const Router = () => {
           <Route path="/category" element={<SignUpCategory />} />
           <Route path="/verification" element={<VerifyEmail />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
-
           <Route path="/businessCategory" element={<GetStarted />} />
-
           <Route path="/businessCategory2" element={<GetStarted2 />} />
           <Route path="/reset_password" element={<ResetPassword />} />
           <Route path="/Sevenday_free" element={<Sevendayfree />} />

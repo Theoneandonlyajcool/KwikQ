@@ -111,11 +111,21 @@ const FreeTrialPage = () => {
           </FeatureList>
 
           <ButtonGroup>
-            <PrimaryButton onClick={handleContinueTrial}>
+            <PrimaryButton
+              onClick={() => {
+                handleContinueTrial;
+                nav("/admin_dashboard");
+              }}
+            >
               Continue with Free Trial
               <IoArrowForward />
             </PrimaryButton>
-            <SecondaryButton onClick={handleViewPlans}>
+            <SecondaryButton
+              onClick={() => {
+                handleViewPlans;
+                nav("/pricing");
+              }}
+            >
               View Upgrade Plans
             </SecondaryButton>
           </ButtonGroup>
