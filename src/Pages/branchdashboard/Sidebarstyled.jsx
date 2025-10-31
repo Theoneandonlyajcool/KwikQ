@@ -20,7 +20,7 @@ export const Logo = styled.div`
   /* padding: 10px; */
   color: #fff;
   margin-bottom: 15px;
-  font-family: Arimo;
+  font-family: inter;
     font-weight: 400;
     font-style: Regular;
     font-size: 16.01px;
@@ -139,7 +139,7 @@ export const Footer = styled.div`
             gap: 5px;
 
             .supertext{
-                font-family: Arimo;
+                font-family: inter;
                 font-weight: 400;
                 font-style: Regular;
                 font-size: 18px;
@@ -151,7 +151,7 @@ export const Footer = styled.div`
             }
 
             .admintext{
-                font-family: Arimo;
+                font-family: inter;
                 font-weight: 400;
                 font-style: Regular;
                 font-size: 18px;
