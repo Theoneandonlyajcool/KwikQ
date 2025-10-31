@@ -36,9 +36,10 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const FreeTrialPage = () => {
-  const nav =useNavigate();
+  const nav = useNavigate();
   const handleContinueTrial = () => {
     console.log("Starting free trial...");
+    nav("/admin_dashboard");
     // Add your trial start logic here
   };
 
@@ -48,7 +49,7 @@ const FreeTrialPage = () => {
   };
 
   const handleBack = () => {
-    nav("/businessCategory")
+    nav("/businessCategory");
   };
 
   return (
@@ -58,68 +59,76 @@ const FreeTrialPage = () => {
           <IoChevronBack />
           Back
         </BackButton>
-        
       </Header>
 
       <ContentWrapper>
-        <LeftSection> 
-            <div className="titlehub">
+        <LeftSection>
+          <div className="titlehub">
             <Badge>
-                <IoSparkles />
-                Limited Time Offer
+              <IoSparkles />
+              Limited Time Offer
             </Badge>
 
             <div>
-                <Title>
-                Start Your 7-Day
-                </Title>
-                <GradientText>Free Trial</GradientText>
+              <Title>Start Your 7-Day</Title>
+              <GradientText>Free Trial</GradientText>
             </div>
 
             <Subtitle>
-                Experience the full power of our platform. No credit card <br /> required.
+              Experience the full power of our platform. No credit card <br />{" "}
+              required.
             </Subtitle>
-            </div>
+          </div>
 
-            <FeatureList>
-                <FeatureItem>
-                <div className="icon check-icon">
-                    <IoCheckmarkCircle />
-                </div>
-                Full access to all premium features
-                </FeatureItem>
+          <FeatureList>
+            <FeatureItem>
+              <div className="icon check-icon">
+                <IoCheckmarkCircle />
+              </div>
+              Full access to all premium features
+            </FeatureItem>
 
-                <FeatureItem>
-                <div className="icon lightning-icon">
-                    <IoFlash />
-                </div>
-                Unlimited service queue points
-                </FeatureItem>
+            <FeatureItem>
+              <div className="icon lightning-icon">
+                <IoFlash />
+              </div>
+              Unlimited service queue points
+            </FeatureItem>
 
-                <FeatureItem>
-                <div className="icon shield-icon">
-                    <IoShieldCheckmark />
-                </div>
-                QR code access
-                </FeatureItem>
+            <FeatureItem>
+              <div className="icon shield-icon">
+                <IoShieldCheckmark />
+              </div>
+              QR code access
+            </FeatureItem>
 
-                <FeatureItem>
-                <div className="icon chart-icon">
-                    <IoTrendingUp />
-                </div>
-                Real-time analytics and insights
-                </FeatureItem>
-            </FeatureList>
+            <FeatureItem>
+              <div className="icon chart-icon">
+                <IoTrendingUp />
+              </div>
+              Real-time analytics and insights
+            </FeatureItem>
+          </FeatureList>
 
-            <ButtonGroup>
-                <PrimaryButton onClick={handleContinueTrial}>
-                Continue with Free Trial
-                <IoArrowForward />
-                </PrimaryButton>
-                <SecondaryButton onClick={handleViewPlans}>
-                View Upgrade Plans
-                </SecondaryButton>
-            </ButtonGroup>
+          <ButtonGroup>
+            <PrimaryButton
+              onClick={() => {
+                handleContinueTrial;
+                nav("/admin_dashboard");
+              }}
+            >
+              Continue with Free Trial
+              <IoArrowForward />
+            </PrimaryButton>
+            <SecondaryButton
+              onClick={() => {
+                handleViewPlans;
+                nav("/pricing");
+              }}
+            >
+              View Upgrade Plans
+            </SecondaryButton>
+          </ButtonGroup>
         </LeftSection>
 
         <RightSection>
@@ -151,9 +160,8 @@ const FreeTrialPage = () => {
         </RightSection>
       </ContentWrapper>
 
-
       <Footer>
-      <InfoBox>
+        <InfoBox>
           <div className="info-icon">
             <IoInformationCircle />
           </div>
@@ -166,7 +174,7 @@ const FreeTrialPage = () => {
             </p>
           </InfoContent>
         </InfoBox>
-        </Footer>
+      </Footer>
     </SevendayfreeStyled>
   );
 };
