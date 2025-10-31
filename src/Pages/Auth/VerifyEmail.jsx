@@ -1,9 +1,8 @@
 import React, { useRef, useState } from "react";
 import {
   VerifyEmailContainer,
-  VerifyEmailHolder,
   LogoHolder,
-  VerifyEmailHolderRight,
+  VerifyEmailHolder,
 } from "./VerifyEmailStyle";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import axios from "axios";
@@ -116,65 +115,65 @@ const VerifyEmail = ({ length = 6 }) => {
   return (
     <VerifyEmailContainer>
       <ToastContainer />
-      <VerifyEmailHolder>
-        <LogoHolder>
+      <LogoHolder>
+        <div className="Logo">
           <img
-            src="https://res.cloudinary.com/dp75oveuw/image/upload/v1761195059/kwikq_logo-removebg-preview_ilmsvd.png"
+            src="https://i.postimg.cc/VLXcTvc2/35379ce965af990a259b5b98b745a14f6d61bddc-2.png"
             alt=""
           />
-        </LogoHolder>
-        <VerifyEmailHolderRight>
-          <div className="top_holder">
-            <div className="Icons">
-              <MdOutlineVerifiedUser />
-            </div>
-            <h2>Verify Email</h2>
-            <p>Please input code sent to your email</p>
-          </div>
+        </div>
+      </LogoHolder>
 
-          <div className="InputHolder">
-            <p>Input code</p>
-            <div>
-              {otp.map((length, index) => (
-                <input
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={1}
-                  key={index}
-                  ref={(ref) => (inputRefs.current[index] = ref)}
-                  value={length}
-                  onChange={(e) => handleInputChange(e.target, index)}
-                  onKeyDown={(e) => handleKeyPress(e, index)}
-                  autoFocus={index === 0}
-                />
-              ))}
-            </div>
+      <VerifyEmailHolder>
+        <div className="top_holder">
+          <div className="Icons">
+            <MdOutlineVerifiedUser />
           </div>
-          <div className="button-holder">
-            <button
-              onClick={() => Validation()}
-              style={{
-                backgroundColor: `${BtnLoadingState ? "gray" : "blue"}`,
-                cursor: `${BtnLoadingState ? "not-allowed" : "pointer"}`,
-              }}
-            >
-              Verify
-            </button>
-            <p>
-              Didn't receive any code?{" "}
-              <span>
-                {timeLeft > 0 ? (
-                  <span>
-                    Resend code in (
-                    {timeLeft > 0 ? formattedTime : "Time’s up!"})
-                  </span>
-                ) : (
-                  <span onClick={handleResetOtp}>Resend code</span>
-                )}
-              </span>
-            </p>
+          <h2>Verify Email</h2>
+          <p>Please input code sent to your email</p>
+        </div>
+
+        <div className="InputHolder">
+          <p>Input code</p>
+          <div>
+            {otp.map((length, index) => (
+              <input
+                type="text"
+                inputMode="numeric"
+                maxLength={1}
+                key={index}
+                ref={(ref) => (inputRefs.current[index] = ref)}
+                value={length}
+                onChange={(e) => handleInputChange(e.target, index)}
+                onKeyDown={(e) => handleKeyPress(e, index)}
+                autoFocus={index === 0}
+              />
+            ))}
           </div>
-        </VerifyEmailHolderRight>
+        </div>
+        <div className="button-holder">
+          <button
+            onClick={() => Validation()}
+            style={{
+              backgroundColor: `${BtnLoadingState ? "gray" : "blue"}`,
+              cursor: `${BtnLoadingState ? "not-allowed" : "pointer"}`,
+            }}
+          >
+            Verify
+          </button>
+          <p>
+            Didn't receive any code?{" "}
+            <span>
+              {timeLeft > 0 ? (
+                <span>
+                  Resend code in ({timeLeft > 0 ? formattedTime : "Time’s up!"})
+                </span>
+              ) : (
+                <span onClick={handleResetOtp}>Resend code</span>
+              )}
+            </span>
+          </p>
+        </div>
       </VerifyEmailHolder>
     </VerifyEmailContainer>
   );

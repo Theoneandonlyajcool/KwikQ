@@ -1,42 +1,33 @@
-import React, { useRef, useState } from "react";
-import Features from "./Features";
-import About from "./About";
-import Works from "./Works";
+import React, { useEffect, useRef, useState } from "react";
+import Monthly from "./MonthlyPrice";
 import Clients from "./Clients";
-import KeyFeatures from "./KeyFeatures";
+import Plans from "./Plan";
 import Faq from "./Faq";
 import GetStarted from "./GetStarted";
-import FooterPage from "../Footer/Footer";
 import styled from "styled-components";
-import { MdKeyboardArrowRight, MdMenu, MdClose } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import Footer from "../Footer/Footer";
+import { MdMenu, MdClose } from "react-icons/md";
+import { useNavigate, Link } from "react-router-dom";
 
-const LandingPage = () => {
+const PriceLandingPage = () => {
   const nav = useNavigate();
-  const headerRef = useRef(null);
-  const homeRef = useRef(null);
-  const worksRef = useRef(null);
-  const aboutRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const scrollToRef = (ref) => {
-    if (!ref?.current) return;
-    const top = ref.current.getBoundingClientRect().top + window.scrollY;
-    window.scrollTo({ top, behavior: "smooth" });
-    setIsMenuOpen(false);
-  };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
-      <LandingContainer ref={homeRef}>
-        <HeaderHolder ref={headerRef}>
+      <LandingContainer>
+        <HeaderHolder>
           <Header>
-            <div className="Logo">
+            <div className="Logo" onClick={() => nav("/")}>
               <img
+                style={{ cursor: "pointer" }}
                 src="https://res.cloudinary.com/dp75oveuw/image/upload/v1761207428/Group_1_lnfxe0.png"
                 alt="Logo"
               />
@@ -52,10 +43,10 @@ const LandingPage = () => {
 
             <DesktopMenu className="Menu">
               <ul>
-                <li onClick={() => scrollToRef(homeRef)}>Home</li>
-                <li onClick={() => scrollToRef(aboutRef)}>About</li>
-                <li onClick={() => scrollToRef(worksRef)}>How it works</li>
-                <li onClick={() => nav("/pricing")}>Pricing</li>
+                <li>Home</li>
+                <li>About</li>
+                <li>How it works</li>
+                <li>Pricing</li>
               </ul>
             </DesktopMenu>
 
@@ -67,70 +58,42 @@ const LandingPage = () => {
             <MobileMenuContainer isOpen={isMenuOpen} onClick={toggleMenu}>
               <MobileMenuContent onClick={(e) => e.stopPropagation()}>
                 <ul>
-                  <li onClick={() => scrollToRef(homeRef)}>Home</li>
-                  <li onClick={() => scrollToRef(aboutRef)}>About</li>
-                  <li onClick={() => scrollToRef(worksRef)}>How it works</li>
+                  <li>Home</li>
+                  <li>About</li>
+                  <li>How it works</li>
                   <li>Pricing</li>
                 </ul>
                 <MobileAuthButtons>
-                  <button
-                    className="sign-in"
-                    onClick={() => nav("/businessCategory")}
-                  >
-                    Sign in
-                  </button>
-                  <button
-                    className="sign-up"
-                    onClick={() => nav("/businessCategory2")}
-                  >
-                    Sign up
-                  </button>
+                  <button className="sign-in">Sign in</button>
+                  <button className="sign-up">Sign up</button>
                 </MobileAuthButtons>
               </MobileMenuContent>
             </MobileMenuContainer>
           </Header>
         </HeaderHolder>
-
-        <ContentWrapper>
-          <Text>
-            <h1>Smart Queue Management System For Modern Enterprise</h1>
-            <p>
-              KwikQ helps businesses manage queues effortlessly by allowing
-              staff to add and track customers in real time.
-            </p>
-          </Text>
-          <ButtonHolder>
-            <button onClick={() => nav("/businessCategory2")}>
-              Get Started
-            </button>
-            <button
-              className="Onboard"
-              onClick={() => nav("/businessCategory2")}
-            >
-              Onboard Your Business <MdKeyboardArrowRight />
-            </button>
-          </ButtonHolder>
-        </ContentWrapper>
+        <Text>
+          <h1>Enterprise-Ready Plans Built for Every Business Need</h1>
+          <h3>
+            Whether you're scaling across locations or optimizing a single
+            branch, KwikQ offers flexible, cost-effective plans that grow with
+            you.
+          </h3>
+          <button>Start Your Free Trial</button>
+          <p>Choose the Perfect Plan for your business</p>
+        </Text>
         <DesignHolder></DesignHolder>
       </LandingContainer>
-
-      <Features />
-      <div ref={worksRef}>
-        <Works />
-      </div>
-      <KeyFeatures />
-      <div ref={aboutRef}>
-        <About />
-      </div>
+      <Monthly />
       <Clients />
+      <Plans />
       <Faq />
       <GetStarted />
-      <FooterPage />
+      <Footer />
     </>
   );
 };
 
-export default LandingPage;
+export default PriceLandingPage;
 
 const LandingContainer = styled.div`
   width: 100%;
@@ -157,20 +120,6 @@ const LandingContainer = styled.div`
     min-height: 100vh;
     height: auto;
     justify-content: space-between;
-  }
-`;
-
-const ContentWrapper = styled.div`
-  width: 100%;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  @media (max-width: 480px) {
-    justify-content: flex-start;
-    padding-top: 40px;
   }
 `;
 
@@ -469,129 +418,98 @@ const MobileAuthButtons = styled.div`
 
 const Text = styled.div`
   width: 90%;
-  min-height: 40vh;
+  min-height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 10px;
+  gap: 27px;
+  padding-top: 35px;
 
   h1 {
     font-weight: 700;
-    font-size: 61px;
-    line-height: 140%;
+    font-size: 50px;
+    line-height: 130%;
     color: #ffffff;
     text-align: center;
-    width: 900px;
+    width: 792px;
+  }
+
+  h3 {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 140%;
+    width: 60%;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  button {
+    width: 224.66px;
+    height: 41.98px;
+    border-radius: 33px;
+    border: 1.25px solid #ffffff;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 150%;
+    color: #222222;
+    transition: all 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #303bff;
+    color: #ffffff;
+    border-color: #303bff;
   }
 
   p {
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 200%;
-    width: 48%;
-    text-align: center;
+    font-size: 16px;
     color: #ffffff;
+    font-weight: 400;
+    line-height: 24px;
   }
 
   @media (max-width: 768px) {
-    min-height: 35vh;
+    min-height: 400px;
+    padding-top: 25px;
+    gap: 20px;
 
     h1 {
-      font-size: 48px;
+      font-size: 40px;
       width: 90%;
     }
 
-    p {
+    h3 {
       font-size: 18px;
-      width: 80%;
+      width: 70%;
     }
   }
 
   @media (max-width: 480px) {
-    min-height: 30vh;
+    min-height: 350px;
+    padding-top: 20px;
+    gap: 20px;
+    margin-top: 30px;
 
     h1 {
       font-size: 28px;
-      margin-bottom: 15px;
+      width: 95%;
+    }
+
+    h3 {
+      font-size: 16px;
+      width: 100%;
+    }
+
+    button {
+      width: 200px;
+      height: 40px;
+      font-size: 14px;
     }
 
     p {
-      font-size: 16px;
-      width: 100%;
-      margin-bottom: 15px;
-    }
-  }
-`;
-
-const ButtonHolder = styled.div`
-  width: 100%;
-  min-height: 15vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 26px;
-
-  button {
-    width: 247px;
-    height: 63px;
-    border-radius: 33px;
-    border: 1px solid #ffffff;
-    background-color: transparent;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 200%;
-    color: #ffffff;
-  }
-
-  .Onboard {
-    width: 381px;
-    height: 62px;
-    border-radius: 33px;
-    border: 1px solid #ffffff;
-    color: #ffffff;
-    background-color: #303bff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-  }
-
-  @media (max-width: 768px) {
-    min-height: 12vh;
-    gap: 20px;
-
-    button {
-      width: 220px;
-      height: 58px;
-      font-size: 18px;
-    }
-
-    .Onboard {
-      width: 350px;
-      height: 58px;
-      font-size: 18px;
-    }
-  }
-
-  @media (max-width: 480px) {
-    min-height: 10vh;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-top: 20px;
-
-    button {
-      width: 300px;
-      height: 45px;
-      font-size: 16px;
-    }
-
-    .Onboard {
-      width: 300px;
-      height: 45px;
-      padding: 10px 10px;
       font-size: 14px;
     }
   }
@@ -599,7 +517,7 @@ const ButtonHolder = styled.div`
 
 const DesignHolder = styled.div`
   width: 100%;
-  min-height: 20vh;
+  min-height: 15vh;
   display: flex;
   background-image: url(https://i.postimg.cc/bJNFLbND/mm-1-1.png);
   background-size: cover;

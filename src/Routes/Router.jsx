@@ -16,6 +16,7 @@ import LayoutShell from "../Pages/branchdashboard/LayoutShell";
 import BranchOverview from "../Pages/pagesbranch/BranchOverview";
 import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
 // import BranchManagement from "../Pages/pagesbranch/BranchManagement";
+import Pricepage from "../Pages/PricingPage/PriceLandingPage";
 
 import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
 import BranchManagement from "../Pages/pagesbranch/BranchManagement";
@@ -35,12 +36,15 @@ const Router = () => {
           <Route path="/category" element={<SignUpCategory />} />
           <Route path="/verification" element={<VerifyEmail />} />
           <Route path="/forget_password" element={<ForgetPassword />} />
-          <Route path="/businessCategory" element={<GetStarted />}></Route>
-          <Route path="/businessCategory2" element={<GetStarted2 />}></Route>
+
+          <Route path="/businessCategory" element={<GetStarted />} />
+
+          <Route path="/businessCategory2" element={<GetStarted2 />} />
           <Route path="/reset_password" element={<ResetPassword />} />
           <Route path="/Sevenday_free" element={<Sevendayfree />} />
           <Route path="/queue_form" element={<QueueForm />} />
           <Route path="/queue_success" element={<QueueSuccess />} />
+          <Route path="/pricing" element={<Pricepage />} />
           <Route path="/singleBranch" element={<LoginForm />} />
 
           <Route path="/dashboard/*" element={<LayoutShell />}>
