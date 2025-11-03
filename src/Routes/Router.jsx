@@ -46,7 +46,7 @@ const Router = () => {
           <Route path="/reset_password" element={<ResetPassword />} />
           <Route path="/Sevenday_free" element={<Sevendayfree />} />
           <Route path="/queue_form" element={<QueueForm />} />
-          <Route path="/queue_success" element={<QueueSuccess />} />
+          {/* <Route path="/queue_success" element={<QueueSuccess />} /> */}
           <Route path="/pricing" element={<Pricepage />} />
           <Route path="/singleBranch" element={<LoginForm />} />
           <Route path="/admin_landingpage" element={<AdminLandingPage />} />

@@ -68,6 +68,7 @@ const Signup = () => {
       SetLoadingState(false);
       toast.success(res?.data?.message);
       localStorage.setItem("OrgEmail", JSON.stringify(inputValues.email));
+      localStorage.setItem("OrgInfo", JSON.stringify(inputValues));
       setTimeout(() => {
         nav("/verification");
       }, 3000);
