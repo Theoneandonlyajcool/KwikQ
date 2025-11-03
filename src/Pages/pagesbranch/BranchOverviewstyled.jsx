@@ -76,7 +76,7 @@ export const BranchOverviewContainer = styled.div`
           font-style: Bold;
           font-size: 32px;
           line-height: 85%;
-          color: #1f2937;
+          color: #222222;
           margin: 0;
           padding: 0;
 
@@ -276,7 +276,7 @@ export const BranchOverviewContainer = styled.div`
           height: auto;
           display: flex;
           flex-direction: column;
-          gap: 8px;
+          gap: 15px;
 
           .card_label {
             font-family: Inter;
