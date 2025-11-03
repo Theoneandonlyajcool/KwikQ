@@ -21,11 +21,11 @@ const AnalyticsDashboard = () => {
     { month: "Feb", value: 62 },
     { month: "Mar", value: 78 },
     { month: "Apr", value: 95 },
-    { month: "May", value: 110 },
+    { month: "May", value: 1100 },
     { month: "Jun", value: 88 },
     { month: "Jul", value: 102 },
     { month: "Aug", value: 95 },
-    { month: "Sep", value: 115 },
+    { month: "Sep", value: 25 },
     { month: "Oct", value: 88 },
   ];
 

@@ -12,14 +12,13 @@ const ForgetPassword = () => {
   });
 
   const [ErrorMsg, SetErrorMsg] = useState({
-      EmailError: "",
-    });
+    EmailError: "",
+  });
 
   const [isLoading, setIsLoading] = useState(false);
-  const nav = useNavigate()
+  const nav = useNavigate();
 
   const BaseUrl = import.meta.env.VITE_BaseUrl;
-
 
   const validation = () => {
     const newErrors = {};
@@ -39,10 +38,9 @@ const ForgetPassword = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-
   const handlesubmit = async (e) => {
     e.preventDefault();
-    validation()
+    validation();
     setIsLoading(true);
     try {
       const res = await axios.post(
@@ -55,7 +53,10 @@ const ForgetPassword = () => {
       console.log("this is my res", res);
       toast.success(res?.data?.message);
       localStorage.setItem("ResetEmail", JSON.stringify(useremail.email));
-      nav("/verification_forgetpassword");
+
+      setTimeout(() => {
+        nav("/verification");
+      }, 2000);
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
@@ -140,11 +141,7 @@ const ForgetPassword = () => {
                 disabled={isLoading}
               />
 
-                <p
-                  style={{ color: "red", }}
-                >
-                  {ErrorMsg.EmailError}
-                </p>
+              <p style={{ color: "red" }}>{ErrorMsg.EmailError}</p>
 
               <div className="FG_Btn1rap">
                 <button
@@ -183,7 +180,14 @@ const ForgetPassword = () => {
                   }}
                 >
                   <IoIosArrowBack />
-                  <span>Back to log in</span>
+                  <div
+                    style={{
+                      width: "fit-content",
+                      textWrap: "nowrap",
+                    }}
+                  >
+                    Back to log in
+                  </div>
                 </a>
               </div>
             </div>

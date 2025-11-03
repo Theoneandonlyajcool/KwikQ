@@ -459,6 +459,7 @@ const QueueHistory = () => {
             </tr>
           </thead>
           <tbody>
+            {/* Queue History  */}
             {queueData.map((item) => (
               <tr key={item.id}>
                 <td className="queue-id">{item.id}</td>

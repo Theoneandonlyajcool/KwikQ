@@ -231,6 +231,7 @@ const styles = {
     overflowY: "auto",
     scrollbarWidth: "none",
     msOverflowStyle: "none",
+    backgroundColor: "#f5f7fa",
   },
   contentSection: {
     maxWidth: "1400px",

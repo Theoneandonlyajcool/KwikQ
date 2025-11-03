@@ -68,6 +68,7 @@ const SignIn = () => {
       });
       console.log(res);
       toast.success(res?.data?.message);
+      console.log(res);
       setTimeout(() => {
         nav("/Sevenday_free");
       }, 2000);
