@@ -1,156 +1,540 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import Monthly from "./MonthlyPrice";
+import Clients from "./Clients";
+import Plans from "./Plan";
+import Faq from "./Faq";
+import GetStarted from "../AdminLandingPage/GetStarted";
 import styled from "styled-components";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import Footer from "../Footer/Footer";
+import { MdMenu, MdClose } from "react-icons/md";
+import { HiUser } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
 
-const AdminGetStarted = () => {
+const AdminLandingPage = () => {
+  const nav = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
-    <GetStartedBody>
-      <GetStartedWrapper>
-        <HeroText>
-          <h1>Get rid of long line and wait times</h1>
-          <button>
-            Get started today
-            <MdKeyboardArrowRight className="arrow-icon" />
-          </button>
-        </HeroText>
-      </GetStartedWrapper>
-    </GetStartedBody>
+    <>
+      <AdminLandingContainer>
+        <HeaderHolder>
+          <Header>
+            <div className="Logo">
+              <img
+                style={{ cursor: "pointer" }}
+                src="https://res.cloudinary.com/dp75oveuw/image/upload/v1761207428/Group_1_lnfxe0.png"
+                alt="Logo"
+              />
+            </div>
+
+            <MobileMenuButton onClick={toggleMenu}>
+              {isMenuOpen ? (
+                <MdClose style={{ color: "#222222" }} />
+              ) : (
+                <MdMenu />
+              )}
+            </MobileMenuButton>
+
+            <DesktopMenu className="Menu">
+              <ul>
+                <li>Home</li>
+                <li>About</li>
+                <li>How it works</li>
+                <li>Pricing</li>
+              </ul>
+            </DesktopMenu>
+
+            <DesktopLogin className="login">
+              <button onClick={() => nav("/admin_dashboard")}>
+                Admin <HiUser style={{ color: "white" }} />
+              </button>
+            </DesktopLogin>
+
+            <MobileMenuContainer isOpen={isMenuOpen} onClick={toggleMenu}>
+              <MobileMenuContent onClick={(e) => e.stopPropagation()}>
+                <ul>
+                  <li>Home</li>
+                  <li>About</li>
+                  <li>How it works</li>
+                  <li>Pricing</li>
+                </ul>
+                <MobileAuthButtons>
+                  <button onClick={() => nav("/admin_dashboard")}>Admin</button>
+                </MobileAuthButtons>
+              </MobileMenuContent>
+            </MobileMenuContainer>
+          </Header>
+        </HeaderHolder>
+        <Text>
+          <h1>Enterprise-Ready Plans Built for Every Business Need</h1>
+          <h3>
+            Whether you're scaling across locations or optimizing a single
+            branch, KwikQ offers flexible, cost-effective plans that grow with
+            you.
+          </h3>
+          <button>Start Your Free Trial</button>
+          <p>Choose the Perfect Plan for your business</p>
+        </Text>
+        <DesignHolder></DesignHolder>
+      </AdminLandingContainer>
+      <Monthly />
+      <Clients />
+      <Plans />
+      <Faq />
+      <GetStarted />
+      <Footer />
+    </>
   );
 };
 
-export default AdminGetStarted;
+export default AdminLandingPage;
 
-const GetStartedBody = styled.div`
+const AdminLandingContainer = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  height: auto;
   display: flex;
-
-  @media (max-width: 768px) {
-    height: auto;
-    min-height: 60vh;
-  }
-
-  @media (max-width: 480px) {
-    height: auto;
-    min-height: 50vh;
-  }
-`;
-
-const GetStartedWrapper = styled.div`
-  width: 100%;
-  height: 85vh;
-  display: flex;
+  background-image: url(https://i.postimg.cc/ZKgTqRjG/background.png);
   flex-direction: column;
-  justify-content: center;
-  gap: 30px;
-  padding: 80px;
-  color: #ffffff;
-  overflow: hidden;
-  background-image: url(https://i.postimg.cc/t4Tf9pnr/section.png);
-  background-position: center;
+  align-items: center;
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding-top: 100px;
+  position: relative;
 
   @media (max-width: 768px) {
+    padding-top: 90px;
+    min-height: 100vh;
     height: auto;
-    padding: 60px 40px;
-    gap: 30px;
-    text-align: center;
-    min-height: 60vh;
   }
 
   @media (max-width: 480px) {
+    padding-top: 70px;
+    min-height: 100vh;
     height: auto;
-    padding: 40px 20px;
-    gap: 25px;
-    text-align: center;
-    min-height: 50vh;
+    justify-content: space-between;
   }
 `;
 
-const HeroText = styled.div`
+const HeaderHolder = styled.div`
+  width: 100%;
+  min-height: 20vh;
   display: flex;
-  flex-direction: column;
-  gap: 50px;
+  justify-content: center;
+  position: fixed;
+  top: 20px;
+  left: 0;
+  z-index: 1000;
+  pointer-events: none;
 
-  h1 {
-    font-size: 96px;
+  @media (max-width: 768px) {
+    top: 15px;
+  }
+
+  @media (max-width: 480px) {
+    top: 10px;
+    min-height: 10vh;
+  }
+`;
+
+const Header = styled.div`
+  width: min(1039px, 95%);
+  height: 69px;
+  border-radius: 60px;
+  background: linear-gradient(to right, #303bff, #96f7e4);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: auto;
+  margin-top: 15px;
+  position: relative;
+  padding: 0 20px;
+
+  .Logo {
+    width: auto;
+    height: 70%;
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 120px;
+      height: auto;
+      object-fit: contain;
+      color: white;
+    }
+
+    @media (max-width: 768px) and (min-width: 481px) {
+      img {
+        width: 100px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      width: 50%;
+
+      img {
+        width: 80px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) and (min-width: 481px) {
+    height: 62px;
+    padding: 0 15px;
+  }
+
+  @media (max-width: 480px) {
+    height: 50px;
+    padding: 0 15px;
+    margin-top: 10px;
+    border-radius: 25px;
+  }
+`;
+
+const DesktopMenu = styled.div`
+  width: auto;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+
+    li {
+      color: #ffffff;
+      line-height: 150%;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+      font-size: 16px;
+      white-space: nowrap;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  @media (max-width: 768px) and (min-width: 481px) {
+    ul {
+      gap: 20px;
+
+      li {
+        font-size: 14px;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    display: none;
+  }
+`;
+
+const DesktopLogin = styled.div`
+  width: auto;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  p {
     font-weight: 600;
-    line-height: 100%;
-    width: 70%;
+    cursor: pointer;
+    color: #ffffff;
+    transition: opacity 0.3s ease;
+    font-size: 16px;
+    white-space: nowrap;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   button {
-    width: 265px;
-    height: 60px;
-    background-color: #ffffff;
-    font-size: 20px;
-    font-weight: 500;
-    color: #222222;
-    border-radius: 20px;
+    width: 100px;
+    height: 34px;
+    background-color: #303bff;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 600;
     border: none;
-    gap: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
+    outline: none;
+    color: #ffffff;
+    line-height: 150%;
     transition: all 0.3s ease;
-
-    &:hover {
-      background-color: #14196b;
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .arrow-icon {
-      font-size: 25px;
-      transition: transform 0.3s ease;
-    }
-
-    &:hover .arrow-icon {
-      transform: translateX(4px);
-    }
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
   }
 
-  @media (max-width: 768px) {
-    align-items: center;
-    gap: 40px;
+  button:hover {
+    background-color: #ffffff;
+    color: #303bff;
+  }
 
-    h1 {
-      font-size: 60px;
-      width: 90%;
-      line-height: 110%;
-      text-align: center;
+  @media (max-width: 768px) and (min-width: 481px) {
+    gap: 12px;
+
+    p {
+      font-size: 14px;
     }
 
     button {
-      width: 230px;
-      height: 55px;
-      font-size: 18px;
-      border-radius: 18px;
+      width: 90px;
+      height: 32px;
+      font-size: 13px;
     }
   }
 
   @media (max-width: 480px) {
+    display: none;
+  }
+`;
+
+const MobileMenuButton = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 1001;
+
+  @media (max-width: 480px) {
+    display: flex;
     align-items: center;
-    gap: 30px;
+    justify-content: center;
+  }
+`;
+
+const MobileMenuContainer = styled.div`
+  display: none;
+
+  @media (max-width: 480px) {
+    display: ${(props) => (props.isOpen ? "flex" : "none")};
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 65%;
+    height: 100vh;
+    background: #ffffff;
+    z-index: 999;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 0;
+    padding-top: 80px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const MobileMenuContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
+  width: 100%;
+  padding: 0 20px;
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+    width: 100%;
+
+    li {
+      color: #000000;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+      width: 100%;
+      padding: 8px 12px;
+      border-radius: 6px;
+
+      &:hover {
+        background-color: #303bff;
+        color: #ffffff;
+        transform: translateX(5px);
+      }
+    }
+  }
+`;
+
+const MobileAuthButtons = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0 20px;
+  margin-top: 20px;
+
+  button {
+    width: 100%;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .sign-in {
+    background: transparent;
+    border: 2px solid #303bff;
+    color: #303bff;
+
+    &:hover {
+      background: #303bff;
+      color: #ffffff;
+    }
+  }
+
+  .sign-up {
+    background: #303bff;
+    color: #ffffff;
+
+    &:hover {
+      background: #1a2ac0;
+      transform: translateY(-2px);
+    }
+  }
+`;
+
+const Text = styled.div`
+  width: 90%;
+  min-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 27px;
+  padding-top: 35px;
+
+  h1 {
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 130%;
+    color: #ffffff;
+    text-align: center;
+    width: 792px;
+  }
+
+  h3 {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 140%;
+    width: 60%;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  button {
+    width: 224.66px;
+    height: 41.98px;
+    border-radius: 33px;
+    border: 1.25px solid #ffffff;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 150%;
+    color: #222222;
+    transition: all 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #303bff;
+    color: #ffffff;
+    border-color: #303bff;
+  }
+
+  p {
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  @media (max-width: 768px) {
+    min-height: 400px;
+    padding-top: 25px;
+    gap: 20px;
 
     h1 {
-      font-size: 36px;
+      font-size: 40px;
+      width: 90%;
+    }
+
+    h3 {
+      font-size: 18px;
+      width: 70%;
+    }
+  }
+
+  @media (max-width: 480px) {
+    min-height: 350px;
+    padding-top: 20px;
+    gap: 20px;
+    margin-top: 30px;
+
+    h1 {
+      font-size: 28px;
+      width: 95%;
+    }
+
+    h3 {
+      font-size: 16px;
       width: 100%;
-      line-height: 110%;
-      text-align: center;
     }
 
     button {
       width: 200px;
-      height: 50px;
-      font-size: 16px;
-      border-radius: 15px;
-
-      .arrow-icon {
-        font-size: 20px;
-      }
+      height: 40px;
+      font-size: 14px;
     }
+
+    p {
+      font-size: 14px;
+    }
+  }
+`;
+
+const DesignHolder = styled.div`
+  width: 100%;
+  min-height: 15vh;
+  display: flex;
+  background-image: url(https://i.postimg.cc/bJNFLbND/mm-1-1.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  @media (max-width: 768px) {
+    min-height: 15vh;
+  }
+
+  @media (max-width: 480px) {
+    min-height: 15vh;
+    margin-top: auto;
   }
 `;

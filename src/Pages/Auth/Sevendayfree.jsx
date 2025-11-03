@@ -123,7 +123,7 @@ const FreeTrialPage = () => {
             <SecondaryButton
               onClick={() => {
                 handleViewPlans;
-                nav("/pricing");
+                nav("/admin_landingpage");
               }}
             >
               View Upgrade Plans
