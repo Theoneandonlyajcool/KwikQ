@@ -1,4 +1,6 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import {
   BarChart,
   Bar,
@@ -213,6 +215,7 @@ const AnalyticsDashboard = () => {
       `}</style>
 
       <div className="dashboard-container">
+        <ToastContainer />
         <div className="header">
           <div className="header-top">
             <h1 className="header-title">Analytics</h1>
