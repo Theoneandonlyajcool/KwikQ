@@ -32,8 +32,8 @@ const Router = () => {
         <Routes>
           <Route path="*" element={<PageNotFound />} />
           <Route path="/" element={<Landing />} />
-          <Route path="/sign_up" element={<Signup />} />
-          <Route path="/sign_in" element={<SignIn />} />
+          <Route path="/sign_up/:role" element={<Signup />} />
+          <Route path="/sign_in/:role" element={<SignIn />} />
           <Route path="/category" element={<SignUpCategory />} />
           <Route path="/verification" element={<VerifyEmail />} />
           <Route path="/forget_password" element={<ForgetPassword />} />

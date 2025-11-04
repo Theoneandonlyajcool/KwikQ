@@ -1,7 +1,5 @@
 import React from "react";
 
-const PrivateRouting = () => {
-  return <div>private</div>;
-};
+const PrivateRouting = () => {};
 
 export default PrivateRouting;

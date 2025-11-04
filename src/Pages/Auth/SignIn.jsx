@@ -8,8 +8,15 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import { Role } from "../../Components/Context";
 
 const SignIn = () => {
+  const { role } = useParams();
+
+  const whatUserRole = useContext(Role);
+  console.log(`The user role is ${whatUserRole}`);
   const nav = useNavigate();
   const [loginput, setLoginput] = useState({
     email: "",

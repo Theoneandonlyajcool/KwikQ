@@ -443,7 +443,7 @@ const QueueHistory = () => {
         </select>
       </div>
 
-      <div className="table-container">
+      {/* <div className="table-container">
         <table className="queue-table">
           <thead>
             <tr>
@@ -459,7 +459,6 @@ const QueueHistory = () => {
             </tr>
           </thead>
           <tbody>
-            {/* Queue History  */}
             {queueData.map((item) => (
               <tr key={item.id}>
                 <td className="queue-id">{item.id}</td>
@@ -491,7 +490,7 @@ const QueueHistory = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
     </div>
   );
 };
