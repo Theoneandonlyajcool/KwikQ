@@ -20,6 +20,10 @@ import Pricepage from "../Pages/PricingPage/PriceLandingPage";
 import AdminLandingPage from "../Pages/AdminLandingPage/AdminLandingPage";
 import Orgform from "../Pages/ApiOrgform/ApiOrgform";
 import Branch from "../Pages/ApiBranchform/ApiBranch";
+import Organization from "../Pages/OnBoarding/Orangization";
+import BranchOnboarding from "../Pages/OnBoarding/Branch";
+import Review from "../Pages/OnBoarding/Review";
+import Submitted from "../Pages/OnBoarding/Submitted";
 
 import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
 import BranchManagement from "../Pages/pagesbranch/BranchManagement";
@@ -52,6 +56,11 @@ const Router = () => {
           <Route path="/admin_landingpage" element={<AdminLandingPage />} />
           <Route path="/orgform" element={<Orgform />} />
           <Route path="/branch" element={<Branch />} />
+
+          <Route path="/organization_onboarding" element={<Organization />} />
+          <Route path="/branch_onboarding" element={<BranchOnboarding />} />
+          <Route path="/review" element={<Review />} />
+          <Route path="/submitted" element={<Submitted />} />
 
           <Route path="/dashboard/*" element={<LayoutShell />}>
             <Route index element={<Navigate to="overview" />} />

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const BoardingContainer = styled.div`
+export const OrangizationContainer = styled.div`
   width: 100%;
   height: 100vh;
   height: auto;
@@ -160,7 +160,7 @@ export const BoardingTop = styled.div`
   }
 `;
 
-export const OnboardingHolder = styled.div`
+export const OnboardingHolder = styled.form`
   width: 80%;
   min-height: auto;
   display: flex;
@@ -179,7 +179,7 @@ export const OnboardingHolder = styled.div`
 
 export const TextSection = styled.div`
   width: 100%;
-  min-height: 600px;
+  min-height: 530px;
   border-radius: 14px;
   border: 1.25px solid #e8e8eb;
   display: flex;
