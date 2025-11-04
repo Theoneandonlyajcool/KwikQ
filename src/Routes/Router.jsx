@@ -18,6 +18,8 @@ import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
 // import BranchManagement from "../Pages/pagesbranch/BranchManagement";
 import Pricepage from "../Pages/PricingPage/PriceLandingPage";
 import AdminLandingPage from "../Pages/AdminLandingPage/AdminLandingPage";
+import Orgform from "../Pages/ApiOrgform/ApiOrgform";
+import Branch from "../Pages/ApiBranchform/ApiBranch";
 
 import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
 import BranchManagement from "../Pages/pagesbranch/BranchManagement";
@@ -48,6 +50,8 @@ const Router = () => {
           <Route path="/pricing" element={<Pricepage />} />
           <Route path="/singleBranch" element={<LoginForm />} />
           <Route path="/admin_landingpage" element={<AdminLandingPage />} />
+          <Route path="/orgform" element={<Orgform />} />
+          <Route path="/branch" element={<Branch />} />
 
           <Route path="/dashboard/*" element={<LayoutShell />}>
             <Route index element={<Navigate to="overview" />} />
