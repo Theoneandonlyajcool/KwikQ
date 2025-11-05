@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BranchOverviewContainer } from "./BranchOverviewstyled";
 import { MdStorefront } from "react-icons/md";
 import { HiUsers } from "react-icons/hi";
@@ -12,9 +12,44 @@ import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import { MdWarning } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const BranchOverview = () => {
   const nav = useNavigate();
+  const [allbranches_in_an_organization, setAllbranches_in_an_organization] = useState()
+  const orgId = localStorage.getItem("user_ID");
+  const token = localStorage.getItem("user_token");
+  const BaseUrl = import.meta.env.VITE_BaseUrl;
+
+
+  const allbranches_of_an_organization = async (status) => {
+    try {
+      //params hold values id and status
+      const params = {};
+      if (orgId) params.organizationId = orgId;
+      if (status) params.status = status;
+
+      const res = await axios.get(`${BaseUrl}/api/v1/management`, {
+        params,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log("data of all branches in an organization", res);
+      setAllbranches_in_an_organization(res); 
+      toast.success(res?.data?.message)
+    } catch (error) {
+      console.log("allbranches_in_an_organization", error)
+      toast.error(error?.response?.data?.message)
+    }
+  }
+
+
+  useEffect(()=> {
+    allbranches_of_an_organization() 
+  }, []);
+
   const [branches] = useState([
     {
       id: 1,
@@ -127,8 +162,22 @@ const BranchOverview = () => {
               </p>
             </div>
             <div className="status_badges">
-              <span className="status_badge active_badge">4 Active</span>
-              <span className="status_badge offline_badge">1 Offline</span>
+              {/* PRESERVED: added onClick to call backend with status */}
+              <span
+                className="status_badge active_badge"
+                onClick={() => allbranches_of_an_organization("active")}
+                style={{ cursor: "pointer" }}
+              >
+                4 Active
+              </span>
+
+              <span
+                className="status_badge offline_badge"
+                onClick={() => allbranches_of_an_organization("inactive")}
+                style={{ cursor: "pointer" }}
+              >
+                1 Offline
+              </span>
             </div>
           </div>
 

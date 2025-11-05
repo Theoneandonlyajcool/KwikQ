@@ -1,0 +1,107 @@
+.addcardtext{
+    width: 100%;
+    height: 7%;
+    /* background-color: blanchedalmond; */
+    font-family: inter;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.addcardtext>span{
+    width: 5%;
+    height: 100%;
+    /* background-color: aqua; */
+    font-size: 24px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.allinputcard{
+    width: 80%;
+    height: 80%;
+    /* background-color: bisque; */
+}
+
+.twoinput{
+    width: 100%;
+    height: 48%;
+    /* background-color: green; */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.threeinput{
+    width: 100%;
+    height: 50%;
+    /* background-color: powderblue; */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family: inter;
+}
+
+.figuerandname{
+    width: 100%;
+    height: 30%;
+    border-radius: 5px;
+    border: 1px solid #222222;
+    outline: none;
+    padding: 5px;
+}
+
+.savechangesmodel{
+    width: 100%;
+    height: 15%;
+    /* background-color: aliceblue; */
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.selectdiv{
+    width: 50%;
+    /* background-color: gold; */
+}
+
+.seleteandrest1{
+    width: 70%;
+    height: 100%;
+    border-radius: 5px;
+    border: 1px solid #222222;
+    outline: none;
+    padding: 5px;
+    margin-left: 3%;
+}
+
+.seleteandrest{
+    width: 50%;
+    height: 23%;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px;
+    border: 1px solid #222222;
+
+}
+
+.savechangesmodel > button{
+    width: 20%;
+    height: 80%;
+    border-radius: 7px;
+    background-color: #4A4ED1;
+    border: none;
+    outline: none;
+    font-family: inter;
+    color: #ffffff;
+    font-size: 16px;
+
+}
+
+.savechangesmodel > button:hover{
+    background-color: #ffffff;
+    color: #222222;
+    font-size: 17px;
+    border: 1px solid #222222;
+}

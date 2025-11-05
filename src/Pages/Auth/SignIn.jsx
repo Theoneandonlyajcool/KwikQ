@@ -81,6 +81,10 @@ const SignIn = () => {
         import.meta.env.VITE_USERTOKEN,
         JSON.stringify(res?.data?.token)
       );
+      localStorage.setItem(
+        import.meta.env.VITE_USERID,
+        JSON.stringify(res?.data?.data?.org)
+      );
       toast.success(res?.data?.message);
       setTimeout(() => {
         nav("/Sevenday_free");

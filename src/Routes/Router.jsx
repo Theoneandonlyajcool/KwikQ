@@ -18,12 +18,13 @@ import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
 // import BranchManagement from "../Pages/pagesbranch/BranchManagement";
 import Pricepage from "../Pages/PricingPage/PriceLandingPage";
 import AdminLandingPage from "../Pages/AdminLandingPage/AdminLandingPage";
-
+import VerifyForgetpassword from "../Pages/Auth/VerifyForgetpassword";
 import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
 import BranchManagement from "../Pages/pagesbranch/BranchManagement";
 import AdminDash from "../Pages/Admin/AdminDash";
 import GetStarted2 from "../Pages/Auth/GetStarted2";
 import LoginForm from "../Pages/Auth/SingleBranchLogin";
+import BranchSigninV from "../Pages/Auth/BranchSigninV";
 
 const Router = () => {
   return (
@@ -39,6 +40,8 @@ const Router = () => {
           <Route path="/forget_password" element={<ForgetPassword />} />
 
           <Route path="/businessCategory" element={<GetStarted />} />
+          <Route path="/Branch_SigninV" element={<BranchSigninV />} />
+          <Route path="/verification_forgetpassword" element={<VerifyForgetpassword />} />
 
           <Route path="/businessCategory2" element={<GetStarted2 />} />
           <Route path="/reset_password" element={<ResetPassword />} />
