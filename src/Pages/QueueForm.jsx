@@ -49,7 +49,7 @@ const QueueForm = () => {
               </div>
             </div>
 
-            <div className="form-grid">
+            <div className="form-content">
               <div className="form-group full-width">
                 <label className="form-label">
                   Full Name <span className="required">*</span>
@@ -58,28 +58,30 @@ const QueueForm = () => {
                   type="text"
                   className="form-input"
                   placeholder="Enter your full name"
+                  style={{ backgroundColor: "#e8e8eb" }}
                 />
-              </div>
-              <div className="optional-form">
                 <div className="form-group-opt">
                   <label className="form-label-opt">
-                    Phone Number <span className="required">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    className="form-input"
-                    placeholder="+234 XXX XXX XXXX"
-                  />
-                </div>
-
-                <div className="form-group-opt">
-                  <label className="form-label-opt">
-                    Email Address (Optional)
+                    Email Address <span className="required">*</span>
                   </label>
                   <input
                     type="email"
                     className="form-input"
                     placeholder="your-email@example.com"
+                    style={{ backgroundColor: "#e8e8eb" }}
+                  />
+                </div>
+              </div>
+              <div className="optional-form">
+                <div className="form-group-opt">
+                  <label className="form-label-opt">
+                    Phone Number (Optional)
+                  </label>
+                  <input
+                    type="tel"
+                    className="form-input"
+                    placeholder="+234 XXX XXX XXXX"
+                    style={{ backgroundColor: "#e8e8eb" }}
                   />
                 </div>
               </div>
@@ -117,6 +119,7 @@ const QueueForm = () => {
                 className="form-input form-textarea"
                 placeholder="Any specific details or requirements..."
                 rows="4"
+                style={{ backgroundColor: "#e8e8eb" }}
               />
             </div>
           </section>
