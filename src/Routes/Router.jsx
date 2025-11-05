@@ -1,5 +1,7 @@
 import React from "react";
 import { HashRouter, Navigate, Route, Routes } from "react-router-dom";
+
+// Pages
 import PageNotFound from "../Pages/PageNotFound";
 import Signup from "../Pages/Auth/Signup";
 import SignIn from "../Pages/Auth/SignIn";
@@ -31,21 +33,36 @@ import AdminDash from "../Pages/Admin/AdminDash";
 import GetStarted2 from "../Pages/Auth/GetStarted2";
 import LoginForm from "../Pages/Auth/SingleBranchLogin";
 
+// Hooks
+import { useState } from "react";
+import { Role } from "../Components/Context";
+
 const Router = () => {
+  const [OrgRole, SetOrgRole] = useState("");
+
   return (
     <div>
-      <HashRouter>
-        <Routes>
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="/" element={<Landing />} />
-          <Route path="/sign_up" element={<Signup />} />
-          <Route path="/sign_in" element={<SignIn />} />
-          <Route path="/category" element={<SignUpCategory />} />
-          <Route path="/verification" element={<VerifyEmail />} />
-          <Route path="/forget_password" element={<ForgetPassword />} />
+      <Role.Provider value={{ OrgRole, SetOrgRole }}>
+        <HashRouter>
+          <Routes>
+            <Route path="*" element={<PageNotFound />} />
+            <Route path="/" element={<Landing />} />
+            <Route path="/sign_up/" element={<Signup />} />
+            <Route path="/sign_in/" element={<SignIn />} />
+            <Route path="/category" element={<SignUpCategory />} />
+            <Route path="/verification" element={<VerifyEmail />} />
+            <Route path="/forget_password" element={<ForgetPassword />} />
 
-          <Route path="/businessCategory" element={<GetStarted />} />
+            <Route path="/businessCategory" element={<GetStarted />} />
 
+            <Route path="/businessCategory2" element={<GetStarted2 />} />
+            <Route path="/reset_password" element={<ResetPassword />} />
+            <Route path="/Sevenday_free" element={<Sevendayfree />} />
+            <Route path="/queue_form" element={<QueueForm />} />
+            <Route path="/queue_success" element={<QueueSuccess />} />
+            <Route path="/pricing" element={<Pricepage />} />
+            <Route path="/singleBranch" element={<LoginForm />} />
+            <Route path="/admin_landingpage" element={<AdminLandingPage />} />
           <Route path="/businessCategory2" element={<GetStarted2 />} />
           <Route path="/reset_password" element={<ResetPassword />} />
           <Route path="/Sevenday_free" element={<Sevendayfree />} />
@@ -62,17 +79,18 @@ const Router = () => {
           <Route path="/review" element={<Review />} />
           <Route path="/submitted" element={<Submitted />} />
 
-          <Route path="/dashboard/*" element={<LayoutShell />}>
-            <Route index element={<Navigate to="overview" />} />
-            <Route path="overview" element={<BranchOverview />} />
-            <Route path="analytics" element={<Analytics />} />
-            <Route path="branch-management" element={<BranchManagement />} />
-            <Route path="settings" element={<OrganizationSettings />} />
-          </Route>
+            <Route path="/dashboard/*" element={<LayoutShell />}>
+              <Route index element={<Navigate to="overview" />} />
+              <Route path="overview" element={<BranchOverview />} />
+              <Route path="analytics" element={<Analytics />} />
+              <Route path="branch-management" element={<BranchManagement />} />
+              <Route path="settings" element={<OrganizationSettings />} />
+            </Route>
 
-          <Route path="/admin_dashboard" element={<AdminDash />} />
-        </Routes>
-      </HashRouter>
+            <Route path="/admin_dashboard" element={<AdminDash />} />
+          </Routes>
+        </HashRouter>
+      </Role.Provider>
     </div>
   );
 };

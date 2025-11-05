@@ -8,8 +8,15 @@ import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useContext } from "react";
+import { Role } from "../../Components/Context";
 
 const SignIn = () => {
+  // const { role } = useParams();
+
+  // const whatUserRole = useContext(Role);
+  // console.log(`The user role is ${whatUserRole}`);
   const nav = useNavigate();
   const [loginput, setLoginput] = useState({
     email: "",
@@ -77,11 +84,14 @@ const SignIn = () => {
         headers: { "Content-Type": "application/json" },
       });
       console.log(res);
+      9;
       localStorage.setItem(
         import.meta.env.VITE_USERTOKEN,
         JSON.stringify(res?.data?.token)
       );
       toast.success(res?.data?.message);
+      console.log(res);
+      localStorage.setItem("User", res?.data?.token);
       setTimeout(() => {
         nav("/Sevenday_free");
       }, 2000);
