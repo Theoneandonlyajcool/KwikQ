@@ -10,6 +10,7 @@ import { useContext } from "react";
 const GetStarted = () => {
   // const { OrgRole } = useContext(Role);
   // console.log("User Role:", OrgRole);
+  const nav = useNavigate();
 
   return (
     <div className="onboarding">
@@ -27,7 +28,10 @@ const GetStarted = () => {
         <div className="bc-heading-child">
           <div className="image-cont">
             <img
-              style={{ width: "100%" }}
+              style={{ width: "100%", cursor: "pointer" }}
+              onClick={() => {
+                nav("/");
+              }}
               src="
             https://res.cloudinary.com/dp75oveuw/image/upload/v1760854502/Mask_group_wsdoqc.png"
               alt=""
@@ -81,7 +85,7 @@ const Card = ({ image, title, desc, role, ChangeRole }) => {
           nav(`/singleBranch/`);
           // alert("single");
         } else {
-          nav(`/sign_in/:`);
+          nav(`/sign_in/`);
           // alert("Sign in");
         }
       }}

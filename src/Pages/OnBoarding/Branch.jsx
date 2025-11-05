@@ -23,6 +23,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { MdLocalPhone, MdOutlineEmail } from "react-icons/md";
 import { useNavigate, Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
 
 const Branch = () => {
   const nav = useNavigate();
@@ -109,12 +110,46 @@ const Branch = () => {
     }
 
     toast.success("Form submitted successfully!");
-    nav("/review");
+    // nav("/review")/;
+  };
+
+  const BaseURL = import.meta.env.VITE_API_BASE_URL;
+  const token = localStorage.getItem("User");
+  const CreateBranch = async () => {
+    try {
+      const res = await axios.post(
+        `${BaseURL}/api/v1/create-branch`,
+        {
+          branchName: "NewBranch",
+          address: "12 Admiralty Way",
+          city: "Lagos",
+          state: "Lagos State",
+          serviceType: "Savings",
+          managerName: "John Doe",
+          managerEmail: "OTP@gmail.com",
+          managerPhone: "2348012345678",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      toast.error(error?.message);
+    }
   };
 
   return (
-    <BranchContainer onSubmit={handleSubmit}>
+    <BranchContainer
+      onSubmit={(e) => {
+        e.preventDefault();
+        CreateBranch();
+      }}
+    >
       <BoardingLogo>
+        <ToastContainer />
         <div className="back">
           <Link to="/organization_onboarding">
             <div className="circle">
