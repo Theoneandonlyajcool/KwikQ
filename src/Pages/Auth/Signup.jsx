@@ -9,12 +9,15 @@ import axios from "axios";
 const Signup = () => {
   const nav = useNavigate();
   const BaseUrl = import.meta.env.VITE_API_BASE_URL;
+  const OrgRole = localStorage.getItem("OrgRole");
+  console.log(OrgRole);
 
   const [inputValues, SetInputValues] = useState({
     businessName: "",
     // lastName: "",
     email: "",
     password: "",
+    role: OrgRole,
   });
 
   const [ErrorMsg, SetErrorMsg] = useState({
@@ -60,6 +63,9 @@ const Signup = () => {
 
     return Object.keys(newErrors).length === 0;
   };
+
+  // const formData = new FormData();
+  // formData.append();
 
   const CreateAcct = async () => {
     try {

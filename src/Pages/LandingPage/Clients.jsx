@@ -13,7 +13,7 @@ const Customers = () => {
       icon: <BsQuote />,
       text: "KwikQ has transformed our banking operations. and the queue moves in an orderly manner. Staff productivity has improved, and customer complaints about waiting",
       Image:
-        "https://i.postimg.cc/rFM3cLSz/97c5bbcb0cada2f75e7bc212c11d163f098e588a-1.jpg",
+        "https://i.postimg.cc/TPs3Kbrr/Whats-App-Image-2025-11-03-at-12-46-01-10832d33.jpg",
       role: "Operations Manager",
       branch: "Zenith Bank Ikeja Branch",
       rate: <IoIosStar />,
@@ -32,8 +32,7 @@ const Customers = () => {
       id: 3,
       icon: <BsQuote />,
       text: "Apart from reducing queues, KwikQ gives us data insights, how many customers we attend to daily, peak hours, and staff performance. These analytics help us plan better and allocate resources smartly. It's a valuable addition to our operations",
-      Image:
-        "https://i.postimg.cc/rFM3cLSz/97c5bbcb0cada2f75e7bc212c11d163f098e588a-1.jpg",
+      Image: "https://i.postimg.cc/VkdvB1zX/Lady.jpg",
       role: "Customer Experience Lead,",
       branch: "Polaris Bank",
       rate: <IoIosStar />,
@@ -43,7 +42,7 @@ const Customers = () => {
       icon: <BsQuote />,
       text: "KwikQ has helped us manage flow effectively, clients only arrive when it's their turn. Staff now have better control, and the waiting area is no longer crowded. It's improved our overall professionalism.",
       Image:
-        "https://i.postimg.cc/rFM3cLSz/97c5bbcb0cada2f75e7bc212c11d163f098e588a-1.jpg",
+        "https://i.postimg.cc/yYw4tzFR/Whats-App-Image-2025-11-03-at-12-46-01-f7353c45.jpg",
       role: "Service Coordinator,",
       branch: "Federal Inland Revenue Service",
       rate: <IoIosStar />,

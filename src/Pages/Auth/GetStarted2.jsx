@@ -33,11 +33,13 @@ const GetStarted2 = () => {
             image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783258/374da1b547a439fa5c2a4ee0f923a871458d0381_1_pfvxvt.png"
             title="Independent Organization"
             desc="A single, independent entity that operates from one main location or unit"
+            role={"individual"}
           />
           <Card
             image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783257/6deb3f53715c252d7279ab294c1fc5bf1b3e46d3_wjp2w1.jpg"
             title="Multi-Branch organization"
             desc=" A parent oranization that operates multiple physical or functional branches"
+            role={"multi"}
           />
           {/* <Card
             image="https://res.cloudinary.com/dp75oveuw/image/upload/v1761682523/Single_brnach_Image_ehl9lb.png"
@@ -50,10 +52,17 @@ const GetStarted2 = () => {
   );
 };
 
-const Card = ({ image, title, desc }) => {
+const Card = ({ image, title, desc, role }) => {
   const nav = useNavigate();
   return (
-    <div className="card" onClick={() => nav("/sign_up")}>
+    <div
+      className="card"
+      onClick={() => {
+        localStorage.setItem("OrgRole", role);
+
+        nav("/sign_up");
+      }}
+    >
       <div className="Card_description">
         <h1 className="card-title">{title}</h1>
         <p className="card-desc">{desc}</p>

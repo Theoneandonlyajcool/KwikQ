@@ -36,11 +36,20 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const FreeTrialPage = () => {
+  const navigationRole =
+    localStorage.getItem("OrgRole") || localStorage.getItem("UserRole");
+
+  console.log(navigationRole);
+
   const nav = useNavigate();
   const handleContinueTrial = () => {
     console.log("Starting free trial...");
-    nav("/admin_dashboard");
-    // Add your trial start logic here
+
+    if (navigationRole == "multi") {
+      nav("/organization_onboarding");
+    } else {
+      nav("/admin_dashboard");
+    }
   };
 
   const handleViewPlans = () => {
@@ -113,8 +122,8 @@ const FreeTrialPage = () => {
           <ButtonGroup>
             <PrimaryButton
               onClick={() => {
-                handleContinueTrial;
-                nav("/admin_dashboard");
+                handleContinueTrial();
+                // nav("/admin_dashboard");
               }}
             >
               Continue with Free Trial
@@ -123,7 +132,7 @@ const FreeTrialPage = () => {
             <SecondaryButton
               onClick={() => {
                 handleViewPlans;
-                nav("/pricing");
+                nav("/admin_landingpage");
               }}
             >
               View Upgrade Plans
