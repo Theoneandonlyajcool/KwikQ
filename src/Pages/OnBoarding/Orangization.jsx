@@ -19,13 +19,14 @@ import { GoPerson } from "react-icons/go";
 import { MdLocalPhone } from "react-icons/md";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Orangization = () => {
   const nav = useNavigate();
 
   const [formData, setFormData] = React.useState({
-    industry: "",
     address: "",
+    industry: "",
     city: "",
     state: "",
 
@@ -94,8 +95,45 @@ const Orangization = () => {
     }
   };
 
+  const BaseURl = import.meta.env.VITE_API_BASE_URL;
+  const ID = sessionStorage.getItem("user-recog");
+  const token = localStorage.getItem("User");
+  console.log(token);
+  console.log(ID);
+
+  const CreateBranch = async () => {
+    try {
+      const res = await axios.patch(
+        `https://kwikq-1.onrender.com/api/v1/organizations/${ID}`,
+        {
+          industryServiceType: formData.industry,
+          headOfficeAddress: formData.address,
+          city: formData.city,
+          state: formData.state,
+          fullName: formData.primaryContact.fullName,
+          phoneNumber: formData.primaryContact.phone,
+          email: formData.primaryContact.email,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toast.success(res?.data?.message);
+      setTimeout(() => {
+        nav("/branch_onboarding");
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <OrangizationContainer>
+      <ToastContainer />
       <BoardingLogo>
         <div className="back">
           <div className="circle">
@@ -136,7 +174,13 @@ const Orangization = () => {
           <p style={{ width: "150px" }}>Review & Confirm </p>
         </div>
       </BoardingTop>
-      <OnboardingHolder onSubmit={handleSubmit}>
+      <OnboardingHolder
+        onSubmit={(e) => {
+          e.preventDefault();
+          // handleSubmit()
+          CreateBranch();
+        }}
+      >
         <TextSection>
           <div className="Orgn">
             <h4>

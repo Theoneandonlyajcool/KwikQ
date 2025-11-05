@@ -33,13 +33,13 @@ const SignIn = () => {
 
   const BaseUrl = import.meta.env.VITE_BaseUrl;
 
-  useEffect(() => {
-    let t;
-    if (isLoading) {
-      t = setTimeout(() => setIsLoading(false), 2000); // 6000 ms = 6s
-    }
-    return () => clearTimeout(t);
-  }, [isLoading]);
+  // useEffect(() => {
+  //   let t;
+  //   if (isLoading) {
+  //     t = setTimeout(() => setIsLoading(false), 2000); // 6000 ms = 6s
+  //   }
+  //   return () => clearTimeout(t);
+  // }, [isLoading]);
 
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
@@ -83,15 +83,15 @@ const SignIn = () => {
       const res = await axios.post(`${BaseUrl}/api/v1/login`, loginput, {
         headers: { "Content-Type": "application/json" },
       });
-      console.log(res);
-      9;
       localStorage.setItem(
         import.meta.env.VITE_USERTOKEN,
         JSON.stringify(res?.data?.token)
       );
       toast.success(res?.data?.message);
-      console.log(res);
       localStorage.setItem("User", res?.data?.token);
+      sessionStorage.setItem("user-recog", res?.data?.data?.org);
+      // console.log(res?.data?.data?.org);
+      setIsLoading(false);
       setTimeout(() => {
         nav("/Sevenday_free");
       }, 2000);
@@ -205,58 +205,12 @@ const SignIn = () => {
               </div> */}
 
               <button type="submit" className="btn" disabled={isLoading}>
-                {isLoading ? (
-                  <div
-                    style={{
-                      position: "fixed",
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      background: "rgba(0, 0, 0, 0.5)",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      zIndex: 9999,
-                      backdropFilter: "blur(3px)",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "35%",
-                        height: "40%",
-                        background: "white",
-                        borderRadius: "17px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        border: "red",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: "60px",
-                          height: "60px",
-                          border: "4px solid #f3f3f3",
-                          borderTop: "4px solid #1466FF",
-                          borderRadius: "50%",
-                          animation: "spin 0.8s linear infinite",
-                          background: "white",
-                        }}
-                      />
-                      <style>
-                        {`
-                      @keyframes spin {
-                        0% { transform: rotate(0deg); }
-                        100% { transform: rotate(360deg); }
-                      }
-                    `}
-                      </style>
-                    </div>
-                  </div>
+                {/* {isLoading ? (
+
                 ) : (
                   "Sign in"
-                )}
+                )} */}
+                sign in
               </button>
               <div className="linksignup">
                 <span>Don’t have an account?</span>{" "}
@@ -267,6 +221,58 @@ const SignIn = () => {
             </form>
           </div>
         </div>
+
+        {isLoading && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              background: "rgba(0, 0, 0, 0.5)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 9999,
+              backdropFilter: "blur(3px)",
+            }}
+          >
+            <div
+              style={{
+                width: "35%",
+                height: "40%",
+                background: "white",
+                borderRadius: "17px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "red",
+              }}
+            >
+              <div
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  border: "4px solid #f3f3f3",
+                  borderTop: "4px solid #1466FF",
+                  borderRadius: "50%",
+                  animation: "spin 0.8s linear infinite",
+                  background: "white",
+                }}
+              />
+              <style>
+                {`
+                      @keyframes spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                      }
+                    `}
+              </style>
+            </div>
+          </div>
+        )}
+
         <div className="imagelogin">
           <div className="holdimageandtext">
             <div className="imageholder">
@@ -283,6 +289,7 @@ const SignIn = () => {
           </div>
         </div>
       </section>
+
       <ToastContainer />
     </Loginbackground>
     // </div>
