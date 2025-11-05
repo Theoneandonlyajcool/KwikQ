@@ -8,7 +8,6 @@ export const BranchContainer = styled.form`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
 
   @media (max-width: 480px) {
     height: auto;
@@ -54,11 +53,12 @@ export const BoardingLogo = styled.div`
   }
 
   .logo {
-    width: 180px;
-    height: 40px;
-    justify-content: center;
+    width: 200px;
+    height: 70px;
     display: flex;
     flex-direction: column;
+    margin-left: -20px;
+    border: 1.25px solid transparent;
 
     img {
       width: 100%;
@@ -67,7 +67,6 @@ export const BoardingLogo = styled.div`
     }
 
     p {
-      color: red;
       margin-left: 34px;
       color: #6a7282;
       font-variant: 16px;
@@ -120,7 +119,7 @@ export const BoardingTop = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 120px;
+    width: 200px;
     gap: 8px;
     text-align: center;
   }
@@ -141,10 +140,6 @@ export const BoardingTop = styled.div`
     line-height: 150%;
     font-size: 16px;
     font-weight: 400;
-  }
-  hr {
-    width: 120px;
-    color: #e5e7eb;
   }
 
   @media (max-width: 480px) {
@@ -211,27 +206,7 @@ export const TopText = styled.div`
   .Branch {
     width: 50%;
     min-height: 55px;
-  }
-
-  .Add {
-    width: 50%;
-    min-height: 55px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-
-    button {
-      width: 132px;
-      height: 36px;
-      border-radius: 20px;
-      background-color: #ffffff;
-      border: 1.25px solid #747cff;
-      justify-content: center;
-      align-items: center;
-      display: flex;
-      gap: 10px;
-      cursor: pointer;
-    }
+    background-color: gray;
   }
 
   @media (max-width: 480px) {
@@ -243,12 +218,6 @@ export const TopText = styled.div`
     .Branch {
       width: 100%;
       min-height: auto;
-    }
-
-    .Add {
-      width: 100%;
-      min-height: auto;
-      justify-content: flex-start;
     }
 
     p {

@@ -17,6 +17,9 @@ import NotificationsPage from "../Admin/Pages/Notifications/Notifications";
 const AdminDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("analytics");
 
+  const OrgDetials = JSON.parse(localStorage.getItem("OrgInfo"));
+  console.log(OrgDetials);
+
   // Hide scrollbar CSS
   React.useEffect(() => {
     const style = document.createElement("style");
@@ -94,10 +97,10 @@ const AdminDashboard = () => {
 
         <div style={styles.sidebarFooter}>
           <div style={styles.userProfile}>
-            <div style={styles.userAvatar}>AU</div>
+            <div style={styles.userAvatar}>{OrgDetials.businessName[0]}</div>
             <div>
-              <p style={styles.userName}>Admin User</p>
-              <p style={styles.userEmail}>Bank-admin@gmail.com</p>
+              <p style={styles.userName}>{OrgDetials.businessName}</p>
+              <p style={styles.userEmail}>{OrgDetials.email}</p>
             </div>
           </div>
           <button style={styles.logoutBtn}>

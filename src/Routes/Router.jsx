@@ -20,6 +20,12 @@ import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
 // import BranchManagement from "../Pages/pagesbranch/BranchManagement";
 import Pricepage from "../Pages/PricingPage/PriceLandingPage";
 import AdminLandingPage from "../Pages/AdminLandingPage/AdminLandingPage";
+import Orgform from "../Pages/ApiOrgform/ApiOrgform";
+import Branch from "../Pages/ApiBranchform/ApiBranch";
+import Organization from "../Pages/OnBoarding/Orangization";
+import BranchOnboarding from "../Pages/OnBoarding/Branch";
+import Review from "../Pages/OnBoarding/Review";
+import Submitted from "../Pages/OnBoarding/Submitted";
 
 import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
 import BranchManagement from "../Pages/pagesbranch/BranchManagement";
@@ -57,6 +63,21 @@ const Router = () => {
             <Route path="/pricing" element={<Pricepage />} />
             <Route path="/singleBranch" element={<LoginForm />} />
             <Route path="/admin_landingpage" element={<AdminLandingPage />} />
+          <Route path="/businessCategory2" element={<GetStarted2 />} />
+          <Route path="/reset_password" element={<ResetPassword />} />
+          <Route path="/Sevenday_free" element={<Sevendayfree />} />
+          <Route path="/queue_form" element={<QueueForm />} />
+          {/* <Route path="/queue_success" element={<QueueSuccess />} /> */}
+          <Route path="/pricing" element={<Pricepage />} />
+          <Route path="/singleBranch" element={<LoginForm />} />
+          <Route path="/admin_landingpage" element={<AdminLandingPage />} />
+          <Route path="/orgform" element={<Orgform />} />
+          <Route path="/branch" element={<Branch />} />
+
+          <Route path="/organization_onboarding" element={<Organization />} />
+          <Route path="/branch_onboarding" element={<BranchOnboarding />} />
+          <Route path="/review" element={<Review />} />
+          <Route path="/submitted" element={<Submitted />} />
 
             <Route path="/dashboard/*" element={<LayoutShell />}>
               <Route index element={<Navigate to="overview" />} />

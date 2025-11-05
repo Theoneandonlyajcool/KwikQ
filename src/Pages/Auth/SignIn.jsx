@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Loginbackground } from "./SignInStyle";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
@@ -33,6 +33,14 @@ const SignIn = () => {
 
   const BaseUrl = import.meta.env.VITE_BaseUrl;
 
+  useEffect(() => {
+    let t;
+    if (isLoading) {
+      t = setTimeout(() => setIsLoading(false), 2000); // 6000 ms = 6s
+    }
+    return () => clearTimeout(t);
+  }, [isLoading]);
+
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
     setLoginput((prev) => ({ ...prev, [name]: value }));
@@ -51,7 +59,8 @@ const SignIn = () => {
     if (
       !loginput.email.trim() ||
       !loginput.email.includes("@") ||
-      !loginput.email.includes(".com")
+      !loginput.email.includes(".") ||
+      !loginput.email.includes("com")
     ) {
       toast.error("Invalid email formart");
       newErr.email = "This field is required";
@@ -68,6 +77,7 @@ const SignIn = () => {
   const handlesubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
+    setIsLoading(true);
 
     try {
       const res = await axios.post(`${BaseUrl}/api/v1/login`, loginput, {
@@ -75,6 +85,10 @@ const SignIn = () => {
       });
       console.log(res);
       9;
+      localStorage.setItem(
+        import.meta.env.VITE_USERTOKEN,
+        JSON.stringify(res?.data?.token)
+      );
       toast.success(res?.data?.message);
       console.log(res);
       localStorage.setItem("User", res?.data?.token);
