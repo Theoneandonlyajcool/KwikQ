@@ -115,19 +115,21 @@ const Branch = () => {
 
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const token = localStorage.getItem("User");
+  const [LoadingState, SetLoadingState] = useState(false);
   const CreateBranch = async () => {
     try {
+      SetLoadingState(true);
       const res = await axios.post(
         `${BaseURL}/api/v1/create-branch`,
         {
-          branchName: "NewBranch",
-          address: "12 Admiralty Way",
-          city: "Lagos",
-          state: "Lagos State",
-          serviceType: "Savings",
-          managerName: "John Doe",
-          managerEmail: "OTP@gmail.com",
-          managerPhone: "2348012345678",
+          branchName: branchformData.branchName,
+          address: branchformData.address,
+          city: branchformData.city,
+          state: branchformData.state,
+          serviceType: branchformData.serviceType,
+          managerName: branchformData.managerName,
+          managerEmail: branchformData.managerEmail,
+          managerPhone: branchformData.managerPhone,
         },
         {
           headers: {
@@ -136,6 +138,12 @@ const Branch = () => {
           },
         }
       );
+
+      toast.success(res?.data?.message);
+      SetLoadingState(false);
+      setTimeout(() => {
+        nav("/admin_dashboard");
+      }, 2000);
     } catch (error) {
       toast.error(error?.message);
     }

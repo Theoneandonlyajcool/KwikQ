@@ -15,7 +15,7 @@ import QueueHistory from "../Admin/Pages/History/History";
 import NotificationsPage from "../Admin/Pages/Notifications/Notifications";
 
 const AdminDashboard = () => {
-  const [activeMenu, setActiveMenu] = useState("analytics");
+  const [activeMenu, setActiveMenu] = useState("dashboard");
 
   const OrgDetials = JSON.parse(localStorage.getItem("OrgInfo"));
   console.log(OrgDetials);
@@ -97,10 +97,10 @@ const AdminDashboard = () => {
 
         <div style={styles.sidebarFooter}>
           <div style={styles.userProfile}>
-            <div style={styles.userAvatar}>{OrgDetials.businessName[0]}</div>
+            <div style={styles.userAvatar}>AU</div>
             <div>
-              <p style={styles.userName}>{OrgDetials.businessName}</p>
-              <p style={styles.userEmail}>{OrgDetials.email}</p>
+              <p style={styles.userName}>buisness name</p>
+              <p style={styles.userEmail}>email@gmail.com</p>
             </div>
           </div>
           <button style={styles.logoutBtn}>

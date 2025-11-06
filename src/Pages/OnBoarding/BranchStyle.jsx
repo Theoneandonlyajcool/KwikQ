@@ -279,11 +279,11 @@ export const TopText = styled.div`
 
 export const FirstSection = styled.div`
   width: 74%;
-  height: 467px;
+  height: 487px;
   border-radius: 14px;
   border: 1.25px solid #e8e8eb;
   display: flex;
-  gap: 20px;
+  gap: 5px;
   padding: 20px;
   flex-direction: column;
 
@@ -545,7 +545,9 @@ export const LastSection = styled.div`
 
 export const Bottomholder = styled.div`
   width: 74%;
-  min-height: 10vh;
+  /* border: 2px solid red; */
+  /* background-color: green; */
+  min-height: 5vh;
   display: flex;
   justify-content: center;
   align-items: center;
