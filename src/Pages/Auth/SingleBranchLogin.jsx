@@ -109,18 +109,19 @@ const LoginForm = () => {
             {LoadingState ? "loading....." : "sign in"}
           </button>
 
-          <div className="help-links">
-            <span className="help-text">Don't have an access code?</span>{" "}
-            <a href="#" className="help-link">
-              Contact your organization
-            </a>
-          </div>
-        </form>
+            <button type="submit" className="submit-button">
+              Sign in
+            </button>
 
-        <div className="back-link-container">
-          <a href="#" className="back-link">
-            Back to Selection
-          </a>
+            <div className="help-links">
+              <span className="help-text">Don't have an access code?</span>{" "}
+              <a href="#" className="help-link">
+                Contact your organization
+              </a>
+            </div>
+          </form>
+
+          <div className="back-link-container">Back to Selection</div>
         </div>
       </div>
     </div>
