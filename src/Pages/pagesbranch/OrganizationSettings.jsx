@@ -403,10 +403,10 @@ const OrganizationSettings = () => {
                   alignContent: "center",
                 }}
               >
-                <div style={{width: "90%", height: "100%", backgroundColor: "#ffffff", borderRadius: "5px", padding: "10px" }}>
+                <div style={{width: "90%", height: "100%", backgroundColor: "#19223058", borderRadius: "5px", padding: "10px" }}>
                   <div className="addcardtext">
                     <h3>Add Card Details</h3>
-                    <span onClick={() => setModel(false)}><IoMdClose /></span>
+                    <span onClick={() => setModel(false)}><IoMdClose  style={{ color: "red", border: "none"}}/></span>
                   </div>
                   <div className="allinputcard">
                     <div className="twoinput">

@@ -18,8 +18,10 @@ import { toast } from "react-toastify";
 const BranchOverview = () => {
   const nav = useNavigate();
   const [allbranches_in_an_organization, setAllbranches_in_an_organization] = useState()
-  const orgId = localStorage.getItem("user_ID");
-  const token = localStorage.getItem("user_token");
+  // const orgId = localStorage.getItem("user_ID");
+  // const token = localStorage.getItem("user_token");
+  const orgId = "690b0e31fb10a455e31d1dc5"
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGIwZTMxZmIxMGE0NTVlMzFkMWRjNSIsImVtYWlsIjoiaG92ZXJleHNAZ21haWwuY29tIiwicm9sZSI6Im11bHRpIiwiaWF0IjoxNzYyMzgyOTQwLCJleHAiOjE3NjI2NDIxNDB9.LB_b9bFMiH-awfFQAOBoXOM2cIpDnbv8G2L8A0CwDJQ"
   const BaseUrl = import.meta.env.VITE_BaseUrl;
 
 
