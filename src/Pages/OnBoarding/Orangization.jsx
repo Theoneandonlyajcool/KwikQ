@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   OrangizationContainer,
   BoardingLogo,
@@ -100,9 +100,11 @@ const Orangization = () => {
   const token = localStorage.getItem("User");
   console.log(token);
   console.log(ID);
+  const [LoadingState, SetLoadingState] = useState(false);
 
   const CreateBranch = async () => {
     try {
+      SetLoadingState(true);
       const res = await axios.patch(
         `https://kwikq-1.onrender.com/api/v1/organizations/${ID}`,
         {
@@ -123,11 +125,14 @@ const Orangization = () => {
       );
 
       toast.success(res?.data?.message);
+      SetLoadingState(false);
       setTimeout(() => {
         nav("/branch_onboarding");
       }, 2000);
     } catch (error) {
+      SetLoadingState(false);
       console.log(error);
+      toast.error(error?.message);
     }
   };
 
@@ -292,7 +297,14 @@ const Orangization = () => {
           </div>
         </TextSection>
         <Bottomholder>
-          <button type="submit">
+          <button
+            type="submit"
+            disabled={LoadingState}
+            style={{
+              backgroundColor: `${LoadingState ? "gray" : "blue"}`,
+              cursor: `${LoadingState ? "disabled" : "pointer"}`,
+            }}
+          >
             Preview and confirm <FaArrowRightLong />
           </button>
         </Bottomholder>

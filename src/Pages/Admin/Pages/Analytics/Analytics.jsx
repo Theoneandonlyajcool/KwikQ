@@ -1,6 +1,9 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
+import "./Analytics.css";
+// import { Skeleton } from "@mui/material";
+// import Stack from "@mui/material";
 import {
   BarChart,
   Bar,
@@ -61,159 +64,36 @@ const AnalyticsDashboard = () => {
     { name: "Emergency 15%", value: 15, color: "#A3E635" },
   ];
 
+  const ID = "671f72d8c9b9d32f0a1a4e5b";
+  const token = localStorage.getItem("User");
+
+  const [AnalyticsData, SetAnalyticsData] = useState({});
+  const BaseURL = import.meta.env.VITE_API_BASE_URL;
+  const GetAnalytics = async () => {
+    try {
+      const res = await axios.get(
+        `https://kwikq-1.onrender.com/api/v1/analytics/671f72d8c9b9d32f0a1a4e5b?startDate=2025-10-11&endDate=2025-10-11
+`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}"`,
+          },
+        }
+      );
+      console.log(res?.data);
+      toast.success(res?.data?.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.error);
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    GetAnalytics();
+  }, []);
+
   return (
     <>
-      <style>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-
-        body {
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-          background-color: #F9FAFB;
-        }
-
-        .dashboard-container {
-          max-width: 1400px;
-          margin: 0 auto;
-          padding: 24px;
-          background-color: #F9FAFB;
-        }
-
-        .header {
-          margin-bottom: 32px;
-        }
-
-        .header-top {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 8px;
-        }
-
-        .header-title {
-          font-size: 32px;
-          font-weight: 600;
-          color: #111827;
-        }
-
-        .header-date {
-          font-size: 14px;
-          color: #6B7280;
-        }
-
-        .header-subtitle {
-          font-size: 20px;
-          font-weight: 500;
-          color: #111827;
-          margin-bottom: 4px;
-        }
-
-        .header-description {
-          font-size: 14px;
-          color: #6B7280;
-        }
-
-        .stats-row {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 20px;
-          margin-bottom: 20px;
-        }
-
-        .stat-card {
-          background: white;
-          border-radius: 12px;
-          padding: 24px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-label {
-          font-size: 14px;
-          color: #6B7280;
-          margin-bottom: 8px;
-        }
-
-        .stat-value {
-          font-size: 36px;
-          font-weight: 600;
-          color: #111827;
-          margin-bottom: 8px;
-        }
-
-        .stat-change {
-          font-size: 12px;
-          color: #6B7280;
-          display: flex;
-          align-items: center;
-          gap: 4px;
-        }
-
-        .stat-change.positive {
-          color: #10B981;
-        }
-
-        .stat-change.negative {
-          color: #EF4444;
-        }
-
-        .charts-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 20px;
-        }
-
-        .chart-card {
-          background: white;
-          border-radius: 12px;
-          padding: 24px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .chart-title {
-          font-size: 16px;
-          font-weight: 500;
-          color: #111827;
-          margin-bottom: 20px;
-        }
-
-        .chart-container {
-          width: 100%;
-          height: 280px;
-        }
-
-        .legend-container {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 16px;
-          margin-top: 16px;
-          justify-content: center;
-        }
-
-        .legend-item {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 13px;
-          color: #6B7280;
-        }
-
-        .legend-dot {
-          width: 12px;
-          height: 12px;
-          border-radius: 50%;
-        }
-
-        @media (max-width: 768px) {
-          .stats-row,
-          .charts-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-      `}</style>
-
       <div className="dashboard-container">
         <ToastContainer />
         <div className="header">
