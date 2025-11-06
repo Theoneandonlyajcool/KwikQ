@@ -17,7 +17,6 @@ import QueueSuccess from "../Pages/QueueSuccess";
 import LayoutShell from "../Pages/branchdashboard/LayoutShell";
 import BranchOverview from "../Pages/pagesbranch/BranchOverview";
 import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
-// import BranchManagement from "../Pages/pagesbranch/BranchManagement";
 import Pricepage from "../Pages/PricingPage/PriceLandingPage";
 import AdminLandingPage from "../Pages/AdminLandingPage/AdminLandingPage";
 import Orgform from "../Pages/ApiOrgform/ApiOrgform";
