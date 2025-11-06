@@ -66,10 +66,42 @@ const QueueForm = () => {
 
   const QueueValidation = () => {};
 
+  const Formtoken = localStorage.getItem("User");
+  console.log(Formtoken);
+
+  const Orgid = sessionStorage.getItem("user-recog");
+  console.log(Orgid);
+
+  const Branchid = "690b69abeb798f2d5d3711c2";
+  console.log(Branchid);
+
   const JoinQueue = async () => {
     try {
-      const res = await axios.post(`${BaseURl}/api/v1/customer`, inputValues);
+      const res = await axios.post(
+        `${BaseURl}/api/v1/customer`,
+        {
+          organization: Orgid,
+          branch: Branchid,
+          formDetails: {
+            fullName: "string",
+            email: "string",
+            phone: "string",
+            serviceNeeded: "string",
+            additionalInfo: "Unknown Type: String",
+            elderlyStatus: true,
+            pregnantStatus: true,
+            emergencyLevel: true,
+          },
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${Formtoken}`,
+          },
+        }
+      );
       console.log(res?.data);
+      toast.success(res?.data?.message);
     } catch (error) {
       console.log(error);
     }
