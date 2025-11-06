@@ -517,7 +517,7 @@ const Text = styled.div`
 
 const DesignHolder = styled.div`
   width: 100%;
-  min-height: 15vh;
+  min-height: 20vh;
   display: flex;
   background-image: url(https://i.postimg.cc/bJNFLbND/mm-1-1.png);
   background-size: cover;

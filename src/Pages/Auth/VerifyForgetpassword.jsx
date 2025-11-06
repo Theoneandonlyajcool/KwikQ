@@ -57,8 +57,8 @@ const VerifyForgetpassword = ({ length = 6 }) => {
       SetBtnLoadingState(false);
       setOtp("");
       setTimeout(() => {
+        nav("/reset_password");
       }, 2000);
-      nav("/reset_password");
     } catch (error) {
       console.log(error);
       SetBtnLoadingState(false);

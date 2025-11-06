@@ -1,4 +1,6 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import {
   BarChart,
   Bar,
@@ -21,11 +23,11 @@ const AnalyticsDashboard = () => {
     { month: "Feb", value: 62 },
     { month: "Mar", value: 78 },
     { month: "Apr", value: 95 },
-    { month: "May", value: 110 },
+    { month: "May", value: 1100 },
     { month: "Jun", value: 88 },
     { month: "Jul", value: 102 },
     { month: "Aug", value: 95 },
-    { month: "Sep", value: 115 },
+    { month: "Sep", value: 25 },
     { month: "Oct", value: 88 },
   ];
 
@@ -213,6 +215,7 @@ const AnalyticsDashboard = () => {
       `}</style>
 
       <div className="dashboard-container">
+        <ToastContainer />
         <div className="header">
           <div className="header-top">
             <h1 className="header-title">Analytics</h1>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Clock,
   CheckCircle,
@@ -10,8 +10,35 @@ import {
 
 import { SlWallet } from "react-icons/sl";
 import QueueCard from "./DashCard";
+import axios from "axios";
+import { toast } from "react-toastify";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 
 export default function Dashboard() {
+  const BaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+  const [CardData, SetCardData] = useState({});
+  const [LoadingState, SetLoadingState] = useState(false);
+  console.log(CardData);
+
+  const GetMetricsCardData = async () => {
+    try {
+      SetLoadingState(true);
+      const res = await axios.get(`${BaseUrl}/api/v1/dashboard`);
+      // console.log(res?.data?.data);
+      SetCardData(res?.data?.data);
+      // console.log(CardData);
+      SetLoadingState(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    GetMetricsCardData();
+  }, []);
+
   const [activeQuota, setActiveQuota] = useState(null);
 
   const quotas = [
@@ -136,28 +163,65 @@ export default function Dashboard() {
           <h2 style={styles.statValue}>247</h2>
           <span style={{ ...styles.statChange, color: "#10b981" }}>+24%</span>
         </div> */}
-        <QueueCard
-          cardValue={"32"}
-          cardColor={"blue"}
-          cardBgColor={"aqua"}
-          iconName={"LuUsersRound"}
-        />
-        <QueueCard
-          cardValue={"12 min"}
-          cardColor={"purple"}
-          cardBgColor={"purple"}
-          iconName={"FaRegClock"}
-        />
-        <QueueCard
-          cardValue={"247"}
-          cardColor={"green"}
-          cardBgColor={"green"}
-          iconName={"AiOutlineCheckCircle"}
-        />
+
+        {LoadingState ? (
+          // Loading State of the cards
+          <>
+            <Stack spacing={1}>
+              {/* For variant="text", adjust the height via font-size */}
+              <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+              {/* For other variants, adjust the size with `width` and `height` */}
+              {/* <Skeleton variant="circular" width={40} height={40} /> */}
+              <Skeleton variant="rectangular" width={310} height={60} />
+              <Skeleton variant="rounded" width={310} height={60} />
+            </Stack>
+
+            <Stack spacing={1}>
+              {/* For variant="text", adjust the height via font-size */}
+              <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+              {/* For other variants, adjust the size with `width` and `height` */}
+              {/* <Skeleton variant="circular" width={40} height={40} /> */}
+              <Skeleton variant="rectangular" width={310} height={60} />
+              <Skeleton variant="rounded" width={310} height={60} />
+            </Stack>
+
+            <Stack spacing={1}>
+              {/* For variant="text", adjust the height via font-size */}
+              <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+              {/* For other variants, adjust the size with `width` and `height` */}
+              {/* <Skeleton variant="circular" width={40} height={40} /> */}
+              <Skeleton variant="rectangular" width={310} height={60} />
+              <Skeleton variant="rounded" width={310} height={60} />
+            </Stack>
+          </>
+        ) : (
+          <>
+            <QueueCard
+              cardValue={"32"}
+              Data={""}
+              cardColor={"blue"}
+              cardBgColor={"aqua"}
+              iconName={"LuUsersRound"}
+            />
+
+            <QueueCard
+              cardValue={"12 min"}
+              cardColor={"purple"}
+              cardBgColor={"purple"}
+              iconName={"FaRegClock"}
+            />
+            <QueueCard
+              cardValue={"247"}
+              cardColor={"green"}
+              cardBgColor={"green"}
+              iconName={"AiOutlineCheckCircle"}
+            />
+          </>
+        )}
       </div>
 
       <div style={styles.contentGrid}>
-        <div style={styles.section}>
+        <div style={styles.section1}>
           <div style={styles.sectionHeader}>
             <h3 style={styles.sectionTitle}>Quota Points Status</h3>
             <span style={styles.viewLink}>View</span>
@@ -209,6 +273,7 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Recent Activity */}
         <div style={styles.section}>
           <div style={styles.sectionHeader}>
             <h3 style={styles.sectionTitle}>Recent Activity</h3>
@@ -398,11 +463,13 @@ const styles = {
     gap: "2rem",
     marginBottom: "2rem",
   },
-  section: {
+  section1: {
     background: "white",
     padding: "1.5rem",
     borderRadius: "12px",
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
+    border: "2px solid red",
+    width: "100%",
   },
 
   QrSection: {

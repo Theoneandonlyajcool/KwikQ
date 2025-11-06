@@ -443,7 +443,7 @@ const QueueHistory = () => {
         </select>
       </div>
 
-      <div className="table-container">
+      {/* <div className="table-container">
         <table className="queue-table">
           <thead>
             <tr>
@@ -490,7 +490,7 @@ const QueueHistory = () => {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -18,16 +18,20 @@ import {
 import { GrNotes } from "react-icons/gr";
 import { FiUsers } from "react-icons/fi";
 import { TbSend } from "react-icons/tb";
+import { Link, useNavigate } from "react-router-dom";
 
 const Preview = () => {
+  const navigate = useNavigate();
   return (
     <PreviewContainer>
       <BoardingLogo>
-        <div className="back">
-          <div className="circle">
-            <IoIosArrowRoundBack />
+        <Link to="/branch_onboarding">
+          <div className="back">
+            <div className="circle">
+              <IoIosArrowRoundBack />
+            </div>
           </div>
-        </div>
+        </Link>
         <div className="logo">
           <img
             src="https://i.postimg.cc/hvw7KVFS/35379ce965af990a259b5b98b745a14f6d61bddc-1.png"
@@ -146,7 +150,7 @@ const Preview = () => {
         <p>• Setup takes approximately 24-48 hours for review and activation</p>
       </NoticeSection>
       <Bottomholder>
-        <button>
+        <button onClick={() => navigate("/submitted")}>
           Submit Onboarding <TbSend />
         </button>
       </Bottomholder>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-// import QueueCard from "./QueueCard";
-// import "./QueueManagement.css";
+import QueueCard from "./QueueCard";
+import "./QueueManagement.css";
 import { TbLayersSubtract } from "react-icons/tb";
 import { MdLayers } from "react-icons/md";
 import Skeleton from "react-loading-skeleton";
@@ -15,36 +15,36 @@ const QueueManagement = () => {
   // }
 
   const [queues, setQueues] = useState([
-    {
-      id: 1,
-      name: "T-001",
-      customer: "P. Johnson, 24/7/2025",
-      service: "Service: Account Opening",
-      added: "10:30 AM",
-      wait: "12 mins",
-      phone: "+234 802 243 7878",
-      active: true,
-    },
-    {
-      id: 2,
-      name: "T-002",
-      customer: "M. Lee",
-      service: "Service: Account Opening",
-      added: "10:45 AM",
-      wait: "1 hr",
-      phone: "+234 456 421 8841",
-      active: false,
-    },
-    {
-      id: 3,
-      name: "T-003",
-      customer: "S. Chen Reeves",
-      service: "Service: Account Opening",
-      added: "11:04 AM",
-      wait: "1 min",
-      phone: "+234 456 421 8841",
-      active: false,
-    },
+    // {
+    //   id: 1,
+    //   name: "T-001",
+    //   customer: "P. Johnson, 24/7/2025",
+    //   service: "Service: Account Opening",
+    //   added: "10:30 AM",
+    //   wait: "12 mins",
+    //   phone: "+234 802 243 7878",
+    //   active: true,
+    // },
+    // {
+    //   id: 2,
+    //   name: "T-002",
+    //   customer: "M. Lee",
+    //   service: "Service: Account Opening",
+    //   added: "10:45 AM",
+    //   wait: "1 hr",
+    //   phone: "+234 456 421 8841",
+    //   active: false,
+    // },
+    // {
+    //   id: 3,
+    //   name: "T-003",
+    //   customer: "S. Chen Reeves",
+    //   service: "Service: Account Opening",
+    //   added: "11:04 AM",
+    //   wait: "1 min",
+    //   phone: "+234 456 421 8841",
+    //   active: false,
+    // },
   ]);
 
   // const handleServe = (id) => {
