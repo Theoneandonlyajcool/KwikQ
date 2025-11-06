@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   PreviewContainer,
   BoardingLogo,
@@ -19,15 +19,50 @@ import { GrNotes } from "react-icons/gr";
 import { FiUsers } from "react-icons/fi";
 import { TbSend } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import axios from "axios";
 
 const Preview = () => {
+  const nav = useNavigate();
+  const Org_Details = JSON.parse(localStorage.getItem("onboard-details"));
+  console.log(Org_Details);
+
+  const [LoadingState, SetLoadingState] = useState(false);
+  const BaseURL = import.meta.env.VITE_API_BASE_URL;
+  const token = localStorage.getItem("User");
+
+  const CreateBranch = async () => {
+    try {
+      SetLoadingState(true);
+      const res = await axios.post(
+        `${BaseURL}/api/v1/create-branch`,
+        Org_Details,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success(res?.data?.message);
+      SetLoadingState(false);
+      setTimeout(() => {
+        nav("/submitted");
+      }, 2000);
+    } catch (error) {
+      SetLoadingState(false);
+      toast.error(error?.response?.data?.message);
+      console.log(error);
+    }
+  };
+
   const navigate = useNavigate();
   return (
     <PreviewContainer>
+      <ToastContainer />
       <BoardingLogo>
         <Link to="/branch_onboarding">
           <div className="back">
-            <div className="circle">
+            <div className="circle" onClick={() => nav(-1)}>
               <IoIosArrowRoundBack />
             </div>
           </div>
@@ -150,8 +185,14 @@ const Preview = () => {
         <p>• Setup takes approximately 24-48 hours for review and activation</p>
       </NoticeSection>
       <Bottomholder>
-        <button onClick={() => navigate("/submitted")}>
-          Submit Onboarding <TbSend />
+        <button disabled={LoadingState} onClick={CreateBranch}>
+          {LoadingState ? (
+            "Creating...."
+          ) : (
+            <>
+              Submit Onboarding <TbSend />
+            </>
+          )}
         </button>
       </Bottomholder>
     </PreviewContainer>

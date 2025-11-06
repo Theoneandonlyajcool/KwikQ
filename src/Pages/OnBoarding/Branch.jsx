@@ -113,46 +113,65 @@ const Branch = () => {
     // nav("/review")/;
   };
 
-  const BaseURL = import.meta.env.VITE_API_BASE_URL;
-  const token = localStorage.getItem("User");
-  const CreateBranch = async () => {
-    try {
-      const res = await axios.post(
-        `${BaseURL}/api/v1/create-branch`,
-        {
-          branchName: "NewBranch",
-          address: "12 Admiralty Way",
-          city: "Lagos",
-          state: "Lagos State",
-          serviceType: "Savings",
-          managerName: "John Doe",
-          managerEmail: "OTP@gmail.com",
-          managerPhone: "2348012345678",
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-    } catch (error) {
-      toast.error(error?.message);
-    }
+  const [LoadingState, SetLoadingState] = useState(false);
+
+  // const CreateBranch = async () => {
+  //   try {
+  //     SetLoadingState(true);
+  //     const res = await axios.post(
+  //       `${BaseURL}/api/v1/create-branch`,
+  //       {
+  //         branchName: branchformData.branchName,
+  //         address: branchformData.address,
+  //         city: branchformData.city,
+  //         state: branchformData.state,
+  //         serviceType: branchformData.serviceType,
+  //         managerName: branchformData.managerName,
+  //         managerEmail: branchformData.managerEmail,
+  //         managerPhone: branchformData.managerPhone,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     localStorage.setItem("Org-Details", JSON.stringify(branchformData));
+  //     SetLoadingState(false);      toast.success(res?.data?.message);
+  //     setTimeout(() => {
+  //       nav("/review");
+  //     }, 2000);
+  //   } catch (error) {
+  //     SetLoadingState(false);
+  //     // console.log(error);
+  //     toast.error(error?.response?.data?.message);
+  //   }
+  // };
+
+  const SubmitOnboarding = () => {
+    toast.success("Onboarding submitted succesfully");
+    localStorage.setItem("onboard-details", JSON.stringify(branchformData));
+    setTimeout(() => {
+      nav("/review");
+    }, 2000);
   };
 
   return (
     <BranchContainer
       onSubmit={(e) => {
         e.preventDefault();
-        CreateBranch();
+        SubmitOnboarding();
       }}
     >
       <BoardingLogo>
         <ToastContainer />
         <div className="back">
           <Link to="/organization_onboarding">
-            <div className="circle">
+            <div
+              className="circle"
+              onClick={() => nav("/organization_onboarding")}
+            >
               <IoIosArrowRoundBack />
             </div>
           </Link>

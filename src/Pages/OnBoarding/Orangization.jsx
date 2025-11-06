@@ -136,7 +136,7 @@ const Orangization = () => {
       <ToastContainer />
       <BoardingLogo>
         <div className="back">
-          <div className="circle">
+          <div className="circle" onClick={() => nav(-1)}>
             <IoIosArrowRoundBack />
           </div>
         </div>
