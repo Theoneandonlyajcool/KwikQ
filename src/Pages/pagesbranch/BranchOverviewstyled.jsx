@@ -127,6 +127,77 @@ export const BranchOverviewContainer = styled.div`
       }
     }
 
+     .add_branch_btn {
+          width: auto;
+          height: 30px;
+          padding: 12px 20px;
+          background: #5b5fef;
+          border-radius: 8px;
+          border: none;
+          outline: none;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          font-family: Inter;
+          font-weight: 500;
+          font-style: Medium;
+          font-size: 14px;
+          line-height: 140%;
+          color: #ffffff;
+
+          @media ${device.android} {
+            width: 100%;
+            height: 42px;
+            font-size: 13px;
+            justify-content: center;
+          }
+
+          @media ${device.iphone} {
+            width: 100%;
+            height: 42px;
+            font-size: 13px;
+            justify-content: center;
+          }
+
+          @media ${device.tablet} {
+            width: auto;
+            height: 43px;
+            font-size: 13px;
+          }
+
+          @media ${device.desktop} {
+            width: auto;
+            height: 30px;
+            font-size: 14px;
+          }
+
+          .add_icon {
+            font-size: 20px;
+
+            @media ${device.android} {
+              font-size: 18px;
+            }
+
+            @media ${device.iphone} {
+              font-size: 18px;
+            }
+
+            @media ${device.tablet} {
+              font-size: 19px;
+            }
+
+            @media ${device.desktop} {
+              font-size: 20px;
+            }
+          }
+
+          &:hover {
+            background: #4a4ed1;
+          }
+        }
+      
+
     .stats_cards_wrapper {
       width: 100%;
       min-height: 18%;

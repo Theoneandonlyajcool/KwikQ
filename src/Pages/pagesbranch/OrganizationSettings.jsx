@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import { IoMdClose } from "react-icons/io";
 import "../../Styles/cardModal.css";
 import axios from "axios";
+import CurrentDateTime from "./CurrentDateTime";
 
 const OrganizationSettings = () => {
   const [activeTab, setActiveTab] = useState("Profile");
@@ -112,6 +113,23 @@ const OrganizationSettings = () => {
     }
   }
 
+
+   const deleteOrganization = async () => {
+    try {
+      const res = await axios.delete(`${BaseUrl}/api/v1/deleteorganization/${orgId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log("DeleteOrganization", res);
+      setOneBranchData(res?.data?.data); 
+      toast.success(res?.data?.message)
+    } catch (error) {
+      console.log("DeleteOrganization", error)
+      toast.error(error?.response?.data?.message)
+    }
+  }
+
   const tabs = ["Profile", "Users & Roles", "Security", "Billing"];
 
   const organizationInfo = {
@@ -146,16 +164,16 @@ const OrganizationSettings = () => {
   ];
 
   const securitySettings = [
-    {
-      title: "Two-Factor Authentication (2FA)",
-      description: "Require 2FA for all admin and manager accounts",
-      enabled: true,
-    },
-    {
-      title: "IP Whitelisting",
-      description: "Restrict admin access to specific IP addresses",
-      enabled: false,
-    },
+    // {
+    //   title: "Two-Factor Authentication (2FA)",
+    //   description: "Require 2FA for all admin and manager accounts",
+    //   enabled: true,
+    // },
+    // {
+    //   title: "IP Whitelisting",
+    //   description: "Restrict admin access to specific IP addresses",
+    //   enabled: false,
+    // },
     {
       title: "Login Notifications",
       description: "Email alerts for new login attempts",
@@ -200,7 +218,7 @@ const OrganizationSettings = () => {
         <div className="header_section">
           <div className="header_text">
             <h1 className="main_title">Organization Settings</h1>
-            <p className="sub_title">Friday, October 24, 2025</p>
+            <p className="sub_title"><CurrentDateTime /></p>
           </div>
         </div>
 
@@ -610,7 +628,7 @@ const OrganizationSettings = () => {
             <p className="danger_text">
               Permanently delete your organization and all associated data. This action cannot be undone.
             </p>
-            <button className="delete_organization_btn">
+            <button className="delete_organization_btn" onClick={()=> deleteOrganization()}>
               <MdDelete className="delete_icon" />
               Delete Organization
             </button>

@@ -9,11 +9,13 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { FaUsers } from "react-icons/fa";
 import { IoTime } from "react-icons/io5";
 import { IoCheckmarkCircleSharp } from "react-icons/io5";
+import { MdAdd } from "react-icons/md";
 import { MdWarning } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import CurrentDateTime from "./CurrentDateTime";
 
 const BranchOverview = () => {
   const nav = useNavigate();
@@ -61,9 +63,9 @@ const BranchOverview = () => {
       code: "BR001",
       manager: "Jane Okafor",
       lastUpdated: "2 min ago",
-      activeQueue: 28,
-      avgWait: "10 min",
-      servedToday: 156,
+      activeQueue: "00",
+      avgWait: "0 min",
+      servedToday: "00",
       statusColor: "#000000",
       bgColor: "#ffffff",
     },
@@ -75,9 +77,9 @@ const BranchOverview = () => {
       code: "BR002",
       manager: "Chidi Eze",
       lastUpdated: "1 min ago",
-      activeQueue: 42,
-      avgWait: "15 min",
-      servedToday: 203,
+      activeQueue: "00",
+      avgWait: "0 min",
+      servedToday: "00",
       statusColor: "#000000",
       bgColor: "#ffffff",
     },
@@ -89,9 +91,9 @@ const BranchOverview = () => {
       code: "BR004",
       manager: "Emmanuel Nwankwo",
       lastUpdated: "5 min ago",
-      activeQueue: 67,
-      avgWait: "22 min",
-      servedToday: 189,
+      activeQueue: "00",
+      avgWait: "00 min",
+      servedToday: "00",
       statusColor: "#dc2626",
       bgColor: "#fff7ed",
       border: "1.25px solid #FFD6A7",
@@ -105,7 +107,7 @@ const BranchOverview = () => {
         <div className="header_section">
           <div className="header_text">
             <h1 className="main_title">Branch Overview</h1>
-            <p className="sub_title">Thursday, October 23, 2025</p>
+            <p className="sub_title"><CurrentDateTime /></p>
           </div>
         </div>
 
@@ -116,8 +118,8 @@ const BranchOverview = () => {
             </div>
             <div className="card_content">
               <p className="card_label">Total Branches</p>
-              <h2 className="card_value">5</h2>
-              <p className="card_change blue_text">+1 this month</p>
+              <h2 className="card_value">0</h2>
+              <p className="card_change blue_text">+0 this month</p>
             </div>
           </div>
 
@@ -127,8 +129,8 @@ const BranchOverview = () => {
             </div>
             <div className="card_content">
               <p className="card_label">Total Active Queues</p>
-              <h2 className="card_value">152</h2>
-              <p className="card_change purple_text">+18% from yesterday</p>
+              <h2 className="card_value">0</h2>
+              <p className="card_change purple_text">+00% from yesterday</p>
             </div>
           </div>
 
@@ -138,8 +140,8 @@ const BranchOverview = () => {
             </div>
             <div className="card_content">
               <p className="card_label">Avg. Wait Time (All)</p>
-              <h2 className="card_value">13 min</h2>
-              <p className="card_change blue_text">-5% improvement</p>
+              <h2 className="card_value">0 min</h2>
+              <p className="card_change blue_text">-0% improvement</p>
             </div>
           </div>
 
@@ -149,8 +151,8 @@ const BranchOverview = () => {
             </div>
             <div className="card_content">
               <p className="card_label">Total Served Today</p>
-              <h2 className="card_value">646</h2>
-              <p className="card_change purple_text">+25% from yesterday</p>
+              <h2 className="card_value">00</h2>
+              <p className="card_change purple_text">+0% from yesterday</p>
             </div>
           </div>
         </div>
@@ -165,6 +167,12 @@ const BranchOverview = () => {
             </div>
             <div className="status_badges">
               {/* PRESERVED: added onClick to call backend with status */}
+
+              <button className="add_branch_btn" onClick={()=> nav("/branch_onboarding")}>
+              <MdAdd className="add_icon" />
+              Add New Branch
+            </button>
+
               <span
                 className="status_badge active_badge"
                 onClick={() => allbranches_of_an_organization("active")}

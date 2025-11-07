@@ -31,6 +31,7 @@ import BranchManagement from "../Pages/pagesbranch/BranchManagement";
 import AdminDash from "../Pages/Admin/AdminDash";
 import GetStarted2 from "../Pages/Auth/GetStarted2";
 import LoginForm from "../Pages/Auth/SingleBranchLogin";
+import Editbranch from "../Pages/pagesbranch/Editbranch";
 
 // Hooks
 import { useState } from "react";
@@ -70,6 +71,7 @@ const Router = () => {
             <Route path="/Sevenday_free" element={<Sevendayfree />} />
             <Route path="/queue_form" element={<QueueForm />} />
             {/* <Route path="/queue_success" element={<QueueSuccess />} /> */}
+            <Route path="/edit_branch" element={<Editbranch />} />
             <Route path="/pricing" element={<Pricepage />} />
             <Route path="/singleBranch" element={<LoginForm />} />
             <Route path="/admin_landingpage" element={<AdminLandingPage />} />

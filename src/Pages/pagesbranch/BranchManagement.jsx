@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BranchManagementContainer } from "./BranchManagementstyled";
 import { BranchDetailsContainer } from "./BranchDetailsStyle";
 import { OperationsContainer } from "./OperationsStyle";
@@ -18,14 +18,65 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import { IoMdCloseCircle } from "react-icons/io";
 import { IoShieldCheckmark } from "react-icons/io5";
 import { MdNotifications } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import CurrentDateTime from "./CurrentDateTime";
+
 
 const BranchManagement = () => {
+  const [Modal, SetModal] = useState(true);
+  const nav = useNavigate()
+  const [oneBranchData, setOneBranchData] = useState()
+  // const Brnach_ID = localStorage.getItem("Brnach_ID");
+  // const token = localStorage.getItem("user_token");
+  const Brnach_ID = "690c670120559ad2241f1de7"
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGIwZTMxZmIxMGE0NTVlMzFkMWRjNSIsImVtYWlsIjoiaG92ZXJleHNAZ21haWwuY29tIiwicm9sZSI6Im11bHRpIiwiaWF0IjoxNzYyNDIwMDc1LCJleHAiOjE3NjI2NzkyNzV9.wSOiIxa5_r-HKnhwHctfn8hMs8rEUtw6qFi6bniU_TA"
+  const BaseUrl = import.meta.env.VITE_BaseUrl;
+  console.log("the data", oneBranchData)
+  const [model, setModel] = useState(true)
+
   const [selectedBranch, setSelectedBranch] = useState("Victoria Island Branch");
   const [activeTab, setActiveTab] = useState("Branch Details");
 
   const tabs = ["Branch Details", "Operations", "Permissions", "Notifications"];
 
+   const onebranches = async () => {
+    try {
+      const res = await axios.get(`${BaseUrl}/api/v1/branch/${Brnach_ID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log("onebranches", res);
+      setOneBranchData(res?.data?.data); 
+      toast.success(res?.data?.message)
+    } catch (error) {
+      console.log("onebranches", error)
+      toast.error(error?.response?.data?.message)
+    }
+  }
+
+
+  useEffect(()=> {
+    onebranches() 
+  }, []);
+
   const branchInfo = {
+    branchName: oneBranchData?.branchName,
+    branchCode: oneBranchData?.branchCode,
+    address: oneBranchData?.address,
+    city: oneBranchData?.city,
+    serviceType: oneBranchData?.serviceType,
+  };
+
+  const managerInfo = {
+    name: oneBranchData?.managerName,
+    email: oneBranchData?.managerEmail,
+    phone: oneBranchData?.managerPhone,
+    lastLogin: "",
+  };
+  const branchInfo1 = {
     branchName: "Victoria Island Branch",
     branchCode: "BR001",
     address: "123 Ahmadu Bello Way, Victoria Island, Lagos",
@@ -33,7 +84,7 @@ const BranchManagement = () => {
     status: "Active",
   };
 
-  const managerInfo = {
+  const managerInfo1 = {
     name: "Jane Okafor",
     email: "jane.okafor@kwikq.ng",
     phone: "+234 800 123 4567",
@@ -111,18 +162,18 @@ const BranchManagement = () => {
     },
   ];
 
-  const accessControl = [
-    {
-      title: "Two-Factor Authentication",
-      description: "Require 2FA for branch manager login",
-      enabled: true,
-    },
-    {
-      title: "IP Restrictions",
-      description: "Limit access to specific IP addresses",
-      enabled: false,
-    },
-  ];
+  // const accessControl = [
+  //   {
+  //     title: "Two-Factor Authentication",
+  //     description: "Require 2FA for branch manager login",
+  //     enabled: true,
+  //   },
+  //   {
+  //     title: "IP Restrictions",
+  //     description: "Limit access to specific IP addresses",
+  //     enabled: false,
+  //   },
+  // ];
 
   return (
     <BranchManagementContainer>
@@ -130,7 +181,7 @@ const BranchManagement = () => {
         <div className="header_section">
           <div className="header_text">
             <h1 className="main_title">Branch Management</h1>
-            <p className="sub_title">Thursday, October 23, 2025</p>
+            <p className="sub_title"><CurrentDateTime /></p>
           </div>
         </div>
 
@@ -145,7 +196,7 @@ const BranchManagement = () => {
                 <IoIosArrowDown className="dropdown_icon" />
               </div>
             </div>
-            <button className="add_branch_btn">
+            <button className="add_branch_btn" onClick={()=> nav("/branch_onboarding")} >
               <MdAdd className="add_icon" />
               Add New Branch
             </button>
@@ -205,8 +256,8 @@ const BranchManagement = () => {
                   <div className="field_value">{branchInfo.city}</div>
                 </div>
                 <div className="info_field">
-                  <label className="field_label">Status</label>
-                  <div className="field_value">{branchInfo.status}</div>
+                  <label className="field_label">serviceType</label>
+                  <div className="field_value">{branchInfo.serviceType}</div>
                 </div>
               </div>
             </div>
@@ -414,7 +465,7 @@ const BranchManagement = () => {
             </div>
           </div>
 
-          <div className="access_control_section">
+          {/* <div className="access_control_section">
             <div className="section_header">
               <h2 className="section_title">Access Control</h2>
             </div>
@@ -433,9 +484,10 @@ const BranchManagement = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </PermissionsContainer>
       </div>
+      <ToastContainer />
     </BranchManagementContainer>
   );
 };
