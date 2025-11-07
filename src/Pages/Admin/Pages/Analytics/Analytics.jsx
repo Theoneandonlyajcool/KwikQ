@@ -63,6 +63,12 @@ const AnalyticsDashboard = () => {
     { name: "Emergency 15%", value: 15, color: "#A3E635" },
   ];
 
+  const FetchAnalytics = async () => {
+    try {
+      const res = await axios.get("");
+    } catch (error) {}
+  };
+
   return (
     <>
       <div className="dashboard-container">

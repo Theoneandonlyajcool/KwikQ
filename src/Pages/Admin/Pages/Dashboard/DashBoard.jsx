@@ -332,7 +332,7 @@ export default function Dashboard() {
         {/* Qr code and button */}
         <div
           style={{
-            border: "2px solid red",
+            // border: "2px solid red",
             width: "100%",
             display: "flex",
             justifyContent: "space-between",
@@ -363,7 +363,6 @@ const styles = {
     padding: "2rem",
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif',
-    border: "2px solid red",
   },
   header: {
     marginBottom: "1rem",
@@ -468,7 +467,7 @@ const styles = {
     padding: "1.5rem",
     borderRadius: "12px",
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-    border: "2px solid red",
+    // border: "2px solid red",
     width: "100%",
   },
 
@@ -477,7 +476,7 @@ const styles = {
     padding: "1.5rem",
     borderRadius: "12px",
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-    border: "2px solid blue",
+    // border: "2px solid blue",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
