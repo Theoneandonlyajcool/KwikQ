@@ -8,6 +8,14 @@ export const OrangizationContainer = styled.div`
   flex-direction: column;
   align-items: center;
 
+  @media (min-width: 1440px) {
+    height: 110vh;
+  }
+
+  @media (min-width: 1920px) {
+    height: 120vh;
+  }
+
   @media (max-width: 768px) {
     height: auto;
     min-height: 100vh;
@@ -48,6 +56,8 @@ export const BoardingLogo = styled.div`
     justify-content: center;
     display: flex;
     flex-direction: column;
+    border: transparent;
+    margin-left: 10px;
 
     img {
       width: 100%;
@@ -63,6 +73,14 @@ export const BoardingLogo = styled.div`
       font-weight: 400;
       line-height: 24px;
     }
+  }
+
+  @media (min-width: 1440px) {
+    min-height: 18vh;
+  }
+
+  @media (min-width: 1920px) {
+    min-height: 20vh;
   }
 
   @media (max-width: 1024px) {
@@ -135,6 +153,52 @@ export const BoardingTop = styled.div`
     color: #e5e7eb;
   }
 
+  @media (min-width: 1440px) {
+    height: 25vh;
+
+    .Holder {
+      width: 140px;
+      gap: 10px;
+    }
+
+    .circle {
+      width: 55px;
+      height: 55px;
+      font-size: 22px;
+    }
+
+    p {
+      font-size: 17px;
+    }
+
+    hr {
+      width: 140px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    height: 30vh;
+
+    .Holder {
+      width: 160px;
+      gap: 12px;
+    }
+
+    .circle {
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+
+    hr {
+      width: 160px;
+    }
+  }
+
   @media (max-width: 768px) {
     height: 15vh;
     gap: 20px;
@@ -167,6 +231,14 @@ export const OnboardingHolder = styled.form`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  @media (min-width: 1440px) {
+    width: 75%;
+  }
+
+  @media (min-width: 1920px) {
+    width: 70%;
+  }
 
   @media (max-width: 1024px) {
     width: 85%;
@@ -308,6 +380,88 @@ export const TextSection = styled.div`
     }
   }
 
+  @media (min-width: 1440px) {
+    min-height: 580px;
+    padding: 25px;
+    gap: 15px;
+
+    .Orgn {
+      h4 {
+        font-size: 22px;
+      }
+      p {
+        font-size: 17px;
+      }
+    }
+
+    .InputHolder {
+      input {
+        width: 550px;
+        min-height: 40px;
+        font-size: 16px;
+      }
+    }
+
+    .LastInputHolder .input_holder {
+      width: 550px;
+
+      input {
+        width: 520px;
+        min-height: 40px;
+        font-size: 16px;
+      }
+    }
+
+    .input_holder {
+      width: 550px;
+
+      .Number {
+        width: 520px;
+      }
+    }
+  }
+
+  @media (min-width: 1920px) {
+    min-height: 650px;
+    padding: 30px;
+    gap: 20px;
+
+    .Orgn {
+      h4 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 18px;
+      }
+    }
+
+    .InputHolder {
+      input {
+        width: 600px;
+        min-height: 44px;
+        font-size: 17px;
+      }
+    }
+
+    .LastInputHolder .input_holder {
+      width: 600px;
+
+      input {
+        width: 570px;
+        min-height: 44px;
+        font-size: 17px;
+      }
+    }
+
+    .input_holder {
+      width: 600px;
+
+      .Number {
+        width: 570px;
+      }
+    }
+  }
+
   @media (max-width: 1024px) {
     min-height: 550px;
     padding: 18px;
@@ -433,6 +587,26 @@ export const Bottomholder = styled.div`
     font-weight: 400;
     line-height: 20px;
     cursor: pointer;
+  }
+
+  @media (min-width: 1440px) {
+    width: 94%;
+
+    button {
+      width: 200px;
+      height: 44px;
+      font-size: 15px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    width: 92%;
+
+    button {
+      width: 220px;
+      height: 48px;
+      font-size: 16px;
+    }
   }
 
   @media (max-width: 768px) {

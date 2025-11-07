@@ -10,6 +10,14 @@ export const BranchContainer = styled.form`
   justify-content: center;
   gap: 20px;
 
+  @media (min-width: 1440px) {
+    height: 110vh;
+  }
+
+  @media (min-width: 1920px) {
+    height: 120vh;
+  }
+
   @media (max-width: 480px) {
     height: auto;
     min-height: 100vh;
@@ -54,11 +62,13 @@ export const BoardingLogo = styled.div`
   }
 
   .logo {
-    width: 180px;
+    width: 200px;
     height: 40px;
     justify-content: center;
     display: flex;
     flex-direction: column;
+    border: transparent;
+    margin-left: 10px;
 
     img {
       width: 100%;
@@ -74,6 +84,14 @@ export const BoardingLogo = styled.div`
       font-weight: 400;
       line-height: 24px;
     }
+  }
+
+  @media (min-width: 1440px) {
+    min-height: 18vh;
+  }
+
+  @media (min-width: 1920px) {
+    min-height: 20vh;
   }
 
   @media (max-width: 1024px) {
@@ -147,6 +165,54 @@ export const BoardingTop = styled.div`
     color: #e5e7eb;
   }
 
+  @media (min-width: 1440px) {
+    height: 25vh;
+    gap: 25px;
+
+    .Holder {
+      width: 140px;
+      gap: 10px;
+    }
+
+    .circle {
+      width: 55px;
+      height: 55px;
+      font-size: 22px;
+    }
+
+    p {
+      font-size: 17px;
+    }
+
+    hr {
+      width: 140px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    height: 30vh;
+    gap: 30px;
+
+    .Holder {
+      width: 160px;
+      gap: 12px;
+    }
+
+    .circle {
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 18px;
+    }
+
+    hr {
+      width: 160px;
+    }
+  }
+
   @media (max-width: 480px) {
     height: 15vh;
     gap: 10px;
@@ -212,7 +278,7 @@ export const TopText = styled.div`
     width: 50%;
     min-height: 55px;
   }
-
+  /* 
   .Add {
     width: 50%;
     min-height: 55px;
@@ -231,6 +297,34 @@ export const TopText = styled.div`
       display: flex;
       gap: 10px;
       cursor: pointer;
+    }
+  } */
+
+  @media (min-width: 1440px) {
+    width: 70%;
+
+    p {
+      font-size: 17px;
+    }
+
+    button {
+      width: 140px;
+      height: 40px;
+      font-size: 15px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    width: 65%;
+
+    p {
+      font-size: 18px;
+    }
+
+    button {
+      width: 150px;
+      height: 42px;
+      font-size: 16px;
     }
   }
 
@@ -293,6 +387,20 @@ export const FirstSection = styled.div`
     gap: 10px;
   }
 
+  @media (min-width: 1440px) {
+    width: 70%;
+    height: 500px;
+    padding: 25px;
+    gap: 25px;
+  }
+
+  @media (min-width: 1920px) {
+    width: 65%;
+    height: 550px;
+    padding: 30px;
+    gap: 30px;
+  }
+
   @media (max-width: 480px) {
     width: 90%;
     height: auto;
@@ -329,6 +437,30 @@ export const InputHolder = styled.div`
     padding: 10px;
     outline: none;
     border: none;
+  }
+
+  @media (min-width: 1440px) {
+    h4 {
+      font-size: 17px;
+    }
+
+    input {
+      width: 500px;
+      min-height: 40px;
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    h4 {
+      font-size: 18px;
+    }
+
+    input {
+      width: 550px;
+      min-height: 44px;
+      font-size: 17px;
+    }
   }
 
   @media (max-width: 480px) {
@@ -387,6 +519,32 @@ export const AddressHolder = styled.div`
       padding: 10px 0;
       outline: none;
       border: none;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    h4 {
+      font-size: 17px;
+    }
+
+    .input-holder {
+      input {
+        min-height: 40px;
+        font-size: 16px;
+      }
+    }
+  }
+
+  @media (min-width: 1920px) {
+    h4 {
+      font-size: 18px;
+    }
+
+    .input-holder {
+      input {
+        min-height: 44px;
+        font-size: 17px;
+      }
     }
   }
 
@@ -451,6 +609,30 @@ export const Sections = styled.div`
     padding-right: 12px;
   }
 
+  @media (min-width: 1440px) {
+    h4 {
+      font-size: 17px;
+    }
+
+    input {
+      width: 350px;
+      min-height: 40px;
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    h4 {
+      font-size: 18px;
+    }
+
+    input {
+      width: 400px;
+      min-height: 44px;
+      font-size: 17px;
+    }
+  }
+
   @media (max-width: 480px) {
     flex-direction: column;
     gap: 8px;
@@ -504,6 +686,38 @@ export const LastSection = styled.div`
       padding: 10px 0;
       outline: none;
       border: none;
+    }
+  }
+
+  @media (min-width: 1440px) {
+    h4 {
+      font-size: 17px;
+    }
+
+    .input-holder {
+      width: 350px;
+
+      input {
+        width: 310px;
+        min-height: 40px;
+        font-size: 16px;
+      }
+    }
+  }
+
+  @media (min-width: 1920px) {
+    h4 {
+      font-size: 18px;
+    }
+
+    .input-holder {
+      width: 400px;
+
+      input {
+        width: 360px;
+        min-height: 44px;
+        font-size: 17px;
+      }
     }
   }
 
@@ -566,6 +780,26 @@ export const Bottomholder = styled.div`
     font-weight: 400;
     line-height: 20px;
     cursor: pointer;
+  }
+
+  @media (min-width: 1440px) {
+    width: 70%;
+
+    button {
+      width: 200px;
+      height: 40px;
+      font-size: 15px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    width: 65%;
+
+    button {
+      width: 220px;
+      height: 44px;
+      font-size: 16px;
+    }
   }
 
   @media (max-width: 480px) {

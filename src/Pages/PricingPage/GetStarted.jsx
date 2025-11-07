@@ -7,7 +7,7 @@ const GetStarted = () => {
     <GetStartedBody>
       <GetStartedWrapper>
         <HeroText>
-          <h1>Get rid of long line and wait times</h1>
+          <h1>Get rid of long lines and wait times</h1>
           <button>
             Get started today
             <MdKeyboardArrowRight className="arrow-icon" />
@@ -22,8 +22,16 @@ export default GetStarted;
 
 const GetStartedBody = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 80vh;
   display: flex;
+
+  @media (min-width: 1440px) {
+    height: 85vh;
+  }
+
+  @media (min-width: 1920px) {
+    height: 90vh;
+  }
 
   @media (max-width: 768px) {
     height: auto;
@@ -38,7 +46,7 @@ const GetStartedBody = styled.div`
 
 const GetStartedWrapper = styled.div`
   width: 100%;
-  height: 85vh;
+  height: 75vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -49,6 +57,16 @@ const GetStartedWrapper = styled.div`
   background-image: url(https://i.postimg.cc/t4Tf9pnr/section.png);
   background-position: center;
   background-size: cover;
+
+  @media (min-width: 1440px) {
+    height: 80vh;
+    padding: 100px;
+  }
+
+  @media (min-width: 1920px) {
+    height: 85vh;
+    padding: 120px;
+  }
 
   @media (max-width: 768px) {
     height: auto;
@@ -76,7 +94,7 @@ const HeroText = styled.div`
     font-size: 96px;
     font-weight: 600;
     line-height: 100%;
-    width: 70%;
+    width: 80%;
   }
 
   button {
@@ -109,6 +127,41 @@ const HeroText = styled.div`
 
     &:hover .arrow-icon {
       transform: translateX(4px);
+    }
+  }
+
+  @media (min-width: 1440px) {
+    gap: 60px;
+
+    h1 {
+      font-size: 110px;
+      width: 75%;
+    }
+
+    button {
+      width: 280px;
+      height: 65px;
+      font-size: 22px;
+    }
+  }
+
+  @media (min-width: 1920px) {
+    gap: 70px;
+
+    h1 {
+      font-size: 120px;
+      width: 70%;
+    }
+
+    button {
+      width: 300px;
+      height: 70px;
+      font-size: 24px;
+      border-radius: 25px;
+
+      .arrow-icon {
+        font-size: 28px;
+      }
     }
   }
 

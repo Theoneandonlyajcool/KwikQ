@@ -217,12 +217,12 @@ const Branch = () => {
           <p>Branch Information</p>
           <p>Add details for each branch location</p>
         </div>
-        <div className="Add">
+        {/* <div className="Add">
           <button type="button">
             <IoMdAdd />
             Add Branch
           </button>
-        </div>
+        </div> */}
       </TopText>
 
       <FirstSection>

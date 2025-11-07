@@ -76,12 +76,40 @@ const MainContainer = styled.div`
   padding-top: 20px;
   padding-bottom: 20px;
 
+  @media (min-width: 1441px) {
+    width: 100%;
+    height: 100vh;
+    min-height: max-content;
+    gap: 43px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    height: 100vh;
+    min-height: max-content;
+    gap: 43px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
   h2 {
     font-size: 48px;
     font-weight: 700;
     line-height: 150%;
     color: #000000;
     font-weight: 600;
+
+    @media (min-width: 1441px) {
+      font-size: 48px;
+      line-height: 150%;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      font-size: 48px;
+      line-height: 150%;
+    }
   }
 
   @media (max-width: 768px) {
@@ -119,6 +147,20 @@ const CardHolder = styled.div`
   flex-direction: column;
   gap: 20px;
 
+  @media (min-width: 1441px) {
+    width: 55%;
+    height: 70%;
+    min-height: max-content;
+    gap: 20px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 55%;
+    height: 70%;
+    min-height: max-content;
+    gap: 20px;
+  }
+
   @media (max-width: 768px) {
     width: 80%;
     gap: 18px;
@@ -140,6 +182,18 @@ const QuestionsHolder = styled.div`
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+
+  @media (min-width: 1441px) {
+    width: 100%;
+    height: auto;
+    min-height: max-content;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    height: auto;
+    min-height: max-content;
+  }
 `;
 
 const QuestionsCard = styled.div`
@@ -152,6 +206,18 @@ const QuestionsCard = styled.div`
   align-items: center;
   cursor: pointer;
 
+  @media (min-width: 1441px) {
+    width: 100%;
+    min-height: 70px;
+    padding: 0 25px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    min-height: 70px;
+    padding: 0 25px;
+  }
+
   .dropdown_icon {
     cursor: pointer;
     width: 24px;
@@ -159,6 +225,16 @@ const QuestionsCard = styled.div`
     background-color: #ffffff;
     border-radius: 15px;
     transition: transform 0.3s ease;
+
+    @media (min-width: 1441px) {
+      width: 24px;
+      height: 24px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   .dropdown_icon.rotate {
@@ -197,6 +273,18 @@ const AnswerCard = styled.div`
   border-top: 1px solid #444;
   animation: slideDown 0.3s ease-out;
 
+  @media (min-width: 1441px) {
+    width: 100%;
+    min-height: 80px;
+    padding: 20px 25px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    min-height: 80px;
+    padding: 20px 25px;
+  }
+
   @media (max-width: 768px) {
     padding: 18px 20px;
     min-height: 70px;
@@ -218,6 +306,18 @@ const QuestionText = styled.h4`
   color: white;
   line-height: 140%;
   width: 90%;
+
+  @media (min-width: 1441px) {
+    font-size: 15px;
+    line-height: 140%;
+    width: 90%;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    font-size: 15px;
+    line-height: 140%;
+    width: 90%;
+  }
 
   @media (max-width: 768px) {
     font-size: 14px;

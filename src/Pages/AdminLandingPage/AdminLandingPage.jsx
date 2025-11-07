@@ -110,6 +110,20 @@ const AdminLandingContainer = styled.div`
   padding-top: 100px;
   position: relative;
 
+  @media (min-width: 1441px) {
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    padding-top: 100px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+    padding-top: 100px;
+  }
+
   @media (max-width: 768px) {
     padding-top: 90px;
     min-height: 100vh;
@@ -135,6 +149,18 @@ const HeaderHolder = styled.div`
   z-index: 1000;
   pointer-events: none;
 
+  @media (min-width: 1441px) {
+    width: 100%;
+    min-height: 20vh;
+    top: 20px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    min-height: 20vh;
+    top: 20px;
+  }
+
   @media (max-width: 768px) {
     top: 15px;
   }
@@ -158,6 +184,20 @@ const Header = styled.div`
   position: relative;
   padding: 0 20px;
 
+  @media (min-width: 1441px) {
+    width: min(1039px, 95%);
+    height: 69px;
+    margin-top: 15px;
+    padding: 0 20px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: min(1039px, 95%);
+    height: 69px;
+    margin-top: 15px;
+    padding: 0 20px;
+  }
+
   .Logo {
     width: auto;
     height: 70%;
@@ -169,6 +209,18 @@ const Header = styled.div`
       height: auto;
       object-fit: contain;
       color: white;
+    }
+
+    @media (min-width: 1441px) {
+      img {
+        width: 120px;
+      }
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      img {
+        width: 120px;
+      }
     }
 
     @media (max-width: 768px) and (min-width: 481px) {
@@ -222,6 +274,26 @@ const DesktopMenu = styled.div`
 
       &:hover {
         opacity: 0.8;
+      }
+    }
+  }
+
+  @media (min-width: 1441px) {
+    ul {
+      gap: 30px;
+
+      li {
+        font-size: 16px;
+      }
+    }
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    ul {
+      gap: 30px;
+
+      li {
+        font-size: 16px;
       }
     }
   }
@@ -284,6 +356,34 @@ const DesktopLogin = styled.div`
   button:hover {
     background-color: #ffffff;
     color: #303bff;
+  }
+
+  @media (min-width: 1441px) {
+    gap: 15px;
+
+    p {
+      font-size: 16px;
+    }
+
+    button {
+      width: 100px;
+      height: 34px;
+      font-size: 14px;
+    }
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    gap: 15px;
+
+    p {
+      font-size: 16px;
+    }
+
+    button {
+      width: 100px;
+      height: 34px;
+      font-size: 14px;
+    }
   }
 
   @media (max-width: 768px) and (min-width: 481px) {
@@ -431,6 +531,20 @@ const Text = styled.div`
   gap: 27px;
   padding-top: 35px;
 
+  @media (min-width: 1441px) {
+    width: 90%;
+    min-height: 500px;
+    gap: 27px;
+    padding-top: 35px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 90%;
+    min-height: 500px;
+    gap: 27px;
+    padding-top: 35px;
+  }
+
   h1 {
     font-weight: 700;
     font-size: 50px;
@@ -438,6 +552,16 @@ const Text = styled.div`
     color: #ffffff;
     text-align: center;
     width: 792px;
+
+    @media (min-width: 1441px) {
+      font-size: 50px;
+      width: 792px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      font-size: 50px;
+      width: 792px;
+    }
   }
 
   h3 {
@@ -447,6 +571,16 @@ const Text = styled.div`
     width: 60%;
     text-align: center;
     color: #ffffff;
+
+    @media (min-width: 1441px) {
+      font-size: 20px;
+      width: 60%;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      font-size: 20px;
+      width: 60%;
+    }
   }
 
   button {
@@ -528,6 +662,16 @@ const DesignHolder = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+
+  @media (min-width: 1441px) {
+    width: 100%;
+    min-height: 15vh;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    min-height: 15vh;
+  }
 
   @media (max-width: 768px) {
     min-height: 15vh;

@@ -252,6 +252,16 @@ const MonthlyPriceContainer = styled.div`
   justify-content: center;
   align-items: center;
 
+  @media (min-width: 1441px) {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    min-height: 100vh;
+  }
+
   @media (max-width: 768px) {
     min-height: auto;
     padding: 40px 20px;
@@ -272,6 +282,18 @@ const MonthlyWrapper = styled.div`
   flex-direction: column;
   gap: 15px;
 
+  @media (min-width: 1441px) {
+    width: 99%;
+    min-height: 20vh;
+    gap: 15px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 99%;
+    min-height: 20vh;
+    gap: 15px;
+  }
+
   .Btn_holder {
     width: 339px;
     height: 58px;
@@ -280,6 +302,16 @@ const MonthlyWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media (min-width: 1441px) {
+      width: 339px;
+      height: 58px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 339px;
+      height: 58px;
+    }
 
     button {
       width: 165px;
@@ -291,6 +323,18 @@ const MonthlyWrapper = styled.div`
       font-size: 20px;
       font-weight: 600;
       color: #ffffff;
+
+      @media (min-width: 1441px) {
+        width: 165px;
+        height: 53px;
+        font-size: 20px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        width: 165px;
+        height: 53px;
+        font-size: 20px;
+      }
     }
   }
   small {
@@ -302,6 +346,14 @@ const MonthlyWrapper = styled.div`
     border-radius: 8px;
     padding: 2px 8px;
     color: #303bff;
+
+    @media (min-width: 1441px) {
+      font-size: 12px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      font-size: 12px;
+    }
   }
 
   @media (max-width: 768px) {
@@ -348,6 +400,20 @@ const MonthlyCardsHolder = styled.div`
   justify-content: center;
   gap: 20px;
 
+  @media (min-width: 1441px) {
+    width: 99%;
+    height: 1103px;
+    margin-top: 80px;
+    gap: 20px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 99%;
+    height: 1103px;
+    margin-top: 80px;
+    gap: 20px;
+  }
+
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
@@ -381,6 +447,22 @@ const Cards = styled.div`
   flex-direction: column;
   padding-top: 30px;
 
+  @media (min-width: 1441px) {
+    width: 28%;
+    min-height: 865px;
+    height: 70vh;
+    gap: 50px;
+    padding-top: 30px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 28%;
+    min-height: 865px;
+    height: 70vh;
+    gap: 50px;
+    padding-top: 30px;
+  }
+
   .Top {
     width: 333px;
     height: 125.94px;
@@ -389,10 +471,32 @@ const Cards = styled.div`
     flex-direction: column;
     justify-content: center;
 
+    @media (min-width: 1441px) {
+      width: 333px;
+      height: 125.94px;
+      gap: 10px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 333px;
+      height: 125.94px;
+      gap: 10px;
+    }
+
     .Icons_holder {
       width: 100%;
       height: 50px;
       display: flex;
+
+      @media (min-width: 1441px) {
+        width: 100%;
+        height: 50px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        width: 100%;
+        height: 50px;
+      }
 
       .Icons {
         width: 50px;
@@ -404,6 +508,18 @@ const Cards = styled.div`
         align-items: center;
         font-size: 24px;
         color: #ffffff;
+
+        @media (min-width: 1441px) {
+          width: 50px;
+          height: 50px;
+          font-size: 24px;
+        }
+
+        @media (min-width: 1025px) and (max-width: 1440px) {
+          width: 50px;
+          height: 50px;
+          font-size: 24px;
+        }
       }
 
       small {
@@ -416,6 +532,14 @@ const Cards = styled.div`
         line-height: 180%;
         padding: 2px 8px;
         text-align: center;
+
+        @media (min-width: 1441px) {
+          font-size: 13px;
+        }
+
+        @media (min-width: 1025px) and (max-width: 1440px) {
+          font-size: 13px;
+        }
       }
     }
 
@@ -423,12 +547,28 @@ const Cards = styled.div`
       font-size: 31px;
       font-weight: 600;
       color: #222222;
+
+      @media (min-width: 1441px) {
+        font-size: 31px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        font-size: 31px;
+      }
     }
     p {
       font-size: 16px;
       font-weight: 400;
       color: #222222;
       line-height: 20px;
+
+      @media (min-width: 1441px) {
+        font-size: 16px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        font-size: 16px;
+      }
     }
   }
 
@@ -437,11 +577,27 @@ const Cards = styled.div`
     align-items: center;
     width: 333px;
 
+    @media (min-width: 1441px) {
+      width: 333px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 333px;
+    }
+
     h4 {
       font-size: 20px;
       font-weight: 600;
       color: #101828;
       line-height: 140%;
+
+      @media (min-width: 1441px) {
+        font-size: 20px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        font-size: 20px;
+      }
     }
   }
 
@@ -461,6 +617,18 @@ const Cards = styled.div`
     align-items: center;
     gap: 10px;
     border: 1.25px solid #d0d0d0;
+
+    @media (min-width: 1441px) {
+      width: 333px;
+      height: 50.37px;
+      font-size: 16px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 333px;
+      height: 50.37px;
+      font-size: 16px;
+    }
   }
 
   .ListHolder {
@@ -470,11 +638,31 @@ const Cards = styled.div`
     flex-direction: column;
     gap: 17px;
 
+    @media (min-width: 1441px) {
+      width: 333px;
+      height: 447px;
+      gap: 17px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 333px;
+      height: 447px;
+      gap: 17px;
+    }
+
     ul {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: 17px;
+
+      @media (min-width: 1441px) {
+        gap: 17px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        gap: 17px;
+      }
     }
 
     li {
@@ -485,6 +673,14 @@ const Cards = styled.div`
       align-items: center;
       gap: 10px;
       line-height: 24px;
+
+      @media (min-width: 1441px) {
+        font-size: 16px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        font-size: 16px;
+      }
     }
   }
 
@@ -576,6 +772,24 @@ const MiddleCard = styled.div`
   flex-direction: column;
   padding-top: 30px;
 
+  @media (min-width: 1441px) {
+    width: 30%;
+    min-height: 900px;
+    height: 70vh;
+    gap: 50px;
+    padding-top: 30px;
+    margin-top: -35px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 30%;
+    min-height: 900px;
+    height: 70vh;
+    gap: 50px;
+    padding-top: 30px;
+    margin-top: -35px;
+  }
+
   .Top {
     width: 333px;
     height: 125.94px;
@@ -584,11 +798,33 @@ const MiddleCard = styled.div`
     flex-direction: column;
     justify-content: center;
 
+    @media (min-width: 1441px) {
+      width: 333px;
+      height: 125.94px;
+      gap: 10px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 333px;
+      height: 125.94px;
+      gap: 10px;
+    }
+
     .Icons_holder {
       width: 100%;
       height: 50px;
       display: flex;
       justify-content: space-between;
+
+      @media (min-width: 1441px) {
+        width: 100%;
+        height: 50px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        width: 100%;
+        height: 50px;
+      }
 
       .Icons {
         width: 50px;
@@ -600,6 +836,18 @@ const MiddleCard = styled.div`
         align-items: center;
         font-size: 24px;
         color: #ffffff;
+
+        @media (min-width: 1441px) {
+          width: 50px;
+          height: 50px;
+          font-size: 24px;
+        }
+
+        @media (min-width: 1025px) and (max-width: 1440px) {
+          width: 50px;
+          height: 50px;
+          font-size: 24px;
+        }
       }
 
       small {
@@ -612,6 +860,14 @@ const MiddleCard = styled.div`
         line-height: 180%;
         padding: 2px 8px;
         text-align: center;
+
+        @media (min-width: 1441px) {
+          font-size: 13px;
+        }
+
+        @media (min-width: 1025px) and (max-width: 1440px) {
+          font-size: 13px;
+        }
       }
     }
 
@@ -619,12 +875,28 @@ const MiddleCard = styled.div`
       font-size: 31px;
       font-weight: 600;
       color: #222222;
+
+      @media (min-width: 1441px) {
+        font-size: 31px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        font-size: 31px;
+      }
     }
     p {
       font-size: 16px;
       font-weight: 400;
       color: #222222;
       line-height: 20px;
+
+      @media (min-width: 1441px) {
+        font-size: 16px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        font-size: 16px;
+      }
     }
   }
 
@@ -633,11 +905,27 @@ const MiddleCard = styled.div`
     align-items: center;
     width: 333px;
 
+    @media (min-width: 1441px) {
+      width: 333px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 333px;
+    }
+
     h4 {
       font-size: 20px;
       font-weight: 600;
       color: #101828;
       line-height: 140%;
+
+      @media (min-width: 1441px) {
+        font-size: 20px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        font-size: 20px;
+      }
     }
   }
 
@@ -656,6 +944,20 @@ const MiddleCard = styled.div`
     justify-content: center;
     align-items: center;
     gap: 10px;
+
+    /* Large Desktop */
+    @media (min-width: 1441px) {
+      width: 333px;
+      height: 50.37px;
+      font-size: 16px;
+    }
+
+    /* Standard Desktop */
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 333px;
+      height: 50.37px;
+      font-size: 16px;
+    }
   }
 
   .ListHolder {
@@ -665,11 +967,31 @@ const MiddleCard = styled.div`
     flex-direction: column;
     gap: 17px;
 
+    @media (min-width: 1441px) {
+      width: 333px;
+      height: 447px;
+      gap: 17px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 333px;
+      height: 447px;
+      gap: 17px;
+    }
+
     ul {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: 17px;
+
+      @media (min-width: 1441px) {
+        gap: 17px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        gap: 17px;
+      }
     }
 
     li {
@@ -680,6 +1002,14 @@ const MiddleCard = styled.div`
       align-items: center;
       gap: 10px;
       line-height: 24px;
+
+      @media (min-width: 1441px) {
+        font-size: 16px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        font-size: 16px;
+      }
     }
   }
 
