@@ -19,6 +19,9 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router-dom";
 
+const toCamelCase = (str) =>
+  str.toLowerCase().replace(/\s+(\w)/g, (_, c) => c.toUpperCase());
+
 const QueueForm = () => {
   const nav = useNavigate();
 
@@ -33,6 +36,7 @@ const QueueForm = () => {
     fullName: "",
     phone: "",
     email: "",
+    AdditionalInfo: "",
     serviceNeeded: PurposeOfVisit,
     elederlyStatus: ElederlyStatus,
     pregnantStatus: PregnantStaus,
@@ -70,27 +74,30 @@ const QueueForm = () => {
   const QueueValidation = () => {};
 
   const Formtoken = localStorage.getItem("User");
-  console.log(Formtoken);
+  // console.log(Formtoken);
 
   const Branchid = localStorage.getItem("BranchID");
-  console.log(Branchid);
+  // console.log(Branchid);
 
   const ORGid = localStorage.getItem("Org_ID");
-  console.log(ORGid);
+  // console.log(ORGid);
+
+  const [LoadingState, SetLoadingState] = useState(false);
 
   const JoinQueue = async () => {
     try {
+      SetLoadingState(true);
       const res = await axios.post(
         `${BaseURl}/api/v1/customer`,
         {
           organization: ORGid,
           branch: Branchid,
           formDetails: {
-            fullName: "Adebola",
-            email: "Joseph@gmail.com",
-            phone: "09136890215",
-            serviceNeeded: "loanCollection",
-            additionalInfo: "This is the additional info",
+            fullName: inputValues.fullName,
+            email: inputValues.email,
+            phone: inputValues.phone,
+            serviceNeeded: purpose,
+            additionalInfo: inputValues.AdditionalInfo,
             elderlyStatus: true,
             pregnantStatus: false,
             emergencyLevel: true,
@@ -105,10 +112,19 @@ const QueueForm = () => {
       );
       console.log(res?.data);
       toast.success(res?.data?.message);
+      SetLoadingState(false);
     } catch (error) {
+      SetLoadingState(false);
       toast.error(error?.response?.data?.message);
       console.log(error);
     }
+  };
+
+  const [purpose, setPurpose] = useState(""); // stores camelCase keys like "loanCollection"
+
+  const handleSelectChange = (e) => {
+    setPurpose(e.target.value);
+    console.log("Selected value (camelCase):", e.target.value);
   };
 
   return (
@@ -241,16 +257,31 @@ const QueueForm = () => {
                 <label className="form-label">
                   Purpose of Visit <span className="required">*</span>
                 </label>
-                <select className="form-input form-select">
+                <select
+                  className="form-input form-select"
+                  value={purpose}
+                  onChange={handleSelectChange}
+                >
                   <option value="">Select a service</option>
-                  <option value="Account Opening">Account Opening</option>
-                  <option value="Loan Collection">Loan Collection</option>
-                  <option value="Card Collection">Card Collection</option>
-                  <option value="Fund Transfer">Fund Transfer</option>
-                  <option value="Account Update">Account Update</option>
-                  <option value="General Inquiry">General Inquiry</option>
-                  <option value="General Inquiry">General Inquiry</option>
-                  <option value="other">Other</option>
+                  <option value={toCamelCase("Account Opening")}>
+                    Account Opening
+                  </option>
+                  <option value={toCamelCase("Loan Collection")}>
+                    Loan Collection
+                  </option>
+                  <option value={toCamelCase("Card Collection")}>
+                    Card Collection
+                  </option>
+                  <option value={toCamelCase("Fund Transfer")}>
+                    Fund Transfer
+                  </option>
+                  <option value={toCamelCase("Account Update")}>
+                    Account Update
+                  </option>
+                  <option value={toCamelCase("General Inquiry")}>
+                    General Inquiry
+                  </option>
+                  <option value={toCamelCase("Other")}>Other</option>
                 </select>
               </div>
 
@@ -259,6 +290,13 @@ const QueueForm = () => {
                   Additional Notes (Optional)
                 </label>
                 <textarea
+                  value={inputValues.AdditionalInfo}
+                  onChange={(e) =>
+                    SetInputValues({
+                      ...inputValues,
+                      AdditionalInfo: e.target.value,
+                    })
+                  }
                   className="form-input form-textarea"
                   placeholder="Any specific details or requirements..."
                   rows="4"
@@ -350,10 +388,15 @@ const QueueForm = () => {
               </button>
               <button
                 onClick={JoinQueue}
+                disabled={LoadingState}
+                style={{
+                  cursor: `${LoadingState ? "not-allowed" : "pointer"}`,
+                  backgroundColor: `${LoadingState ? "gray" : ""}`,
+                }}
                 type="submit"
                 className="btn btn-primary"
               >
-                Join Queue
+                {LoadingState ? "Joining....." : " Join Queue"}
               </button>
             </div>
           </form>

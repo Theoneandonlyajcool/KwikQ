@@ -30,6 +30,8 @@ const Preview = () => {
   const [LoadingState, SetLoadingState] = useState(false);
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const token = localStorage.getItem("User");
+  console.log(Org_Details);
+  console.log(token);
 
   const CreateBranch = async () => {
     try {

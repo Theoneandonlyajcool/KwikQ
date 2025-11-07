@@ -81,6 +81,15 @@ const QueueManagement = () => {
     }
   };
 
+  // const GetAllQueues = async () => {
+  //   try {
+  //     const res = await axios.get(`${BaseURL}/api/v1/get-all-customers`);
+  //     console.log(res?.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   useEffect(() => {
     GetAllQueues();
   }, []);
