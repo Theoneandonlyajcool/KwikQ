@@ -83,12 +83,14 @@ const QueueForm = () => {
   // console.log(ORGid);
 
   const [LoadingState, SetLoadingState] = useState(false);
+  console.log(ORGid);
+  console.log(Branchid);
 
   const JoinQueue = async () => {
     try {
       SetLoadingState(true);
       const res = await axios.post(
-        `${BaseURl}/api/v1/customer`,
+        `${BaseURl}/api/v1/cus`,
         {
           organization: ORGid,
           branch: Branchid,

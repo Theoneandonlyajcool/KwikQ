@@ -66,6 +66,7 @@ const QueueManagement = () => {
   const BranchID = localStorage.getItem("BranchID");
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const [LoadingState, SetLoadingState] = useState(false);
+  console.log(BranchID);
 
   const GetAllQueues = async () => {
     try {
