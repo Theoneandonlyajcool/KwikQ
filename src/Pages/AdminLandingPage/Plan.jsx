@@ -39,6 +39,14 @@ const PlandBody = styled.div`
   align-items: center;
   background-color: #ffffff;
 
+  @media (min-width: 1440px) {
+    min-height: 100vh;
+  }
+
+  @media (min-width: 1920px) {
+    min-height: 100vh;
+  }
+
   @media (max-width: 768px) {
     min-height: auto;
     padding: 40px 0;
@@ -60,6 +68,16 @@ const PlanWraper = styled.div`
   padding: 40px 0px;
   flex-direction: column;
   gap: 43px;
+
+  @media (min-width: 1440px) {
+    width: 90%;
+    padding: 60px 0px;
+  }
+
+  @media (min-width: 1920px) {
+    width: 85%;
+    padding: 80px 0px;
+  }
 
   @media (max-width: 768px) {
     width: 95%;
@@ -86,6 +104,14 @@ const HeaderText = styled.div`
     font-size: 39px;
     font-weight: 600;
 
+    @media (min-width: 1440px) {
+      font-size: 42px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 45px;
+    }
+
     @media (max-width: 768px) {
       font-size: 32px;
       text-align: center;
@@ -100,6 +126,14 @@ const HeaderText = styled.div`
     font-weight: 400;
     font-size: 16px;
     color: #4a5565;
+
+    @media (min-width: 1440px) {
+      font-size: 17px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 18px;
+    }
 
     @media (max-width: 768px) {
       font-size: 15px;
@@ -131,6 +165,16 @@ const PlanHolder = styled.div`
   align-items: center;
   gap: 30px;
   justify-content: center;
+
+  @media (min-width: 1440px) {
+    max-width: 1200px;
+    gap: 40px;
+  }
+
+  @media (min-width: 1920px) {
+    max-width: 1400px;
+    gap: 50px;
+  }
 
   h1 {
     font-weight: 600;
@@ -169,6 +213,16 @@ const PlanHolder = styled.div`
     box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
     gap: 20px;
 
+    @media (min-width: 1440px) {
+      width: 400px;
+      min-height: 280px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 420px;
+      min-height: 300px;
+    }
+
     .Icon_holder {
       width: 47.99px;
       height: 43.98px;
@@ -179,6 +233,18 @@ const PlanHolder = styled.div`
       align-items: center;
       font-size: 23px;
       color: #ffffff;
+
+      @media (min-width: 1440px) {
+        width: 50px;
+        height: 46px;
+        font-size: 24px;
+      }
+
+      @media (min-width: 1920px) {
+        width: 52px;
+        height: 48px;
+        font-size: 25px;
+      }
 
       @media (max-width: 768px) {
         width: 45px;
@@ -199,11 +265,27 @@ const PlanHolder = styled.div`
       width: 317.52px;
       gap: 10px;
 
+      @media (min-width: 1440px) {
+        width: 330px;
+      }
+
+      @media (min-width: 1920px) {
+        width: 350px;
+      }
+
       h3 {
         font-weight: 600;
         font-size: 20px;
         line-height: 300%;
         color: #101828;
+
+        @media (min-width: 1440px) {
+          font-size: 22px;
+        }
+
+        @media (min-width: 1920px) {
+          font-size: 24px;
+        }
 
         @media (max-width: 768px) {
           font-size: 18px;
@@ -221,6 +303,16 @@ const PlanHolder = styled.div`
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
+
+        @media (min-width: 1440px) {
+          width: 260px;
+          font-size: 17px;
+        }
+
+        @media (min-width: 1920px) {
+          width: 270px;
+          font-size: 18px;
+        }
 
         @media (max-width: 768px) {
           width: 100%;

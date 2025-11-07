@@ -2,8 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { GrStatusGood } from "react-icons/gr";
 import { IoArrowBackSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 
 const Submitted = () => {
+  const nav = useNavigate();
   return (
     <PreviewContainer>
       <BoardingLogo>
@@ -18,10 +20,10 @@ const Submitted = () => {
           </div>
         </div>
         <Back>
-          <div className="circle">
+          {/* <div className="circle">
             <IoArrowBackSharp />
             Back
-          </div>
+          </div> */}
         </Back>
       </BoardingLogo>
 
@@ -65,7 +67,9 @@ const Submitted = () => {
           </div>
         </ContentWrapper>
         <Bottomholder>
-          <button className="Btn">DashBoard</button>
+          <button className="Btn" onClick={() => nav("/dashboard/*")}>
+            DashBoard
+          </button>
           <button>View Pricing Plans</button>
         </Bottomholder>
       </SubmittedHolder>

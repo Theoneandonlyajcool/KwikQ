@@ -22,12 +22,12 @@ const About = () => {
           experience faster, smarter, and more efficient. With features like
           real-time queue tracking, QR code check-ins, and instant
           notifications, KwikQ empowers businesses to deliver smooth and
-          organized customer service without the chaos. Whether it’s a bank,
+          organized customer service without the chaos. Whether it's a bank,
           clinic, or service center, KwikQ transforms waiting lines into
           seamless experiences because great service starts with great order.
           <br />
           <br />
-          Whether it’s a bank, clinic, or service center, KwikQ transforms
+          Whether it's a bank, clinic, or service center, KwikQ transforms
           waiting lines into seamless experiences — because great service starts
           with great order.
         </p>
@@ -46,6 +46,18 @@ export const AboutContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 50px;
+
+  @media (min-width: 1441px) {
+    width: 100%;
+    min-height: 100vh;
+    gap: 50px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    min-height: 100vh;
+    gap: 50px;
+  }
 
   @media screen and (max-width: 360px) {
     flex-direction: column;
@@ -66,10 +78,32 @@ export const ImageHolder = styled.div`
   width: 471px;
   height: 423px;
 
+  @media (min-width: 1441px) {
+    width: 471px;
+    height: 423px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 471px;
+    height: 423px;
+  }
+
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+
+    @media (min-width: 1441px) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   @media screen and (max-width: 360px) {
@@ -91,11 +125,33 @@ export const TextHolder = styled.div`
   flex-direction: column;
   gap: 23px;
 
+  @media (min-width: 1441px) {
+    width: 698px;
+    height: 457px;
+    gap: 23px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 698px;
+    height: 457px;
+    gap: 23px;
+  }
+
   h1 {
     font-weight: 700;
     font-size: 45px;
     color: #222222;
     line-height: 220%;
+
+    @media (min-width: 1441px) {
+      font-size: 45px;
+      line-height: 220%;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      font-size: 45px;
+      line-height: 220%;
+    }
 
     span {
       color: #303bff;
@@ -107,10 +163,28 @@ export const TextHolder = styled.div`
     line-height: 155%;
     color: #222222;
     font-weight: 400;
+
+    @media (min-width: 1441px) {
+      font-size: 20px;
+      line-height: 155%;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      font-size: 20px;
+      line-height: 155%;
+    }
   }
 
   strong {
     color: #303bff;
+
+    @media (min-width: 1441px) {
+      color: #303bff;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      color: #303bff;
+    }
   }
 
   @media screen and (max-width: 360px) {

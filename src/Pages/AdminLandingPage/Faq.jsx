@@ -105,6 +105,22 @@ const MainContainer = styled.div`
   padding-bottom: 20px;
   justify-content: center;
 
+  @media (min-width: 1441px) {
+    width: 100%;
+    height: auto;
+    gap: 43px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    height: auto;
+    gap: 43px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
   @media (max-width: 768px) {
     gap: 30px;
     padding-top: 15px;
@@ -127,6 +143,18 @@ const HeaderText = styled.div`
   align-items: center;
   gap: 10px;
 
+  @media (min-width: 1441px) {
+    width: 100%;
+    min-height: 20vh;
+    gap: 10px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    min-height: 20vh;
+    gap: 10px;
+  }
+
   .Top_icon {
     width: 47.99px;
     min-height: 47.88px;
@@ -137,6 +165,18 @@ const HeaderText = styled.div`
     display: flex;
     color: white;
     font-size: 20px;
+
+    @media (min-width: 1441px) {
+      width: 47.99px;
+      min-height: 47.88px;
+      font-size: 20px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 47.99px;
+      min-height: 47.88px;
+      font-size: 20px;
+    }
   }
 
   h2 {
@@ -144,12 +184,28 @@ const HeaderText = styled.div`
     font-weight: 600;
     color: #101828;
     font-weight: 600;
+
+    @media (min-width: 1441px) {
+      font-size: 39px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      font-size: 39px;
+    }
   }
 
   p {
     font-size: 16px;
     color: #4a5565;
     font-weight: 400;
+
+    @media (min-width: 1441px) {
+      font-size: 16px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      font-size: 16px;
+    }
   }
 
   @media (max-width: 768px) {
@@ -196,6 +252,22 @@ const MiddleHolder = styled.div`
   gap: 30px;
   padding: 0 20px;
 
+  @media (min-width: 1441px) {
+    width: 100%;
+    max-width: 1331px;
+    min-height: 546.66px;
+    gap: 30px;
+    padding: 0 20px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    max-width: 1331px;
+    min-height: 546.66px;
+    gap: 30px;
+    padding: 0 20px;
+  }
+
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 25px;
@@ -213,10 +285,32 @@ const ImageHolder = styled.div`
   width: 599px;
   height: 516.54px;
 
+  @media (min-width: 1441px) {
+    width: 599px;
+    height: 516.54px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 599px;
+    height: 516.54px;
+  }
+
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+
+    @media (min-width: 1441px) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   @media (max-width: 768px) {
@@ -239,6 +333,18 @@ const CardHolder = styled.div`
   flex-direction: column;
   gap: 16px;
   overflow-y: auto;
+
+  @media (min-width: 1441px) {
+    width: 45%;
+    height: 546.66px;
+    gap: 16px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 45%;
+    height: 546.66px;
+    gap: 16px;
+  }
 
   @media (max-width: 768px) {
     width: 100%;
@@ -265,6 +371,16 @@ const QuestionsHolder = styled.div`
   overflow: hidden;
   border: 1px solid #e5e7eb;
 
+  @media (min-width: 1441px) {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    border-radius: 10px;
+  }
+
   @media (max-width: 480px) {
     border-radius: 8px;
   }
@@ -281,6 +397,18 @@ const QuestionsCard = styled.div`
   background-color: #f5f7fa;
   border-radius: 10px;
 
+  @media (min-width: 1441px) {
+    width: 100%;
+    height: 51.99px;
+    padding: 0 20px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    height: 51.99px;
+    padding: 0 20px;
+  }
+
   .rotate {
     transform: rotate(180deg);
   }
@@ -292,6 +420,16 @@ const QuestionsCard = styled.div`
     color: #303bff;
     background-color: #ffffff;
     padding: 3px;
+
+    @media (min-width: 1441px) {
+      width: 22px;
+      height: 22px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 22px;
+      height: 22px;
+    }
   }
 
   @media (max-width: 768px) {
@@ -319,6 +457,18 @@ const AnswerCard = styled.div`
   font-size: 14px;
   line-height: 1.5;
 
+  @media (min-width: 1441px) {
+    width: 100%;
+    padding: 14px 22px;
+    font-size: 14px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    padding: 14px 22px;
+    font-size: 14px;
+  }
+
   @media (max-width: 768px) {
     padding: 12px 18px;
   }
@@ -337,6 +487,16 @@ const QuestionText = styled.h4`
   line-height: 140%;
   width: 90%;
   margin: 0;
+
+  @media (min-width: 1441px) {
+    font-size: 15px;
+    width: 90%;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    font-size: 15px;
+    width: 90%;
+  }
 
   @media (max-width: 768px) {
     font-size: 14px;

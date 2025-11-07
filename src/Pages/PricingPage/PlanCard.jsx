@@ -6,9 +6,9 @@ export const PlanCards = [
   {
     id: 1,
     Icon: <IoMdTime />,
-    title: "14-Day Free Trial",
+    title: "7-Day Free Trial",
     details:
-      "Try any plan risk-free for 14 days. No credit card required to start.",
+      "Try any plan risk-free for 7 days. No credit card required to start.",
   },
 
   {

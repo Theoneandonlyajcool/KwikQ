@@ -70,7 +70,7 @@ const Router = () => {
             <Route path="/reset_password" element={<ResetPassword />} />
             <Route path="/Sevenday_free" element={<Sevendayfree />} />
             <Route path="/queue_form" element={<QueueForm />} />
-            {/* <Route path="/queue_success" element={<QueueSuccess />} /> */}
+            <Route path="/queue_success" element={<QueueSuccess />} />
             <Route path="/edit_branch" element={<Editbranch />} />
             <Route path="/pricing" element={<Pricepage />} />
             <Route path="/singleBranch" element={<LoginForm />} />
