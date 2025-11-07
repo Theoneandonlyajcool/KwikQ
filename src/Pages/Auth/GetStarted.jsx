@@ -54,7 +54,7 @@ const GetStarted = () => {
             image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783257/6deb3f53715c252d7279ab294c1fc5bf1b3e46d3_wjp2w1.jpg"
             title="individual"
             desc="A single, independent entity that operates from one main location or unitu"
-            role={"independent"}
+            role={"individual"}
           />
           <Card
             image="https://res.cloudinary.com/dmqhseusw/image/upload/v1760783258/374da1b547a439fa5c2a4ee0f923a871458d0381_1_pfvxvt.png"

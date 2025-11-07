@@ -17,8 +17,11 @@ import MuiSkeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useNavigate } from "react-router-dom";
 
 const QueueForm = () => {
+  const nav = useNavigate();
+
   const [FormLoadingState, SetFormLoadingState] = useState(false);
 
   const [ElederlyStatus, SetElderlyStatus] = useState(false);
@@ -69,27 +72,27 @@ const QueueForm = () => {
   const Formtoken = localStorage.getItem("User");
   console.log(Formtoken);
 
-  const Orgid = sessionStorage.getItem("user-recog");
-  console.log(Orgid);
-
-  const Branchid = "690b69abeb798f2d5d3711c2";
+  const Branchid = localStorage.getItem("BranchID");
   console.log(Branchid);
+
+  const ORGid = localStorage.getItem("Org_ID");
+  console.log(ORGid);
 
   const JoinQueue = async () => {
     try {
       const res = await axios.post(
         `${BaseURl}/api/v1/customer`,
         {
-          organization: Orgid,
+          organization: ORGid,
           branch: Branchid,
           formDetails: {
-            fullName: "string",
-            email: "string",
-            phone: "string",
-            serviceNeeded: "string",
-            additionalInfo: "Unknown Type: String",
+            fullName: "Adebola",
+            email: "Joseph@gmail.com",
+            phone: "09136890215",
+            serviceNeeded: "loanCollection",
+            additionalInfo: "This is the additional info",
             elderlyStatus: true,
-            pregnantStatus: true,
+            pregnantStatus: false,
             emergencyLevel: true,
           },
         },
@@ -103,6 +106,7 @@ const QueueForm = () => {
       console.log(res?.data);
       toast.success(res?.data?.message);
     } catch (error) {
+      toast.error(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -125,7 +129,11 @@ const QueueForm = () => {
             </div>
           </div>
 
-          <div className="header-right">
+          <div
+            className="header-right"
+            onClick={() => nav(-1)}
+            style={{ cursor: "pointer" }}
+          >
             <IoArrowBackOutline />
             Back
           </div>
@@ -235,14 +243,13 @@ const QueueForm = () => {
                 </label>
                 <select className="form-input form-select">
                   <option value="">Select a service</option>
-                  <option value="consultation">General Consultation</option>
-                  <option value="prescription_refill">
-                    Prescription Refill
-                  </option>
-                  <option value="lab_test">Laboratory Test</option>
-                  <option value="vaccination">Vaccination</option>
-                  <option value="follow_up">Follow-up Visit</option>
-                  <option value="emergency">Emergency</option>
+                  <option value="Account Opening">Account Opening</option>
+                  <option value="Loan Collection">Loan Collection</option>
+                  <option value="Card Collection">Card Collection</option>
+                  <option value="Fund Transfer">Fund Transfer</option>
+                  <option value="Account Update">Account Update</option>
+                  <option value="General Inquiry">General Inquiry</option>
+                  <option value="General Inquiry">General Inquiry</option>
                   <option value="other">Other</option>
                 </select>
               </div>

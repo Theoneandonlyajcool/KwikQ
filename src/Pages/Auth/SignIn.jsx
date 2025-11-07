@@ -10,7 +10,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
-import { Role } from "../../Components/Context";
+import { PreviousPage } from "../../Components/ReUsableFunction";
 
 const SignIn = () => {
   // const { role } = useParams();
@@ -108,12 +108,52 @@ const SignIn = () => {
     setEyePassword((prev) => !prev);
   };
 
+  const DisplayRole = localStorage.getItem("UserRole");
+
+  const goBack = PreviousPage();
+
   return (
     // <div>
     <Loginbackground>
       <section className="loginrap">
         <div className="login_context">
-          <div className="loginlogo">
+          {DisplayRole && (
+            <div
+              style={{
+                // border: "2px solid red",
+                position: "fixed",
+                top: "0",
+                width: "100%",
+                height: "5vh",
+                left: "0",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 1000,
+              }}
+            >
+              <div
+                style={{
+                  border: "2px solid green",
+                  backgroundColor: "#303bff",
+                  color: "white",
+                  width: "50%",
+                  height: "100%",
+                  borderBottomLeftRadius: "1rem",
+                  borderBottomRightRadius: "1rem",
+                  textAlign: "center",
+                }}
+              >
+                <h3>
+                  {DisplayRole == "multi"
+                    ? "You are signing in as a multi organization"
+                    : "You are signing in as an individual organization"}
+                </h3>
+              </div>
+            </div>
+          )}
+
+          <div className="loginlogo" onClick={() => goBack()}>
             <img
               src="https://res.cloudinary.com/dmqhseusw/image/upload/v1760739526/35379ce965af990a259b5b98b745a14f6d61bddc_edhy49.png"
               className="imagestyled"
