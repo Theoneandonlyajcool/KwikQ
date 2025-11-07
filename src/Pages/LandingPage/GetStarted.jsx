@@ -7,7 +7,7 @@ const GetStarted = () => {
     <GetStartedBody>
       <GetStartedWrapper>
         <HeroText>
-          <h1>Get rid of long line and wait times</h1>
+          <h1>Get rid of long lines and wait times</h1>
           <button>
             Get started today
             <MdKeyboardArrowRight className="arrow-icon" />
@@ -22,8 +22,16 @@ export default GetStarted;
 
 const GetStartedBody = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 80vh;
   display: flex;
+
+  @media (min-width: 1441px) {
+    height: 85vh;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    height: 82vh;
+  }
 
   @media (max-width: 768px) {
     height: auto;
@@ -38,7 +46,7 @@ const GetStartedBody = styled.div`
 
 const GetStartedWrapper = styled.div`
   width: 100%;
-  height: 85vh;
+  height: 75vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -49,6 +57,18 @@ const GetStartedWrapper = styled.div`
   background-image: url(https://i.postimg.cc/t4Tf9pnr/section.png);
   background-position: center;
   background-size: cover;
+
+  @media (min-width: 1441px) {
+    height: 80vh;
+    padding: 100px;
+    gap: 40px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    height: 78vh;
+    padding: 90px;
+    gap: 35px;
+  }
 
   @media (max-width: 768px) {
     height: auto;
@@ -72,11 +92,31 @@ const HeroText = styled.div`
   flex-direction: column;
   gap: 50px;
 
+  @media (min-width: 1441px) {
+    gap: 60px;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    gap: 55px;
+  }
+
   h1 {
     font-size: 96px;
     font-weight: 600;
     line-height: 100%;
-    width: 70%;
+    width: 80%;
+
+    @media (min-width: 1441px) {
+      font-size: 110px;
+      width: 75%;
+      line-height: 105%;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      font-size: 100px;
+      width: 78%;
+      line-height: 102%;
+    }
   }
 
   button {
@@ -95,6 +135,22 @@ const HeroText = styled.div`
     cursor: pointer;
     transition: all 0.3s ease;
 
+    @media (min-width: 1441px) {
+      width: 300px;
+      height: 70px;
+      font-size: 22px;
+      border-radius: 25px;
+      gap: 8px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 280px;
+      height: 65px;
+      font-size: 21px;
+      border-radius: 22px;
+      gap: 6px;
+    }
+
     &:hover {
       background-color: #14196b;
       color: white;
@@ -105,6 +161,14 @@ const HeroText = styled.div`
     .arrow-icon {
       font-size: 25px;
       transition: transform 0.3s ease;
+
+      @media (min-width: 1441px) {
+        font-size: 28px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        font-size: 26px;
+      }
     }
 
     &:hover .arrow-icon {

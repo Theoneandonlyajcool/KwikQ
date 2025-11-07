@@ -46,6 +46,14 @@ const FeaturesContainer = styled.div`
   align-items: center;
   background-color: #eaedff;
 
+  @media (min-width: 1441px) {
+    height: 100vh;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    height: 100vh;
+  }
+
   @media (max-width: 768px) {
     height: auto;
     padding: 30px 0;
@@ -64,6 +72,16 @@ const FeaturesWrapper = styled.div`
   align-items: center;
   flex-direction: column;
 
+  @media (min-width: 1441px) {
+    width: 90%;
+    height: 100vh;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 90%;
+    height: 100vh;
+  }
+
   .main {
     width: 843px;
     height: 154px;
@@ -73,10 +91,30 @@ const FeaturesWrapper = styled.div`
     flex-direction: column;
     gap: 10px;
 
+    @media (min-width: 1441px) {
+      width: 843px;
+      height: 154px;
+      gap: 10px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 843px;
+      height: 154px;
+      gap: 10px;
+    }
+
     h4 {
       font-weight: 700;
       font-size: 45px;
       color: #222222;
+
+      @media (min-width: 1441px) {
+        font-size: 45px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        font-size: 45px;
+      }
     }
 
     p {
@@ -84,6 +122,18 @@ const FeaturesWrapper = styled.div`
       font-weight: 500;
       width: 90%;
       line-height: 140%;
+
+      @media (min-width: 1441px) {
+        font-size: 18px;
+        width: 90%;
+        line-height: 140%;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        font-size: 18px;
+        width: 90%;
+        line-height: 140%;
+      }
     }
   }
 
@@ -139,7 +189,22 @@ const CardHolder = styled.div`
   gap: 20px;
   flex-wrap: nowrap;
   padding: 30px 0;
-  /* background-color: yellow;/ */
+
+  @media (min-width: 1441px) {
+    width: 100%;
+    height: 68vh;
+    min-height: max-content;
+    gap: 20px;
+    padding: 30px 0;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1440px) {
+    width: 100%;
+    height: 68vh;
+    min-height: max-content;
+    gap: 20px;
+    padding: 30px 0;
+  }
 
   .Cards {
     width: 23%;
@@ -154,6 +219,20 @@ const CardHolder = styled.div`
     background-color: #ffffff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
+    @media (min-width: 1441px) {
+      width: 23%;
+      min-height: 330px;
+      padding: 25px 20px;
+      gap: 25px;
+    }
+
+    @media (min-width: 1025px) and (max-width: 1440px) {
+      width: 23%;
+      min-height: 330px;
+      padding: 25px 20px;
+      gap: 25px;
+    }
+
     .icon {
       width: 50px;
       height: 50px;
@@ -165,6 +244,20 @@ const CardHolder = styled.div`
       color: white;
       background-color: #009688;
       margin-bottom: 10px;
+
+      @media (min-width: 1441px) {
+        width: 50px;
+        height: 50px;
+        font-size: 25px;
+        margin-bottom: 10px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        width: 50px;
+        height: 50px;
+        font-size: 25px;
+        margin-bottom: 10px;
+      }
     }
 
     .text {
@@ -173,12 +266,30 @@ const CardHolder = styled.div`
       align-items: flex-start;
       gap: 15px;
 
+      @media (min-width: 1441px) {
+        gap: 15px;
+      }
+
+      @media (min-width: 1025px) and (max-width: 1440px) {
+        gap: 15px;
+      }
+
       h3 {
         font-weight: 600;
         font-size: 17px;
         line-height: 130%;
         color: #14196b;
         margin: 0;
+
+        @media (min-width: 1441px) {
+          font-size: 17px;
+          line-height: 130%;
+        }
+
+        @media (min-width: 1025px) and (max-width: 1440px) {
+          font-size: 17px;
+          line-height: 130%;
+        }
       }
 
       p {
@@ -186,6 +297,16 @@ const CardHolder = styled.div`
         font-weight: 400;
         line-height: 150%;
         color: #333;
+
+        @media (min-width: 1441px) {
+          font-size: 15px;
+          line-height: 150%;
+        }
+
+        @media (min-width: 1025px) and (max-width: 1440px) {
+          font-size: 15px;
+          line-height: 150%;
+        }
       }
     }
   }

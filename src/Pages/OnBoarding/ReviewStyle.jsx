@@ -10,6 +10,16 @@ export const PreviewContainer = styled.div`
   justify-content: center;
   gap: 20px;
 
+  @media (min-width: 1440px) {
+    height: 110vh;
+    gap: 25px;
+  }
+
+  @media (min-width: 1920px) {
+    height: 120vh;
+    gap: 30px;
+  }
+
   @media (max-width: 1024px) {
     gap: 15px;
   }
@@ -36,6 +46,16 @@ export const BoardingLogo = styled.div`
     justify-content: center;
     align-items: center;
 
+    @media (min-width: 1440px) {
+      width: 140px;
+      height: 90px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 160px;
+      height: 100px;
+    }
+
     @media (max-width: 768px) {
       width: 100px;
       height: 70px;
@@ -53,6 +73,18 @@ export const BoardingLogo = styled.div`
     align-items: center;
     cursor: pointer;
 
+    @media (min-width: 1440px) {
+      width: 45px;
+      min-height: 35px;
+      font-size: 22px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 50px;
+      min-height: 40px;
+      font-size: 24px;
+    }
+
     @media (max-width: 768px) {
       width: 35px;
       min-height: 25px;
@@ -67,6 +99,16 @@ export const BoardingLogo = styled.div`
     display: flex;
     flex-direction: column;
 
+    @media (min-width: 1440px) {
+      width: 200px;
+      height: 45px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 220px;
+      height: 50px;
+    }
+
     @media (max-width: 768px) {
       width: 150px;
       height: 35px;
@@ -79,12 +121,21 @@ export const BoardingLogo = styled.div`
     }
 
     p {
-      color: red;
       margin-left: 34px;
       color: #6a7282;
       font-variant: 16px;
       font-weight: 400;
       line-height: 24px;
+
+      @media (min-width: 1440px) {
+        font-size: 17px;
+        margin-left: 38px;
+      }
+
+      @media (min-width: 1920px) {
+        font-size: 18px;
+        margin-left: 42px;
+      }
 
       @media (max-width: 768px) {
         margin-left: 20px;
@@ -92,6 +143,14 @@ export const BoardingLogo = styled.div`
         line-height: 20px;
       }
     }
+  }
+
+  @media (min-width: 1440px) {
+    min-height: 18vh;
+  }
+
+  @media (min-width: 1920px) {
+    min-height: 20vh;
   }
 
   @media (max-width: 1024px) {
@@ -110,6 +169,14 @@ export const BoardingTop = styled.div`
   align-items: center;
   justify-content: center;
 
+  @media (min-width: 1440px) {
+    height: 25vh;
+  }
+
+  @media (min-width: 1920px) {
+    height: 30vh;
+  }
+
   @media (max-width: 768px) {
     height: 15vh;
   }
@@ -122,6 +189,16 @@ export const BoardingTop = styled.div`
     width: 120px;
     gap: 8px;
     text-align: center;
+
+    @media (min-width: 1440px) {
+      width: 140px;
+      gap: 10px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 160px;
+      gap: 12px;
+    }
 
     @media (max-width: 768px) {
       width: 100px;
@@ -140,6 +217,18 @@ export const BoardingTop = styled.div`
     align-items: center;
     font-size: 20px;
 
+    @media (min-width: 1440px) {
+      width: 55px;
+      height: 55px;
+      font-size: 22px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+    }
+
     @media (max-width: 768px) {
       width: 40px;
       height: 40px;
@@ -153,6 +242,14 @@ export const BoardingTop = styled.div`
     font-size: 16px;
     font-weight: 400;
 
+    @media (min-width: 1440px) {
+      font-size: 17px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 18px;
+    }
+
     @media (max-width: 768px) {
       font-size: 12px;
     }
@@ -161,6 +258,14 @@ export const BoardingTop = styled.div`
   hr {
     width: 120px;
     color: #e5e7eb;
+
+    @media (min-width: 1440px) {
+      width: 140px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 160px;
+    }
 
     @media (max-width: 768px) {
       display: none;
@@ -171,6 +276,14 @@ export const BoardingTop = styled.div`
 export const TopText = styled.div`
   width: 74%;
   min-height: 55px;
+
+  @media (min-width: 1440px) {
+    width: 70%;
+  }
+
+  @media (min-width: 1920px) {
+    width: 65%;
+  }
 
   @media (max-width: 1024px) {
     width: 85%;
@@ -187,6 +300,14 @@ export const TopText = styled.div`
     line-height: 150%;
     font-weight: 400;
 
+    @media (min-width: 1440px) {
+      font-size: 17px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 18px;
+    }
+
     @media (max-width: 768px) {
       font-size: 14px;
     }
@@ -202,6 +323,18 @@ export const FirstSection = styled.div`
   gap: 20px;
   padding: 20px;
   flex-direction: column;
+
+  @media (min-width: 1440px) {
+    width: 70%;
+    height: 280px;
+    padding: 25px;
+  }
+
+  @media (min-width: 1920px) {
+    width: 65%;
+    height: 300px;
+    padding: 30px;
+  }
 
   @media (max-width: 1024px) {
     width: 85%;
@@ -229,6 +362,14 @@ export const TextHolder = styled.div`
   width: 100%;
   min-height: 30vh;
 
+  @media (min-width: 1440px) {
+    min-height: 35vh;
+  }
+
+  @media (min-width: 1920px) {
+    min-height: 40vh;
+  }
+
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 15px;
@@ -240,6 +381,16 @@ export const TextHolder = styled.div`
     width: 510px;
     min-height: 100%;
     gap: 20px;
+
+    @media (min-width: 1440px) {
+      width: 550px;
+      gap: 25px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 600px;
+      gap: 30px;
+    }
 
     @media (max-width: 1024px) {
       width: 48%;
@@ -257,6 +408,16 @@ export const TextHolder = styled.div`
     flex-direction: column;
     gap: 20px;
 
+    @media (min-width: 1440px) {
+      width: 550px;
+      gap: 25px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 600px;
+      gap: 30px;
+    }
+
     @media (max-width: 1024px) {
       width: 48%;
     }
@@ -273,6 +434,14 @@ export const TextHolder = styled.div`
     font-weight: 400;
     color: #8c8c8c;
 
+    @media (min-width: 1440px) {
+      font-size: 17px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 18px;
+    }
+
     @media (max-width: 768px) {
       font-size: 14px;
     }
@@ -283,6 +452,14 @@ export const TextHolder = styled.div`
     font-size: 16px;
     font-weight: 400;
     color: #222222;
+
+    @media (min-width: 1440px) {
+      font-size: 17px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 18px;
+    }
 
     @media (max-width: 768px) {
       font-size: 14px;
@@ -299,6 +476,18 @@ export const SecondSection = styled.div`
   gap: 20px;
   padding: 20px;
   flex-direction: column;
+
+  @media (min-width: 1440px) {
+    width: 70%;
+    height: 320px;
+    padding: 25px;
+  }
+
+  @media (min-width: 1920px) {
+    width: 65%;
+    height: 350px;
+    padding: 30px;
+  }
 
   @media (max-width: 1024px) {
     width: 85%;
@@ -327,6 +516,16 @@ export const SecondSection = styled.div`
     gap: 20px;
     justify-content: center;
 
+    @media (min-width: 1440px) {
+      width: 550px;
+      gap: 25px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 600px;
+      gap: 30px;
+    }
+
     @media (max-width: 1024px) {
       width: 100%;
     }
@@ -350,6 +549,18 @@ export const NoticeSection = styled.div`
   padding-left: 25.23px;
   gap: 10px;
 
+  @media (min-width: 1440px) {
+    width: 70%;
+    height: 220px;
+    padding: 25px;
+  }
+
+  @media (min-width: 1920px) {
+    width: 65%;
+    height: 240px;
+    padding: 30px;
+  }
+
   @media (max-width: 1024px) {
     width: 85%;
     height: auto;
@@ -369,6 +580,14 @@ export const NoticeSection = styled.div`
     gap: 10px;
     align-items: center;
 
+    @media (min-width: 1440px) {
+      gap: 12px;
+    }
+
+    @media (min-width: 1920px) {
+      gap: 15px;
+    }
+
     @media (max-width: 768px) {
       gap: 8px;
     }
@@ -379,6 +598,14 @@ export const NoticeSection = styled.div`
     line-height: 150%;
     font-size: 16px;
     font-weight: 400;
+
+    @media (min-width: 1440px) {
+      font-size: 17px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 18px;
+    }
 
     @media (max-width: 768px) {
       font-size: 14px;
@@ -391,6 +618,16 @@ export const NoticeSection = styled.div`
     font-size: 16px;
     font-weight: 400;
     padding-left: 25.23px;
+
+    @media (min-width: 1440px) {
+      font-size: 17px;
+      padding-left: 28px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 18px;
+      padding-left: 32px;
+    }
 
     @media (max-width: 768px) {
       font-size: 14px;
@@ -406,6 +643,16 @@ export const Bottomholder = styled.div`
   justify-content: center;
   align-items: center;
   justify-content: flex-end;
+
+  @media (min-width: 1440px) {
+    width: 70%;
+    min-height: 12vh;
+  }
+
+  @media (min-width: 1920px) {
+    width: 65%;
+    min-height: 14vh;
+  }
 
   @media (max-width: 1024px) {
     width: 85%;
@@ -432,6 +679,18 @@ export const Bottomholder = styled.div`
     font-weight: 400;
     line-height: 20px;
     cursor: pointer;
+
+    @media (min-width: 1440px) {
+      width: 200px;
+      height: 40px;
+      font-size: 15px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 220px;
+      height: 44px;
+      font-size: 16px;
+    }
 
     @media (max-width: 768px) {
       width: 90%;
