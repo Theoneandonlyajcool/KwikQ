@@ -66,7 +66,6 @@ export const BoardingLogo = styled.div`
     }
 
     p {
-      color: red;
       margin-left: 34px;
       color: #6a7282;
       font-variant: 16px;
