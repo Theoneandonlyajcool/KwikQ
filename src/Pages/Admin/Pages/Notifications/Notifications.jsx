@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Notifications.css";
 import axios from "axios";
 
@@ -48,15 +48,32 @@ const NotificationsPage = () => {
     (n) => n.priority === "High Priority"
   ).length;
 
-  const markAllAsRead = () => {
-    setNotifications(notifications.map((n) => ({ ...n, read: true })));
-  };
+  // const markAllAsRead = () => {
+  //   setNotifications(notifications.map((n) => ({ ...n, read: true })));
+  // };
+
+  const BaseURL = import.meta.env.VITE_API_BASE_URL;
+  const BranchID = localStorage.getItem("BranchID");
+  const Role =
+    localStorage.getItem("UserRole") || localStorage.getItem("OrgRole");
+
+  console.log(Role);
 
   const FetchNotifications = async () => {
     try {
-      const res = await axios.get();
-    } catch (error) {}
+      const res = await axios.get(
+        `${BaseURL}/api/v1/notifications/${BranchID}?role=${Role}`
+      );
+
+      console.log(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    FetchNotifications();
+  }, []);
 
   return (
     <>

@@ -13,6 +13,7 @@ import QueueManagement from "../Admin/Pages/Queue/QueueManagement";
 import AnalyticsDashboard from "../Admin/Pages/Analytics/Analytics";
 import QueueHistory from "../Admin/Pages/History/History";
 import NotificationsPage from "../Admin/Pages/Notifications/Notifications";
+import QueueSettings from "./Pages/Settings/Settings";
 
 const AdminDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
@@ -61,7 +62,7 @@ const AdminDashboard = () => {
       case "notifications":
         return <NotificationsPage />;
       case "settings":
-        return <div>Seetings</div>;
+        return <QueueSettings />;
       default:
         return (
           <div style={styles.contentSection}>
