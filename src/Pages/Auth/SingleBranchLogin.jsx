@@ -32,6 +32,7 @@ const LoginForm = () => {
       SetLoadingState(false);
       toast.success(res?.data?.message);
       localStorage.setItem("BranchID", res?.data?.branch?.id);
+      console.log(res?.data?.branch?.id);
       localStorage.setItem("Org_ID", res?.data?.organization);
       setTimeout(() => {
         nav("/admin_dashboard");
