@@ -184,8 +184,8 @@ const QueueManagement = () => {
               <div>
                 {queues.map((ele, idx) => {
                   return (
-                    <div>
-                      <QueueCard data={ele} key={idx} />;
+                    <div style={{ border: "2px solid red", margin: ".5rem" }}>
+                      <QueueCard data={ele} key={ele.id} />;
                     </div>
                   );
                 })}
