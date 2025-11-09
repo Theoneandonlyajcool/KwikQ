@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { OrganizationSettingsContainer } from "./OrganizationSettingsstyled";
 import { ProfileContainer } from "./ProfileStyle";
 import { BillingContainer } from "./BillingStyle";
@@ -21,9 +21,142 @@ import { IoMdPeople } from "react-icons/io";
 import { MdPersonAdd } from "react-icons/md";
 import { MdModeEdit } from "react-icons/md";
 import { IoIosArrowDown } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
+import { IoMdClose } from "react-icons/io";
+import "../../Styles/cardModal.css";
+import axios from "axios";
+import CurrentDateTime from "./CurrentDateTime";
+import { ToastContainer, toast } from "react-toastify";
 
 const OrganizationSettings = () => {
   const [activeTab, setActiveTab] = useState("Profile");
+  const [model, setModel] = useState(false)
+  const nav = useNavigate();
+  const BaseUrl = import.meta.env.VITE_BaseUrl;
+  const ID = sessionStorage.getItem("user-recog");
+  const token = localStorage.getItem("User");
+  const [organ_Details, setOrgan_Details]= useState()
+  const [loading, setLoading] = useState(false)
+  console.log("organ_Details", organ_Details )
+
+
+  const [cardDetails, setCardDetails] = useState({
+    cardNumber: "",
+    cardHolder: "",
+    cardType: "",
+    expires: "",
+    cvv: "",
+  });
+
+  const [errors, setErrors] = useState({
+    cardNumber: "",
+    cardHolder: "",
+    cardType: "",
+    expires: "",
+    cvv: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "cardNumber" || name === "cvv") {
+      if (!/^\d*$/.test(value)) return; 
+    }
+    setCardDetails((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const allFilled = 
+  cardDetails.cardNumber.trim() &&
+  cardDetails.cardHolder.trim() &&
+  cardDetails.cardType &&
+  cardDetails.expires &&
+  cardDetails.cvv.trim();
+
+
+  const handleSubmit = () => {
+    let newErrors = {};
+    if (!cardDetails.cardNumber.trim() || cardDetails.cardNumber.length !== 16) {
+      newErrors.cardNumber = "Valid 16-digit card number is required";
+    }
+    if (!cardDetails.cardHolder.trim()) {
+      newErrors.cardHolder = "Card holder name is required";
+    }
+    if (!cardDetails.cardType) {
+      newErrors.cardType = "Card type is required";
+    }
+    if (!cardDetails.expires) {
+      newErrors.expires = "Expiration date is required";
+    }
+    if (!cardDetails.cvv.trim() || cardDetails.cvv.length !== 3) {
+      newErrors.cvv = "Valid 3-digit CVV is required";
+    }
+
+    setErrors(newErrors);
+
+    // if (Object.keys(newErrors).length > 0) {
+    //   console.log("Validation errors:", newErrors);
+    //   return;
+    // }
+
+    console.log("Card details:", cardDetails);
+  };
+
+  const addCard = async ()=>{
+    handleSubmit()
+    try {
+      const res = await axios.post(`${BaseUrl}/api/v1/billing/${ID}/cards`, cardDetails, {headers: 
+        {"Content-Type": "application/json", Authorization: Bearer `${token}`}
+      })
+      console.log(res)
+      toast.success(res?.data?.message)
+        setTimeout(() => {
+          // nav("/dashboard");
+        }, 3000);
+    } catch (error) {
+      console.log("add card error", error);
+      toast.error(err?.response?.data?.message);
+    }
+  }
+
+  const organization_Details = async () => {
+    try {
+      const res = await axios.get(`${BaseUrl}/api/v1/organization-details/${ID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log("organization_Details", res);
+      setOrgan_Details(res?.data?.data);
+      toast.success(res?.data?.message)
+    } catch (error) {
+      console.log("organization_Details", error)
+      toast.error(error?.response?.data?.message)
+    }
+  }
+
+
+  useEffect(()=> {
+    organization_Details() 
+  }, []);
+
+
+   const deleteOrganization = async () => {
+    try {
+      setLoading(true)
+      const res = await axios.delete(`${BaseUrl}/api/v1/organizations/${ID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log("DeleteOrganization", res);
+      setLoading(false)
+      setOneBranchData(res?.data?.data); 
+      toast.success(res?.data?.message)
+    } catch (error) {
+      console.log("DeleteOrganization", error)
+      setLoading(false)
+      toast.error(error?.response?.data?.message)
+    }
+  }
 
   const tabs = ["Profile", "Users & Roles", "Security", "Billing"];
 
@@ -59,16 +192,16 @@ const OrganizationSettings = () => {
   ];
 
   const securitySettings = [
-    {
-      title: "Two-Factor Authentication (2FA)",
-      description: "Require 2FA for all admin and manager accounts",
-      enabled: true,
-    },
-    {
-      title: "IP Whitelisting",
-      description: "Restrict admin access to specific IP addresses",
-      enabled: false,
-    },
+    // {
+    //   title: "Two-Factor Authentication (2FA)",
+    //   description: "Require 2FA for all admin and manager accounts",
+    //   enabled: true,
+    // },
+    // {
+    //   title: "IP Whitelisting",
+    //   description: "Restrict admin access to specific IP addresses",
+    //   enabled: false,
+    // },
     {
       title: "Login Notifications",
       description: "Email alerts for new login attempts",
@@ -109,11 +242,12 @@ const OrganizationSettings = () => {
 
   return (
     <OrganizationSettingsContainer>
+      <ToastContainer />
       <div className="organization_settings_wrapper">
         <div className="header_section">
           <div className="header_text">
             <h1 className="main_title">Organization Settings</h1>
-            <p className="sub_title">Friday, October 24, 2025</p>
+            <p className="sub_title"><CurrentDateTime /></p>
           </div>
         </div>
 
@@ -165,7 +299,7 @@ const OrganizationSettings = () => {
                     <input
                       type="text"
                       className="field_input"
-                      value={organizationInfo.name}
+                      value={organ_Details?.businessName}
                       readOnly
                     />
                   </div>
@@ -176,7 +310,7 @@ const OrganizationSettings = () => {
                     <input
                       type="text"
                       className="field_input"
-                      value={organizationInfo.industryType}
+                      value={organ_Details?.industryServiceType}
                       readOnly
                     />
                     <IoIosArrowDown className="dropdown_icon" />
@@ -192,7 +326,7 @@ const OrganizationSettings = () => {
                     <input
                       type="email"
                       className="field_input with_icon"
-                      value={organizationInfo.contactEmail}
+                      value={organ_Details?.email}
                       readOnly
                     />
                   </div>
@@ -204,7 +338,7 @@ const OrganizationSettings = () => {
                     <input
                       type="text"
                       className="field_input with_icon"
-                      value={organizationInfo.contactPhone}
+                      value={organ_Details?.phoneNumber}
                       readOnly
                     />
                   </div>
@@ -213,24 +347,24 @@ const OrganizationSettings = () => {
 
               <div className="info_row">
                 <div className="info_field">
-                  <label className="field_label">Website</label>
+                  <label className="field_label">FullName</label>
                   <div className="field_value_input">
                     <MdLanguage className="field_icon" />
                     <input
                       type="text"
                       className="field_input with_icon"
-                      value={organizationInfo.website}
+                      value={organ_Details?.fullName}
                       readOnly
                     />
                   </div>
                 </div>
                 <div className="info_field">
-                  <label className="field_label">Tax ID / Registration Number</label>
+                  <label className="field_label">State</label>
                   <div className="field_value_input">
                     <input
                       type="text"
                       className="field_input"
-                      value={organizationInfo.taxId}
+                      value={organ_Details?.state}
                       readOnly
                     />
                   </div>
@@ -245,7 +379,7 @@ const OrganizationSettings = () => {
                     <input
                       type="text"
                       className="field_input with_icon"
-                      value={organizationInfo.address}
+                      value={organ_Details?.headOfficeAddress}
                       readOnly
                     />
                   </div>
@@ -254,11 +388,11 @@ const OrganizationSettings = () => {
 
               <div className="info_row full_width">
                 <div className="info_field">
-                  <label className="field_label">Organization Description</label>
+                  <label className="field_label">City</label>
                   <div className="field_value_textarea">
-                    <textarea
+                    <input
                       className="field_textarea"
-                      value={organizationInfo.description}
+                      value={organ_Details?.city}
                       readOnly
                     />
                   </div>
@@ -282,7 +416,7 @@ const OrganizationSettings = () => {
                   <p className="subscription_features">{subscriptionPlan.features}</p>
                   <p className="subscription_price">{subscriptionPlan.price}</p>
                 </div>
-                <button className="change_plan_btn">Change Plan</button>
+                <button className="change_plan_btn"  onClick={()=> nav("/admin_landingpage")}>Change Plan</button>
               </div>
             </div>
           </div>
@@ -290,6 +424,7 @@ const OrganizationSettings = () => {
 
         {/* Billing Tab */}
         <BillingContainer className={activeTab === "Billing" ? "active" : ""}>
+               
           <div className="billing_info_section">
             <div className="section_header">
               <div className="section_icon_wrapper">
@@ -301,7 +436,110 @@ const OrganizationSettings = () => {
               </div>
             </div>
 
-            <div className="payment_card">
+             {model ? (
+                <div
+                style={{
+                  backgroundColor: "#ffffff",
+                  height: "60vh",
+                  width: "100%",
+                  // position: "fixed",
+                  top: "0",
+                  bottom: "0",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignContent: "center",
+                }}
+              >
+                <div style={{width: "90%", height: "100%", backgroundColor: "#19223058", borderRadius: "5px", padding: "10px" }}>
+                  <div className="addcardtext">
+                    <h3>Add Card Details</h3>
+                    <span onClick={() => setModel(false)}><IoMdClose  style={{ color: "red", border: "none"}}/></span>
+                  </div>
+                  <div className="allinputcard">
+                    <div className="twoinput">
+                      <label htmlFor="cardNumber">Card Number</label>
+                      <input
+                        type="text" 
+                        name="cardNumber"
+                        placeholder="•••• •••• •••• 4242"
+                        className="figuerandname"
+                        value={cardDetails.cardNumber}
+                        onChange={handleChange}
+                        maxLength={16}
+                        style={errors.cardNumber ? { border: "1px solid red" } : {}}
+                      />
+                      {errors.cardNumber && <p style={{ color: "red", fontSize: "14px" }}>{errors.cardNumber}</p>}
+
+                      <label htmlFor="cardHolder">Card Holder</label>
+                      <input
+                        type="text"
+                        name="cardHolder"
+                        placeholder="ABC Financial Services"
+                        className="figuerandname"
+                        value={cardDetails.cardHolder}
+                        onChange={handleChange}
+                        style={errors.cardHolder ? { border: "1px solid red" } : {}}
+                      />
+                      {errors.cardHolder && <p style={{ color: "red", fontSize: "14px" }}>{errors.cardHolder}</p>}
+                    </div>
+
+                    <div className="threeinput">
+                      <div className="selectdiv">
+                        <label htmlFor="cardType">Card Type</label>
+                        <select
+                          name="cardType"
+                          className="seleteandrest1"
+                          value={cardDetails.cardType}
+                          onChange={handleChange}
+                          style={errors.cardType ? { border: "1px solid red" } : {}}
+                        >
+                          <option value="">Card Type</option>
+                          <option value="visa">Visa</option>
+                          <option value="Master-Card">Master-Card</option>
+                          <option value="kora">Kora</option>
+                          <option value="other">Other</option>
+                        </select>
+                        {errors.cardType && <p style={{ color: "red", fontSize: "14px" }}>{errors.cardType}</p>}
+                      </div>
+
+                      <p><label htmlFor="expires">Expires</label></p>
+                      <input
+                        type="date"
+                        name="expires"
+                        // placeholder="12/25"
+                        className="seleteandrest"
+                        value={cardDetails.expires}
+                        onChange={handleChange}
+                        style={errors.expires ? { border: "1px solid red" } : {}}
+                      />
+                      {errors.expires && <p style={{ color: "red", fontSize: "14px" }}>{errors.expires}</p>}
+
+                      <p><label htmlFor="cvv">CVV</label></p>
+                      <input
+                        type="text" 
+                        name="cvv"
+                        placeholder="123"
+                        className="seleteandrest"
+                        value={cardDetails.cvv}
+                        onChange={handleChange}
+                        maxLength={3}
+                        style={errors.cvv ? { border: "1px solid red" } : {}}
+                      />
+                      {errors.cvv && <p style={{ color: "red", fontSize: "14px" }}>{errors.cvv}</p>}
+                    </div>
+                  </div>
+                  <div className="savechangesmodel">
+                    <button type="button" disabled={!allFilled} style={
+                        !allFilled
+                        ? { backgroundColor: "gray", cursor: "not-allowed" }
+                        : {}
+                    } onClick={()=> addCard()}>
+                      Add Card
+                    </button>
+                  </div>
+                </div>
+              </div>
+              ) :   <div className="payment_card">
               <div className="payment_card_header">
                 <span className="payment_method_label">Payment Method</span>
                 <span className="payment_type">{paymentMethod.type}</span>
@@ -317,14 +555,20 @@ const OrganizationSettings = () => {
                   <span className="card_expires_date">{paymentMethod.expires}</span>
                 </div>
               </div>
-            </div>
+            </div>}
 
             <div className="payment_actions">
               <button className="update_card_btn">
                 <MdEdit className="btn_icon" />
                 Update Card
               </button>
-              <button className="add_card_btn">
+
+             
+              
+
+
+
+              <button className="add_card_btn" onClick={()=> setModel(true)}>
                 <MdAdd className="btn_icon" />
                 Add Card
               </button>
@@ -355,6 +599,8 @@ const OrganizationSettings = () => {
               ))}
             </div>
           </div>
+
+          
         </BillingContainer>
 
         {/* Security Tab */}
@@ -411,9 +657,9 @@ const OrganizationSettings = () => {
             <p className="danger_text">
               Permanently delete your organization and all associated data. This action cannot be undone.
             </p>
-            <button className="delete_organization_btn">
+            <button className="delete_organization_btn" onClick={()=> deleteOrganization()} disabled={loading}>
               <MdDelete className="delete_icon" />
-              Delete Organization
+              {loading ? "Deleting..." : "Delete Organization"}
             </button>
           </div>
         </SecurityContainer>

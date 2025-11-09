@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BranchAnalyticsContainer } from "./AnalyticsStyle";
 import { InactiveAnalyticsContainer } from "./InactiveAnalyticsStyle";
 import { TrendsContainer } from "./TrendsStyle";
@@ -10,77 +10,67 @@ import { MdStorefront } from "react-icons/md";
 import { IoMdPeople } from "react-icons/io";
 import { MdAccessTime } from "react-icons/md";
 import { MdLayers } from "react-icons/md";
+import { MdError } from "react-icons/md";
 import { TbTrendingUp } from "react-icons/tb";
 import { TbTrendingDown } from "react-icons/tb";
+import CurrentDateTime from "../CurrentDateTime";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 
 
 
-const BranchAnalytics = ({ analyticsData }) => {
+const BranchAnalytics = () => {
   const [activeTab, setActiveTab] = useState("Trends");
-  const [timeRange, setTimeRange] = useState("Last 7 Days");
+  // const [timeRange, setTimeRange] = useState("Last 7 Days");
+  const [analyticsData, setAnalyticsData] = useState();
+  const [status, setStatus] = useState("inactive");
+  const [errors, setErrors] = useState(null);
+  const token = localStorage.getItem("User");
+  const BaseUrl = import.meta.env.VITE_BaseUrl;
+  // console.log("fuck up", analyticsData)
 
-  const hasData = analyticsData && analyticsData.stats;
-  const hasTrendData = analyticsData?.trendData?.length > 0;
-  const hasHourlyData = analyticsData?.hourlyData?.length > 0;
-  const hasServiceData = analyticsData?.serviceData?.length > 0;
-  const hasBranchData = analyticsData?.branchData?.length > 0;
 
-  const PIE_COLORS = ['#1e3a8a', '#3b82f6', '#60a5fa', '#93c5fd', '#dbeafe'];
+  // const hasData = analyticsData && analyticsData.stats;
+  // const hasTrendData = analyticsData?.trendData?.length > 0;
+  // const hasHourlyData = analyticsData?.hourlyData?.length > 0;
+  // const hasServiceData = analyticsData?.serviceData?.length > 0;
+  // const hasBranchData = analyticsData?.branchData?.length > 0;
 
+  // const PIE_COLORS = ['#1e3a8a', '#3b82f6', '#60a5fa', '#93c5fd', '#dbeafe'];
+
+  const organAnalytics = async () =>{
+    setStatus("loading")
+    setErrors(null);
+    try {
+      const res = await axios.get(`${BaseUrl}/api/v1/getanalytics`, {
+        headers: {Authorization: `Bearer ${token}`}
+      })
+      console.log("analy work", res)
+      setAnalyticsData(res?.data);
+      setStatus("success")
+      toast.success(res?.data?.message);
+    } catch (error) {
+      console.log(error)
+      setErrors(error?.response?.data?.message);
+      toast.error(error?.response?.data?.message);
+      setStatus("error")
+    }
+  }
+
+  useEffect(()=> {
+    organAnalytics()
+  }, [])
   
 
-  // INACTIVE PAGE - When NO data
-  if (!hasData) {
+  if (status === "inactive") {
     return (
       <InactiveAnalyticsContainer>
+        <ToastContainer />
         <div className="analytics_wrapper">
           <div className="header_section">
             <h1 className="main_title">Analytics</h1>
-            <p className="sub_title">Monday, October 20, 2025</p>
-          </div>
-
-          <div className="insights_section">
-            <div className="insights_header">
-              <div className="insights_left">
-                <h2 className="insights_title">Analytics & Insights</h2>
-                <p className="insights_subtitle">Monitor performance and identify trends</p>
-              </div>
-              <div className="time_range_filter">
-                <IoCalendarOutline className="calendar_icon" />
-                <select className="time_select" value={timeRange} onChange={(e) => setTimeRange(e.target.value)}>
-                  <option>Last 7 Days</option>
-                  <option>Last 30 Days</option>
-                  <option>Last 90 Days</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div className="stats_cards">
-            <div className="stat_card">
-              <div className="stat_header">
-                <div className="trend_icon up">
-                  <TbTrendingUp />
-                </div>
-                <span className="trend_percent positive">+0%</span>
-              </div>
-              <p className="stat_label">Total Customers</p>
-              <h2 className="stat_value">---</h2>
-              <p className="stat_comparison">vs last week</p>
-            </div>
-
-            <div className="stat_card">
-              <div className="stat_header">
-                <div className="trend_icon down">
-                  <TbTrendingDown />
-                </div>
-                <span className="trend_percent negative">-0%</span>
-              </div>
-              <p className="stat_label">Avg. Wait Time</p>
-              <h2 className="stat_value">---</h2>
-              <p className="stat_comparison">vs last week</p>
-            </div>
+            <p className="sub_title"><CurrentDateTime /></p>
           </div>
 
           <div className="charts_grid">
@@ -92,46 +82,84 @@ const BranchAnalytics = ({ analyticsData }) => {
                 <p className="empty_text">Weekly customer volume will be displayed here</p>
               </div>
             </div>
-
-            {/* <div className="chart_box">
-              <h3 className="chart_box_title">Average Wait Time Trend</h3>
-              <div className="empty_chart">
-                <MdLayers className="empty_icon" />
-                <p className="empty_title">No Data Found</p>
-                <p className="empty_text">Average wait time will be displayed here</p>
-              </div>
-            </div> */}
-
-            {/* <div className="chart_box">
-              <h3 className="chart_box_title">Peak Hours Analysis</h3>
-              <div className="empty_chart">
-                <MdLayers className="empty_icon" />
-                <p className="empty_title">No Data Found</p>
-                <p className="empty_text">Peak hours analysis will be displayed here</p>
-              </div>
-            </div> */}
-
-            <div className="chart_box">
-              <h3 className="chart_box_title">Service Type Distribution</h3>
-              <div className="empty_chart">
-                <MdLayers className="empty_icon" />
-                <p className="empty_title">No Data Found</p>
-                <p className="empty_text">Service type distribution will be displayed here</p>
-              </div>
-            </div>
           </div>
         </div>
       </InactiveAnalyticsContainer>
     );
   }
 
-  // ACTIVE PAGE - When data EXISTS
+  if(status === "loading"){
+    return (
+      <InactiveAnalyticsContainer>
+        <ToastContainer />
+        <div className="analytics_wrapper">
+          <div className="header_section">
+            <h1 className="main_title">Analytics</h1>
+            <p className="sub_title"><CurrentDateTime /></p>
+          </div>
+
+          <div className="charts_grid">
+            <div className="chart_box">
+              <h3 className="chart_box_title">Weekly Customer Volume</h3>
+              <div className="empty_chart">
+                <MdLayers className="empty_icon" />
+                <p className="empty_title">Loading...</p>
+                <p className="empty_text">Fetching branch details, please wait</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </InactiveAnalyticsContainer>
+    )
+  }
+
+  if(status === "error"){
+    return (
+      <InactiveAnalyticsContainer>
+        <ToastContainer />
+        <div className="analytics_wrapper">
+          <div className="header_section">
+            <h1 className="main_title">Analytics</h1>
+            <p className="sub_title"><CurrentDateTime /></p>
+          </div>
+
+          <div className="charts_grid">
+            <div className="chart_box">
+              <h3 className="chart_box_title">Weekly Customer Volume</h3>
+              <div className="empty_chart">
+                    <MdError className="empty_icon" style={{color: 'red'}} />
+                    <p className="empty_title">Error Loading Branch</p>
+                    <p className="empty_text">{errors}</p>
+                    <button 
+                      onClick={() => organAnalytics()} 
+                      style={{
+                        marginTop: '20px',
+                        padding: '10px 20px',
+                        background: '#007bff',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '5px',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      Try Again
+                    </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </InactiveAnalyticsContainer>
+    )
+  }
+
+  if(status === "success" && analyticsData){
   return (
     <BranchAnalyticsContainer>
+    <ToastContainer />
       <div className="analytics_wrapper">
         <div className="header_section">
           <h1 className="main_title">Branch Analytics</h1>
-          <p className="sub_title">Thursday, October 23, 2025</p>
+          <p className="sub_title"><CurrentDateTime /></p>
         </div>
 
         <div className="filters_section">
@@ -158,8 +186,8 @@ const BranchAnalytics = ({ analyticsData }) => {
             </div>
             <div className="stat_content">
               <p className="stat_label">Total Customers</p>
-              <h2 className="stat_value">{analyticsData.stats.totalCustomers}</h2>
-              <p className="stat_change positive">↑ {analyticsData.stats.customerChange}% vs last week</p>
+              <h2 className="stat_value">{}</h2>
+              <p className="stat_change positive">↑ {}% vs last week</p>
             </div>
           </div>
 
@@ -169,8 +197,8 @@ const BranchAnalytics = ({ analyticsData }) => {
             </div>
             <div className="stat_content">
               <p className="stat_label">Avg. Wait Time</p>
-              <h2 className="stat_value">{analyticsData.stats.avgWaitTime} min</h2>
-              <p className="stat_change negative">↓ {analyticsData.stats.waitTimeChange}% improvement</p>
+              <h2 className="stat_value">{} min</h2>
+              <p className="stat_change negative">↓ {}% improvement</p>
             </div>
           </div>
         </div>
@@ -185,7 +213,7 @@ const BranchAnalytics = ({ analyticsData }) => {
           </div>
         </div>
 
-        <TrendsContainer className={activeTab === "Trends" ? "active" : ""}>
+        {/* <TrendsContainer className={activeTab === "Trends" ? "active" : ""}>
           <div className="chart_section">
             <div className="chart_header">
               <h3 className="chart_title">Customer Flow Trends</h3>
@@ -222,7 +250,7 @@ const BranchAnalytics = ({ analyticsData }) => {
             {hasHourlyData ? (
               <div className="chart_container">
                 <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={analyticsData.hourlyData}>
+                  <BarChart data={}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                     <XAxis dataKey="hour" stroke="#6b7280" />
                     <YAxis stroke="#6b7280" />
@@ -239,9 +267,9 @@ const BranchAnalytics = ({ analyticsData }) => {
               </div>
             )}
           </div>
-        </TrendsContainer>
+        </TrendsContainer> */}
 
-        <DistributionContainer className={activeTab === "Distribution" ? "active" : ""}>
+        {/* <DistributionContainer className={activeTab === "Distribution" ? "active" : ""}>
           <div className="chart_section">
             <div className="chart_header">
               <h3 className="chart_title">Service Distribution</h3>
@@ -268,9 +296,9 @@ const BranchAnalytics = ({ analyticsData }) => {
               </div>
             )}
           </div>
-        </DistributionContainer>
+        </DistributionContainer> */}
 
-        <BranchComparisonContainer className={activeTab === "Branch Comparison" ? "active" : ""}>
+        {/* <BranchComparisonContainer className={activeTab === "Branch Comparison" ? "active" : ""}>
           <div className="chart_section">
             <div className="chart_header">
               <h3 className="chart_title">Branch Performance Comparison</h3>
@@ -322,10 +350,10 @@ const BranchAnalytics = ({ analyticsData }) => {
               </div>
             )}
           </div>
-        </BranchComparisonContainer>
+        </BranchComparisonContainer> */}
       </div>
     </BranchAnalyticsContainer>
-  );
+  );}
 };
 
 export default BranchAnalytics;

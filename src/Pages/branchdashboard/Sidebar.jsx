@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SidebarContainer, Footer, MenuItem, Menu, Logo, MenuItem2 } from "./Sidebarstyled";
 import { useNavigate } from "react-router-dom";
 import {
@@ -14,6 +14,8 @@ import { LuShield } from "react-icons/lu";
 
 const Sidebar = ({ collapsed }) => {
   const nav = useNavigate();
+  const setName = localStorage.getItem("Organ_Name");
+  
   return (
     <SidebarContainer collapsed={collapsed}>
       <Logo>
@@ -41,9 +43,9 @@ const Sidebar = ({ collapsed }) => {
       </Menu>
       <Footer>
         <div className="orgholder">
-          <div className="avater">AD</div>
+          <div className="avater">{setName.toUpperCase().slice(0, 2)}</div>
           <div className="textorg">
-            <p className="admintext">Organization Admin</p>
+            <p className="admintext">{setName.toUpperCase()}</p>
             <span className="supertext"> <LuShield  className="shield"/> Super Admin</span>
           </div>
         </div>

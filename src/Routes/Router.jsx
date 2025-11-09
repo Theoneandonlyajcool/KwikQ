@@ -25,16 +25,18 @@ import Organization from "../Pages/OnBoarding/Orangization";
 import BranchOnboarding from "../Pages/OnBoarding/Branch";
 import Review from "../Pages/OnBoarding/Review";
 import Submitted from "../Pages/OnBoarding/Submitted";
-
+import VerifyForgetpassword from "../Pages/Auth/VerifyForgetpassword";
 import OrganizationSettings from "../Pages/pagesbranch/OrganizationSettings";
 import BranchManagement from "../Pages/pagesbranch/BranchManagement";
 import AdminDash from "../Pages/Admin/AdminDash";
 import GetStarted2 from "../Pages/Auth/GetStarted2";
 import LoginForm from "../Pages/Auth/SingleBranchLogin";
+import Editbranch from "../Pages/pagesbranch/Editbranch";
 
 // Hooks
 import { useState } from "react";
 import { Role } from "../Components/Context";
+import BranchSigninV from "../Pages/Auth/BranchSigninV";
 
 const Router = () => {
   const [OrgRole, SetOrgRole] = useState("");
@@ -53,6 +55,8 @@ const Router = () => {
             <Route path="/forget_password" element={<ForgetPassword />} />
 
             <Route path="/businessCategory" element={<GetStarted />} />
+          <Route path="/Branch_SigninV" element={<BranchSigninV />} />
+          <Route path="/verification_forgetpassword" element={<VerifyForgetpassword />} />
 
             <Route path="/businessCategory2" element={<GetStarted2 />} />
             <Route path="/reset_password" element={<ResetPassword />} />
@@ -67,6 +71,7 @@ const Router = () => {
             <Route path="/Sevenday_free" element={<Sevendayfree />} />
             <Route path="/queue_form" element={<QueueForm />} />
             <Route path="/queue_success" element={<QueueSuccess />} />
+            <Route path="/edit_branch" element={<Editbranch />} />
             <Route path="/pricing" element={<Pricepage />} />
             <Route path="/singleBranch" element={<LoginForm />} />
             <Route path="/admin_landingpage" element={<AdminLandingPage />} />
