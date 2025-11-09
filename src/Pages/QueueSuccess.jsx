@@ -8,9 +8,15 @@ import { LuUsers } from "react-icons/lu";
 import { ImNotification } from "react-icons/im";
 import { LuClipboardList } from "react-icons/lu";
 import { IoCloseOutline } from "react-icons/io5";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../Styles/QueueSuccess.css";
 
-const QueueSuccess = () => {
+const QueueSuccess = ({ details, queueInfo, closeModal }) => {
+  console.log(details);
+  const nav = useNavigate();
+  const location = useLocation();
+  // console.log(queueInfo);
+
   const queueData = {
     queue_number: 8,
     full_name: "Ossai Benita",
@@ -24,7 +30,10 @@ const QueueSuccess = () => {
     <div className="success-page-container">
       <div className="success-card">
         <button className="close-button">
-          <IoCloseOutline style={{ width: "18px", height: "18px" }} />
+          <IoCloseOutline
+            style={{ width: "18px", height: "18px" }}
+            onClick={() => closeModal(false)}
+          />
         </button>
 
         <div className="success-header">
@@ -43,7 +52,7 @@ const QueueSuccess = () => {
             <div className="ticket-number-box">
               <div className="section-label">Your Queue Number</div>
 
-              <div className="ticket-number">{ticketNumber}</div>
+              <div className="ticket-number">{queueInfo.queueNumber}</div>
             </div>
           </div>
 
@@ -65,19 +74,19 @@ const QueueSuccess = () => {
               <h3 className="info-list-title">Your Information</h3>
               <div className="info-item">
                 <LuUser className="info-icon" />
-                <span className="info-text">{queueData.full_name}</span>
+                <span className="info-text">{details?.fullName}</span>
               </div>
               <div className="info-item">
                 <LuPhone className="info-icon" />
-                <span className="info-text">{queueData.phone_number}</span>
+                <span className="info-text">{details.phone}</span>
               </div>
               <div className="info-item">
                 <LuMail className="info-icon" />
-                <span className="info-text">{queueData.email}</span>
+                <span className="info-text">{details.email}</span>
               </div>
               <div className="info-item">
                 <LuClipboardList className="info-icon" />
-                <span className="info-text">{queueData.purpose_of_visit}</span>
+                <span className="info-text">{details.serviceNeeded}</span>
               </div>
             </div>
           </div>
@@ -95,7 +104,20 @@ const QueueSuccess = () => {
             </div>
           </div>
 
-          <button className="done-button">Done</button>
+          <button
+            className="done-button"
+            onClick={() => {
+              if (location.pathname.includes("admin_dashboard")) {
+                console.log("Dashboard");
+                // Do something specific here
+              } else {
+                console.log("nothing");
+                // Do something else here
+              }
+            }}
+          >
+            Done
+          </button>
         </div>
       </div>
     </div>

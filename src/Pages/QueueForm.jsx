@@ -18,6 +18,7 @@ import Stack from "@mui/material/Stack";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router-dom";
+import QueueSuccess from "./QueueSuccess";
 
 const toCamelCase = (str) =>
   str.toLowerCase().replace(/\s+(\w)/g, (_, c) => c.toUpperCase());
@@ -38,9 +39,7 @@ const QueueForm = () => {
     email: "",
     AdditionalInfo: "",
     serviceNeeded: PurposeOfVisit,
-    elederlyStatus: ElederlyStatus,
-    pregnantStatus: PregnantStaus,
-    emergencyLevel: EmergencyStatus,
+    // priorityStatus: "",
   });
 
   const [ErrorMsg, SetErrorMsg] = useState({
@@ -49,6 +48,8 @@ const QueueForm = () => {
     elederlyStatusError: "",
     pregnantStatus: "",
   });
+
+  const [PriorityStatus, SetPriorityStatus] = useState("");
 
   const BaseURl = import.meta.env.VITE_API_BASE_URL;
 
@@ -74,47 +75,47 @@ const QueueForm = () => {
   const QueueValidation = () => {};
 
   const Formtoken = localStorage.getItem("User");
-  // console.log(Formtoken);
-
   const Branchid = localStorage.getItem("BranchID");
-  // console.log(Branchid);
-
   const ORGid = localStorage.getItem("Org_ID");
-  // console.log(ORGid);
 
   const [LoadingState, SetLoadingState] = useState(false);
   console.log(ORGid);
   console.log(Branchid);
 
+  const [ShowModal, SetShowModal] = useState(false);
+  const [apiData, SetapiData] = useState({});
   const JoinQueue = async () => {
     try {
       SetLoadingState(true);
       const res = await axios.post(
-        `${BaseURl}/api/v1/cus`,
+        `${BaseURl}/api/v1/create-queue/${Branchid}`,
         {
-          organization: ORGid,
-          branch: Branchid,
           formDetails: {
             fullName: inputValues.fullName,
             email: inputValues.email,
             phone: inputValues.phone,
-            serviceNeeded: purpose,
+            serviceNeeded: inputValues.serviceNeeded,
             additionalInfo: inputValues.AdditionalInfo,
-            elderlyStatus: true,
-            pregnantStatus: false,
-            emergencyLevel: true,
+            priorityStatus: "elderlyOrDisabled",
           },
         },
         {
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${Formtoken}`,
           },
         }
       );
-      console.log(res?.data);
-      toast.success(res?.data?.message);
       SetLoadingState(false);
+      SetShowModal(true);
+      // console.log(res?.data?.data);
+      SetInputValues({
+        fullName: "",
+        phone: "",
+        email: "",
+        AdditionalInfo: "",
+        serviceNeeded: PurposeOfVisit,
+      });
+      SetapiData(res?.data?.data);
     } catch (error) {
       SetLoadingState(false);
       toast.error(error?.response?.data?.message);
@@ -202,6 +203,7 @@ const QueueForm = () => {
                       })
                     }
                     placeholder="Enter your full name"
+                    style={{ backgroundColor: "#f2f2f5" }}
                   />
                 </div>
                 <div className="optional-form">
@@ -220,6 +222,7 @@ const QueueForm = () => {
                         })
                       }
                       placeholder="+234 XXX XXX XXXX"
+                      style={{ backgroundColor: "#f2f2f5" }}
                     />
                   </div>
 
@@ -237,6 +240,7 @@ const QueueForm = () => {
                           email: e.target.value,
                         })
                       }
+                      style={{ backgroundColor: "#f2f2f5" }}
                       placeholder="your-email@example.com"
                     />
                   </div>
@@ -263,6 +267,7 @@ const QueueForm = () => {
                   className="form-input form-select"
                   value={purpose}
                   onChange={handleSelectChange}
+                  style={{ backgroundColor: "#f2f2f5" }}
                 >
                   <option value="">Select a service</option>
                   <option value={toCamelCase("Account Opening")}>
@@ -302,6 +307,7 @@ const QueueForm = () => {
                   className="form-input form-textarea"
                   placeholder="Any specific details or requirements..."
                   rows="4"
+                  style={{ backgroundColor: "#f2f2f5" }}
                 />
               </div>
             </section>
@@ -311,11 +317,11 @@ const QueueForm = () => {
                 <FaExclamationCircle className="section-icon" />
                 <div>
                   <h2 className="section-title">Priority Status</h2>
-                  <p className="section-subtitle">Select if applicable</p>
+                  <p className="section-subtitle">Input details if available</p>
                 </div>
               </div>
 
-              <div className="priority-options">
+              {/* <div className="priority-options">
                 <label className="priority-option">
                   <input
                     type="radio"
@@ -364,7 +370,23 @@ const QueueForm = () => {
                     </span>
                   </div>
                 </label>
-              </div>
+              </div> */}
+
+              <textarea
+                style={{
+                  width: "100%",
+                  height: "6rem",
+                  backgroundColor: "#f2f2f5",
+                  border: "none",
+                  outline: "none",
+                  padding: ".5rem",
+                  borderRadius: ".5rem",
+                  resize: "none",
+                }}
+                placeholder="Any specific details or requirements........"
+                name=""
+                id=""
+              ></textarea>
             </section>
 
             <div className="terms-section">
@@ -464,6 +486,14 @@ const QueueForm = () => {
           </div>
         </div>
       </div>
+
+      {ShowModal && (
+        <QueueSuccess
+          closeModal={SetShowModal}
+          details={inputValues}
+          queueInfo={apiData}
+        />
+      )}
     </div>
   );
 };

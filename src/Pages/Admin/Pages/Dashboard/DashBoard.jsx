@@ -11,7 +11,7 @@ import {
 import { SlWallet } from "react-icons/sl";
 import QueueCard from "./DashCard";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 
@@ -21,16 +21,17 @@ export default function Dashboard() {
   const [CardData, SetCardData] = useState({});
   const [LoadingState, SetLoadingState] = useState(false);
   console.log(CardData);
+  const BranchID = localStorage.getItem("BranchID");
 
   const GetMetricsCardData = async () => {
     try {
       SetLoadingState(true);
-      const res = await axios.get(`${BaseUrl}/api/v1/dashboard`);
-      // console.log(res?.data?.data);
+      const res = await axios.get(`${BaseUrl}/api/v1/dashboard/${BranchID}`);
       SetCardData(res?.data?.data);
-      // console.log(CardData);
       SetLoadingState(false);
     } catch (error) {
+      SetLoadingState(false);
+      toast.error(error?.response?.data?.message);
       console.log(error);
     }
   };
@@ -102,6 +103,7 @@ export default function Dashboard() {
 
   return (
     <div style={styles.dashboard}>
+      <ToastContainer />
       <style>{`
         * {
           margin: 0;

@@ -63,9 +63,12 @@ const AnalyticsDashboard = () => {
     { name: "Emergency 15%", value: 15, color: "#A3E635" },
   ];
 
+  const BranchID = localStorage.getItem("BranchID");
+  const BaseURL = import.meta.env.VITE_API_BASE_URL;
+
   const FetchAnalytics = async () => {
     try {
-      const res = await axios.get("");
+      const res = await axios.get(`${BaseURL}`);
     } catch (error) {}
   };
 
