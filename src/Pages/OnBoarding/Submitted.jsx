@@ -67,7 +67,7 @@ const Submitted = () => {
           </div>
         </ContentWrapper>
         <Bottomholder>
-          <button className="Btn" onClick={() => nav("/dashboard/*")}>
+          <button className="Btn" onClick={() => nav("/dashboard/")}>
             DashBoard
           </button>
           <button>View Pricing Plans</button>
