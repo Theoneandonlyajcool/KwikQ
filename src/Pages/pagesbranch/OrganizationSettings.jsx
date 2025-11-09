@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { OrganizationSettingsContainer } from "./OrganizationSettingsstyled";
 import { ProfileContainer } from "./ProfileStyle";
 import { BillingContainer } from "./BillingStyle";
@@ -26,14 +26,18 @@ import { IoMdClose } from "react-icons/io";
 import "../../Styles/cardModal.css";
 import axios from "axios";
 import CurrentDateTime from "./CurrentDateTime";
+import { ToastContainer, toast } from "react-toastify";
 
 const OrganizationSettings = () => {
   const [activeTab, setActiveTab] = useState("Profile");
   const [model, setModel] = useState(false)
   const nav = useNavigate();
   const BaseUrl = import.meta.env.VITE_BaseUrl;
-  const token = localStorage.getItem("user_token");
-  const orgId = localStorage.getItem("user_ID");
+  const ID = sessionStorage.getItem("user-recog");
+  const token = localStorage.getItem("User");
+  const [organ_Details, setOrgan_Details]= useState()
+  const [loading, setLoading] = useState(false)
+  console.log("organ_Details", organ_Details )
 
 
   const [cardDetails, setCardDetails] = useState({
@@ -99,7 +103,7 @@ const OrganizationSettings = () => {
   const addCard = async ()=>{
     handleSubmit()
     try {
-      const res = await axios.post(`${BaseUrl}/api/v1/billing/${orgId}/cards`, cardDetails, {headers: 
+      const res = await axios.post(`${BaseUrl}/api/v1/billing/${ID}/cards`, cardDetails, {headers: 
         {"Content-Type": "application/json", Authorization: Bearer `${token}`}
       })
       console.log(res)
@@ -113,19 +117,43 @@ const OrganizationSettings = () => {
     }
   }
 
+  const organization_Details = async () => {
+    try {
+      const res = await axios.get(`${BaseUrl}/api/v1/organization-details/${ID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log("organization_Details", res);
+      setOrgan_Details(res?.data?.data);
+      toast.success(res?.data?.message)
+    } catch (error) {
+      console.log("organization_Details", error)
+      toast.error(error?.response?.data?.message)
+    }
+  }
+
+
+  useEffect(()=> {
+    organization_Details() 
+  }, []);
+
 
    const deleteOrganization = async () => {
     try {
-      const res = await axios.delete(`${BaseUrl}/api/v1/deleteorganization/${orgId}`, {
+      setLoading(true)
+      const res = await axios.delete(`${BaseUrl}/api/v1/organizations/${ID}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
       console.log("DeleteOrganization", res);
+      setLoading(false)
       setOneBranchData(res?.data?.data); 
       toast.success(res?.data?.message)
     } catch (error) {
       console.log("DeleteOrganization", error)
+      setLoading(false)
       toast.error(error?.response?.data?.message)
     }
   }
@@ -214,6 +242,7 @@ const OrganizationSettings = () => {
 
   return (
     <OrganizationSettingsContainer>
+      <ToastContainer />
       <div className="organization_settings_wrapper">
         <div className="header_section">
           <div className="header_text">
@@ -270,7 +299,7 @@ const OrganizationSettings = () => {
                     <input
                       type="text"
                       className="field_input"
-                      value={organizationInfo.name}
+                      value={organ_Details?.businessName}
                       readOnly
                     />
                   </div>
@@ -281,7 +310,7 @@ const OrganizationSettings = () => {
                     <input
                       type="text"
                       className="field_input"
-                      value={organizationInfo.industryType}
+                      value={organ_Details?.industryServiceType}
                       readOnly
                     />
                     <IoIosArrowDown className="dropdown_icon" />
@@ -297,7 +326,7 @@ const OrganizationSettings = () => {
                     <input
                       type="email"
                       className="field_input with_icon"
-                      value={organizationInfo.contactEmail}
+                      value={organ_Details?.email}
                       readOnly
                     />
                   </div>
@@ -309,7 +338,7 @@ const OrganizationSettings = () => {
                     <input
                       type="text"
                       className="field_input with_icon"
-                      value={organizationInfo.contactPhone}
+                      value={organ_Details?.phoneNumber}
                       readOnly
                     />
                   </div>
@@ -318,24 +347,24 @@ const OrganizationSettings = () => {
 
               <div className="info_row">
                 <div className="info_field">
-                  <label className="field_label">Website</label>
+                  <label className="field_label">FullName</label>
                   <div className="field_value_input">
                     <MdLanguage className="field_icon" />
                     <input
                       type="text"
                       className="field_input with_icon"
-                      value={organizationInfo.website}
+                      value={organ_Details?.fullName}
                       readOnly
                     />
                   </div>
                 </div>
                 <div className="info_field">
-                  <label className="field_label">Tax ID / Registration Number</label>
+                  <label className="field_label">State</label>
                   <div className="field_value_input">
                     <input
                       type="text"
                       className="field_input"
-                      value={organizationInfo.taxId}
+                      value={organ_Details?.state}
                       readOnly
                     />
                   </div>
@@ -350,7 +379,7 @@ const OrganizationSettings = () => {
                     <input
                       type="text"
                       className="field_input with_icon"
-                      value={organizationInfo.address}
+                      value={organ_Details?.headOfficeAddress}
                       readOnly
                     />
                   </div>
@@ -359,11 +388,11 @@ const OrganizationSettings = () => {
 
               <div className="info_row full_width">
                 <div className="info_field">
-                  <label className="field_label">Organization Description</label>
+                  <label className="field_label">City</label>
                   <div className="field_value_textarea">
-                    <textarea
+                    <input
                       className="field_textarea"
-                      value={organizationInfo.description}
+                      value={organ_Details?.city}
                       readOnly
                     />
                   </div>
@@ -628,9 +657,9 @@ const OrganizationSettings = () => {
             <p className="danger_text">
               Permanently delete your organization and all associated data. This action cannot be undone.
             </p>
-            <button className="delete_organization_btn" onClick={()=> deleteOrganization()}>
+            <button className="delete_organization_btn" onClick={()=> deleteOrganization()} disabled={loading}>
               <MdDelete className="delete_icon" />
-              Delete Organization
+              {loading ? "Deleting..." : "Delete Organization"}
             </button>
           </div>
         </SecurityContainer>

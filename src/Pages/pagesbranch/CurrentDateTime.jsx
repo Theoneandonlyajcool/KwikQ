@@ -25,9 +25,9 @@ const CurrentDateTime = () => {
   }, []);
 
   return (
-    <div style={{ fontSize: "14px", color: "#333" }}>
+    <span style={{ fontSize: "14px", color: "#333" }}>
       {dateTime || "Loading..."}
-    </div>
+    </span>
   );
 };
 

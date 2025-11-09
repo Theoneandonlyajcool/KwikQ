@@ -499,7 +499,7 @@ export const ProfileContainer = styled.div`
 
             .field_textarea {
               width: 100%;
-              height: 80px;
+              height: 30px;
               background: transparent;
               border: none;
               outline: none;
@@ -527,7 +527,7 @@ export const ProfileContainer = styled.div`
               }
 
               @media ${device.desktop} {
-                height: 80px;
+                height: 30px;
                 font-size: 14px;
               }
             }

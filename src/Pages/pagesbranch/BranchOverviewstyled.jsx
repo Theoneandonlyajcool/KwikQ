@@ -200,7 +200,7 @@ export const BranchOverviewContainer = styled.div`
 
     .stats_cards_wrapper {
       width: 100%;
-      min-height: 18%;
+      max-height: 18%;
       display: flex;
       gap: 15px;
       /* background: blue; */
@@ -228,8 +228,9 @@ export const BranchOverviewContainer = styled.div`
 
       .stat_card {
         width: 37%;
-        min-height: 100%;
+        max-height: 100%;
         background: #ffffff;
+        /* background: #af1b1b; */
         border-radius: 12px;
         padding: 20px;
         display: flex;
@@ -441,6 +442,7 @@ export const BranchOverviewContainer = styled.div`
       width: 100%;
       height: auto;
       background: #ffffff;
+      /* background: red; */
       border-radius: 12px;
       padding: 24px;
 

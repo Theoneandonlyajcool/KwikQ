@@ -14,34 +14,32 @@ import { MdWarning } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import CurrentDateTime from "./CurrentDateTime";
 
 const BranchOverview = () => {
+  
   const nav = useNavigate();
   const [allbranches_in_an_organization, setAllbranches_in_an_organization] = useState()
-  // const orgId = localStorage.getItem("user_ID");
-  // const token = localStorage.getItem("user_token");
-  const orgId = "690b0e31fb10a455e31d1dc5"
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5MGIwZTMxZmIxMGE0NTVlMzFkMWRjNSIsImVtYWlsIjoiaG92ZXJleHNAZ21haWwuY29tIiwicm9sZSI6Im11bHRpIiwiaWF0IjoxNzYyMzgyOTQwLCJleHAiOjE3NjI2NDIxNDB9.LB_b9bFMiH-awfFQAOBoXOM2cIpDnbv8G2L8A0CwDJQ"
+  const [organization_metrics, setOrganization_metrics] = useState()
+  const [Organ_Name, setOrgan_Name] = useState()
+  const ID = sessionStorage.getItem("user-recog");
+  const token = localStorage.getItem("User");
   const BaseUrl = import.meta.env.VITE_BaseUrl;
+  // console.log("api",organization_metrics)
+  // console.log("api", allbranches_in_an_organization)
 
 
-  const allbranches_of_an_organization = async (status) => {
+  const allbranches_of_an_organization = async () => {
     try {
-      //params hold values id and status
-      const params = {};
-      if (orgId) params.organizationId = orgId;
-      if (status) params.status = status;
-
-      const res = await axios.get(`${BaseUrl}/api/v1/management`, {
-        params,
+      const res = await axios.get(`${BaseUrl}/api/v1/getallbranches`, {
+        params:  { organizationId: ID },
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log("data of all branches in an organization", res);
-      setAllbranches_in_an_organization(res); 
+      // console.log("data of all branches in an organization", res);
+      setAllbranches_in_an_organization(res?.data?.branches); 
       toast.success(res?.data?.message)
     } catch (error) {
       console.log("allbranches_in_an_organization", error)
@@ -54,55 +52,73 @@ const BranchOverview = () => {
     allbranches_of_an_organization() 
   }, []);
 
-  const [branches] = useState([
-    {
-      id: 1,
-      name: "Victoria Island Branch",
-      status: "Active",
-      location: "Lagos",
-      code: "BR001",
-      manager: "Jane Okafor",
-      lastUpdated: "2 min ago",
-      activeQueue: "00",
-      avgWait: "0 min",
-      servedToday: "00",
-      statusColor: "#000000",
-      bgColor: "#ffffff",
-    },
-    {
-      id: 2,
-      name: "Ikeja Branch",
-      status: "Active",
-      location: "Lagos",
-      code: "BR002",
-      manager: "Chidi Eze",
-      lastUpdated: "1 min ago",
-      activeQueue: "00",
-      avgWait: "0 min",
-      servedToday: "00",
-      statusColor: "#000000",
-      bgColor: "#ffffff",
-    },
-    {
-      id: 3,
-      name: "Port Harcourt Branch",
-      status: "Warning",
-      location: "Rivers",
-      code: "BR004",
-      manager: "Emmanuel Nwankwo",
-      lastUpdated: "5 min ago",
-      activeQueue: "00",
-      avgWait: "00 min",
-      servedToday: "00",
-      statusColor: "#dc2626",
-      bgColor: "#fff7ed",
-      border: "1.25px solid #FFD6A7",
-      warning: "High",
-    },
-  ]);
+  useEffect(()=> {
+  const getname = async () => {
+      try {
+        const res = await axios.get(`${BaseUrl}/api/v1/organization-details/${ID}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        // console.log("organization_Name", res);
+        localStorage.setItem("Organ_Name", res?.data?.data?.businessName)
+        setOrgan_Name(res?.data?.data); 
+        // toast.success(res?.data?.message)
+      } catch (error) {
+        console.log("organization_Name", error)
+        // toast.error(error?.response?.data?.message)
+      }
+    }
+    
+      getname() 
+    }, []);
+
+  // const allbranches_of_an_organization = async () => {
+  //   try {
+  //     const res = await axios.get(`${BaseUrl}/api/v1/organizations/${ID}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+  //     // console.log("data of all branches in an organization", res);
+  //     setAllbranches_in_an_organization(res?.data?.oragnizationBranches); 
+  //     toast.success(res?.data?.message)
+  //   } catch (error) {
+  //     console.log("allbranches_in_an_organization", error)
+  //     toast.error(error?.response?.data?.message)
+  //   }
+  // }
+
+
+  // useEffect(()=> {
+  //   allbranches_of_an_organization() 
+  // }, []);
+
+
+  const organization_branches_metrics = async () => {
+    try {
+      const res = await axios.get(`${BaseUrl}/api/v1/branch/management/${ID}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log("organization_branches_metrics ", res);
+      setOrganization_metrics(res.data); 
+      toast.success(res?.data?.message)
+    } catch (error) {
+      console.log("organization_branches_metrics", error)
+      toast.error(error?.response?.data?.message)
+    }
+  }
+
+
+  useEffect(()=> {
+    organization_branches_metrics() 
+  }, []);
 
   return (
     <BranchOverviewContainer>
+    <ToastContainer />
       <div className="branch_wrapper">
         <div className="header_section">
           <div className="header_text">
@@ -118,7 +134,7 @@ const BranchOverview = () => {
             </div>
             <div className="card_content">
               <p className="card_label">Total Branches</p>
-              <h2 className="card_value">0</h2>
+              <h2 className="card_value">{organization_metrics?.totalBranches}</h2>
               <p className="card_change blue_text">+0 this month</p>
             </div>
           </div>
@@ -129,7 +145,7 @@ const BranchOverview = () => {
             </div>
             <div className="card_content">
               <p className="card_label">Total Active Queues</p>
-              <h2 className="card_value">0</h2>
+              <h2 className="card_value">{organization_metrics?.totalActiveQueues}</h2>
               <p className="card_change purple_text">+00% from yesterday</p>
             </div>
           </div>
@@ -140,7 +156,7 @@ const BranchOverview = () => {
             </div>
             <div className="card_content">
               <p className="card_label">Avg. Wait Time (All)</p>
-              <h2 className="card_value">0 min</h2>
+              <h2 className="card_value">{organization_metrics?.avgWaitTime}</h2>
               <p className="card_change blue_text">-0% improvement</p>
             </div>
           </div>
@@ -151,7 +167,7 @@ const BranchOverview = () => {
             </div>
             <div className="card_content">
               <p className="card_label">Total Served Today</p>
-              <h2 className="card_value">00</h2>
+              <h2 className="card_value">{organization_metrics?.totalServedToday}</h2>
               <p className="card_change purple_text">+0% from yesterday</p>
             </div>
           </div>
@@ -166,8 +182,6 @@ const BranchOverview = () => {
               </p>
             </div>
             <div className="status_badges">
-              {/* PRESERVED: added onClick to call backend with status */}
-
               <button className="add_branch_btn" onClick={()=> nav("/branch_onboarding")}>
               <MdAdd className="add_icon" />
               Add New Branch
@@ -192,7 +206,7 @@ const BranchOverview = () => {
           </div>
 
           <div className="branches_list">
-            {branches.map((branch) => (
+            {allbranches_in_an_organization?.map((branch) => (
               <div
                 key={branch.id}
                 className="branch_card"
@@ -213,7 +227,7 @@ const BranchOverview = () => {
                     </div>
                     <div className="branch_details">
                       <div className="branch_name_row">
-                        <h3 className="branch_name">{branch.name}</h3>
+                        <h3 className="branch_name">{branch.branchName}</h3>
                         <span
                           className="status_label"
                           style={{
@@ -232,10 +246,10 @@ const BranchOverview = () => {
                           {branch.location}
                         </span>
                         <span className="meta_separator">•</span>
-                        <span className="meta_item">{branch.code}</span>
+                        <span className="meta_item">{branch.branchCode}</span>
                         <span className="meta_separator">•</span>
                         <span className="meta_item">
-                          Manager: {branch.manager}
+                          Manager: {branch.managerName}
                         </span>
                       </div>
                       <div className="last_updated">
@@ -299,15 +313,16 @@ const BranchOverview = () => {
                 <div className="branch_actions">
                   <button
                     className="action_btn view_details_btn"
-                    onClick={() =>
-                      (window.location.href = "/#/dashboard/branch-management")
-                    }
+                    onClick={() => {
+                      sessionStorage.setItem("selectedBranchId", branch?._id);
+                      window.location.href = "/#/dashboard/branch-management"
+                    }}
                   >
                     View Details
                   </button>
-                    <button className="action_btn secondary_btn"  onClick={() =>
-                      (window.location.href = "/#/dashboard/analytics")
-                    }>
+                    <button className="action_btn secondary_btn"  onClick={() => {
+                      window.location.href = "/#/dashboard/analytics"
+                    }}>
                       Analytics
                     </button>
                     <button className="action_btn secondary_btn"  onClick={() =>
