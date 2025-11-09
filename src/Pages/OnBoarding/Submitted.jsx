@@ -20,10 +20,10 @@ const Submitted = () => {
           </div>
         </div>
         <Back>
-          {/* <div className="circle">
+          <div className="circle">
             <IoArrowBackSharp />
             Back
-          </div> */}
+          </div>
         </Back>
       </BoardingLogo>
 
@@ -57,13 +57,13 @@ const Submitted = () => {
             <p>You'll receive admin credentials within 24-48 hours</p>
           </div>
           <div>
-            <h4 className="question-holder">
+            {/* <h4 className="question-holder">
               <GrStatusGood style={{ color: "#747cff" }} />
               Onboarding reference
             </h4>
             <p>
               Reference ID: <span>ONB-49235686</span>
-            </p>
+            </p> */}
           </div>
         </ContentWrapper>
         <Bottomholder>
@@ -82,12 +82,21 @@ export default Submitted;
 const PreviewContainer = styled.div`
   width: 100%;
   height: 100vh;
-  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 20px;
+
+  @media (min-width: 1440px) {
+    height: 110vh;
+    gap: 25px;
+  }
+
+  @media (min-width: 1920px) {
+    height: 120vh;
+    gap: 30px;
+  }
 
   @media (max-width: 1024px) {
     gap: 15px;
@@ -97,16 +106,34 @@ const PreviewContainer = styled.div`
     height: auto;
     min-height: 100vh;
     gap: 10px;
+    padding: 20px 0;
   }
 `;
 
 const BoardingLogo = styled.div`
   width: 100%;
-  min-height: 15vh;
+  height: 20vh;
   background-color: #f5f9fe;
   border-bottom: 1.25px solid #f3f4f6;
   display: flex;
   align-items: center;
+
+  @media (min-width: 1440px) {
+    height: 22vh;
+  }
+
+  @media (min-width: 1920px) {
+    height: 25vh;
+  }
+
+  @media (max-width: 1024px) {
+    height: 15vh;
+  }
+
+  @media (max-width: 768px) {
+    height: 12vh;
+    min-height: 80px;
+  }
 
   .empty {
     width: 126px;
@@ -114,6 +141,20 @@ const BoardingLogo = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media (min-width: 1440px) {
+      width: 140px;
+      height: 90px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 160px;
+      height: 100px;
+    }
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   .logo {
@@ -122,6 +163,24 @@ const BoardingLogo = styled.div`
     justify-content: center;
     display: flex;
     flex-direction: column;
+    margin-left: 0px;
+    border: transparent;
+
+    @media (min-width: 1440px) {
+      width: 200px;
+      height: 45px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 220px;
+      height: 50px;
+    }
+
+    @media (max-width: 768px) {
+      width: 150px;
+      height: 35px;
+      margin-left: 20px;
+    }
 
     img {
       width: 100%;
@@ -130,31 +189,23 @@ const BoardingLogo = styled.div`
     }
 
     p {
-      color: red;
       margin-left: 34px;
       color: #6a7282;
       font-variant: 16px;
       font-weight: 400;
       line-height: 24px;
-    }
-  }
 
-  @media (max-width: 1024px) {
-    min-height: 12vh;
-  }
+      @media (min-width: 1440px) {
+        font-size: 17px;
+        margin-left: 38px;
+      }
 
-  @media (max-width: 768px) {
-    min-height: 10vh;
+      @media (min-width: 1920px) {
+        font-size: 18px;
+        margin-left: 42px;
+      }
 
-    .empty {
-      display: none;
-    }
-
-    .logo {
-      width: 150px;
-      height: 35px;
-
-      p {
+      @media (max-width: 768px) {
         margin-left: 20px;
         font-size: 14px;
         line-height: 20px;
@@ -170,9 +221,24 @@ const Back = styled.div`
   align-items: center;
   justify-content: flex-end;
 
-  @media (max-width: 768px) {
-    width: 60%;
+  @media (min-width: 1440px) {
+    width: 75%;
+    height: 90px;
+  }
+
+  @media (min-width: 1920px) {
+    width: 80%;
+    height: 100px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 65%;
     height: 70px;
+  }
+
+  @media (max-width: 768px) {
+    width: 50%;
+    height: 60px;
   }
 
   .circle {
@@ -188,45 +254,85 @@ const Back = styled.div`
     align-items: center;
     cursor: pointer;
 
+    @media (min-width: 1440px) {
+      width: 100px;
+      min-height: 40px;
+      font-size: 15px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 110px;
+      min-height: 44px;
+      font-size: 16px;
+    }
+
+    @media (max-width: 1024px) {
+      width: 85px;
+      min-height: 34px;
+      font-size: 13px;
+    }
+
     @media (max-width: 768px) {
       width: 80px;
       min-height: 32px;
       font-size: 12px;
       gap: 8px;
-      margin-right: 10px;
+      margin-right: 20px;
     }
   }
 `;
 
 const SubmittedHolder = styled.div`
   width: 645px;
-  min-height: 607px;
+  height: 80vh;
+
+  @media (min-width: 1440px) {
+    width: 700px;
+    height: 85vh;
+  }
+
+  @media (min-width: 1920px) {
+    width: 750px;
+    height: 90vh;
+  }
 
   @media (max-width: 1024px) {
     width: 85%;
     max-width: 600px;
+    height: 75vh;
   }
 
   @media (max-width: 768px) {
     width: 90%;
     min-height: 500px;
+    height: auto;
+    padding: 0 10px;
   }
 `;
 
 const IconHolder = styled.div`
   width: 100%;
-  min-height: 20vh;
+  min-height: 15vh;
   display: flex;
   align-items: center;
   justify-content: center;
 
+  @media (min-width: 1440px) {
+    min-height: 18vh;
+  }
+
+  @media (min-width: 1920px) {
+    min-height: 20vh;
+  }
+
   @media (max-width: 768px) {
-    min-height: 15vh;
+    min-height: 12vh;
+    margin-top: 10px;
   }
 
   .Icon {
-    width: 96px;
-    min-height: 96px;
+    width: 86px;
+    min-height: 86px;
     border-radius: 50px;
     background: linear-gradient(90deg, #303bff, #96f7e4);
     display: flex;
@@ -235,10 +341,22 @@ const IconHolder = styled.div`
     font-size: 40px;
     color: white;
 
+    @media (min-width: 1440px) {
+      width: 95px;
+      min-height: 95px;
+      font-size: 45px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 105px;
+      min-height: 105px;
+      font-size: 50px;
+    }
+
     @media (max-width: 768px) {
-      width: 80px;
-      min-height: 80px;
-      font-size: 35px;
+      width: 70px;
+      min-height: 70px;
+      font-size: 30px;
     }
   }
 `;
@@ -251,16 +369,33 @@ const Message = styled.div`
   justify-content: center;
   align-items: center;
 
+  @media (min-width: 1440px) {
+    min-height: 90px;
+  }
+
+  @media (min-width: 1920px) {
+    min-height: 100px;
+  }
+
   @media (max-width: 768px) {
     min-height: 70px;
     text-align: center;
     padding: 0 10px;
+    margin-top: 10px;
   }
 
   h4 {
     font-size: 20px;
     line-height: 140%;
     font-weight: 600;
+
+    @media (min-width: 1440px) {
+      font-size: 22px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 24px;
+    }
 
     @media (max-width: 768px) {
       font-size: 18px;
@@ -273,15 +408,24 @@ const Message = styled.div`
     line-height: 150%;
     color: #222222;
 
+    @media (min-width: 1440px) {
+      font-size: 17px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 18px;
+    }
+
     @media (max-width: 768px) {
       font-size: 14px;
+      padding: 0 10px;
     }
   }
 `;
 
 const ContentWrapper = styled.div`
   width: 100%;
-  min-height: 227px;
+  min-height: 200px;
   background-color: #ffffff;
   border: 1.25px solid #e8e8eb;
   border-radius: 14px;
@@ -293,6 +437,18 @@ const ContentWrapper = styled.div`
   padding-left: 25.23px;
   gap: 10px;
   margin-top: 20px;
+
+  @media (min-width: 1440px) {
+    padding: 25px;
+    min-height: 220px;
+    gap: 15px;
+  }
+
+  @media (min-width: 1920px) {
+    padding: 30px;
+    min-height: 240px;
+    gap: 20px;
+  }
 
   @media (max-width: 1024px) {
     padding: 18px;
@@ -311,6 +467,14 @@ const ContentWrapper = styled.div`
     gap: 10px;
     align-items: center;
 
+    @media (min-width: 1440px) {
+      gap: 12px;
+    }
+
+    @media (min-width: 1920px) {
+      gap: 15px;
+    }
+
     @media (max-width: 768px) {
       gap: 8px;
     }
@@ -321,6 +485,14 @@ const ContentWrapper = styled.div`
     font-size: 16px;
     font-weight: 400;
 
+    @media (min-width: 1440px) {
+      font-size: 17px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 18px;
+    }
+
     @media (max-width: 768px) {
       font-size: 14px;
     }
@@ -330,6 +502,16 @@ const ContentWrapper = styled.div`
     font-size: 16px;
     font-weight: 400;
     padding-left: 25.23px;
+
+    @media (min-width: 1440px) {
+      font-size: 17px;
+      padding-left: 28px;
+    }
+
+    @media (min-width: 1920px) {
+      font-size: 18px;
+      padding-left: 32px;
+    }
 
     @media (max-width: 768px) {
       font-size: 14px;
@@ -349,11 +531,27 @@ const Bottomholder = styled.div`
   align-items: center;
   gap: 20px;
 
+  @media (min-width: 1440px) {
+    min-height: 18vh;
+    gap: 25px;
+  }
+
+  @media (min-width: 1920px) {
+    min-height: 20vh;
+    gap: 30px;
+  }
+
+  @media (max-width: 1024px) {
+    min-height: 12vh;
+    gap: 15px;
+  }
+
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 15px;
     min-height: 12vh;
     margin-top: 20px;
+    padding: 0 10px;
   }
 
   .Btn {
@@ -366,8 +564,26 @@ const Bottomholder = styled.div`
     font-size: 16px;
     border: 1.25px solid #e8e8eb;
 
+    @media (min-width: 1440px) {
+      width: 170px;
+      height: 40px;
+      font-size: 17px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 180px;
+      height: 44px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 1024px) {
+      width: 140px;
+      height: 34px;
+      font-size: 15px;
+    }
+
     @media (max-width: 768px) {
-      width: 90%;
+      width: 100%;
       max-width: 300px;
       height: 40px;
       font-size: 14px;
@@ -389,8 +605,26 @@ const Bottomholder = styled.div`
     line-height: 20px;
     cursor: pointer;
 
+    @media (min-width: 1440px) {
+      width: 190px;
+      height: 40px;
+      font-size: 15px;
+    }
+
+    @media (min-width: 1920px) {
+      width: 200px;
+      height: 44px;
+      font-size: 16px;
+    }
+
+    @media (max-width: 1024px) {
+      width: 160px;
+      height: 34px;
+      font-size: 13px;
+    }
+
     @media (max-width: 768px) {
-      width: 90%;
+      width: 100%;
       max-width: 300px;
       height: 40px;
       font-size: 14px;

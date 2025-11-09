@@ -93,11 +93,19 @@ export const BoardingLogo = styled.div`
   }
 
   .logo {
-    width: 180px;
+    width: 190px;
     height: 40px;
     justify-content: center;
     display: flex;
     flex-direction: column;
+    border: transparent;
+    margin-left: 10px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
     @media (min-width: 1440px) {
       width: 200px;

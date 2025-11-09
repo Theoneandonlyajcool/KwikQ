@@ -29,7 +29,6 @@ const Orangization = () => {
     industry: "",
     city: "",
     state: "",
-
     primaryContact: {
       fullName: "",
       email: "",
@@ -37,69 +36,82 @@ const Orangization = () => {
     },
   });
 
+  const [errors, setErrors] = React.useState({
+    address: "",
+    industry: "",
+    city: "",
+    state: "",
+    fullName: "",
+    email: "",
+    phone: "",
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
+
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
     }));
+
+    let message = "";
+
+    if (!value.trim()) {
+      message = "This field is required.";
+    }
+
+    setErrors((prev) => ({ ...prev, [name]: message }));
   };
 
   const handlePrimaryContactChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
 
+    setFormData((prev) => ({
+      ...prev,
       primaryContact: {
-        ...prevData.primaryContact,
+        ...prev.primaryContact,
         [name]: value,
       },
     }));
+
+    let message = "";
+
+    if (!value.trim()) {
+      message = "This field is required.";
+    } else if (name === "email") {
+      const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailPattern.test(value)) {
+        message = "Invalid email format.";
+      }
+    } else if (name === "phone") {
+      const phonePattern = /^(?:0)[7-9][0-1]\d{8}$/;
+      if (!phonePattern.test(value)) {
+        message = "Invalid Nigerian phone format. Use 080 xxxx xxxx";
+      }
+    }
+
+    setErrors((prev) => ({ ...prev, [name]: message }));
   };
 
-  const validateEmail = (email) => {
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return regex.test(email);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!formData.industry.trim()) {
-      return toast.error("Please enter your industry.");
-    }
-    if (!formData.address.trim()) {
-      return toast.error("Please enter your address.");
-    }
-    if (!formData.city.trim()) {
-      return toast.error("Please enter your city.");
-    }
-    if (!formData.state.trim()) {
-      return toast.error("Please enter your state.");
-    }
-    if (!formData.primaryContact.fullName.trim()) {
-      return toast.error("Please enter your full name.");
-    }
-    if (!validateEmail(formData.primaryContact.email.trim())) {
-      return toast.error("Please enter a valid email address.");
-    }
-    if (
-      !/^(?:\+?[0-9]{1,3})?[0]?[1-9][0-9]{6,9}$/.test(
-        formData.primaryContact.phone
-      )
-    ) {
-      return toast.error("Phone number must be between 7 to 15 digits.");
-    } else {
-      toast.success("Form submitted successfully!");
-      nav("/branch_onboarding");
-    }
-  };
+  const allValid =
+    formData.address.trim() &&
+    formData.industry.trim() &&
+    formData.city.trim() &&
+    formData.state.trim() &&
+    formData.primaryContact.fullName.trim() &&
+    formData.primaryContact.email.trim() &&
+    formData.primaryContact.phone.trim() &&
+    !errors.address &&
+    !errors.industry &&
+    !errors.city &&
+    !errors.state &&
+    !errors.fullName &&
+    !errors.email &&
+    !errors.phone;
 
   const BaseURl = import.meta.env.VITE_API_BASE_URL;
   const ID = sessionStorage.getItem("user-recog");
   const token = localStorage.getItem("User");
-  console.log(token);
-  console.log(ID);
 
   const CreateBranch = async () => {
     try {
@@ -122,6 +134,19 @@ const Orangization = () => {
         }
       );
 
+      localStorage.setItem(
+        "organization-data",
+        JSON.stringify({
+          industryServiceType: formData.industry,
+          headOfficeAddress: formData.address,
+          city: formData.city,
+          state: formData.state,
+          fullName: formData.primaryContact.fullName,
+          email: formData.primaryContact.email,
+          phoneNumber: formData.primaryContact.phone,
+        })
+      );
+
       toast.success(res?.data?.message);
       setTimeout(() => {
         nav("/branch_onboarding");
@@ -129,6 +154,17 @@ const Orangization = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!allValid) {
+      toast.error("Please fill all required fields correctly.");
+      return;
+    }
+
+    await CreateBranch();
   };
 
   return (
@@ -150,6 +186,7 @@ const Orangization = () => {
           </div>
         </div>
       </BoardingLogo>
+
       <BoardingTop>
         <div className="Holder">
           <div className="circle">
@@ -171,16 +208,11 @@ const Orangization = () => {
           <div className="circle">
             <GrNotes />
           </div>
-          <p style={{ width: "150px" }}>Review & Confirm </p>
+          <p style={{ width: "150px" }}>Review & Confirm</p>
         </div>
       </BoardingTop>
-      <OnboardingHolder
-        onSubmit={(e) => {
-          e.preventDefault();
-          // handleSubmit()
-          CreateBranch();
-        }}
-      >
+
+      <OnboardingHolder onSubmit={handleFormSubmit}>
         <TextSection>
           <div className="Orgn">
             <h4>
@@ -190,29 +222,39 @@ const Orangization = () => {
             <p>Tell us about your organization</p>
           </div>
 
-          <div>
-            <div className="InputHolder">
-              <div>
-                <p>Head Office Address *</p>
-                <input
-                  type="text"
-                  placeholder="123 Main Street"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                />
-              </div>
+          <div className="InputHolder">
+            <div>
+              <p>Head Office Address *</p>
+              <input
+                type="text"
+                placeholder="123 Main Street"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                style={errors.address ? { border: "1px solid red" } : {}}
+              />
+              {errors.address && (
+                <p style={{ color: "red", fontSize: "14px" }}>
+                  {errors.address}
+                </p>
+              )}
+            </div>
 
-              <div>
-                <p>Industry/Service type *</p>
-                <input
-                  type="text"
-                  placeholder="Enter service"
-                  name="industry"
-                  value={formData.industry}
-                  onChange={handleChange}
-                />
-              </div>
+            <div>
+              <p>Industry/Service type *</p>
+              <input
+                type="text"
+                placeholder="Enter service"
+                name="industry"
+                value={formData.industry}
+                onChange={handleChange}
+                style={errors.industry ? { border: "1px solid red" } : {}}
+              />
+              {errors.industry && (
+                <p style={{ color: "red", fontSize: "14px" }}>
+                  {errors.industry}
+                </p>
+              )}
             </div>
           </div>
 
@@ -225,7 +267,11 @@ const Orangization = () => {
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
+                style={errors.city ? { border: "1px solid red" } : {}}
               />
+              {errors.city && (
+                <p style={{ color: "red", fontSize: "14px" }}>{errors.city}</p>
+              )}
             </div>
 
             <div>
@@ -236,7 +282,11 @@ const Orangization = () => {
                 name="state"
                 value={formData.state}
                 onChange={handleChange}
+                style={errors.state ? { border: "1px solid red" } : {}}
               />
+              {errors.state && (
+                <p style={{ color: "red", fontSize: "14px" }}>{errors.state}</p>
+              )}
             </div>
           </div>
 
@@ -256,8 +306,14 @@ const Orangization = () => {
                     name="fullName"
                     value={formData.primaryContact.fullName}
                     onChange={handlePrimaryContactChange}
+                    style={errors.fullName ? { border: "1px solid red" } : {}}
                   />
                 </div>
+                {errors.fullName && (
+                  <p style={{ color: "red", fontSize: "14px" }}>
+                    {errors.fullName}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -270,8 +326,14 @@ const Orangization = () => {
                     name="email"
                     value={formData.primaryContact.email}
                     onChange={handlePrimaryContactChange}
+                    style={errors.email ? { border: "1px solid red" } : {}}
                   />
                 </div>
+                {errors.email && (
+                  <p style={{ color: "red", fontSize: "14px" }}>
+                    {errors.email}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -283,20 +345,34 @@ const Orangization = () => {
                   type="tel"
                   name="phone"
                   className="Number"
-                  placeholder="Enter phone number"
+                  placeholder="080 xxxx xxxx"
                   value={formData.primaryContact.phone}
                   onChange={handlePrimaryContactChange}
+                  style={errors.phone ? { border: "1px solid red" } : {}}
                 />
               </div>
+              {errors.phone && (
+                <p style={{ color: "red", fontSize: "14px" }}>{errors.phone}</p>
+              )}
             </div>
           </div>
         </TextSection>
+
         <Bottomholder>
-          <button type="submit">
+          <button
+            type="submit"
+            disabled={!allValid}
+            style={
+              !allValid
+                ? { backgroundColor: "gray", cursor: "not-allowed" }
+                : {}
+            }
+          >
             Preview and confirm <FaArrowRightLong />
           </button>
         </Bottomholder>
       </OnboardingHolder>
+
       <ToastContainer />
     </OrangizationContainer>
   );
