@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   PreviewContainer,
   BoardingLogo,
@@ -21,24 +21,59 @@ import { TbSend } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
 
 const Preview = () => {
   const nav = useNavigate();
-  const Org_Details = JSON.parse(localStorage.getItem("onboard-details"));
-  console.log(Org_Details);
+
+  const branchData = JSON.parse(localStorage.getItem("onboard-details"));
+  const [organizationData, setOrganizationData] = useState(null);
 
   const [LoadingState, SetLoadingState] = useState(false);
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const token = localStorage.getItem("User");
-  console.log(Org_Details);
-  console.log(token);
+
+  useEffect(() => {
+    const storedOrgData = JSON.parse(localStorage.getItem("organization-data"));
+
+    if (storedOrgData) {
+      console.log("Using organization data from localStorage:", storedOrgData);
+      setOrganizationData(storedOrgData);
+    } else {
+      const fetchOrganizationData = async () => {
+        try {
+          const ID = sessionStorage.getItem("user-recog");
+          const response = await axios.get(
+            `${BaseURL}/api/v1/organizations/${ID}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("Using organization data from API:", response.data);
+          setOrganizationData(response.data);
+        } catch (error) {
+          console.error("Error fetching organization data:", error);
+        }
+      };
+      fetchOrganizationData();
+    }
+  }, [BaseURL, token]);
+
+  console.log("Branch data:", branchData);
+  console.log("Organization data:", organizationData);
+  console.log(
+    "LocalStorage org data:",
+    JSON.parse(localStorage.getItem("organization-data"))
+  );
 
   const CreateBranch = async () => {
     try {
       SetLoadingState(true);
       const res = await axios.post(
         `${BaseURL}/api/v1/create-branch`,
-        Org_Details,
+        branchData,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -57,7 +92,6 @@ const Preview = () => {
     }
   };
 
-  const navigate = useNavigate();
   return (
     <PreviewContainer>
       <ToastContainer />
@@ -79,22 +113,29 @@ const Preview = () => {
           </div>
         </div>
       </BoardingLogo>
+
       <BoardingTop>
         <div className="Holder">
-          <div className="circle">
-            <HiOutlineBuildingOffice />
+          <div
+            className="circle"
+            style={{ backgroundColor: "#303bff", color: "white" }}
+          >
+            <IoCheckmarkCircleOutline />
           </div>
           <p>Organization Details</p>
         </div>
-        <hr />
+        <hr style={{ borderColor: "#303bff" }} />
 
         <div className="Holder">
-          <div className="circle">
-            <HiOutlineBuildingOffice />
+          <div
+            className="circle"
+            style={{ backgroundColor: "#303bff", color: "white" }}
+          >
+            <IoCheckmarkCircleOutline />
           </div>
           <p>Branch Information</p>
         </div>
-        <hr />
+        <hr style={{ borderColor: "#303bff" }} />
 
         <div className="Holder">
           <div className="circle">
@@ -118,26 +159,30 @@ const Preview = () => {
         <TextHolder>
           <div className="lefttext">
             <div>
-              <h4>Organization Name</h4>
-              <p>First Bank</p>
+              <h4>Head Office Address</h4>
+              <p>{organizationData?.headOfficeAddress || "Not provided"}</p>
             </div>
             <div>
-              <h4>Head Office</h4>
-              <p>124 mainland estate, lagos, Lagos</p>
+              <h4>City</h4>
+              <p>{organizationData?.city || "Not provided"}</p>
+            </div>
+            <div>
+              <h4>State</h4>
+              <p>{organizationData?.state || "Not provided"}</p>
             </div>
           </div>
 
           <div className="righttext">
             <div>
-              <h4>Industry</h4>
-              <p>Bank/Financial Services</p>
+              <h4>Industry/Service Type</h4>
+              <p>{organizationData?.industryServiceType || "Not provided"}</p>
             </div>
 
             <div>
               <h4>Contact Person</h4>
-              <p>Jeremiah Odinaka</p>
-              <p>JerryOdi571@gmail.com</p>
-              <p>09096828167</p>
+              <p>{organizationData?.fullName || "Not provided"}</p>
+              <p>{organizationData?.email || "Not provided"}</p>
+              <p>{organizationData?.phoneNumber || "Not provided"}</p>
             </div>
           </div>
         </TextHolder>
@@ -150,28 +195,35 @@ const Preview = () => {
         </div>
         <TextHolder>
           <div className="lefttext">
-            <h4>1. mainland (BR78)</h4>
+            <h4>
+              1. {branchData?.branchName || "Branch Name"} (
+              {branchData?.branchCode || "Branch Code"})
+            </h4>
 
             <div>
               <p>Location</p>
-              <p>141 VI Lagos, Lagos, Lagos</p>
+              <p>
+                {branchData?.address || "Not provided"},{" "}
+                {branchData?.city || ""}, {branchData?.state || ""}
+              </p>
             </div>
             <div>
               <h4>Branch Manager</h4>
-              <p>Samuel Victor</p>
-              <p>Samvic@gmail.com</p>
-              <p>09034874783</p>
+              <p>{branchData?.managerName || "Not provided"}</p>
+              <p>{branchData?.managerEmail || "Not provided"}</p>
+              <p>{branchData?.managerPhone || "Not provided"}</p>
             </div>
           </div>
 
           <div className="service">
             <div>
               <h4>Service Type</h4>
-              <p>Bank/Financial Services</p>
+              <p>{branchData?.serviceType || "Not provided"}</p>
             </div>
           </div>
         </TextHolder>
       </SecondSection>
+
       <NoticeSection>
         <h4 className="question-holder">
           <FiUsers />
@@ -186,6 +238,7 @@ const Preview = () => {
         <p>• You'll receive admin access to monitor all branches</p>
         <p>• Setup takes approximately 24-48 hours for review and activation</p>
       </NoticeSection>
+
       <Bottomholder>
         <button disabled={LoadingState} onClick={CreateBranch}>
           {LoadingState ? (

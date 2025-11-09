@@ -11,7 +11,7 @@ import {
   LastSection,
   Bottomholder,
 } from "./BranchStyle";
-import { IoIosArrowRoundBack, IoMdAdd } from "react-icons/io";
+import { IoIosArrowRoundBack } from "react-icons/io";
 import {
   HiOutlineBuildingOffice,
   HiOutlineBuildingOffice2,
@@ -23,7 +23,11 @@ import { CiLocationOn } from "react-icons/ci";
 import { MdLocalPhone, MdOutlineEmail } from "react-icons/md";
 import { useNavigate, Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
+
+const isEmailValid = (email) =>
+  /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email);
+const isPhoneValid = (phone) => /^\+234\s?\d{2}\s?\d{4}\s?\d{4}$/.test(phone);
 
 const Branch = () => {
   const nav = useNavigate();
@@ -40,130 +44,69 @@ const Branch = () => {
     managerPhone: "",
   });
 
+  const [errors, setErrors] = useState({
+    branchName: "",
+    branchCode: "",
+    address: "",
+    city: "",
+    state: "",
+    serviceType: "",
+    managerName: "",
+    managerEmail: "",
+    managerPhone: "",
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setbranchformData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setbranchformData((prev) => ({ ...prev, [name]: value }));
+
+    let message = "";
+    if (!value.trim()) {
+      message = "This field is required.";
+    } else if (name === "managerEmail" && !isEmailValid(value)) {
+      message = "Invalid email format.";
+    } else if (name === "managerPhone" && !isPhoneValid(value)) {
+      message = "Invalid Nigerian phone format. Use +234 xx xxxx xxxx";
+    }
+
+    setErrors((prev) => ({ ...prev, [name]: message }));
   };
 
-  const validateEmail = (email) => {
-    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return regex.test(email);
-  };
+  const allValid =
+    branchformData.branchName.trim() &&
+    branchformData.branchCode.trim() &&
+    branchformData.address.trim() &&
+    branchformData.city.trim() &&
+    branchformData.state.trim() &&
+    branchformData.serviceType.trim() &&
+    branchformData.managerName.trim() &&
+    branchformData.managerEmail.trim() &&
+    branchformData.managerPhone.trim() &&
+    isEmailValid(branchformData.managerEmail) &&
+    isPhoneValid(branchformData.managerPhone) &&
+    !errors.branchName &&
+    !errors.branchCode &&
+    !errors.address &&
+    !errors.city &&
+    !errors.state &&
+    !errors.serviceType &&
+    !errors.managerName &&
+    !errors.managerEmail &&
+    !errors.managerPhone;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!branchformData.branchName.trim()) {
-      toast.error("Please enter branch name.");
+    if (!allValid) {
+      toast.error("Please fill all required fields correctly.");
       return;
     }
-
-    if (!branchformData.branchCode.trim()) {
-      toast.error("Please enter branch code.");
-      return;
-    }
-
-    if (!branchformData.address.trim()) {
-      toast.error("Please enter branch address.");
-      return;
-    }
-
-    if (!branchformData.city.trim()) {
-      toast.error("Please enter city.");
-      return;
-    }
-
-    if (!branchformData.state.trim()) {
-      toast.error("Please enter state.");
-      return;
-    }
-
-    if (!branchformData.serviceType.trim()) {
-      toast.error("Please enter service type.");
-      return;
-    }
-
-    if (!branchformData.managerName.trim()) {
-      toast.error("Please enter manager name.");
-      return;
-    }
-
-    if (!validateEmail(branchformData.managerEmail.trim())) {
-      toast.error("Please enter a valid manager email.");
-      return;
-    }
-
-    if (!branchformData.managerPhone.trim()) {
-      toast.error("Please enter manager phone number.");
-      return;
-    }
-
-    if (
-      !/^(?:\+?[0-9]{1,3})?[0]?[1-9][0-9]{6,9}$/.test(
-        branchformData.managerPhone
-      )
-    ) {
-      return toast.error("Phone number must be between 7 to 15 digits.");
-    }
-
     toast.success("Form submitted successfully!");
-    // nav("/review")/;
-  };
-
-  const [LoadingState, SetLoadingState] = useState(false);
-
-  // const CreateBranch = async () => {
-  //   try {
-  //     SetLoadingState(true);
-  //     const res = await axios.post(
-  //       `${BaseURL}/api/v1/create-branch`,
-  //       {
-  //         branchName: branchformData.branchName,
-  //         address: branchformData.address,
-  //         city: branchformData.city,
-  //         state: branchformData.state,
-  //         serviceType: branchformData.serviceType,
-  //         managerName: branchformData.managerName,
-  //         managerEmail: branchformData.managerEmail,
-  //         managerPhone: branchformData.managerPhone,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     localStorage.setItem("Org-Details", JSON.stringify(branchformData));
-  //     SetLoadingState(false);      toast.success(res?.data?.message);
-  //     setTimeout(() => {
-  //       nav("/review");
-  //     }, 2000);
-  //   } catch (error) {
-  //     SetLoadingState(false);
-  //     // console.log(error);
-  //     toast.error(error?.response?.data?.message);
-  //   }
-  // };
-
-  const SubmitOnboarding = () => {
-    toast.success("Onboarding submitted succesfully");
     localStorage.setItem("onboard-details", JSON.stringify(branchformData));
-    setTimeout(() => {
-      nav("/review");
-    }, 2000);
+    setTimeout(() => nav("/review"), 2000);
   };
 
   return (
-    <BranchContainer
-      onSubmit={(e) => {
-        e.preventDefault();
-        SubmitOnboarding();
-      }}
-    >
+    <BranchContainer onSubmit={handleSubmit}>
       <BoardingLogo>
         <ToastContainer />
         <div className="back">
@@ -189,12 +132,15 @@ const Branch = () => {
 
       <BoardingTop>
         <div className="Holder">
-          <div className="circle">
-            <HiOutlineBuildingOffice />
+          <div
+            className="circle"
+            style={{ backgroundColor: "#303bff", color: "white" }}
+          >
+            <IoCheckmarkCircleOutline />
           </div>
           <p>Organization Details</p>
         </div>
-        <hr />
+        <hr style={{ borderColor: "#303bff" }} />
 
         <div className="Holder">
           <div className="circle active">
@@ -217,12 +163,6 @@ const Branch = () => {
           <p>Branch Information</p>
           <p>Add details for each branch location</p>
         </div>
-        {/* <div className="Add">
-          <button type="button">
-            <IoMdAdd />
-            Add Branch
-          </button>
-        </div> */}
       </TopText>
 
       <FirstSection>
@@ -240,7 +180,13 @@ const Branch = () => {
               placeholder="Input Branch"
               value={branchformData.branchName}
               onChange={handleChange}
+              style={errors.branchName ? { border: "1px solid red" } : {}}
             />
+            {errors.branchName && (
+              <p style={{ color: "red", fontSize: "14px" }}>
+                {errors.branchName}
+              </p>
+            )}
           </div>
           <div>
             <h4>Branch Code *</h4>
@@ -250,7 +196,13 @@ const Branch = () => {
               placeholder="Input code"
               value={branchformData.branchCode}
               onChange={handleChange}
+              style={errors.branchCode ? { border: "1px solid red" } : {}}
             />
+            {errors.branchCode && (
+              <p style={{ color: "red", fontSize: "14px" }}>
+                {errors.branchCode}
+              </p>
+            )}
           </div>
         </InputHolder>
 
@@ -265,8 +217,12 @@ const Branch = () => {
                 placeholder="Add Address"
                 value={branchformData.address}
                 onChange={handleChange}
+                style={errors.address ? { border: "1px solid red" } : {}}
               />
             </div>
+            {errors.address && (
+              <p style={{ color: "red", fontSize: "14px" }}>{errors.address}</p>
+            )}
           </div>
         </AddressHolder>
 
@@ -279,8 +235,13 @@ const Branch = () => {
               placeholder="Enter your city"
               value={branchformData.city}
               onChange={handleChange}
+              style={errors.city ? { border: "1px solid red" } : {}}
             />
+            {errors.city && (
+              <p style={{ color: "red", fontSize: "14px" }}>{errors.city}</p>
+            )}
           </div>
+
           <div>
             <h4>State *</h4>
             <input
@@ -289,7 +250,11 @@ const Branch = () => {
               placeholder="State"
               value={branchformData.state}
               onChange={handleChange}
+              style={errors.state ? { border: "1px solid red" } : {}}
             />
+            {errors.state && (
+              <p style={{ color: "red", fontSize: "14px" }}>{errors.state}</p>
+            )}
           </div>
 
           <div>
@@ -300,13 +265,19 @@ const Branch = () => {
               placeholder="type"
               value={branchformData.serviceType}
               onChange={handleChange}
+              style={errors.serviceType ? { border: "1px solid red" } : {}}
             />
+            {errors.serviceType && (
+              <p style={{ color: "red", fontSize: "14px" }}>
+                {errors.serviceType}
+              </p>
+            )}
           </div>
         </Sections>
 
         <hr style={{ border: "1.25px solid #e8e8eb" }} />
-
         <h4>Branch Manager</h4>
+
         <LastSection>
           <div>
             <h4>Manager Name *</h4>
@@ -318,8 +289,14 @@ const Branch = () => {
                 placeholder="Enter full name"
                 value={branchformData.managerName}
                 onChange={handleChange}
+                style={errors.managerName ? { border: "1px solid red" } : {}}
               />
             </div>
+            {errors.managerName && (
+              <p style={{ color: "red", fontSize: "14px" }}>
+                {errors.managerName}
+              </p>
+            )}
           </div>
 
           <div>
@@ -332,8 +309,14 @@ const Branch = () => {
                 placeholder="Enter Email"
                 value={branchformData.managerEmail}
                 onChange={handleChange}
+                style={errors.managerEmail ? { border: "1px solid red" } : {}}
               />
             </div>
+            {errors.managerEmail && (
+              <p style={{ color: "red", fontSize: "14px" }}>
+                {errors.managerEmail}
+              </p>
+            )}
           </div>
 
           <div>
@@ -343,23 +326,32 @@ const Branch = () => {
               <input
                 type="tel"
                 name="managerPhone"
-                placeholder="Enter Number"
+                placeholder="+234 xx xxxx xxxx"
                 value={branchformData.managerPhone}
                 onChange={handleChange}
+                style={errors.managerPhone ? { border: "1px solid red" } : {}}
               />
             </div>
+            {errors.managerPhone && (
+              <p style={{ color: "red", fontSize: "14px" }}>
+                {errors.managerPhone}
+              </p>
+            )}
           </div>
         </LastSection>
       </FirstSection>
 
       <Bottomholder>
-        <button type="submit">
-          <TbSend />
-          Submit Onboarding
+        <button
+          type="submit"
+          disabled={!allValid}
+          style={
+            !allValid ? { backgroundColor: "gray", cursor: "not-allowed" } : {}
+          }
+        >
+          <TbSend /> Submit Onboarding
         </button>
       </Bottomholder>
-
-      <ToastContainer />
     </BranchContainer>
   );
 };

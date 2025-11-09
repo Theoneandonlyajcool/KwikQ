@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import QueueCard from "./QueueCard";
+import QueueCard from "../../components/QueueCard/QueueCard";
 import "./QueueManagement.css";
 import { TbLayersSubtract } from "react-icons/tb";
 import { MdLayers } from "react-icons/md";
@@ -11,10 +11,6 @@ import { toast, ToastContainer } from "react-toastify";
 
 const QueueManagement = () => {
   const nav = useNavigate();
-
-  // const ActiveQueues =async()=>{
-  //   const res =
-  // }
 
   // const [queues, setQueues] = useState([
   //   {
@@ -49,46 +45,27 @@ const QueueManagement = () => {
   //   },
   // ]);
 
-  // const handleServe = (id) => {
-  //   setQueues(
-  //     queues.map((q) =>
-  //       q.id === id ? { ...q, active: true } : { ...q, active: false }
-  //     )
-  //   );
-  // };
-
   const [queues, setQueues] = useState([]);
-
-  // const handleRemove = (id) => {
-  //   setQueues(queues.filter((q) => q.id !== id));
-  // };
 
   const BranchID = localStorage.getItem("BranchID");
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const [LoadingState, SetLoadingState] = useState(false);
+  // console.log(BranchID);
+  // console.log(BranchID);
 
   const GetAllQueues = async () => {
     try {
       SetLoadingState(true);
       const res = await axios.get(`${BaseURL}/api/v1/queues/${BranchID}`);
-      console.log(res?.data);
       toast.success(res?.data?.message);
       setQueues(res?.data?.data);
+      console.log(res?.data.data);
       SetLoadingState(false);
     } catch (error) {
       SetLoadingState(false);
       console.log(error);
     }
   };
-
-  // const GetAllQueues = async () => {
-  //   try {
-  //     const res = await axios.get(`${BaseURL}/api/v1/get-all-customers`);
-  //     console.log(res?.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
   useEffect(() => {
     GetAllQueues();
@@ -209,23 +186,6 @@ const QueueManagement = () => {
                   return (
                     <div>
                       <QueueCard data={ele} key={idx} />;
-                      <div className="quick-actions">
-                        <h3>Quick Actions</h3>
-                        <div className="actions-content">
-                          <div className="action-buttons">
-                            <button className="btn-action">Pause Queue</button>
-                            <button className="btn-action">
-                              Add Manual Entry
-                            </button>
-                          </div>
-                          <div className="qr-section">
-                            <div className="qr-code">
-                              <div className="qr-pattern"></div>
-                            </div>
-                            <p className="qr-label">Scan Our QR</p>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   );
                 })}
@@ -233,6 +193,22 @@ const QueueManagement = () => {
             )}
           </>
         )}
+
+        <div className="quick-actions">
+          <h3>Quick Actions</h3>
+          <div className="actions-content">
+            <div className="action-buttons">
+              <button className="btn-action">Pause Queue</button>
+              <button className="btn-action">Add Manual Entry</button>
+            </div>
+            <div className="qr-section">
+              <div className="qr-code">
+                <div className="qr-pattern"></div>
+              </div>
+              <p className="qr-label">Scan Our QR</p>
+            </div>
+          </div>
+        </div>
 
         {/* <div className="quick-actions">
           <h3>Quick Actions</h3>
