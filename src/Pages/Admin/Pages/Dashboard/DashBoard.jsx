@@ -17,7 +17,7 @@ import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import { IoClipboard } from "react-icons/io5";
 
-export default function Dashboard() {
+export default function Dashboard({ qrCode }) {
   // Get time
 
   const [dateTime, setDateTime] = useState("");
@@ -82,38 +82,9 @@ export default function Dashboard() {
 
   console.log(`The role is ${Role}`);
 
-  const [BrowserLoadingState, SetBrowserLoadingState] = useState(false);
-
-  const [QrCodeImage, SetQrCodeImage] = useState("");
-
-  const GenerateQrCode = async () => {
-    try {
-      SetBrowserLoadingState(true);
-      const res = await axios.post(
-        `${BaseUrl}/api/v1/qrcode/generate`,
-        Role == "multi"
-          ? {
-              organizationId: OrgID,
-              branchId: BranchID,
-            }
-          : {
-              organizationId: OrgID,
-            }
-      );
-
-      console.log(res?.data);
-      SetBrowserLoadingState(false);
-      toast.success(res?.data?.message);
-      SetQrCodeImage(res?.data?.qrImageUrl);
-    } catch (error) {
-      SetBrowserLoadingState(false);
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
     GetMetricsCardData();
-    GenerateQrCode();
+    // GenerateQrCode();
   }, []);
 
   const [activeQuota, setActiveQuota] = useState(null);
@@ -486,27 +457,9 @@ export default function Dashboard() {
             </button>
           </div>
 
-          <img style={styles.QrCode} src={QrCodeImage} alt="Qr code" />
+          <img style={styles.QrCode} src="" alt="Qr code" />
         </div>
       </div>
-
-      {BrowserLoadingState && (
-        <div
-          style={{
-            backgroundColor: "rgba(149, 148, 148, 0.484)",
-            position: "fixed",
-            top: "0",
-            width: "100%",
-            left: "0",
-            height: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <p>Genrating QR code.....</p>
-        </div>
-      )}
     </div>
   );
 }
