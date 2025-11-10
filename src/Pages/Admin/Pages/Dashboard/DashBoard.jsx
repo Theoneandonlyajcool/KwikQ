@@ -14,8 +14,36 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
+  // Get time
+
+  const [dateTime, setDateTime] = useState("");
+
+  useEffect(() => {
+    const updateDateTime = () => {
+      const now = new Date();
+      const formattedDate = new Intl.DateTimeFormat("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      }).format(now);
+      setDateTime(formattedDate);
+    };
+
+    updateDateTime();
+    const interval = setInterval(updateDateTime, 60000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const nav = useNavigate();
+
   const BaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const [CardData, SetCardData] = useState({});
@@ -23,10 +51,17 @@ export default function Dashboard() {
   console.log(CardData);
   const BranchID = localStorage.getItem("BranchID");
 
+  const SingleToken = localStorage.getItem("singleToken");
+  console.log(SingleToken);
+
   const GetMetricsCardData = async () => {
     try {
       SetLoadingState(true);
-      const res = await axios.get(`${BaseUrl}/api/v1/dashboard/${BranchID}`);
+      const res = await axios.get(`${BaseUrl}/api/v1/dashboard/${BranchID}`, {
+        headers: {
+          Authorization: `Bearer ${SingleToken}`,
+        },
+      });
       SetCardData(res?.data?.data);
       SetLoadingState(false);
     } catch (error) {
@@ -36,8 +71,47 @@ export default function Dashboard() {
     }
   };
 
+  // Get role
+
+  const Role =
+    localStorage.getItem("OrgRole") || localStorage.getItem("UserRole");
+
+  const OrgID = localStorage.getItem("Org_ID");
+
+  console.log(`The role is ${Role}`);
+
+  const [BrowserLoadingState, SetBrowserLoadingState] = useState(false);
+
+  const [QrCodeImage, SetQrCodeImage] = useState("");
+
+  const GenerateQrCode = async () => {
+    try {
+      SetBrowserLoadingState(true);
+      const res = await axios.post(
+        `${BaseUrl}/api/v1/qrcode/generate`,
+        Role == "multi"
+          ? {
+              organizationId: OrgID,
+              branchId: BranchID,
+            }
+          : {
+              organizationId: OrgID,
+            }
+      );
+
+      console.log(res?.data);
+      SetBrowserLoadingState(false);
+      toast.success(res?.data?.message);
+      SetQrCodeImage(res?.data?.qrImageUrl);
+    } catch (error) {
+      SetBrowserLoadingState(false);
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     GetMetricsCardData();
+    GenerateQrCode();
   }, []);
 
   const [activeQuota, setActiveQuota] = useState(null);
@@ -121,7 +195,7 @@ export default function Dashboard() {
       <header style={styles.header}>
         <div>
           <h1 style={styles.title}>Dashboard Overview</h1>
-          <p style={styles.date}>Fri 01 day, October 22, 2025</p>
+          <p style={styles.date}>{dateTime}</p>
         </div>
 
         <img
@@ -211,6 +285,7 @@ export default function Dashboard() {
               cardColor={"purple"}
               cardBgColor={"purple"}
               iconName={"FaRegClock"}
+              cardData={CardData}
             />
             <QueueCard
               cardValue={"247"}
@@ -344,16 +419,32 @@ export default function Dashboard() {
           {/* Buttons */}
           <div style={styles.actionButtons}>
             <button style={styles.actionBtn}>Pause Queue</button>
-            <button style={styles.actionBtn}>Add Manual Entry</button>
+            <button style={styles.actionBtn} onClick={() => nav("quue")}>
+              Add Manual Entry
+            </button>
           </div>
 
-          <img
-            style={styles.QrCode}
-            src="https://res.cloudinary.com/dp75oveuw/image/upload/v1761625620/etgKsr_axex0h.png"
-            alt=""
-          />
+          <img style={styles.QrCode} src={QrCodeImage} alt="Qr code" />
         </div>
       </div>
+
+      {BrowserLoadingState && (
+        <div
+          style={{
+            backgroundColor: "rgba(149, 148, 148, 0.484)",
+            position: "fixed",
+            top: "0",
+            width: "100%",
+            left: "0",
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <p>Genrating QR code.....</p>
+        </div>
+      )}
     </div>
   );
 }
