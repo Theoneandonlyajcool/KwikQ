@@ -19,18 +19,10 @@ const LoginForm = () => {
   const SingleLogin = async () => {
     try {
       SetLoadingState(true);
-      const res = await axios.post(
-        `${BaseURL}/api/v1/branchlogin`,
-        {
-          managerEmail: email,
-          branchCode: accessCode,
-        },
-        {
-          headers: {
-            Authorization: `Bearer `,
-          },
-        }
-      );
+      const res = await axios.post(`${BaseURL}/api/v1/branchlogin`, {
+        managerEmail: email,
+        branchCode: accessCode,
+      });
       SetLoadingState(false);
       toast.success(res?.data?.message);
       localStorage.setItem("BranchID", res?.data?.branch?.id);
