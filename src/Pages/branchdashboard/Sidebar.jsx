@@ -14,7 +14,7 @@ import { LuShield } from "react-icons/lu";
 
 const Sidebar = ({ collapsed }) => {
   const nav = useNavigate();
-  const setName = localStorage.getItem("Organ_Name");
+  const Setname = localStorage.getItem("Organ_Name");
   
   return (
     <SidebarContainer collapsed={collapsed}>
@@ -43,9 +43,9 @@ const Sidebar = ({ collapsed }) => {
       </Menu>
       <Footer>
         <div className="orgholder">
-          <div className="avater">{setName.toUpperCase().slice(0, 2)}</div>
+          <div className="avater">{Setname.toUpperCase().slice(0, 2)}</div>
           <div className="textorg">
-            <p className="admintext">{setName.toUpperCase()}</p>
+            <p className="admintext">{Setname.toUpperCase()}</p>
             <span className="supertext"> <LuShield  className="shield"/> Super Admin</span>
           </div>
         </div>
