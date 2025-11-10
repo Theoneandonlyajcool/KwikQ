@@ -9,9 +9,9 @@ import axios, { Axios } from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
-const QueueManagement = () => {
+const QueueManagement = ({ qrCode }) => {
   const nav = useNavigate();
-
+  console.log(qrCode);
   // const [queues, setQueues] = useState([
   //   {
   //     id: 1,
@@ -59,7 +59,7 @@ const QueueManagement = () => {
       const res = await axios.get(`${BaseURL}/api/v1/queues/${BranchID}`);
       toast.success(res?.data?.message);
       setQueues(res?.data?.data);
-      console.log(res?.data.data);
+      // console.log(res?.data.data);
       SetLoadingState(false);
     } catch (error) {
       SetLoadingState(false);
@@ -254,14 +254,15 @@ const QueueManagement = () => {
             {/* Buttons */}
             <div style={styles.actionButtons}>
               <button style={styles.actionBtn}>Pause Queue</button>
-              <button style={styles.actionBtn}>Add Manual Entry</button>
+              <button
+                style={styles.actionBtn}
+                onClick={() => nav("/queue_form")}
+              >
+                Add Manual Entry
+              </button>
             </div>
 
-            <img
-              style={styles.QrCode}
-              src="https://res.cloudinary.com/dp75oveuw/image/upload/v1761625620/etgKsr_axex0h.png"
-              alt=""
-            />
+            <img style={styles.QrCode} src={qrCode} alt="" />
           </div>
         </div>
 

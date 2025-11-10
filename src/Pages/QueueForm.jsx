@@ -108,13 +108,13 @@ const QueueForm = () => {
       SetLoadingState(false);
       SetShowModal(true);
       // console.log(res?.data?.data);
-      SetInputValues({
-        fullName: "",
-        phone: "",
-        email: "",
-        AdditionalInfo: "",
-        serviceNeeded: PurposeOfVisit,
-      });
+      // SetInputValues({
+      //   fullName: "",
+      //   phone: "",
+      //   email: "",
+      //   AdditionalInfo: "",
+      //   serviceNeeded: PurposeOfVisit,
+      // });
       SetapiData(res?.data?.data);
     } catch (error) {
       SetLoadingState(false);

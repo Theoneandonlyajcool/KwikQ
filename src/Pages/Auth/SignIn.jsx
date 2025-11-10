@@ -67,14 +67,17 @@ const SignIn = () => {
   const checkOnboardingStatus = async (IDs, tokens) => {
     try {
       const BaseURL = import.meta.env.VITE_API_BASE_URL;
-      const res = await axios.get(`${BaseURL}/api/v1/branch/management/${IDs}`, {
-        headers: {
-          Authorization: `Bearer ${tokens}`,
-        },
-      });
+      const res = await axios.get(
+        `${BaseURL}/api/v1/branch/management/${IDs}`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokens}`,
+          },
+        }
+      );
 
       const orgData = res?.data;
-      console.log("check well", res)
+      console.log("check well", res);
 
       const hasCompletedOnboarding =
         orgData?.totalBranches ||
@@ -101,8 +104,8 @@ const SignIn = () => {
 
       const token = res?.data?.token;
       const orgId = res?.data?.data?.org;
-      console.log(token)
-      console.log(orgId)
+      console.log(token);
+      console.log(orgId);
 
       localStorage.setItem(
         import.meta.env.VITE_USERTOKEN,
@@ -110,8 +113,8 @@ const SignIn = () => {
       );
       localStorage.setItem(import.meta.env.VITE_USERID, JSON.stringify(orgId));
       localStorage.setItem("User", token);
+
       sessionStorage.setItem("user-recog", orgId);
-      
 
       toast.success(res?.data?.message);
 
@@ -119,10 +122,20 @@ const SignIn = () => {
 
       setIsLoading(false);
 
+      const Role =
+        localStorage.getItem("UserRole") || localStorage.getItem("OrgRole");
+
+      // localStorage.setItem("Org_Id", res?.data?.data?.org);
+
       setTimeout(() => {
         if (isOnboarded) {
           console.log("Existing user - Redirecting to dashboard");
-          nav("/dashboard/");
+
+          if (Role == "multi") {
+            nav("/dashboard/");
+          } else {
+            nav("/admin_dashboard");
+          }
         } else {
           console.log("New user - Redirecting to Seven Day Free Trial");
           nav("/Sevenday_free");
