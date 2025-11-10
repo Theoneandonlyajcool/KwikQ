@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import {
   BarChart,
@@ -19,6 +19,29 @@ import {
 import "./Analytics.css";
 
 const AnalyticsDashboard = () => {
+  const [dateTime, setDateTime] = useState("");
+
+  useEffect(() => {
+    const updateDateTime = () => {
+      const now = new Date();
+      const formattedDate = new Intl.DateTimeFormat("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      }).format(now);
+      setDateTime(formattedDate);
+    };
+
+    updateDateTime();
+    const interval = setInterval(updateDateTime, 60000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   // Dummy data for charts
   const steadyCustomerData = [
     { month: "Jan", value: 45 },

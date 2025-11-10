@@ -1,10 +1,53 @@
 import React, { useState } from "react";
 import { Clock, Phone, Timer, Bell, X, SkipForward } from "lucide-react";
 import "./QueueCard.css";
+import axios from "axios";
+import { RemoveCustomer } from "../../../Services/APICalls";
 
-const QueueCard = ({ data }) => {
+const QueueCard = ({ data, refresh }) => {
   const [mappedCustomers, SetMappedCustomers] = useState([]);
   // SetMappedCustomers(data?.customers);
+  console.log(data);
+
+  const Id = data.id;
+
+  const [TimeJoined, SetTimeJoined] = useState("");
+
+  const formattedTime = new Date(data.joinedAt).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+  //Formatted wait time
+
+  const waitTime = data?.waitTime;
+  // remove the "min" and convert to a number
+  const totalMinutes = parseInt(waitTime);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  const formattedWaitTime = `${hours} hrs ${minutes} mins`;
+  // console.log(formattedWaitTime);
+
+  // Remove customer
+
+  const [customerID, SetcustomerID] = useState("");
+
+  const BranchID = localStorage.getItem("BranchID");
+  const BaseURL = import.meta.env.VITE_API_BASE_URL;
+  const token = localStorage.getItem("User");
+
+  // const RemoveCustomer = async () => {
+  //   try {
+  //     const res = await axios.delete(`${BaseURL}/api/v1/remove/${customerID}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div className="service-card">
@@ -17,23 +60,23 @@ const QueueCard = ({ data }) => {
 
       <div className="service-card__content">
         <div className="service-card__header">
-          <span className="service-card__ticket">ticketNumber</span>
-          <h3 className="service-card__name">name</h3>
-          <p className="service-card__service">servic</p>
+          <span className="service-card__ticket">{data?.queueNumber}</span>
+          <h3 className="service-card__name">{data?.fullName}</h3>
+          <p className="service-card__service">{data?.service}</p>
         </div>
 
         <div className="service-card__meta">
           <div className="service-card__meta-item">
             <Clock className="service-card__meta-icon" />
-            <span>Joined : joinedTime</span>
+            <span>Joined : {formattedTime}</span>
           </div>
           <div className="service-card__meta-item">
             <Timer className="service-card__meta-icon" />
-            <span>Wait: waitTime</span>
+            <span>Wait:{formattedWaitTime}</span>
           </div>
           <div className="service-card__meta-item">
             <Phone className="service-card__meta-icon" />
-            <span>phoneNumber</span>
+            <span>{data.phone}</span>
           </div>
         </div>
       </div>
@@ -58,6 +101,13 @@ const QueueCard = ({ data }) => {
 
         <button
           style={{ color: "red", border: "2px solid red" }}
+          onClick={() => {
+            // RemoveCustomer(Id);
+            // setTimeout(() => {
+            //   refresh();
+            // }, 3000);
+            console.log(data.id);
+          }}
           className="service-card__button service-card__button--destructive"
           // onClick={onRemove}
         >
