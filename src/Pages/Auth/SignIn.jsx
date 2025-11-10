@@ -68,15 +68,18 @@ const SignIn = () => {
   const checkOnboardingStatus = async (IDs, tokens) => {
     try {
       const BaseURL = import.meta.env.VITE_API_BASE_URL;
-      const res = await axios.get(`${BaseURL}/api/v1/branch/management/${IDs}`, {
-        headers: {
-          Authorization: `Bearer ${tokens}`,
-        },
-      });
+      const res = await axios.get(
+        `${BaseURL}/api/v1/branch/management/${IDs}`,
+        {
+          headers: {
+            Authorization: `Bearer ${tokens}`,
+          },
+        }
+      );
 
       // Check if organization data exists (user has completed onboarding)
       const orgData = res?.data;
-      console.log("check well", res)
+      console.log("check well", res);
 
       const hasCompletedOnboarding =
         orgData?.totalBranches ||
@@ -103,8 +106,8 @@ const SignIn = () => {
 
       const token = res?.data?.token;
       const orgId = res?.data?.data?.org;
-      console.log(token)
-      console.log(orgId)
+      console.log(token);
+      console.log(orgId);
 
       // Store token and user info
       localStorage.setItem(
@@ -114,7 +117,6 @@ const SignIn = () => {
       localStorage.setItem(import.meta.env.VITE_USERID, JSON.stringify(orgId));
       localStorage.setItem("User", token);
       sessionStorage.setItem("user-recog", orgId);
-      
 
       toast.success(res?.data?.message);
 
@@ -127,7 +129,7 @@ const SignIn = () => {
         if (isOnboarded) {
           // EXISTING USER: Skip onboarding, go straight to dashboard
           console.log("Existing user - Redirecting to dashboard");
-          nav("/dashboard/");
+          nav("/admin_dashboard");
         } else {
           // NEW USER: Go through Seven Day Free Trial and onboarding
           console.log("New user - Redirecting to Seven Day Free Trial");

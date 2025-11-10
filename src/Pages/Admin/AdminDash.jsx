@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   LayoutDashboard,
   Users,
@@ -14,6 +14,7 @@ import AnalyticsDashboard from "../Admin/Pages/Analytics/Analytics";
 import QueueHistory from "../Admin/Pages/History/History";
 import NotificationsPage from "../Admin/Pages/Notifications/Notifications";
 import QueueSettings from "./Pages/Settings/Settings";
+import axios from "axios";
 
 const AdminDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
@@ -49,12 +50,51 @@ const AdminDashboard = () => {
     { key: "settings", icon: <Settings size={20} />, label: "Settings" },
   ];
 
+  const [BrowserLoadingState, SetBrowserLoadingState] = useState(false);
+  const [QrCodeImage, SetQrCodeImage] = useState("");
+  const Role =
+    localStorage.getItem("OrgRole") || localStorage.getItem("UserRole");
+
+  const OrgID = localStorage.getItem("Org_ID");
+  const BranchID = localStorage.getItem("BranchID");
+
+  const BaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+  const GenerateQrCode = async () => {
+    try {
+      SetBrowserLoadingState(true);
+      const res = await axios.post(
+        `${BaseUrl}/api/v1/qrcode/generate`,
+        Role == "multi"
+          ? {
+              organizationId: OrgID,
+              branchId: BranchID,
+            }
+          : {
+              organizationId: OrgID,
+            }
+      );
+
+      console.log(res?.data);
+      SetBrowserLoadingState(false);
+      toast.success(res?.data?.message);
+      SetQrCodeImage(res?.data?.qrImageUrl);
+    } catch (error) {
+      SetBrowserLoadingState(false);
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    GenerateQrCode();
+  }, []);
+
   const renderContent = () => {
     switch (activeMenu) {
       case "dashboard":
-        return <DashBoard />;
+        return <DashBoard qrCode={QrCodeImage} />;
       case "queue":
-        return <QueueManagement />;
+        return <QueueManagement qrCode={QrCodeImage} />;
       case "analytics":
         return <AnalyticsDashboard />;
       case "history":
@@ -126,6 +166,24 @@ const AdminDashboard = () => {
       <main style={styles.mainContent} className="main-content">
         {renderContent()}
       </main>
+
+      {BrowserLoadingState && (
+        <div
+          style={{
+            backgroundColor: "rgba(149, 148, 148, 0.484)",
+            position: "fixed",
+            top: "0",
+            width: "100%",
+            left: "0",
+            height: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <p>Genrating QR code.....</p>
+        </div>
+      )}
     </div>
   );
 };
