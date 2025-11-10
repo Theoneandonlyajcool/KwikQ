@@ -5,12 +5,21 @@ import { FaRegClock } from "react-icons/fa6";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 
 const QueueCard = (props) => {
-  const { cardValue, cardColor, cardBgColor, iconName: Icon } = props;
+  const {
+    cardValue,
+    cardColor,
+    cardBgColor,
+    iconName: Icon,
+    cardData,
+    text,
+  } = props;
+
+  console.log(`This is the data ${text}`);
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <style>{`
         .queue-card {
-          background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
+          // background: linear-gradient(135deg, #e8eaf6 0%, #c5cae9 100%);
           border-radius: 24px;
           border: 2px solid #5c6bc0;
           padding: 32px 24px;
@@ -97,16 +106,23 @@ const QueueCard = (props) => {
         }
       `}</style>
 
-      <div className="queue-card">
+      <div
+        style={{
+          border: `2px solid ${cardColor}`,
+          backgroundColor: `${cardBgColor}`,
+          // color: `${cardColor}`,
+        }}
+        className="queue-card"
+      >
         <div style={{ position: "relative" }}>
           <div className="icon-container">
             <Users size={28} color="#3f51b5" strokeWidth={2.5} />
           </div>
-          <span className="percentage-badge">+12%</span>
+          <span className="percentage-badge">{cardData?.percentageChange}</span>
         </div>
 
-        <div className="card-label">Active in Queue</div>
-        <div className="card-value">{cardValue}</div>
+        <div className="card-label">{text}</div>
+        <div className="card-value">{cardData?.current}</div>
       </div>
     </div>
   );
