@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { Clock, Phone, Timer, Bell, X, SkipForward } from "lucide-react";
 import "./QueueCard.css";
 import axios from "axios";
+import { RemoveCustomer } from "../../../Services/APICalls";
 
-const QueueCard = ({ data }) => {
+const QueueCard = ({ data, refresh }) => {
   const [mappedCustomers, SetMappedCustomers] = useState([]);
   // SetMappedCustomers(data?.customers);
   console.log(data);
+
+  const Id = data.id;
 
   const [TimeJoined, SetTimeJoined] = useState("");
 
@@ -34,17 +37,17 @@ const QueueCard = ({ data }) => {
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const token = localStorage.getItem("User");
 
-  const RemoveCustomer = async () => {
-    try {
-      const res = await axios.delete(`${BaseURL}/api/v1/remove/${customerID}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const RemoveCustomer = async () => {
+  //   try {
+  //     const res = await axios.delete(`${BaseURL}/api/v1/remove/${customerID}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div className="service-card">
@@ -99,10 +102,11 @@ const QueueCard = ({ data }) => {
         <button
           style={{ color: "red", border: "2px solid red" }}
           onClick={() => {
-            SetcustomerID(data.id);
-            setTimeout(() => {
-              RemoveCustomer();
-            }, 1000);
+            // RemoveCustomer(Id);
+            // setTimeout(() => {
+            //   refresh();
+            // }, 3000);
+            console.log(data.id);
           }}
           className="service-card__button service-card__button--destructive"
           // onClick={onRemove}
