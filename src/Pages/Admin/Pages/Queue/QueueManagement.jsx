@@ -254,7 +254,12 @@ const QueueManagement = () => {
             {/* Buttons */}
             <div style={styles.actionButtons}>
               <button style={styles.actionBtn}>Pause Queue</button>
-              <button style={styles.actionBtn}>Add Manual Entry</button>
+              <button
+                style={styles.actionBtn}
+                onClick={() => nav("/queue_form")}
+              >
+                Add Manual Entry
+              </button>
             </div>
 
             <img

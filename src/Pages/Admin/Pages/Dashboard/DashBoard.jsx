@@ -481,7 +481,7 @@ export default function Dashboard() {
           {/* Buttons */}
           <div style={styles.actionButtons}>
             <button style={styles.actionBtn}>Pause Queue</button>
-            <button style={styles.actionBtn} onClick={() => nav("quue")}>
+            <button style={styles.actionBtn} onClick={() => nav("/queue_form")}>
               Add Manual Entry
             </button>
           </div>
