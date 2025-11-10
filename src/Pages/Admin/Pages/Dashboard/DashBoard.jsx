@@ -15,6 +15,7 @@ import { toast, ToastContainer } from "react-toastify";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
+import { IoClipboard } from "react-icons/io5";
 
 export default function Dashboard() {
   // Get time
@@ -51,7 +52,8 @@ export default function Dashboard() {
   console.log(CardData);
   const BranchID = localStorage.getItem("BranchID");
 
-  const SingleToken = localStorage.getItem("singleToken");
+  const SingleToken =
+    localStorage.getItem("singleToken") || localStorage.getItem("User");
   console.log(SingleToken);
 
   const GetMetricsCardData = async () => {
@@ -116,64 +118,70 @@ export default function Dashboard() {
 
   const [activeQuota, setActiveQuota] = useState(null);
 
+  // quotas
+
   const quotas = [
-    {
-      id: 1,
-      name: "Quota Part-1",
-      status: "Earning",
-      time: "T-24R",
-      progress: 65,
-    },
-    {
-      id: 2,
-      name: "Quota Part-2",
-      status: "Earning",
-      time: "T-24R",
-      progress: 45,
-    },
-    {
-      id: 3,
-      name: "Quota Part-3",
-      status: "Earning",
-      time: "T-24R",
-      progress: 80,
-    },
+    // {
+    //   id: 1,
+    //   name: "Quota Part-1",
+    //   status: "Earning",
+    //   time: "T-24R",
+    //   progress: 65,
+    // },
+    // {
+    //   id: 2,
+    //   name: "Quota Part-2",
+    //   status: "Earning",
+    //   time: "T-24R",
+    //   progress: 45,
+    // },
+    // {
+    //   id: 3,
+    //   name: "Quota Part-3",
+    //   status: "Earning",
+    //   time: "T-24R",
+    //   progress: 80,
+    // },
   ];
 
+  // Activities
+
   const activities = [
-    {
-      id: 1,
-      time: "T-24R",
-      action: "ADD",
-      label: "Started at Phase 1",
-      icon: CheckCircle,
-      color: "#10b981",
-    },
-    {
-      id: 2,
-      time: "T-24D",
-      action: "Info",
-      label: "Sent 4th request",
-      icon: AlertCircle,
-      color: "#3b82f6",
-    },
-    {
-      id: 3,
-      time: "T-24-2",
-      action: "Waiting",
-      label: "Waiting at Phase 2",
-      icon: Clock,
-      color: "#8b5cf6",
-    },
-    {
-      id: 4,
-      time: "T-24-8",
-      action: "Other",
-      label: "Other Some Phase 1 ago",
-      icon: FileText,
-      color: "#f59e0b",
-    },
+    // {
+    //   id: 1,
+    //   time: "T-24R",
+    //   action: "ADD",
+    //   label: "Started at Phase 1",
+    //   icon: CheckCircle,
+    //   color: "#10b981",
+    // },
+    // {
+    //   id: 2,
+    //   time: "T-24D",
+    //   action: "Info",
+    //   label: "Sent 4th request",
+    //   icon: AlertCircle,
+    //   color: "#3b82f6",
+    // },
+    // {
+    //   id: 3,
+    //   time: "T-24-2",
+    //   action: "Waiting",
+    //   label: "Waiting at Phase 2",
+    //   icon: Clock,
+    //   color: "#8b5cf6",
+    // },
+    // {
+    //   id: 4,
+    //   time: "T-24-8",
+    //   action: "Other",
+    //   label: "Other Some Phase 1 ago",
+    //   icon: FileText,
+    //   color: "#f59e0b",
+    // },
   ];
+
+  const metricsValue = Object.keys(CardData);
 
   return (
     <div style={styles.dashboard}>
@@ -276,22 +284,27 @@ export default function Dashboard() {
               cardValue={"32"}
               Data={""}
               cardColor={"blue"}
-              cardBgColor={"aqua"}
+              cardBgColor={"#e5e7fb"}
               iconName={"LuUsersRound"}
+              cardData={CardData?.activeInQueue}
+              text={metricsValue[0]}
             />
 
             <QueueCard
               cardValue={"12 min"}
               cardColor={"purple"}
-              cardBgColor={"purple"}
+              cardBgColor={"#ece2fb"}
               iconName={"FaRegClock"}
-              cardData={CardData}
+              text={metricsValue[1]}
+              cardData={CardData?.averageWaitTime}
             />
             <QueueCard
               cardValue={"247"}
               cardColor={"green"}
-              cardBgColor={"green"}
+              cardBgColor={"#e2f8e9"}
               iconName={"AiOutlineCheckCircle"}
+              cardData={CardData?.servedToday}
+              text={metricsValue[2]}
             />
           </>
         )}
@@ -303,76 +316,125 @@ export default function Dashboard() {
             <h3 style={styles.sectionTitle}>Quota Points Status</h3>
             <span style={styles.viewLink}>View</span>
           </div>
-          <div style={styles.quotaList}>
-            {quotas.map((quota) => (
+          <div
+            // style={quotas.length <= 0 ? styles.quotaList : styles.quotaList2}
+
+            // safe, clear
+            style={quotas?.length === 0 ? styles.quotaList : styles.quotaList2}
+          >
+            {quotas.length <= 0 ? (
               <div
-                key={quota.id}
                 style={{
-                  ...styles.quotaItem,
-                  borderColor: activeQuota === quota.id ? "#000" : "#f3f4f6",
-                  background: activeQuota === quota.id ? "#fafafa" : "white",
+                  // border: "2px solid red",
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "column",
                 }}
-                onClick={() => setActiveQuota(quota.id)}
               >
-                <div>
-                  <h4 style={styles.quotaName}>{quota.name}</h4>
-                  <p style={styles.quotaStatus}>{quota.status}</p>
-                  <p style={styles.quotaTime}>{quota.time}</p>
-                </div>
-                <div style={styles.quotaProgress}>
-                  <div style={styles.progressCircle}>
-                    <svg width="60" height="60" viewBox="0 0 60 60">
-                      <circle
-                        cx="30"
-                        cy="30"
-                        r="25"
-                        fill="none"
-                        stroke="#f0f0f0"
-                        strokeWidth="6"
-                      />
-                      <circle
-                        cx="30"
-                        cy="30"
-                        r="25"
-                        fill="none"
-                        stroke="#000"
-                        strokeWidth="6"
-                        strokeDasharray={`${quota.progress * 1.57} 157`}
-                        strokeLinecap="round"
-                        transform="rotate(-90 30 30)"
-                      />
-                    </svg>
-                  </div>
-                  <span style={styles.progressLabel}>Working</span>
-                </div>
+                <IoClipboard style={{ fontSize: "4rem" }} />
+                <p style={{ marginTop: "1rem" }}>No data found</p>
+
+                <p style={{ fontSize: "1.1rem" }}>
+                  Queue points status records will be displayed here
+                </p>
               </div>
-            ))}
+            ) : (
+              <>
+                {quotas.map((quota) => (
+                  <div
+                    key={quota.id}
+                    style={{
+                      ...styles.quotaItem,
+                      borderColor:
+                        activeQuota === quota.id ? "#000" : "#f3f4f6",
+                      background:
+                        activeQuota === quota.id ? "#fafafa" : "white",
+                    }}
+                    onClick={() => setActiveQuota(quota.id)}
+                  >
+                    <div>
+                      <h4 style={styles.quotaName}>{quota.name}</h4>
+                      <p style={styles.quotaStatus}>{quota.status}</p>
+                      <p style={styles.quotaTime}>{quota.time}</p>
+                    </div>
+                    <div style={styles.quotaProgress}>
+                      <div style={styles.progressCircle}>
+                        <svg width="60" height="60" viewBox="0 0 60 60">
+                          <circle
+                            cx="30"
+                            cy="30"
+                            r="25"
+                            fill="none"
+                            stroke="#f0f0f0"
+                            strokeWidth="6"
+                          />
+                          <circle
+                            cx="30"
+                            cy="30"
+                            r="25"
+                            fill="none"
+                            stroke="#000"
+                            strokeWidth="6"
+                            strokeDasharray={`${quota.progress * 1.57} 157`}
+                            strokeLinecap="round"
+                            transform="rotate(-90 30 30)"
+                          />
+                        </svg>
+                      </div>
+                      <span style={styles.progressLabel}>Working</span>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </div>
 
         {/* Recent Activity */}
+
         <div style={styles.section}>
           <div style={styles.sectionHeader}>
             <h3 style={styles.sectionTitle}>Recent Activity</h3>
           </div>
           <div style={styles.activityList}>
-            {activities.map((activity) => (
-              <div key={activity.id} style={styles.activityItem}>
-                <div
-                  style={{
-                    ...styles.activityIcon,
-                    backgroundColor: activity.color,
-                  }}
-                >
-                  <activity.icon size={20} color="white" />
-                </div>
-                <div>
-                  <p style={styles.activityTime}>{activity.time}</p>
-                  <p style={styles.activityAction}>{activity.action}</p>
-                  <p style={styles.activityLabel}>{activity.label}</p>
-                </div>
+            {/* Empty or not */}
+            {activities.length <= 0 ? (
+              <div
+                style={{
+                  // border: "2px solid red",
+                  display: "flex",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <IoClipboard style={{ fontSize: "4rem" }} />
+                <p style={{ marginTop: "1rem" }}>No data found</p>
+
+                <p style={{ fontSize: "1.1rem" }}>
+                  Queue points status records will be displayed here
+                </p>
               </div>
-            ))}
+            ) : (
+              <>
+                {activities.map((activity) => (
+                  <div key={activity.id} style={styles.activityItem}>
+                    <div
+                      style={{
+                        ...styles.activityIcon,
+                        backgroundColor: activity.color,
+                      }}
+                    >
+                      <activity.icon size={20} color="white" />
+                    </div>
+                    <div>
+                      <p style={styles.activityTime}>{activity.time}</p>
+                      <p style={styles.activityAction}>{activity.action}</p>
+                      <p style={styles.activityLabel}>{activity.label}</p>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -562,6 +624,8 @@ const styles = {
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
     // border: "2px solid red",
     width: "100%",
+    height: "80vh",
+    minHeight: "fit-content",
   },
 
   QrSection: {
@@ -580,11 +644,17 @@ const styles = {
     height: "50%",
   },
 
+  section: {
+    backgroundColor: "white",
+    padding: "1rem",
+  },
+
   sectionHeader: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: "1.5rem",
+    // border: "2px solid red",
   },
   sectionTitle: {
     fontSize: "1.125rem",
@@ -599,7 +669,20 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
+    // border: "2px solid red",
+    height: "100%",
+    // flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
   },
+
+  quotaList2: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "1rem",
+    border: "2px solid red",
+  },
+
   quotaItem: {
     display: "flex",
     justifyContent: "space-between",
@@ -641,6 +724,10 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
+    // border: "2px solid red",
+    height: "90%",
+    // display: "flex",
+    justifyContent: "center",
   },
   activityItem: {
     display: "flex",

@@ -41,6 +41,9 @@ const FreeTrialPage = () => {
 
   console.log(navigationRole);
 
+  const role =
+    localStorage.getItem("UserRole") || localStorage.getItem("OrgRole");
+
   const nav = useNavigate();
   const handleContinueTrial = () => {
     console.log("Starting free trial...");
@@ -123,7 +126,11 @@ const FreeTrialPage = () => {
             <PrimaryButton
               onClick={() => {
                 handleContinueTrial();
-                // nav("/admin_dashboard");
+                if (role == "multi") {
+                  nav("/organization_onboarding");
+                } else {
+                  nav("/admin_dashboard");
+                }
               }}
             >
               Continue with Free Trial
