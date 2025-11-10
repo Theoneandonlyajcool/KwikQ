@@ -14,6 +14,8 @@ const LoginForm = () => {
 
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const [LoadingState, SetLoadingState] = useState(false);
+
+  // single
   const SingleLogin = async () => {
     try {
       SetLoadingState(true);

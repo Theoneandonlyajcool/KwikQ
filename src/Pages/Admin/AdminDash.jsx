@@ -58,6 +58,11 @@ const AdminDashboard = () => {
   const OrgID = localStorage.getItem("Org_ID");
   const BranchID = localStorage.getItem("BranchID");
 
+  // console.log(OrgID);
+
+  const Org_ID = sessionStorage.getItem("user-recog");
+  console.log(Org_ID);
+
   const BaseUrl = import.meta.env.VITE_API_BASE_URL;
 
   const GenerateQrCode = async () => {
@@ -71,7 +76,7 @@ const AdminDashboard = () => {
               branchId: BranchID,
             }
           : {
-              organizationId: OrgID,
+              organizationId: Org_ID,
             }
       );
 
