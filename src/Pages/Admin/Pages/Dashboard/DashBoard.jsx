@@ -50,16 +50,22 @@ export default function Dashboard({ qrCode }) {
   const [CardData, SetCardData] = useState({});
   const [LoadingState, SetLoadingState] = useState(false);
   console.log(CardData);
+
   const BranchID = localStorage.getItem("BranchID");
 
   const SingleToken =
     localStorage.getItem("singleToken") || localStorage.getItem("User");
   console.log(SingleToken);
 
+  console.log(BranchID);
+
+  const Org_ID = sessionStorage.getItem("user-recog");
+  console.log(Org_ID);
+
   const GetMetricsCardData = async () => {
     try {
       SetLoadingState(true);
-      const res = await axios.get(`${BaseUrl}/api/v1/dashboard/${BranchID}`, {
+      const res = await axios.get(`${BaseUrl}/api/v1/dashboard/${Org_ID}`, {
         headers: {
           Authorization: `Bearer ${SingleToken}`,
         },
@@ -79,8 +85,9 @@ export default function Dashboard({ qrCode }) {
     localStorage.getItem("OrgRole") || localStorage.getItem("UserRole");
 
   const OrgID = localStorage.getItem("Org_ID");
+  console.log(OrgID);
 
-  console.log(`The role is ${Role}`);
+  // console.log(`The role is ${Role}`);
 
   useEffect(() => {
     GetMetricsCardData();

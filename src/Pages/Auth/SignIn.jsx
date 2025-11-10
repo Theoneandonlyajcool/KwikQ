@@ -116,6 +116,7 @@ const SignIn = () => {
       );
       localStorage.setItem(import.meta.env.VITE_USERID, JSON.stringify(orgId));
       localStorage.setItem("User", token);
+
       sessionStorage.setItem("user-recog", orgId);
 
       toast.success(res?.data?.message);
@@ -125,11 +126,21 @@ const SignIn = () => {
 
       setIsLoading(false);
 
+      const Role =
+        localStorage.getItem("UserRole") || localStorage.getItem("OrgRole");
+
+      // localStorage.setItem("Org_Id", res?.data?.data?.org);
+
       setTimeout(() => {
         if (isOnboarded) {
           // EXISTING USER: Skip onboarding, go straight to dashboard
           console.log("Existing user - Redirecting to dashboard");
-          nav("/admin_dashboard");
+
+          if (Role == "multi") {
+            nav("/dashboard/");
+          } else {
+            nav("/admin_dashboard");
+          }
         } else {
           // NEW USER: Go through Seven Day Free Trial and onboarding
           console.log("New user - Redirecting to Seven Day Free Trial");
