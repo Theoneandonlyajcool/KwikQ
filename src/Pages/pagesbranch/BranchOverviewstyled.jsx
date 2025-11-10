@@ -228,14 +228,14 @@ export const BranchOverviewContainer = styled.div`
 
       .stat_card {
         width: 37%;
-        max-height: 100%;
+        max-height: 20vh;
         background: #ffffff;
         /* background: #af1b1b; */
         border-radius: 12px;
-        padding: 20px;
+        padding: 10px;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 10px;
         box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.1);
 
         @media ${device.android} {
@@ -258,7 +258,7 @@ export const BranchOverviewContainer = styled.div`
 
         @media ${device.desktop} {
           width: 23%;
-          height: 180px;
+          /* height: 180px; */
           padding: 24px;
         }
 
@@ -345,10 +345,11 @@ export const BranchOverviewContainer = styled.div`
 
         .card_content {
           width: 100%;
-          height: auto;
+          min-height: auto;
           display: flex;
           flex-direction: column;
-          gap: 15px;
+          gap: 5px;
+          /* background: blue; */
 
           .card_label {
             font-family: Inter;
@@ -380,9 +381,10 @@ export const BranchOverviewContainer = styled.div`
             font-family: Inter;
             font-weight: 700;
             font-style: Bold;
-            font-size: 36px;
+            font-size: 26px;
             line-height: 110%;
             color: #1f2937;
+            /* background: red; */
             margin: 0;
 
             @media ${device.android} {
@@ -398,7 +400,7 @@ export const BranchOverviewContainer = styled.div`
             }
 
             @media ${device.desktop} {
-              font-size: 36px;
+              font-size: 26px;
             }
           }
 
@@ -445,6 +447,7 @@ export const BranchOverviewContainer = styled.div`
       /* background: red; */
       border-radius: 12px;
       padding: 24px;
+      margin-top: 30px;
 
       @media ${device.android} {
         padding: 18px;
