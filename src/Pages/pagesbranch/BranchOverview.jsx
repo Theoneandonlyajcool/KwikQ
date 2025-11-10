@@ -52,7 +52,7 @@ const BranchOverview = () => {
     allbranches_of_an_organization() 
   }, []);
 
-  useEffect(()=> {
+  
   const getname = async () => {
       try {
         const res = await axios.get(`${BaseUrl}/api/v1/organization-details/${ID}`, {
@@ -70,8 +70,9 @@ const BranchOverview = () => {
       }
     }
     
+  useEffect(()=> { 
       getname() 
-    }, []);
+  }, []);
 
   // const allbranches_of_an_organization = async () => {
   //   try {

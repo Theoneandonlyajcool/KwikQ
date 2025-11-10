@@ -13,10 +13,6 @@ import { useContext } from "react";
 import { PreviousPage } from "../../Components/ReUsableFunction";
 
 const SignIn = () => {
-  // const { role } = useParams();
-
-  // const whatUserRole = useContext(Role);
-  // console.log(`The user role is ${whatUserRole}`);
   const nav = useNavigate();
   const [loginput, setLoginput] = useState({
     email: "",
@@ -32,14 +28,8 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const BaseUrl = import.meta.env.VITE_BaseUrl;
-
-  // useEffect(() => {
-  //   let t;
-  //   if (isLoading) {
-  //     t = setTimeout(() => setIsLoading(false), 2000); // 6000 ms = 6s
-  //   }
-  //   return () => clearTimeout(t);
-  // }, [isLoading]);
+  const IDs = sessionStorage.getItem("user-recog");
+  const tokens = sessionStorage.getItem("User");
 
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
@@ -62,7 +52,7 @@ const SignIn = () => {
       !loginput.email.includes(".") ||
       !loginput.email.includes("com")
     ) {
-      toast.error("Invalid email formart");
+      toast.error("Invalid email format");
       newErr.email = "This field is required";
       valid = false;
     }
@@ -74,6 +64,33 @@ const SignIn = () => {
     return valid;
   };
 
+  // NEW FUNCTION: Check if user has completed onboarding
+  const checkOnboardingStatus = async (IDs, tokens) => {
+    try {
+      const BaseURL = import.meta.env.VITE_API_BASE_URL;
+      const res = await axios.get(`${BaseURL}/api/v1/branch/management/${IDs}`, {
+        headers: {
+          Authorization: `Bearer ${tokens}`,
+        },
+      });
+
+      // Check if organization data exists (user has completed onboarding)
+      const orgData = res?.data;
+      console.log("check well", res)
+
+      const hasCompletedOnboarding =
+        orgData?.totalBranches ||
+        orgData?.city ||
+        orgData?.state ||
+        orgData?.industryServiceType;
+
+      return hasCompletedOnboarding;
+    } catch (error) {
+      console.log("Error checking onboarding status:", error);
+      return false; // If error, treat as not onboarded (safe default)
+    }
+  };
+
   const handlesubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
@@ -83,48 +100,61 @@ const SignIn = () => {
       const res = await axios.post(`${BaseUrl}/api/v1/login`, loginput, {
         headers: { "Content-Type": "application/json" },
       });
+
+      const token = res?.data?.token;
+      const orgId = res?.data?.data?.org;
+      console.log(token)
+      console.log(orgId)
+
+      // Store token and user info
       localStorage.setItem(
         import.meta.env.VITE_USERTOKEN,
-        JSON.stringify(res?.data?.token)
+        JSON.stringify(token)
       );
-      localStorage.setItem(
-        import.meta.env.VITE_USERID,
-        JSON.stringify(res?.data?.data?.org)
-      );
+      localStorage.setItem(import.meta.env.VITE_USERID, JSON.stringify(orgId));
+      localStorage.setItem("User", token);
+      sessionStorage.setItem("user-recog", orgId);
+      
+
       toast.success(res?.data?.message);
-      localStorage.setItem("User", res?.data?.token);
-      sessionStorage.setItem("user-recog", res?.data?.data?.org);
-      // console.log(res?.data?.data?.org);
+
+      // NEW: Check onboarding status before navigation
+      const isOnboarded = await checkOnboardingStatus(orgId, token);
+
       setIsLoading(false);
+
       setTimeout(() => {
-        nav("/Sevenday_free");
+        if (isOnboarded) {
+          // EXISTING USER: Skip onboarding, go straight to dashboard
+          console.log("Existing user - Redirecting to dashboard");
+          nav("/dashboard/");
+        } else {
+          // NEW USER: Go through Seven Day Free Trial and onboarding
+          console.log("New user - Redirecting to Seven Day Free Trial");
+          nav("/Sevenday_free");
+        }
       }, 2000);
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message);
-    } finally {
       setIsLoading(false);
     }
   };
 
-  //   console.log("this is my input", loginput);
   const toggleEye = () => {
     setEyePassword((prev) => !prev);
   };
 
   const DisplayRole = localStorage.getItem("UserRole");
-
   const goBack = PreviousPage();
 
   return (
-    // <div>
     <Loginbackground>
       <section className="loginrap">
         <div className="login_context">
           {DisplayRole && (
             <div
               style={{
-                // border: "2px solid red",
                 position: "fixed",
                 top: "0",
                 width: "100%",
@@ -238,26 +268,11 @@ const SignIn = () => {
                 </div>
               </div>
 
-              {/* <div className="google_or">
-                <div className="or_">
-                  <span>or</span>
-                </div>
-                <div className="googlelink">
-                  <FcGoogle className="gogole_icon" />
-                  <span>Sign in with google</span>
-                </div>
-              </div> */}
-
               <button type="submit" className="btn" disabled={isLoading}>
-                {/* {isLoading ? (
-
-                ) : (
-                  "Sign in"
-                )} */}
                 sign in
               </button>
               <div className="linksignup">
-                <span>Don’t have an account?</span>{" "}
+                <span>Don't have an account?</span>{" "}
                 <span className="linkssignup" onClick={() => nav("/sign_up")}>
                   Sign Up
                 </span>
@@ -307,11 +322,11 @@ const SignIn = () => {
               />
               <style>
                 {`
-                      @keyframes spin {
-                        0% { transform: rotate(0deg); }
-                        100% { transform: rotate(360deg); }
-                      }
-                    `}
+                  @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                  }
+                `}
               </style>
             </div>
           </div>
@@ -336,7 +351,6 @@ const SignIn = () => {
 
       <ToastContainer />
     </Loginbackground>
-    // </div>
   );
 };
 
