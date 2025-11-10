@@ -26,10 +26,32 @@ const token = localStorage.getItem("User");
 // };
 
 // api/removeCustomer.js
-export const RemoveCustomer = async (Id) => {
-  if (!Id) return { ok: false, error: "no-id" };
-  const res = await axios.delete(`${BaseURL}/api/v1/remove/${Id}`, {
+// export const RemoveCustomer = async (Id) => {
+//   if (!Id) return { ok: false, error: "no-id" };
+//   const res = await axios.delete(`${BaseURL}/api/v1/remove/${Id}`, {
+//     headers: { Authorization: `Bearer ${token}` },
+//   });
+//   return { ok: true, data: res.data };
+// };
+
+// Third aoption
+
+// accept id, return result
+export const RemoveCustomer = async (id) => {
+  if (!id) return { ok: false, error: "no-id" };
+  // ...token parsing like I showed earlier...
+  const res = await axios.delete(`${BaseURL}/api/v1/delete-customer/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return { ok: true, data: res.data };
 };
+
+// My option
+
+// export const RemoveCustomer =async()=>{
+//   try {
+//     const res =await axios.delete(`${BaseURL}/`)
+//   } catch (error) {
+
+//   }
+// }
