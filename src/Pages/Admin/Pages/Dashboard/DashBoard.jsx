@@ -22,7 +22,7 @@ export default function Dashboard({ qrCode }) {
 
   const [dateTime, setDateTime] = useState("");
   const [ractivities, setRactivities] = useState([])
-  console.log("what day fuck", ractivities)
+  // console.log("what day fuck", ractivities)
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -51,27 +51,28 @@ export default function Dashboard({ qrCode }) {
 
   const [CardData, SetCardData] = useState({});
   const [LoadingState, SetLoadingState] = useState(false);
-  console.log(CardData);
+  // console.log(CardData);
 
   const BranchID = localStorage.getItem("BranchID");
 
   const SingleToken =
     localStorage.getItem("user_token") || localStorage.getItem("User");
-  console.log(SingleToken);
+  // console.log("fnvnvjsfnvinsdfvnd",SingleToken);
 
-  console.log(BranchID);
+  // console.log(BranchID);
 
   const Org_ID = sessionStorage.getItem("user-recog");
-  console.log(Org_ID);
+  console.log("jsvshfvhsbfhvbs",Org_ID);
 
   const GetMetricsCardData = async () => {
     try {
       SetLoadingState(true);
-      const res = await axios.get(`${BaseUrl}/api/v1/dashboard/${Org_ID}`, {
+      const res = await axios.get(`${BaseUrl}/api/v1/dashboard`, {
         headers: {
           Authorization: `Bearer ${SingleToken}`,
         },
       });
+      // console.log("come back ooo", res)
       SetCardData(res?.data?.data);
       SetLoadingState(false);
     } catch (error) {

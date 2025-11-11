@@ -88,7 +88,7 @@ const SignIn = () => {
       return hasCompletedOnboarding;
     } catch (error) {
       console.log("Error checking onboarding status:", error);
-      return false; // If error, treat as not onboarded 
+      return false; // If error, treat as not onboarded
     }
   };
 
@@ -107,11 +107,8 @@ const SignIn = () => {
       console.log(token);
       console.log(orgId);
 
-      localStorage.setItem(
-        import.meta.env.VITE_USERTOKEN,
-        token
-      );
-      localStorage.setItem(import.meta.env.VITE_USERID, JSON.stringify(orgId));
+      localStorage.setItem(import.meta.env.VITE_USERTOKEN, token);
+      localStorage.setItem(import.meta.env.VITE_USERID, orgId);
       localStorage.setItem("User", token);
 
       sessionStorage.setItem("user-recog", orgId);

@@ -11,7 +11,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 const QueueManagement = ({ qrCode }) => {
   const nav = useNavigate();
-  const [userId] = useState(JSON.parse(localStorage.getItem("user_ID")));
+  // const [userId] = useState(JSON.parse(localStorage.getItem("user_ID")));
   console.log(qrCode);
   // const [queues, setQueues] = useState([
   //   {
@@ -67,7 +67,6 @@ const QueueManagement = ({ qrCode }) => {
       console.log(error);
     }
   };
-
 
   const [dateTime, setDateTime] = useState("");
 
