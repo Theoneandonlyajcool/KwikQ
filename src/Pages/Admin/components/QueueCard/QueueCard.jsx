@@ -3,7 +3,7 @@ import { Clock, Phone, Timer, Bell, X, SkipForward } from "lucide-react";
 import "./QueueCard.css";
 import axios from "axios";
 import { RemoveCustomer } from "../../../Services/APICalls";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { Await } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -82,9 +82,9 @@ const QueueCard = ({ data, refresh }) => {
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert(
-        `${response.data.message} to ${response.data.data.name} (${response.data.data.email})`
-      );
+      // alert(
+      //   `${response.data.message} to ${response.data.data.name} (${response.data.data.email})`
+      // );
       refresh();
     } catch (error) {
       console.error("Error sending alert:", error);
@@ -171,7 +171,7 @@ const QueueCard = ({ data, refresh }) => {
           onClick={() => onAlert()}
           style={{ backgroundColor: "#303bff", color: "white" }}
           className="service-card__button service-card__button--primary "
-          onClick={AlertUser}
+          // onClick={AlertUser}
         >
           <Bell className="service-card__button-icon" />
           Alert
