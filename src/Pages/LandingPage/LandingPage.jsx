@@ -70,7 +70,7 @@ const LandingPage = () => {
                   <li onClick={() => scrollToRef(homeRef)}>Home</li>
                   <li onClick={() => scrollToRef(aboutRef)}>About</li>
                   <li onClick={() => scrollToRef(worksRef)}>How it works</li>
-                  <li>Pricing</li>
+                  <li onClick={() => nav("/pricing")}>Pricing</li>
                 </ul>
                 <MobileAuthButtons>
                   <button

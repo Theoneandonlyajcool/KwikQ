@@ -257,8 +257,8 @@ export default function Dashboard({ qrCode }) {
               cardColor={"blue"}
               cardBgColor={"#e5e7fb"}
               iconName={"LuUsersRound"}
+              text="activeInQueue"
               cardData={CardData?.activeInQueue}
-              text={metricsValue[0]}
             />
 
             <QueueCard
@@ -266,16 +266,17 @@ export default function Dashboard({ qrCode }) {
               cardColor={"purple"}
               cardBgColor={"#ece2fb"}
               iconName={"FaRegClock"}
-              text={metricsValue[1]}
+              text="averageWaitTime"
               cardData={CardData?.averageWaitTime}
             />
+
             <QueueCard
               cardValue={"247"}
               cardColor={"green"}
               cardBgColor={"#e2f8e9"}
               iconName={"AiOutlineCheckCircle"}
+              text="servedToday"
               cardData={CardData?.servedToday}
-              text={metricsValue[2]}
             />
           </>
         )}

@@ -22,7 +22,7 @@ const Faq = () => {
     {
       text: "What's included in the free trial, and how do I get started?",
       title:
-        "The 14-day free trial offers you full access to KwikQ core features like virtual queues, appointment booking, and live dashboards. No credit card needed.",
+        "The 7-day free trial offers you full access to KwikQ core features like virtual queues, appointment booking, and live dashboards. No credit card needed.",
     },
     {
       text: "Can KwikQ be customized for my workflow or brand?",

@@ -91,6 +91,20 @@ const QueueManagement = ({ qrCode }) => {
     return () => clearInterval(interval);
   }, []);
 
+  // const BaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+  // const skipCustomer = async (customerId) => {
+  //   try {
+  //     const res = await axios.post(`${BaseUrl}/api/v1/skip/${customerId}`);
+  //     console.log("Customer Skipped:", res.data);
+  //     toast.success("Customer skipped successfully");
+  //     return res.data;
+  //   } catch (error) {
+  //     console.error("Error skipping customer:", error);
+  //     toast.error(error?.response?.data?.message || "Error skipping customer");
+  //   }
+  // };
+
   return (
     <>
       {/* <style>{styles}</style> */}

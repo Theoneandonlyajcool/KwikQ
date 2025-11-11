@@ -3,10 +3,10 @@ import { Clock, Phone, Timer, Bell, X, SkipForward } from "lucide-react";
 import "./QueueCard.css";
 import axios from "axios";
 import { RemoveCustomer } from "../../../Services/APICalls";
+import { toast } from "react-toastify";
 
 const QueueCard = ({ data, refresh }) => {
   const [mappedCustomers, SetMappedCustomers] = useState([]);
-  // SetMappedCustomers(data?.customers);
   console.log(data);
 
   const Id = data.id;
@@ -19,17 +19,11 @@ const QueueCard = ({ data, refresh }) => {
     hour12: true,
   });
 
-  //Formatted wait time
-
   const waitTime = data?.waitTime;
-  // remove the "min" and convert to a number
   const totalMinutes = parseInt(waitTime);
   const hours = Math.floor(totalMinutes / 60);
   const minutes = totalMinutes % 60;
   const formattedWaitTime = `${hours} hrs ${minutes} mins`;
-  // console.log(formattedWaitTime);
-
-  // Remove customer
 
   const [customerID, SetcustomerID] = useState("");
 
@@ -37,17 +31,19 @@ const QueueCard = ({ data, refresh }) => {
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const token = localStorage.getItem("User");
 
-  // const RemoveCustomer = async () => {
-  //   try {
-  //     const res = await axios.delete(`${BaseURL}/api/v1/remove/${customerID}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const BaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+  const skipCustomer = async (customerId) => {
+    try {
+      const res = await axios.post(`${BaseUrl}/api/v1/skip/${customerId}`);
+      console.log("Customer Skipped:", res.data);
+      toast.success("Customer skipped successfully");
+      return res.data;
+    } catch (error) {
+      console.error("Error skipping customer:", error);
+      toast.error(error?.response?.data?.message || "Error skipping customer");
+    }
+  };
 
   return (
     <div className="service-card">
@@ -84,8 +80,7 @@ const QueueCard = ({ data, refresh }) => {
       <div className="service-card__actions">
         <button
           style={{ backgroundColor: "#303bff", color: "white" }}
-          className="service-card__button service-card__button--primary "
-          //   onClick={onAlert}
+          className="service-card__button service-card__button--primary"
         >
           <Bell className="service-card__button-icon" />
           Alert
@@ -94,6 +89,12 @@ const QueueCard = ({ data, refresh }) => {
         <div
           style={{ border: "2px solid rgb(202, 202, 202)" }}
           className="service-card__button service-card__button--primary"
+          onClick={() => {
+            skipCustomer(data.id);
+            setTimeout(() => {
+              refresh();
+            }, 1000);
+          }}
         >
           <SkipForward className="service-card__skip-icon" />
           Skip
@@ -102,14 +103,9 @@ const QueueCard = ({ data, refresh }) => {
         <button
           style={{ color: "red", border: "2px solid red" }}
           onClick={() => {
-            // RemoveCustomer(Id);
-            // setTimeout(() => {
-            //   refresh();
-            // }, 3000);
             console.log(data.id);
           }}
           className="service-card__button service-card__button--destructive"
-          // onClick={onRemove}
         >
           <X className="service-card__button-icon" />
           Remove

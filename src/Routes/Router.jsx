@@ -55,8 +55,11 @@ const Router = () => {
             <Route path="/forget_password" element={<ForgetPassword />} />
 
             <Route path="/businessCategory" element={<GetStarted />} />
-          <Route path="/Branch_SigninV" element={<BranchSigninV />} />
-          <Route path="/verification_forgetpassword" element={<VerifyForgetpassword />} />
+            <Route path="/Branch_SigninV" element={<BranchSigninV />} />
+            <Route
+              path="/verification_forgetpassword"
+              element={<VerifyForgetpassword />}
+            />
 
             <Route path="/businessCategory2" element={<GetStarted2 />} />
             <Route path="/reset_password" element={<ResetPassword />} />
