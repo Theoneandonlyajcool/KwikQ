@@ -4,6 +4,8 @@ import "./QueueCard.css";
 import axios from "axios";
 import { RemoveCustomer } from "../../../Services/APICalls";
 import { toast } from "react-toastify";
+import { Await } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 
 const QueueCard = ({ data, refresh }) => {
   const [mappedCustomers, SetMappedCustomers] = useState([]);
@@ -38,12 +40,10 @@ const QueueCard = ({ data, refresh }) => {
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const token = localStorage.getItem("User");
 
-  const AlertUser = async () => {
+  const removeCustomer = async () => {
     try {
-      // SetLoadingState(true);
-      const res = await axios.post(
-        `${BaseURL}/api/v1/alert/${data?.id}`,
-        {},
+      const res = await axios.delete(
+        `${BaseURL}/api/v1/delete-customer/${data.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -51,36 +51,91 @@ const QueueCard = ({ data, refresh }) => {
         }
       );
       toast.success(res?.data?.message);
-      // setQueues(res?.data?.data);
-      // console.log(res?.data.data);
-      // SetLoadingState(false);
+      console.log(res?.data);
     } catch (error) {
-      // SetLoadingState(false);
-      console.log(error);
-    }
-    // console.log(data?.id);
-  };
-  const onRemove = async () => {
-    try {
-      // SetLoadingState(true);
-      const res = await axios.delete(`${BaseURL}/api/v1/delete-customer/${data?.id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      toast.success(res?.data?.message);
-      refresh();
-      // setQueues(res?.data?.data);
-      // console.log(res?.data.data);
-      // SetLoadingState(false);
-    } catch (error) {
-      // SetLoadingState(false);
       console.log(error);
     }
   };
 
+  const [Delete, SetDelete] = useState(false);
+  const DeleteCustomer = async () => {
+    try {
+      const res = await axios.delete(
+        `${BaseURL}/api/v1/delete-customer/${data.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success(res?.data?.message);
+      console.log(res?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onAlert = async () => {
+    try {
+      const response = await axios.post(
+        `${BaseURL}/api/v1/alert/${data.id}`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      alert(
+        `${response.data.message} to ${response.data.data.name} (${response.data.data.email})`
+      );
+      refresh();
+    } catch (error) {
+      console.error("Error sending alert:", error);
+      if (error.response?.status === 404) {
+        alert("Customer not found in queue");
+      } else {
+        alert("Failed to send alert. Try again.");
+      }
+    }
+  };
+
+  // const skipCustomer = async () => {
+  //   try {
+  //     SetSkipState(true);
+  //     const res = await axios.post(`${BaseURL}/api/v1/skip/${data.id}`);
+  //     console.log(res?.data);
+  //     toast.success(res?.data?.message);
+  //     SetSkipState(false);
+  //   } catch (error) {
+  //     SetSkipState(false);
+  //     console.log(error);
+  //   }
+  // };
+
+  // const skipCustomer = async (customerId) => {
+  //   try {
+  //     const res = await axios.post(`${BaseUrl}/api/v1/skip/${customerId}`);
+  //     console.log("Customer Skipped:", res.data);
+  //     toast.success("Customer skipped successfully");
+  //     return res.data;
+  //   } catch (error) {
+  //     console.error("Error skipping customer:", error);
+  //     toast.error(error?.response?.data?.message || "Error skipping customer");
+  //   }
+  // };
+
+  // const RemoveCustomer = async () => {
+  //   try {
+  //     const res = await axios.delete(`${BaseURL}/api/v1/remove/${customerID}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   return (
     <div className="service-card">
+      <ToastContainer />
       <div
         className="service-card__avatar"
         style={{ backgroundColor: "#303bff" }}
@@ -113,6 +168,7 @@ const QueueCard = ({ data, refresh }) => {
 
       <div className="service-card__actions">
         <button
+          onClick={() => onAlert()}
           style={{ backgroundColor: "#303bff", color: "white" }}
           className="service-card__button service-card__button--primary "
           onClick={AlertUser}
@@ -122,21 +178,37 @@ const QueueCard = ({ data, refresh }) => {
         </button>
 
         <div
-          style={{ border: "2px solid rgb(202, 202, 202)" }}
+          onClick={() => DeleteCustomer()}
+          style={{ backgroundColor: "red", color: "white" }}
           className="service-card__button service-card__button--primary"
         >
           <SkipForward className="service-card__skip-icon" />
-          Served
+          Delete
         </div>
 
         <button
-          style={{ color: "red", border: "2px solid red" }}
-          onClick={() => onRemove()}
+          style={{ color: "green", border: "2px solid green" }}
+          onClick={() => {
+            removeCustomer();
+            setTimeout(() => {
+              refresh();
+            }, 3000);
+          }}
+          // onClick={async () => {
+          //   // optionally confirm
+          //   if (!confirm("Remove this customer?")) return;
+          //   const result = await RemoveCustomer(data.id);
+          //   if (result.ok) {
+          //     refresh(); // call parent refresh or update UI
+          //   } else {
+          //     alert("Delete failed");
+          //   }
+          // }}
           className="service-card__button service-card__button--destructive"
           // onClick={onRemove}
         >
-          <X className="service-card__button-icon" />
-          Remove
+          {/* <X className="service-card__button-icon" /> */}
+          Served
         </button>
       </div>
     </div>
