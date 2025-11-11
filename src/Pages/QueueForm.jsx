@@ -90,9 +90,19 @@ const QueueForm = () => {
   const [apiData, SetapiData] = useState({});
   const JoinQueue = async () => {
     try {
+      const { id } = useParams;
       SetLoadingState(true);
       const res = await axios.post(
-        `${BaseURl}/api/v1/create-queue/${search.split("&")[1].split("=")[1]}`,
+        // `
+
+        // ${BaseURl}/api/v1/create-queue/${search.split("&")[1].split("=")[1]}
+
+        // `,
+
+        `
+        ${BaseURl}/api/v1/create-queue/${id},
+          
+        `,
         {
           formDetails: {
             fullName: inputValues.fullName,

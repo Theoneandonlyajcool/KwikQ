@@ -66,7 +66,7 @@ const Router = () => {
             <Route path="/businessCategory2" element={<GetStarted2 />} />
             <Route path="/reset_password" element={<ResetPassword />} />
             <Route path="/Sevenday_free" element={<Sevendayfree />} />
-            <Route path="/users_form?:queue&:id" element={<QueueForm />} />
+            <Route path="/users_form/:queue/:id" element={<QueueForm />} />
             <Route path="/queue_success" element={<QueueSuccess />} />
             <Route path="/pricing" element={<Pricepage />} />
             <Route path="/singleBranch" element={<LoginForm />} />
