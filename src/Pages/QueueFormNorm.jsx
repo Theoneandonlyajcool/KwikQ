@@ -103,12 +103,12 @@ const QueueFormNorm = () => {
             additionalInfo: inputValues.AdditionalInfo,
             priorityStatus: "elderlyOrDisabled",
           },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${Formtoken}`,
-          },
         }
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${Formtoken}`,
+        //   },
+        // }
       );
       SetLoadingState(false);
       SetShowModal(true);

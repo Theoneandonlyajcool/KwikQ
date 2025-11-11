@@ -27,8 +27,8 @@ const toCamelCase = (str) =>
 const QueueForm = () => {
   const nav = useNavigate();
   // console.log(useLocation())
-  const {search} = useLocation()
-  console.log(search?.split("&")[1].split("=")[1])
+  const { search } = useLocation();
+  // console.log(search?.split("&")[1].split("=")[1])
 
   const [FormLoadingState, SetFormLoadingState] = useState(false);
 
@@ -102,12 +102,12 @@ const QueueForm = () => {
             additionalInfo: inputValues.AdditionalInfo,
             priorityStatus: "elderlyOrDisabled",
           },
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${Formtoken}`,
-          },
         }
+        // {
+        //   headers: {
+        //     Authorization: `Bearer ${Formtoken}`,
+        //   },
+        // }
       );
       SetLoadingState(false);
       SetShowModal(true);
