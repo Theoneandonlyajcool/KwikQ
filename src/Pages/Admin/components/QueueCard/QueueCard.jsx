@@ -40,8 +40,11 @@ const QueueCard = ({ data, refresh }) => {
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const token = localStorage.getItem("User");
 
+  const [RemoveLoadingState, SetRemoveLoadingState] = useState(false);
+
   const removeCustomer = async () => {
     try {
+      SetRemoveLoadingState(true);
       const res = await axios.delete(
         `${BaseURL}/api/v1/delete-customer/${data.id}`,
         {
@@ -51,8 +54,13 @@ const QueueCard = ({ data, refresh }) => {
         }
       );
       toast.success(res?.data?.message);
-      console.log(res?.data);
+      SetRemoveLoadingState(false);
+      setTimeout(() => {
+        refresh();
+      }, 1000);
+      // console.log(res?.data);
     } catch (error) {
+      SetRemoveLoadingState(false);
       console.log(error);
     }
   };
@@ -60,6 +68,7 @@ const QueueCard = ({ data, refresh }) => {
   const [Delete, SetDelete] = useState(false);
   const DeleteCustomer = async () => {
     try {
+      SetDelete(true);
       const res = await axios.delete(
         `${BaseURL}/api/v1/delete-customer/${data.id}`,
         {
@@ -69,30 +78,53 @@ const QueueCard = ({ data, refresh }) => {
         }
       );
       toast.success(res?.data?.message);
-      console.log(res?.data);
+      SetDelete(true);
+      // console.log(res?.data);
+      setTimeout(() => {
+        refresh();
+      }, 1000);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const onAlert = async () => {
+  // const onAlert = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${BaseURL}/api/v1/alert/${data.id}`,
+  //       {},
+  //       { headers: { Authorization: `Bearer ${token}` } }
+  //     );
+  //     alert(
+  //       `${response.data.message} to ${response.data.data.name} (${response.data.data.email})`
+  //     );
+  //     refresh();
+  //   } catch (error) {
+  //     console.error("Error sending alert:", error);
+  //     if (error.response?.status === 404) {
+  //       alert("Customer not found in queue");
+  //     } else {
+  //       alert("Failed to send alert. Try again.");
+  //     }
+  //   }
+  // };
+
+  const [AlertLoadingState, SetAlertLoadingState] = useState(false);
+
+  const AlertCustomer = async () => {
     try {
-      const response = await axios.post(
+      SetAlertLoadingState(true);
+      const res = await axios.post(
         `${BaseURL}/api/v1/alert/${data.id}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      alert(
-        `${response.data.message} to ${response.data.data.name} (${response.data.data.email})`
-      );
-      refresh();
+
+      toast.success(res?.data?.message);
+      SetAlertLoadingState(false);
     } catch (error) {
-      console.error("Error sending alert:", error);
-      if (error.response?.status === 404) {
-        alert("Customer not found in queue");
-      } else {
-        alert("Failed to send alert. Try again.");
-      }
+      SetAlertLoadingState(false);
+      console.log(error);
     }
   };
 
@@ -168,31 +200,35 @@ const QueueCard = ({ data, refresh }) => {
 
       <div className="service-card__actions">
         <button
-          onClick={() => onAlert()}
-          style={{ backgroundColor: "#303bff", color: "white" }}
+          disabled={AlertLoadingState}
+          onClick={() => AlertCustomer()}
+          style={{
+            backgroundColor: `${AlertLoadingState ? "#0915fc" : "#303bff"}`,
+            color: "white",
+            cursor: `${AlertLoadingState ? "not-allowed" : "pointer"}`,
+          }}
+          // style={{ backgroundColor: "#303bff", color: "white" }}
           className="service-card__button service-card__button--primary "
           // onClick={AlertUser}
         >
           <Bell className="service-card__button-icon" />
-          Alert
+          {AlertLoadingState ? "Alerting.." : "Alert"}
         </button>
 
-        <div
+        <button
+          disabled={Delete}
           onClick={() => DeleteCustomer()}
           style={{ backgroundColor: "red", color: "white" }}
           className="service-card__button service-card__button--primary"
         >
-          <SkipForward className="service-card__skip-icon" />
-          Delete
-        </div>
+          {/* <SkipForward className="service-card__skip-icon" /> */}
+          {Delete ? "Deleteing" : "Delete"}
+        </button>
 
         <button
           style={{ color: "green", border: "2px solid green" }}
           onClick={() => {
             removeCustomer();
-            setTimeout(() => {
-              refresh();
-            }, 3000);
           }}
           // onClick={async () => {
           //   // optionally confirm
@@ -208,7 +244,8 @@ const QueueCard = ({ data, refresh }) => {
           // onClick={onRemove}
         >
           {/* <X className="service-card__button-icon" /> */}
-          Served
+
+          {RemoveLoadingState ? "Serving..." : "Served"}
         </button>
       </div>
     </div>
