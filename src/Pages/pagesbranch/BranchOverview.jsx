@@ -38,9 +38,9 @@ const BranchOverview = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      // console.log("data of all branches in an organization", res);
+      console.log("data of all branches in an organization", res);
       setAllbranches_in_an_organization(res?.data?.branches); 
-      toast.success(res?.data?.message)
+      // toast.success(res?.data?.message)
     } catch (error) {
       console.log("allbranches_in_an_organization", error)
       toast.error(error?.response?.data?.message)
@@ -103,7 +103,7 @@ const BranchOverview = () => {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log("organization_branches_metrics ", res);
+      // console.log("organization_branches_metrics ", res);
       setOrganization_metrics(res.data); 
       toast.success(res?.data?.message)
     } catch (error) {

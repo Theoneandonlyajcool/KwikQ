@@ -64,7 +64,6 @@ const SignIn = () => {
     return valid;
   };
 
-  // NEW FUNCTION: Check if user has completed onboarding
   const checkOnboardingStatus = async (IDs, tokens) => {
     try {
       const BaseURL = import.meta.env.VITE_API_BASE_URL;
@@ -77,7 +76,6 @@ const SignIn = () => {
         }
       );
 
-      // Check if organization data exists (user has completed onboarding)
       const orgData = res?.data;
       console.log("check well", res);
 
@@ -90,7 +88,7 @@ const SignIn = () => {
       return hasCompletedOnboarding;
     } catch (error) {
       console.log("Error checking onboarding status:", error);
-      return false; // If error, treat as not onboarded (safe default)
+      return false; // If error, treat as not onboarded 
     }
   };
 
@@ -109,10 +107,9 @@ const SignIn = () => {
       console.log(token);
       console.log(orgId);
 
-      // Store token and user info
       localStorage.setItem(
         import.meta.env.VITE_USERTOKEN,
-        JSON.stringify(token)
+        token
       );
       localStorage.setItem(import.meta.env.VITE_USERID, JSON.stringify(orgId));
       localStorage.setItem("User", token);
@@ -121,7 +118,6 @@ const SignIn = () => {
 
       toast.success(res?.data?.message);
 
-      // NEW: Check onboarding status before navigation
       const isOnboarded = await checkOnboardingStatus(orgId, token);
 
       setIsLoading(false);
@@ -133,7 +129,6 @@ const SignIn = () => {
 
       setTimeout(() => {
         if (isOnboarded) {
-          // EXISTING USER: Skip onboarding, go straight to dashboard
           console.log("Existing user - Redirecting to dashboard");
 
           if (Role == "multi") {
@@ -142,7 +137,6 @@ const SignIn = () => {
             nav("/admin_dashboard");
           }
         } else {
-          // NEW USER: Go through Seven Day Free Trial and onboarding
           console.log("New user - Redirecting to Seven Day Free Trial");
           nav("/Sevenday_free");
         }

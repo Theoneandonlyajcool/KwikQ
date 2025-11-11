@@ -3,6 +3,7 @@ import { Clock, Phone, Timer, Bell, X, SkipForward } from "lucide-react";
 import "./QueueCard.css";
 import axios from "axios";
 import { RemoveCustomer } from "../../../Services/APICalls";
+import { toast } from "react-toastify";
 import { Await } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -170,7 +171,7 @@ const QueueCard = ({ data, refresh }) => {
           onClick={() => onAlert()}
           style={{ backgroundColor: "#303bff", color: "white" }}
           className="service-card__button service-card__button--primary "
-          //   onClick={onAlert}
+          onClick={AlertUser}
         >
           <Bell className="service-card__button-icon" />
           Alert

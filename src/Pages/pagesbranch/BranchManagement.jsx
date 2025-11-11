@@ -24,6 +24,7 @@ import { toast, ToastContainer } from "react-toastify";
 import CurrentDateTime from "./CurrentDateTime";
 import { InactiveAnalyticsContainer } from "../pagesbranch/AnalyticsPage.jsx/InactiveAnalyticsStyle";
 import { MdLayers } from "react-icons/md";
+import { IoChevronBack } from "react-icons/io5";
 
 
 const BranchManagement = () => {
@@ -142,15 +143,15 @@ const BranchManagement = () => {
         }
       });
       
-      console.log("onebranches", res);
+      // console.log("onebranches", res);
       setOneBranchData(res?.data?.data);
       setStatus("success");
-      toast.success(res?.data?.message);
+      // toast.success(res?.data?.message);
       
     } catch (error) {
       console.log("onebranches error", error);
       setError(error?.response?.data?.message || "Failed to fetch branch data");
-      toast.error(error?.response?.data?.message || "Failed to fetch branch data");
+      // toast.error(error?.response?.data?.message || "Failed to fetch branch data");
       setStatus("error");
     }
   };
@@ -264,9 +265,9 @@ const BranchManagement = () => {
                   <IoIosArrowDown className="dropdown_icon" />
                 </div>
               </div>
-              <button className="add_branch_btn" onClick={() => nav("/branch_onboarding")}>
-                <MdAdd className="add_icon" />
-                Add New Branch
+              <button className="add_branch_btn" onClick={() => nav("/dashboard/overview")}>
+                <IoChevronBack className="add_icon" />
+                Back
               </button>
             </div>
           </div>

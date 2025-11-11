@@ -241,11 +241,12 @@ const QueueSuccess = ({ details, queueInfo, closeModal }) => {
           <button
             className="done-button"
             onClick={() => {
-              if (location.pathname.includes("admin_dashboard")) {
-                console.log("Dashboard");
-              } else {
-                console.log("nothing");
-              }
+              // if (location.pathname.includes("admin_dashboard")) {
+              //   console.log("Dashboard");
+              // } else {
+              //   console.log("nothing");
+              // }
+              closeModal(false);
             }}
           >
             Done

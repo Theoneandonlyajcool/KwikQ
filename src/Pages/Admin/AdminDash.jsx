@@ -15,12 +15,14 @@ import QueueHistory from "../Admin/Pages/History/History";
 import NotificationsPage from "../Admin/Pages/Notifications/Notifications";
 import QueueSettings from "./Pages/Settings/Settings";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const AdminDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
 
   const OrgDetials = JSON.parse(localStorage.getItem("OrgInfo"));
   console.log(OrgDetials);
+  
 
   // Hide scrollbar CSS
   React.useEffect(() => {

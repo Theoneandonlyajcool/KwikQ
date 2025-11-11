@@ -32,11 +32,13 @@ import AdminDash from "../Pages/Admin/AdminDash";
 import GetStarted2 from "../Pages/Auth/GetStarted2";
 import LoginForm from "../Pages/Auth/SingleBranchLogin";
 import Editbranch from "../Pages/pagesbranch/Editbranch";
+import Allbranch from "../Pages/pagesbranch/Allbranch";
 
 // Hooks
 import { useState } from "react";
 import { Role } from "../Components/Context";
 import BranchSigninV from "../Pages/Auth/BranchSigninV";
+import QueueFormNorm from "../Pages/QueueFormNorm";
 
 const Router = () => {
   const [OrgRole, SetOrgRole] = useState("");
@@ -61,7 +63,7 @@ const Router = () => {
             <Route path="/businessCategory2" element={<GetStarted2 />} />
             <Route path="/reset_password" element={<ResetPassword />} />
             <Route path="/Sevenday_free" element={<Sevendayfree />} />
-            <Route path="/queue_form" element={<QueueForm />} />
+            <Route path="/queue_form?:queue&:id" element={<QueueForm />} />
             <Route path="/queue_success" element={<QueueSuccess />} />
             <Route path="/pricing" element={<Pricepage />} />
             <Route path="/singleBranch" element={<LoginForm />} />
@@ -69,7 +71,7 @@ const Router = () => {
             <Route path="/businessCategory2" element={<GetStarted2 />} />
             <Route path="/reset_password" element={<ResetPassword />} />
             <Route path="/Sevenday_free" element={<Sevendayfree />} />
-            <Route path="/queue_form" element={<QueueForm />} />
+            <Route path="/queue_form" element={<QueueFormNorm />} />
             <Route path="/queue_success" element={<QueueSuccess />} />
             <Route path="/edit_branch" element={<Editbranch />} />
             <Route path="/pricing" element={<Pricepage />} />
@@ -86,6 +88,7 @@ const Router = () => {
             <Route path="/dashboard/*" element={<LayoutShell />}>
               <Route index element={<Navigate to="overview" />} />
               <Route path="overview" element={<BranchOverview />} />
+              <Route path="allbranchview" element={<Allbranch />} />
               <Route path="analytics" element={<Analytics />} />
               <Route path="branch-management" element={<BranchManagement />} />
               <Route path="settings" element={<OrganizationSettings />} />

@@ -54,7 +54,7 @@ export default function Dashboard({ qrCode }) {
   const BranchID = localStorage.getItem("BranchID");
 
   const SingleToken =
-    localStorage.getItem("singleToken") || localStorage.getItem("User");
+    localStorage.getItem("user_token") || localStorage.getItem("User");
   console.log(SingleToken);
 
   console.log(BranchID);
@@ -86,7 +86,8 @@ export default function Dashboard({ qrCode }) {
 
   const OrgID = localStorage.getItem("Org_ID");
   console.log(OrgID);
-
+  console.log("QR: ", qrCode);
+  // console.log("Link: ", qrCode.formLink);
   // console.log(`The role is ${Role}`);
 
   useEffect(() => {
@@ -464,7 +465,7 @@ export default function Dashboard({ qrCode }) {
             </button>
           </div>
 
-          <img style={styles.QrCode} src="" alt="Qr code" />
+          <img style={styles.QrCode} src={qrCode} alt="Qr code" />
         </div>
       </div>
     </div>
