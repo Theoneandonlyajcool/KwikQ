@@ -16,6 +16,7 @@ import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import { IoClipboard } from "react-icons/io5";
+import QueuePointsCard from "../../components/QueuePointsCard";
 
 export default function Dashboard({ qrCode }) {
   // Get time
@@ -51,23 +52,23 @@ export default function Dashboard({ qrCode }) {
 
   const [CardData, SetCardData] = useState({});
   const [LoadingState, SetLoadingState] = useState(false);
-  console.log(CardData);
+  // console.log(CardData);
 
   const BranchID = localStorage.getItem("BranchID");
 
   const SingleToken =
-    localStorage.getItem("user_token") || localStorage.getItem("User");
-  console.log(SingleToken);
+    localStorage.getItem("singleToken") || localStorage.getItem("User");
+  // console.log(SingleToken);
 
-  console.log(BranchID);
+  // console.log(BranchID);
 
   const Org_ID = sessionStorage.getItem("user-recog");
-  console.log(Org_ID);
+  // console.log(Org_ID);
 
   const GetMetricsCardData = async () => {
     try {
       SetLoadingState(true);
-      const res = await axios.get(`${BaseUrl}/api/v1/dashboard/${Org_ID}`, {
+      const res = await axios.get(`${BaseUrl}/api/v1/dashboard/${BranchID}`, {
         headers: {
           Authorization: `Bearer ${SingleToken}`,
         },
@@ -88,42 +89,55 @@ export default function Dashboard({ qrCode }) {
 
   const OrgID = localStorage.getItem("Org_ID");
   console.log(OrgID);
-  console.log("QR: ", qrCode);
-  // console.log("Link: ", qrCode.formLink);
-  // console.log(`The role is ${Role}`);
 
-  useEffect(() => {
-    GetMetricsCardData();
-    // GenerateQrCode();
-  }, []);
+  console.log(Role);
+
+  // console.log(`The role is ${Role}`);
 
   const [activeQuota, setActiveQuota] = useState(null);
 
+  const [quotas, Setquotas] = useState([]);
+
+  const QueuePoints = async () => {
+    try {
+      const res = await axios.get(`${BaseUrl}/api/v1/queue-points/${Org_ID}`);
+      console.log(`These are the ${res?.data}`);
+      Setquotas(res?.data?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    GetMetricsCardData();
+    QueuePoints();
+  }, []);
+
   // quotas
 
-  const quotas = [
-    // {
-    //   id: 1,
-    //   name: "Quota Part-1",
-    //   status: "Earning",
-    //   time: "T-24R",
-    //   progress: 65,
-    // },
-    // {
-    //   id: 2,
-    //   name: "Quota Part-2",
-    //   status: "Earning",
-    //   time: "T-24R",
-    //   progress: 45,
-    // },
-    // {
-    //   id: 3,
-    //   name: "Quota Part-3",
-    //   status: "Earning",
-    //   time: "T-24R",
-    //   progress: 80,
-    // },
-  ];
+  // const quotas = [
+  // {
+  //   id: 1,
+  //   name: "Quota Part-1",
+  //   status: "Earning",
+  //   time: "T-24R",
+  //   progress: 65,
+  // },
+  // {
+  //   id: 2,
+  //   name: "Quota Part-2",
+  //   status: "Earning",
+  //   time: "T-24R",
+  //   progress: 45,
+  // },
+  // {
+  //   id: 3,
+  //   name: "Quota Part-3",
+  //   status: "Earning",
+  //   time: "T-24R",
+  //   progress: 80,
+  // },
+  // ];
 
   // Activities
 
@@ -181,6 +195,8 @@ export default function Dashboard({ qrCode }) {
   ];
 
   const metricsValue = Object.keys(CardData);
+
+  const progressValue = 1;
 
   return (
     <div style={styles.dashboard}>
@@ -309,6 +325,7 @@ export default function Dashboard({ qrCode }) {
         )}
       </div>
 
+      {/* <progress value={progressValue % 10}></progress> */}
       <div style={styles.contentGrid}>
         <div style={styles.section1}>
           <div style={styles.sectionHeader}>
@@ -340,49 +357,7 @@ export default function Dashboard({ qrCode }) {
             ) : (
               <>
                 {quotas.map((quota) => (
-                  <div
-                    key={quota.id}
-                    style={{
-                      ...styles.quotaItem,
-                      borderColor:
-                        activeQuota === quota.id ? "#000" : "#f3f4f6",
-                      background:
-                        activeQuota === quota.id ? "#fafafa" : "white",
-                    }}
-                    onClick={() => setActiveQuota(quota.id)}
-                  >
-                    <div>
-                      <h4 style={styles.quotaName}>{quota.name}</h4>
-                      <p style={styles.quotaStatus}>{quota.status}</p>
-                      <p style={styles.quotaTime}>{quota.time}</p>
-                    </div>
-                    <div style={styles.quotaProgress}>
-                      <div style={styles.progressCircle}>
-                        <svg width="60" height="60" viewBox="0 0 60 60">
-                          <circle
-                            cx="30"
-                            cy="30"
-                            r="25"
-                            fill="none"
-                            stroke="#f0f0f0"
-                            strokeWidth="6"
-                          />
-                          <circle
-                            cx="30"
-                            cy="30"
-                            r="25"
-                            fill="none"
-                            stroke="#000"
-                            strokeWidth="6"
-                            strokeDasharray={`${quota.progress * 1.57} 157`}
-                            strokeLinecap="round"
-                            transform="rotate(-90 30 30)"
-                          />
-                        </svg>
-                      </div>
-                      <span style={styles.progressLabel}>Working</span>
-                    </div>
-                  </div>
+                  <QueuePointsCard />
                 ))}
               </>
             )}
@@ -487,7 +462,7 @@ export default function Dashboard({ qrCode }) {
             </button>
           </div>
 
-          <img style={styles.QrCode} src={qrCode} alt="Qr code" />
+          <img style={styles.QrCode} src="" alt="Qr code" />
         </div>
       </div>
     </div>
