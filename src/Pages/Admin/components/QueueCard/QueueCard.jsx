@@ -3,6 +3,7 @@ import { Clock, Phone, Timer, Bell, X, SkipForward } from "lucide-react";
 import "./QueueCard.css";
 import axios from "axios";
 import { RemoveCustomer } from "../../../Services/APICalls";
+import { toast } from "react-toastify";
 
 const QueueCard = ({ data, refresh }) => {
   const [mappedCustomers, SetMappedCustomers] = useState([]);
@@ -37,17 +38,46 @@ const QueueCard = ({ data, refresh }) => {
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const token = localStorage.getItem("User");
 
-  // const RemoveCustomer = async () => {
-  //   try {
-  //     const res = await axios.delete(`${BaseURL}/api/v1/remove/${customerID}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const AlertUser = async () => {
+    try {
+      // SetLoadingState(true);
+      const res = await axios.post(
+        `${BaseURL}/api/v1/alert/${data?.id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success(res?.data?.message);
+      // setQueues(res?.data?.data);
+      // console.log(res?.data.data);
+      // SetLoadingState(false);
+    } catch (error) {
+      // SetLoadingState(false);
+      console.log(error);
+    }
+    // console.log(data?.id);
+  };
+  const onRemove = async () => {
+    try {
+      // SetLoadingState(true);
+      const res = await axios.delete(`${BaseURL}/api/v1/delete-customer/${data?.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      toast.success(res?.data?.message);
+      refresh();
+      // setQueues(res?.data?.data);
+      // console.log(res?.data.data);
+      // SetLoadingState(false);
+    } catch (error) {
+      // SetLoadingState(false);
+      console.log(error);
+    }
+  };
 
   return (
     <div className="service-card">
@@ -85,7 +115,7 @@ const QueueCard = ({ data, refresh }) => {
         <button
           style={{ backgroundColor: "#303bff", color: "white" }}
           className="service-card__button service-card__button--primary "
-          //   onClick={onAlert}
+          onClick={AlertUser}
         >
           <Bell className="service-card__button-icon" />
           Alert
@@ -96,18 +126,12 @@ const QueueCard = ({ data, refresh }) => {
           className="service-card__button service-card__button--primary"
         >
           <SkipForward className="service-card__skip-icon" />
-          Skip
+          Served
         </div>
 
         <button
           style={{ color: "red", border: "2px solid red" }}
-          onClick={() => {
-            // RemoveCustomer(Id);
-            // setTimeout(() => {
-            //   refresh();
-            // }, 3000);
-            console.log(data.id);
-          }}
+          onClick={() => onRemove()}
           className="service-card__button service-card__button--destructive"
           // onClick={onRemove}
         >

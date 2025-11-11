@@ -43,9 +43,12 @@ const Sidebar = ({ collapsed }) => {
         <MenuItem to="/dashboard/analytics">
           <FiBarChart2 /> Analytics
         </MenuItem>
-        <MenuItem to="/dashboard/branch-management">
+        {/* <MenuItem to="/dashboard/allbranchview">
+          <FiServer /> Branch Details
+        </MenuItem> */}
+        {/* <MenuItem to="/dashboard/branch-management">
           <FiServer /> Branch Management
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem to="/dashboard/settings">
           <FiSettings /> Organization Settings
         </MenuItem>

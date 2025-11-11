@@ -24,11 +24,11 @@ import { useParams, useLocation } from "react-router-dom";
 const toCamelCase = (str) =>
   str.toLowerCase().replace(/\s+(\w)/g, (_, c) => c.toUpperCase());
 
-const QueueForm = () => {
+const QueueFormNorm = () => {
   const nav = useNavigate();
   // console.log(useLocation())
-  const {search} = useLocation()
-  console.log(search?.split("&")[1].split("=")[1])
+  //   const {search} = useLocation()
+  //   console.log(search?.split("&")[1].split("=")[1])
 
   const [FormLoadingState, SetFormLoadingState] = useState(false);
 
@@ -54,6 +54,7 @@ const QueueForm = () => {
   });
 
   const [PriorityStatus, SetPriorityStatus] = useState("");
+  const [userId] = useState(JSON.parse(localStorage.getItem("user_ID")));
 
   const BaseURl = import.meta.env.VITE_API_BASE_URL;
 
@@ -92,7 +93,7 @@ const QueueForm = () => {
     try {
       SetLoadingState(true);
       const res = await axios.post(
-        `${BaseURl}/api/v1/create-queue/${search.split("&")[1].split("=")[1]}`,
+        `${BaseURl}/api/v1/create-queue/${userId}`,
         {
           formDetails: {
             fullName: inputValues.fullName,
@@ -502,4 +503,4 @@ const QueueForm = () => {
   );
 };
 
-export default QueueForm;
+export default QueueFormNorm;

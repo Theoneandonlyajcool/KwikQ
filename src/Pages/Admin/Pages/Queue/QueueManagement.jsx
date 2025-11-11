@@ -11,6 +11,7 @@ import { toast, ToastContainer } from "react-toastify";
 
 const QueueManagement = ({ qrCode }) => {
   const nav = useNavigate();
+  const [userId] = useState(JSON.parse(localStorage.getItem("user_ID")));
   console.log(qrCode);
   // const [queues, setQueues] = useState([
   //   {
@@ -56,7 +57,7 @@ const QueueManagement = ({ qrCode }) => {
   const GetAllQueues = async () => {
     try {
       SetLoadingState(true);
-      const res = await axios.get(`${BaseURL}/api/v1/queues/${BranchID}`);
+      const res = await axios.get(`${BaseURL}/api/v1/queues/${userId}`);
       toast.success(res?.data?.message);
       setQueues(res?.data?.data);
       // console.log(res?.data.data);
@@ -66,6 +67,7 @@ const QueueManagement = ({ qrCode }) => {
       console.log(error);
     }
   };
+
 
   const [dateTime, setDateTime] = useState("");
 
@@ -127,7 +129,7 @@ const QueueManagement = ({ qrCode }) => {
                   marginLeft: ".5rem",
                 }}
                 className="btn-customize"
-                onClick={() => nav("/queue_form")}
+                onClick={() => nav(`/queue_form`)}
               >
                 Add customer
               </button>
@@ -256,7 +258,7 @@ const QueueManagement = ({ qrCode }) => {
               <button style={styles.actionBtn}>Pause Queue</button>
               <button
                 style={styles.actionBtn}
-                onClick={() => nav("/queue_form")}
+                onClick={() => nav(`/queue_form`)}
               >
                 Add Manual Entry
               </button>

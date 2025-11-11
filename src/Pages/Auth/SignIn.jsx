@@ -109,7 +109,7 @@ const SignIn = () => {
 
       localStorage.setItem(
         import.meta.env.VITE_USERTOKEN,
-        JSON.stringify(token)
+        token
       );
       localStorage.setItem(import.meta.env.VITE_USERID, JSON.stringify(orgId));
       localStorage.setItem("User", token);
