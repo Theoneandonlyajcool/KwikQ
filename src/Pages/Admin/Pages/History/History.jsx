@@ -1,337 +1,170 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const QueueHistory = () => {
+  const [apiParams, setApiParams] = useState({
+    branchId: "64b1e2d9c3a4b9f12c8e7f21",
+    startDate: "2025-10-01",
+    endDate: "2025-10-31",
+  });
+
   const [selectedStatus, setSelectedStatus] = useState("All Status");
   const [selectedBranch, setSelectedBranch] = useState("All Branches");
+  const [queueData, setQueueData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // base url from your env (matches your other files)
+  const BaseUrl =
+    import.meta.env.VITE_API_BASE_URL || "https://kwikq-1.onrender.com";
+
+  // Try several common localStorage keys (keeps with your style & is safe)
+  const getPossibleUserId = () => {
+    const candidates = [
+      import.meta.env.VITE_USERID,
+      "User",
+      "userId",
+      "user-recog",
+      "user_id",
+      "USER_ID",
+    ];
+    for (const key of candidates) {
+      if (!key) continue;
+      const val = localStorage.getItem(key);
+      if (val) return val;
+    }
+    return null;
+  };
+
+  const getPossibleToken = () => {
+    const candidates = [
+      "User",
+      import.meta.env.VITE_USERTOKEN,
+      "token",
+      "authToken",
+    ];
+    for (const key of candidates) {
+      if (!key) continue;
+      const val = localStorage.getItem(key);
+      if (val) return val;
+    }
+    return null;
+  };
+
+  const cleanId = (raw) => {
+    if (!raw) return raw;
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed) raw = parsed;
+    } catch (e) {
+      // leave as-is
+    }
+    return String(raw)
+      .replace(/^["']+|["']+$/g, "")
+      .trim();
+  };
 
   useEffect(() => {
-    // Inject CSS styles
-    const style = document.createElement("style");
-    style.id = "queue-history-styles";
-    style.textContent = `
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+    const fetchQueueHistory = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-      .queue-history-container {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        padding: 30px;
-        background-color: #f8f9fa;
-        min-height: 100vh;
-      }
+        const rawUserId = getPossibleUserId();
+        let userId = cleanId(rawUserId);
 
-      .header {
-        margin-bottom: 30px;
-      }
-
-      .header h1 {
-        font-size: 28px;
-        font-weight: 600;
-        color: #2c3e50;
-        margin-bottom: 5px;
-      }
-
-      .date {
-        color: #7f8c8d;
-        font-size: 14px;
-      }
-
-      .stats-container {
-        display: flex;
-        gap: 20px;
-        margin-bottom: 30px;
-      }
-
-      .stat-card {
-        background: white;
-        border-radius: 8px;
-        padding: 25px;
-        flex: 1;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-        text-align: center;
-      }
-
-      .stat-icon {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        margin: 0 auto 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .stat-icon.blue {
-        background-color: #e3f2fd;
-        color: #2196f3;
-      }
-
-      .stat-icon.orange {
-        background-color: #fff3e0;
-        color: #ff9800;
-      }
-
-      .stat-icon.red {
-        background-color: #ffebee;
-        color: #f44336;
-      }
-
-      .stat-value {
-        font-size: 32px;
-        font-weight: 700;
-        color: #2c3e50;
-        margin-bottom: 5px;
-      }
-
-      .stat-label {
-        font-size: 14px;
-        color: #7f8c8d;
-      }
-
-      .filters {
-        display: flex;
-        gap: 15px;
-        margin-bottom: 20px;
-      }
-
-      .filter-select {
-        padding: 10px 15px;
-        border: 1px solid #ddd;
-        border-radius: 6px;
-        background: white;
-        font-size: 14px;
-        cursor: pointer;
-        outline: none;
-        transition: border-color 0.2s;
-      }
-
-      .filter-select:hover {
-        border-color: #2196f3;
-      }
-
-      .table-container {
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-        overflow: hidden;
-      }
-
-      .queue-table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      .queue-table thead {
-        background-color: #f8f9fa;
-      }
-
-      .queue-table th {
-        padding: 15px;
-        text-align: left;
-        font-weight: 600;
-        font-size: 13px;
-        color: #5a6c7d;
-        text-transform: uppercase;
-        border-bottom: 2px solid #e9ecef;
-      }
-
-      .queue-table td {
-        padding: 15px;
-        border-bottom: 1px solid #e9ecef;
-        font-size: 14px;
-        color: #2c3e50;
-      }
-
-      .queue-table tbody tr:hover {
-        background-color: #f8f9fa;
-      }
-
-      .queue-id {
-        font-weight: 600;
-        color: #2196f3;
-      }
-
-      .customer-info {
-        display: flex;
-        flex-direction: column;
-        gap: 3px;
-      }
-
-      .customer-name {
-        font-weight: 500;
-      }
-
-      .customer-phone {
-        font-size: 12px;
-        color: #7f8c8d;
-      }
-
-      .datetime-info {
-        display: flex;
-        flex-direction: column;
-        gap: 3px;
-      }
-
-      .date-created {
-        font-weight: 500;
-      }
-
-      .time-arrival {
-        font-size: 12px;
-        color: #7f8c8d;
-      }
-
-      .status-badge {
-        display: inline-block;
-        padding: 5px 12px;
-        border-radius: 12px;
-        font-size: 12px;
-        font-weight: 600;
-      }
-
-      .status-completed {
-        background-color: #d4edda;
-        color: #155724;
-      }
-
-      .status-cancelled {
-        background-color: #f8d7da;
-        color: #721c24;
-      }
-
-      .status-noshow {
-        background-color: #e2e3e5;
-        color: #383d41;
-      }
-
-      @media (max-width: 768px) {
-        .stats-container {
-          flex-direction: column;
+        // fallback to branchId if userId not available (like some of your other files)
+        if (!userId || userId === "null" || userId === "undefined") {
+          userId = apiParams.branchId;
         }
-        
-        .table-container {
-          overflow-x: auto;
+
+        if (!userId) {
+          toast.error("User ID not found. Please login first.");
+          setError("User ID not found");
+          setLoading(false);
+          return;
         }
-      }
-    `;
 
-    if (!document.getElementById("queue-history-styles")) {
-      document.head.appendChild(style);
-    }
+        const token = getPossibleToken();
 
-    return () => {
-      const existingStyle = document.getElementById("queue-history-styles");
-      if (existingStyle) {
-        existingStyle.remove();
+        const { branchId, startDate, endDate } = apiParams;
+
+        const apiUrl = `${BaseUrl}/api/v1/history/${userId}?branchId=${branchId}&startDate=${startDate}&endDate=${endDate}`;
+
+        console.log("[v0] Fetching queue history from:", apiUrl);
+
+        const response = await axios.get(apiUrl, {
+          headers: token
+            ? {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              }
+            : { "Content-Type": "application/json" },
+        });
+
+        console.log("[v0] API Response:", response.data);
+
+        if (response.data && response.data.data) {
+          localStorage.setItem(
+            "queueHistoryData",
+            JSON.stringify(response.data.data)
+          );
+
+          if (response.data.id) {
+            localStorage.setItem("queueHistoryId", response.data.id);
+          }
+
+          setQueueData(response.data.data);
+          toast.success("Queue history loaded successfully");
+        } else {
+          setQueueData([]);
+        }
+
+        setLoading(false);
+      } catch (err) {
+        console.error("[v0] Error fetching queue history:", err);
+        toast.error(
+          err?.response?.data?.message || "Failed to fetch queue history"
+        );
+        setError(
+          err?.response?.data?.message ||
+            err?.message ||
+            "Error fetching queue history"
+        );
+        setLoading(false);
       }
     };
-  }, []);
 
-  const queueData = [
-    {
-      id: "Q-0001",
-      customer: { name: "Jonathan Smith", phone: "O-2000-123-456" },
-      service: "Premium Saving",
-      branch: "Hudson Point",
-      dateTime: { created: "02/12/19", arrival: "01:31 AM" },
-      waitTime: "8 min",
-      serviceTime: "7 min",
-      status: "Completed",
-      rating: "---",
-    },
-    {
-      id: "Q-0002",
-      customer: { name: "Tessa Benson", phone: "O-2000-123-456" },
-      service: "Loan Application Inquiry",
-      branch: "Lincoln Plaza II",
-      dateTime: { created: "02/12/19", arrival: "01:29 PM" },
-      waitTime: "10 min",
-      serviceTime: "---",
-      status: "Cancelled",
-      rating: "---",
-    },
-    {
-      id: "Q-0003",
-      customer: { name: "Elbert Hawkins", phone: "O-2000-123-456" },
-      service: "Fund Transfer",
-      branch: "Hudson Point",
-      dateTime: { created: "02/12/19", arrival: "01:26 PM" },
-      waitTime: "12 min",
-      serviceTime: "10 min",
-      status: "Completed",
-      rating: "---",
-    },
-    {
-      id: "Q-0004",
-      customer: { name: "Nigel Cox", phone: "O-2000-123-456" },
-      service: "Account Statement Inquiry",
-      branch: "Sunbow",
-      dateTime: { created: "02/12/19", arrival: "01:23 PM" },
-      waitTime: "30 min",
-      serviceTime: "10 min",
-      status: "Completed",
-      rating: "---",
-    },
-    {
-      id: "Q-0005",
-      customer: { name: "Kristopher Holley", phone: "O-2000-123-456" },
-      service: "Account Inquiry",
-      branch: "Lincoln Plaza II",
-      dateTime: { created: "02/12/19", arrival: "01:17 PM" },
-      waitTime: "8 min",
-      serviceTime: "10 min",
-      status: "Completed",
-      rating: "---",
-    },
-    {
-      id: "Q-0006",
-      customer: { name: "Claire Obedoza", phone: "O-2000-123-456" },
-      service: "Complaint Resolution Inquiry",
-      branch: "High",
-      dateTime: { created: "02/12/19", arrival: "01:17 PM" },
-      waitTime: "45 min",
-      serviceTime: "---",
-      status: "No Show",
-      rating: "---",
-    },
-    {
-      id: "Q-0007",
-      customer: { name: "Lyla Flores", phone: "O-2000-123-456" },
-      service: "Account Opening Inquiry",
-      branch: "Sunbow",
-      dateTime: { created: "02/12/19", arrival: "01:14 PM" },
-      waitTime: "8 min",
-      serviceTime: "10 min",
-      status: "Completed",
-      rating: "---",
-    },
-    {
-      id: "Q-0008",
-      customer: { name: "Ferris Evans", phone: "O-2000-123-456" },
-      service: "Account Opening",
-      branch: "Lincoln Plaza II",
-      dateTime: { created: "02/12/19", arrival: "01:14 PM" },
-      waitTime: "35 min",
-      serviceTime: "10 min",
-      status: "Completed",
-      rating: "---",
-    },
-    {
-      id: "Q-0009",
-      customer: { name: "Kent Adeyemi", phone: "O-2000-123-456" },
-      service: "Withdrawal Transfer",
-      branch: "Hudson Point",
-      dateTime: { created: "02/12/19", arrival: "01:13 PM" },
-      waitTime: "5 min",
-      serviceTime: "7 min",
-      status: "Completed",
-      rating: "---",
-    },
-  ];
+    fetchQueueHistory();
+    // we intentionally re-fetch when apiParams change (your original intent)
+  }, [apiParams]);
+
+  // memoize computed stats to avoid re-calculation on unrelated renders
+  const stats = useMemo(() => {
+    const completed = queueData.filter(
+      (item) => item.status?.toLowerCase() === "completed"
+    ).length;
+    const cancelled = queueData.filter((item) => {
+      const st = item.status?.toLowerCase();
+      return st === "cancelled" || st === "no show";
+    }).length;
+
+    const avgWaitTime =
+      queueData.length > 0
+        ? Math.round(
+            queueData.reduce((sum, item) => {
+              const minutes = Number.parseInt(item.waitTime) || 0;
+              return sum + minutes;
+            }, 0) / queueData.length
+          )
+        : 0;
+
+    return { completed, cancelled, avgWaitTime };
+  }, [queueData]);
 
   const getStatusClass = (status) => {
+    if (!status) return "";
     switch (status.toLowerCase()) {
       case "completed":
         return "status-completed";
@@ -344,153 +177,322 @@ const QueueHistory = () => {
     }
   };
 
+  // Client-side filtered data based on selectedStatus & selectedBranch
+  const filteredQueueData = useMemo(() => {
+    return queueData.filter((item) => {
+      const statusMatch =
+        selectedStatus === "All Status"
+          ? true
+          : item.status?.toLowerCase() === selectedStatus.toLowerCase();
+      const branchMatch =
+        selectedBranch === "All Branches"
+          ? true
+          : (item.branch || "").toLowerCase() === selectedBranch.toLowerCase();
+      return statusMatch && branchMatch;
+    });
+  }, [queueData, selectedStatus, selectedBranch]);
+
+  const handleParamChange = (e) => {
+    const { name, value } = e.target;
+    console.log("[v0] Param changed:", name, value);
+    setApiParams((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // keeps behavior same as your original "Apply Filters" button (API is triggered by apiParams change)
+  const handleApplyFilters = () => {
+    console.log("[v0] Applying filters with:", apiParams);
+    // no-op since useEffect listens to apiParams — we keep this to match your UX pattern
+  };
+
   return (
     <div className="queue-history-container">
       <div className="header">
         <h1>Queue History</h1>
-        <p className="date">Tuesday, Oct 06th, 11, 2019</p>
+        <p className="date">{new Date().toLocaleDateString()}</p>
       </div>
 
-      <div className="stats-container">
-        <div className="stat-card">
-          <div className="stat-icon blue">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <circle
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-              <path
-                d="M9 12l2 2 4-4"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-          <div className="stat-value">150</div>
-          <div className="stat-label">Completed Tickets</div>
+      {error && <div className="error-message">Error: {error}</div>}
+
+      {loading ? (
+        <div className="loading-spinner">
+          <div className="spinner"></div>
         </div>
+      ) : (
+        <>
+          <div className="filters">
+            <div
+              style={{
+                display: "flex",
+                gap: "15px",
+                marginBottom: "20px",
+                flexWrap: "wrap",
+              }}
+            >
+              <div
+                style={{ display: "flex", flexDirection: "column", gap: "5px" }}
+              >
+                <label
+                  htmlFor="branchId"
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: "500",
+                    color: "#5a6c7d",
+                  }}
+                >
+                  Branch ID
+                </label>
+                <input
+                  type="text"
+                  id="branchId"
+                  name="branchId"
+                  value={apiParams.branchId}
+                  onChange={handleParamChange}
+                  className="filter-select"
+                  style={{ width: "200px" }}
+                />
+              </div>
 
-        <div className="stat-card">
-          <div className="stat-icon orange">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <circle
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-              <path
-                d="M12 6v6l4 2"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
+              <div
+                style={{ display: "flex", flexDirection: "column", gap: "5px" }}
+              >
+                <label
+                  htmlFor="startDate"
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: "500",
+                    color: "#5a6c7d",
+                  }}
+                >
+                  Start Date
+                </label>
+                <input
+                  type="date"
+                  id="startDate"
+                  name="startDate"
+                  value={apiParams.startDate}
+                  onChange={handleParamChange}
+                  className="filter-select"
+                  style={{ width: "150px" }}
+                />
+              </div>
+
+              <div
+                style={{ display: "flex", flexDirection: "column", gap: "5px" }}
+              >
+                <label
+                  htmlFor="endDate"
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: "500",
+                    color: "#5a6c7d",
+                  }}
+                >
+                  End Date
+                </label>
+                <input
+                  type="date"
+                  id="endDate"
+                  name="endDate"
+                  value={apiParams.endDate}
+                  onChange={handleParamChange}
+                  className="filter-select"
+                  style={{ width: "150px" }}
+                />
+              </div>
+
+              <button
+                onClick={handleApplyFilters}
+                style={{
+                  alignSelf: "flex-end",
+                  padding: "10px 20px",
+                  background: "#2196f3",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  fontWeight: "500",
+                }}
+              >
+                Apply Filters
+              </button>
+            </div>
+
+            <select
+              className="filter-select"
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+            >
+              <option>All Status</option>
+              <option>Completed</option>
+              <option>Cancelled</option>
+              <option>No Show</option>
+            </select>
+
+            <select
+              className="filter-select"
+              value={selectedBranch}
+              onChange={(e) => setSelectedBranch(e.target.value)}
+            >
+              <option>All Branches</option>
+              {[
+                ...new Set(queueData.map((item) => item.branch || "Unknown")),
+              ].map((branch) => (
+                <option key={branch} value={branch}>
+                  {branch}
+                </option>
+              ))}
+            </select>
           </div>
-          <div className="stat-value">12 min</div>
-          <div className="stat-label">Avg Wait Time</div>
-        </div>
 
-        <div className="stat-card">
-          <div className="stat-icon red">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <circle
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="2"
-              />
-              <path
-                d="M15 9l-6 6M9 9l6 6"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
+          <div className="stats-container">
+            <div className="stat-card">
+              <div className="stat-icon blue">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M9 12l2 2 4-4"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+              <div className="stat-value">{stats.completed}</div>
+              <div className="stat-label">Completed Tickets</div>
+            </div>
+
+            <div className="stat-card">
+              <div className="stat-icon orange">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M12 6v6l4 2"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+              <div className="stat-value">{stats.avgWaitTime} min</div>
+              <div className="stat-label">Avg Wait Time</div>
+            </div>
+
+            <div className="stat-card">
+              <div className="stat-icon red">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  />
+                  <path
+                    d="M15 9l-6 6M9 9l6 6"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+              <div className="stat-value">{stats.cancelled}</div>
+              <div className="stat-label">Cancelled/No Show</div>
+            </div>
           </div>
-          <div className="stat-value">5</div>
-          <div className="stat-label">Cancelled/No Show</div>
-        </div>
-      </div>
 
-      <div className="filters">
-        <select
-          className="filter-select"
-          value={selectedStatus}
-          onChange={(e) => setSelectedStatus(e.target.value)}
-        >
-          <option>All Status</option>
-          <option>Completed</option>
-          <option>Cancelled</option>
-          <option>No Show</option>
-        </select>
+          {filteredQueueData.length > 0 ? (
+            <div className="table-container">
+              <table className="queue-table">
+                <thead>
+                  <tr>
+                    <th>Queue ID</th>
+                    <th>Customer</th>
+                    <th>Service</th>
+                    <th>Branch</th>
+                    <th>Date & Time</th>
+                    <th>Wait Time</th>
+                    <th>Service Time</th>
+                    <th>Status</th>
+                    <th>Rating</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredQueueData.map((item, index) => {
+                    const key = item.id || item._id || index;
+                    return (
+                      <tr key={key}>
+                        <td className="queue-id">
+                          {item.id || item._id || "N/A"}
+                        </td>
+                        <td>
+                          <div className="customer-info">
+                            <div className="customer-name">
+                              {item.customer?.name || "N/A"}
+                            </div>
+                            <div className="customer-phone">
+                              {item.customer?.phone || "N/A"}
+                            </div>
+                          </div>
+                        </td>
+                        <td>{item.service || "N/A"}</td>
+                        <td>{item.branch || "N/A"}</td>
+                        <td>
+                          <div className="datetime-info">
+                            <div className="date-created">
+                              {item.dateTime?.created || "N/A"}
+                            </div>
+                            <div className="time-arrival">
+                              {item.dateTime?.arrival || "N/A"}
+                            </div>
+                          </div>
+                        </td>
+                        <td>{item.waitTime || "N/A"}</td>
+                        <td>{item.serviceTime || "N/A"}</td>
+                        <td>
+                          {item.status && (
+                            <span
+                              className={`status-badge ${getStatusClass(
+                                item.status
+                              )}`}
+                            >
+                              {item.status}
+                            </span>
+                          )}
+                        </td>
+                        <td>{item.rating || "---"}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div
+              className="table-container"
+              style={{ padding: "40px", textAlign: "center" }}
+            >
+              <p>No queue history data found for the selected period.</p>
+            </div>
+          )}
+        </>
+      )}
 
-        <select
-          className="filter-select"
-          value={selectedBranch}
-          onChange={(e) => setSelectedBranch(e.target.value)}
-        >
-          <option>All Branches</option>
-          <option>Hudson Point</option>
-          <option>Lincoln Plaza II</option>
-          <option>Sunbow</option>
-        </select>
-      </div>
-
-      {/* <div className="table-container">
-        <table className="queue-table">
-          <thead>
-            <tr>
-              <th>Queue ID</th>
-              <th>Customer</th>
-              <th>Service</th>
-              <th>Branch</th>
-              <th>Date & Time</th>
-              <th>Wait Time</th>
-              <th>Service Time</th>
-              <th>Status</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            {queueData.map((item) => (
-              <tr key={item.id}>
-                <td className="queue-id">{item.id}</td>
-                <td>
-                  <div className="customer-info">
-                    <div className="customer-name">{item.customer.name}</div>
-                    <div className="customer-phone">{item.customer.phone}</div>
-                  </div>
-                </td>
-                <td>{item.service}</td>
-                <td>{item.branch}</td>
-                <td>
-                  <div className="datetime-info">
-                    <div className="date-created">{item.dateTime.created}</div>
-                    <div className="time-arrival">{item.dateTime.arrival}</div>
-                  </div>
-                </td>
-                <td>{item.waitTime}</td>
-                <td>{item.serviceTime}</td>
-                <td>
-                  <span
-                    className={`status-badge ${getStatusClass(item.status)}`}
-                  >
-                    {item.status}
-                  </span>
-                </td>
-                <td>{item.rating}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div> */}
+      <ToastContainer />
     </div>
   );
 };
