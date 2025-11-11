@@ -21,6 +21,8 @@ export default function Dashboard({ qrCode }) {
   // Get time
 
   const [dateTime, setDateTime] = useState("");
+  const [ractivities, setRactivities] = useState([])
+  console.log("what day fuck", ractivities)
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -124,6 +126,24 @@ export default function Dashboard({ qrCode }) {
   ];
 
   // Activities
+
+  const Activities = async ()=>{
+    try {
+      const res =await axios.get(`${BaseUrl}/api/v1/recent-activity/${Org_ID}`, {
+        headers: {
+          Authorization: `Bearer ${SingleToken}`
+        }
+      })
+      // console.log("what day fuck",res)
+      setRactivities(res?.data?.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(()=> {
+    Activities()
+  }, [])
 
   const activities = [
     // {
@@ -377,7 +397,7 @@ export default function Dashboard({ qrCode }) {
           </div>
           <div style={styles.activityList}>
             {/* Empty or not */}
-            {activities.length <= 0 ? (
+            {ractivities.length <= 0 ? (
               <div
                 style={{
                   // border: "2px solid red",
@@ -395,20 +415,22 @@ export default function Dashboard({ qrCode }) {
               </div>
             ) : (
               <>
-                {activities.map((activity) => (
-                  <div key={activity.id} style={styles.activityItem}>
+                {ractivities.slice(0, 5)?.map((act) => (
+                  <div key={act.id} style={styles.activityItem}>
                     <div
                       style={{
                         ...styles.activityIcon,
-                        backgroundColor: activity.color,
+                        // backgroundColor: act.color,
                       }}
                     >
-                      <activity.icon size={20} color="white" />
+                      {/* <act.icon size={20} color="white" /> */}
                     </div>
                     <div>
-                      <p style={styles.activityTime}>{activity.time}</p>
-                      <p style={styles.activityAction}>{activity.action}</p>
-                      <p style={styles.activityLabel}>{activity.label}</p>
+                      
+                      
+                      <p style={styles.activityLabel}>{act?.queueNumber}</p>
+                      <p style={styles.activityAction}>{act?.action}</p>
+                      <p style={styles.activityTime}>{act?.timeAgo}</p>
                     </div>
                   </div>
                 ))}
