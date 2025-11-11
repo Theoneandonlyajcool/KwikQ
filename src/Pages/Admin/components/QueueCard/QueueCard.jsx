@@ -122,6 +122,10 @@ const QueueCard = ({ data, refresh }) => {
 
       toast.success(res?.data?.message);
       SetAlertLoadingState(false);
+      // alert(
+      //   `${response.data.message} to ${response.data.data.name} (${response.data.data.email})`
+      // );
+      refresh();
     } catch (error) {
       SetAlertLoadingState(false);
       console.log(error);
