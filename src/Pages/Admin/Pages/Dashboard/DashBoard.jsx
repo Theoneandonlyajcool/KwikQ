@@ -23,7 +23,7 @@ export default function Dashboard({ qrCode }) {
 
   const [dateTime, setDateTime] = useState("");
   const [ractivities, setRactivities] = useState([])
-  console.log("what day fuck", ractivities)
+  // console.log("what day fuck", ractivities)
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -73,6 +73,7 @@ export default function Dashboard({ qrCode }) {
           Authorization: `Bearer ${SingleToken}`,
         },
       });
+      // console.log("come back ooo", res)
       SetCardData(res?.data?.data);
       SetLoadingState(false);
     } catch (error) {

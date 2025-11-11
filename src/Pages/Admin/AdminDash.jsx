@@ -57,10 +57,10 @@ const AdminDashboard = () => {
   const Role =
     localStorage.getItem("OrgRole") || localStorage.getItem("UserRole");
 
-  const OrgID = localStorage.getItem("Org_ID");
+  const OrgID = localStorage.getItem("Org_ID") || localStorage.getItem('user_ID')
   const BranchID = localStorage.getItem("BranchID");
 
-  // console.log(OrgID);
+  console.log("WHo",OrgID);
 
   const Org_ID = sessionStorage.getItem("user-recog");
   console.log(Org_ID);
@@ -74,11 +74,11 @@ const AdminDashboard = () => {
         `${BaseUrl}/api/v1/qrcode/generate`,
         Role == "multi"
           ? {
-              organizationId: OrgID,
+              individualId: OrgID,
               branchId: BranchID,
             }
           : {
-              organizationId: Org_ID,
+              individualId: OrgID,
             }
       );
 
