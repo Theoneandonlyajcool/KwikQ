@@ -54,7 +54,7 @@ const QueueFormNorm = () => {
   });
 
   const [PriorityStatus, SetPriorityStatus] = useState("");
-  const [userId] = useState(JSON.parse(localStorage.getItem("user_ID")));
+  // const userId = useState(JSON.parse(localStorage.getItem("user_ID")));
 
   const BaseURl = import.meta.env.VITE_API_BASE_URL;
 
@@ -80,12 +80,12 @@ const QueueFormNorm = () => {
   const QueueValidation = () => {};
 
   const Formtoken = localStorage.getItem("User");
-  const Branchid = localStorage.getItem("BranchID");
-  const ORGid = localStorage.getItem("Org_ID");
+  // const Branchid = localStorage.getItem("BranchID");
+  // const ORGid = localStorage.getItem("Org_ID");
 
   const [LoadingState, SetLoadingState] = useState(false);
-  console.log(ORGid);
-  console.log(Branchid);
+  // console.log(ORGid);
+  // console.log(Branchid);
 
   const [ShowModal, SetShowModal] = useState(false);
   const [apiData, SetapiData] = useState({});
@@ -416,7 +416,7 @@ const QueueFormNorm = () => {
                 Clear Form
               </button>
               <button
-                onClick={JoinQueue}
+                onClick={() => JoinQueue()}
                 disabled={LoadingState}
                 style={{
                   cursor: `${LoadingState ? "not-allowed" : "pointer"}`,

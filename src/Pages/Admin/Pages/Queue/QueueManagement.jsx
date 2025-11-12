@@ -54,10 +54,12 @@ const QueueManagement = ({ qrCode }) => {
   // console.log(BranchID);
   // console.log(BranchID);
 
+  const ID = localStorage.getItem("user_ID");
+
   const GetAllQueues = async () => {
     try {
       SetLoadingState(true);
-      const res = await axios.get(`${BaseURL}/api/v1/queues/${userId}`);
+      const res = await axios.get(`${BaseURL}/api/v1/queues/${ID}`);
       toast.success(res?.data?.message);
       setQueues(res?.data?.data);
       // console.log(res?.data.data);

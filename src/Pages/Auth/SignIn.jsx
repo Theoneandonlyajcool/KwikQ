@@ -109,9 +109,11 @@ const SignIn = () => {
 
       localStorage.setItem(import.meta.env.VITE_USERTOKEN, token);
       localStorage.setItem(import.meta.env.VITE_USERID, orgId);
-      localStorage.setItem("User", token);
 
+      // Individual
+      localStorage.setItem("User", token);
       sessionStorage.setItem("user-recog", orgId);
+      localStorage.setItem("adminInfo", JSON.stringify(res?.data?.data));
 
       toast.success(res?.data?.message);
 
