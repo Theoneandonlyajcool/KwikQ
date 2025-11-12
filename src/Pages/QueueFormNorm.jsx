@@ -80,8 +80,10 @@ const QueueFormNorm = () => {
   const QueueValidation = () => {};
 
   const Formtoken = localStorage.getItem("User");
-  // const Branchid = localStorage.getItem("BranchID");
-  // const ORGid = localStorage.getItem("Org_ID");
+  const Branchid = localStorage.getItem("BranchID");
+  const ORGid = localStorage.getItem("Org_ID");
+
+  const UserID = localStorage.getItem("user_ID");
 
   const [LoadingState, SetLoadingState] = useState(false);
   // console.log(ORGid);
@@ -93,7 +95,7 @@ const QueueFormNorm = () => {
     try {
       SetLoadingState(true);
       const res = await axios.post(
-        `${BaseURl}/api/v1/create-queue/${userId}`,
+        `${BaseURl}/api/v1/create-queue/${UserID}`,
         {
           formDetails: {
             fullName: inputValues.fullName,

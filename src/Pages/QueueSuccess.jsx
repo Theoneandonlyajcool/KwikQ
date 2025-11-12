@@ -247,6 +247,9 @@ const QueueSuccess = ({ details, queueInfo, closeModal }) => {
               //   console.log("nothing");
               // }
               closeModal(false);
+              setTimeout(() => {
+                nav(-1);
+              });
             }}
           >
             Done
