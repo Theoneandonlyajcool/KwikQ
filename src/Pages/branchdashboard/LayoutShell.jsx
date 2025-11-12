@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Sidebar from './Sidebar';
-import { Outlet } from 'react-router-dom';
+import React, { useState } from "react";
+import styled from "styled-components";
+import Sidebar from "./Sidebar";
+import { Outlet } from "react-router-dom";
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -24,7 +24,9 @@ const LayoutShell = () => {
     <LayoutContainer>
       <Sidebar />
       <MainContent>
-        <ContentArea><Outlet/></ContentArea>
+        <ContentArea>
+          <Outlet />
+        </ContentArea>
       </MainContent>
     </LayoutContainer>
   );

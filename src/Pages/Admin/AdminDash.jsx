@@ -7,6 +7,8 @@ import {
   Bell,
   Settings,
   LogOut,
+  Menu,
+  X,
 } from "lucide-react";
 import DashBoard from "../Admin/Pages/Dashboard/DashBoard";
 import QueueManagement from "../Admin/Pages/Queue/QueueManagement";
@@ -15,13 +17,36 @@ import QueueHistory from "../Admin/Pages/History/History";
 import NotificationsPage from "../Admin/Pages/Notifications/Notifications";
 import QueueSettings from "./Pages/Settings/Settings";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 
 const AdminDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const OrgDetials = JSON.parse(localStorage.getItem("OrgInfo"));
   console.log(OrgDetials);
+
+  // Check screen size and handle responsiveness
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setIsSidebarOpen(true);
+      } else {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    // Initial check
+    checkScreenSize();
+
+    // Add event listener
+    window.addEventListener("resize", checkScreenSize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
 
   // Hide scrollbar CSS
   React.useEffect(() => {
@@ -56,14 +81,8 @@ const AdminDashboard = () => {
   const Role =
     localStorage.getItem("OrgRole") || localStorage.getItem("UserRole");
 
-  const OrgID =
-    localStorage.getItem("Org_ID") || localStorage.getItem("user_ID");
+  const OrgID = localStorage.getItem("Org_ID");
   const BranchID = localStorage.getItem("BranchID");
-
-  console.log("WHo", OrgID);
-
-  const Org_ID = sessionStorage.getItem("user-recog");
-  console.log(Org_ID);
 
   const BaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -74,11 +93,11 @@ const AdminDashboard = () => {
         `${BaseUrl}/api/v1/qrcode/generate`,
         Role == "multi"
           ? {
-              individualId: OrgID,
+              organizationId: OrgID,
               branchId: BranchID,
             }
           : {
-              individualId: OrgID,
+              organizationId: OrgID,
             }
       );
 
@@ -92,12 +111,27 @@ const AdminDashboard = () => {
     }
   };
 
-  const adminInfo = JSON.parse(localStorage.getItem("adminInfo"));
-  console.log(adminInfo);
-
   useEffect(() => {
     GenerateQrCode();
   }, []);
+
+  const handleMenuClick = (key) => {
+    setActiveMenu(key);
+    if (isMobile) {
+      setIsSidebarOpen(false);
+    }
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  const handleNotificationsClick = () => {
+    setActiveMenu("notifications");
+    if (isMobile) {
+      setIsSidebarOpen(false);
+    }
+  };
 
   const renderContent = () => {
     switch (activeMenu) {
@@ -124,11 +158,47 @@ const AdminDashboard = () => {
 
   return (
     <div style={styles.dashboard}>
-      <aside style={styles.sidebar}>
-        <div style={styles.sidebarHeader}>
-          <h2 style={styles.logo}>KwikQ</h2>
-          <p style={styles.subtitle}>Admin Panel</p>
+      {/* Mobile Header */}
+      {isMobile && (
+        <div style={styles.mobileHeader}>
+          <button style={styles.menuButton} onClick={toggleSidebar}>
+            {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+
+          <div style={styles.logoContainer}>
+            <h2 style={styles.mobileLogo}>KwikQ</h2>
+            <p style={styles.mobileSubtitle}>Admin Panel</p>
+          </div>
+
+          <button
+            style={styles.notificationButton}
+            onClick={handleNotificationsClick}
+          >
+            <Bell size={22} />
+          </button>
         </div>
+      )}
+
+      {/* Sidebar Overlay for Mobile */}
+      {isMobile && isSidebarOpen && (
+        <div style={styles.overlay} onClick={() => setIsSidebarOpen(false)} />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        style={{
+          ...styles.sidebar,
+          ...(isMobile ? styles.sidebarMobile : {}),
+          ...(isMobile && isSidebarOpen ? styles.sidebarMobileOpen : {}),
+          ...(isMobile && !isSidebarOpen ? styles.sidebarMobileClosed : {}),
+        }}
+      >
+        {!isMobile && (
+          <div style={styles.sidebarHeader}>
+            <h2 style={styles.logo}>KwikQ</h2>
+            <p style={styles.subtitle}>Admin Panel</p>
+          </div>
+        )}
 
         <nav style={styles.sidebarNav} className="sidebar-nav">
           {menuItems.map((item) => (
@@ -138,7 +208,7 @@ const AdminDashboard = () => {
                 ...styles.navItem,
                 ...(activeMenu === item.key ? styles.navItemActive : {}),
               }}
-              onClick={() => setActiveMenu(item.key)}
+              onClick={() => handleMenuClick(item.key)}
             >
               {item.icon}
               <span>{item.label}</span>
@@ -148,24 +218,10 @@ const AdminDashboard = () => {
 
         <div style={styles.sidebarFooter}>
           <div style={styles.userProfile}>
-            <div style={styles.userAvatar}>
-              {/* Initials */}
-              {adminInfo.name[0]}
-              {/* {OrgDetials.businessName[0] ? OrgDetials.businessName[0] : "AU"} */}
-            </div>
+            <div style={styles.userAvatar}>AU</div>
             <div>
-              <p style={styles.userName}>
-                {/* businessName */}
-                {adminInfo.name}
-                {/* {OrgDetials.businessName
-                  ? OrgDetials.businessName
-                  : "business name"} */}
-              </p>
-              <p style={styles.userEmail}>
-                {/* ajcool585@gmail.com */}
-                {adminInfo.email}
-                {/* {OrgDetials.email ? OrgDetials.email : "email"} */}
-              </p>
+              <p style={styles.userName}>businessName</p>
+              <p style={styles.userEmail}>ajcool585@gmail.com</p>
             </div>
           </div>
           <button style={styles.logoutBtn}>
@@ -175,7 +231,14 @@ const AdminDashboard = () => {
         </div>
       </aside>
 
-      <main style={styles.mainContent} className="main-content">
+      {/* Main Content */}
+      <main
+        style={{
+          ...styles.mainContent,
+          ...(isMobile ? styles.mainContentMobile : {}),
+        }}
+        className="main-content"
+      >
         {renderContent()}
       </main>
 
@@ -191,9 +254,10 @@ const AdminDashboard = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            zIndex: 1000,
           }}
         >
-          <p>Genrating QR code.....</p>
+          <p>Generating QR code.....</p>
         </div>
       )}
     </div>
@@ -207,7 +271,80 @@ const styles = {
     background: "#f5f7fa",
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif',
+    position: "relative",
   },
+
+  // Mobile Header Styles
+  mobileHeader: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: "16px 20px",
+    background: "#1a1d2e",
+    color: "#fff",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 100,
+    height: "70px",
+    boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+  },
+  menuButton: {
+    background: "none",
+    border: "none",
+    color: "#fff",
+    cursor: "pointer",
+    padding: "8px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: "0 0 auto",
+  },
+  logoContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    textAlign: "center",
+  },
+  mobileLogo: {
+    fontSize: "20px",
+    fontWeight: "700",
+    margin: 0,
+    lineHeight: 1.2,
+  },
+  mobileSubtitle: {
+    fontSize: "11px",
+    color: "#64748b",
+    margin: 0,
+    lineHeight: 1.2,
+  },
+  notificationButton: {
+    background: "none",
+    border: "none",
+    color: "#fff",
+    cursor: "pointer",
+    padding: "8px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: "0 0 auto",
+  },
+
+  // Overlay for mobile
+  overlay: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: "rgba(0, 0, 0, 0.5)",
+    zIndex: 199,
+  },
+
+  // Sidebar Styles
   sidebar: {
     width: "280px",
     background: "#1a1d2e",
@@ -215,6 +352,22 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     boxShadow: "2px 0 10px rgba(0, 0, 0, 0.1)",
+    flexShrink: 0,
+    zIndex: 200,
+  },
+  sidebarMobile: {
+    position: "fixed",
+    top: "70px",
+    left: 0,
+    bottom: 0,
+    transform: "translateX(-100%)",
+    transition: "transform 0.3s ease-in-out",
+  },
+  sidebarMobileOpen: {
+    transform: "translateX(0)",
+  },
+  sidebarMobileClosed: {
+    transform: "translateX(-100%)",
   },
   sidebarHeader: {
     padding: "24px 20px",
@@ -311,16 +464,22 @@ const styles = {
     fontSize: "13px",
     fontWeight: "500",
   },
+
+  // Main Content Styles
   mainContent: {
     flex: 1,
-    // padding: "40px",
     overflowY: "auto",
     scrollbarWidth: "none",
     msOverflowStyle: "none",
     backgroundColor: "#f5f7fa",
   },
+  mainContentMobile: {
+    marginTop: "70px",
+    height: "calc(100vh - 70px)",
+  },
   contentSection: {
     maxWidth: "1400px",
+    padding: "20px",
   },
   contentTitle: {
     fontSize: "32px",
@@ -328,12 +487,42 @@ const styles = {
     color: "#1a1f36",
     marginBottom: "30px",
   },
+
+  // Responsive styles for different screen sizes
   statsGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
     gap: "25px",
     marginBottom: "40px",
+    "@media (max-width: 768px)": {
+      gridTemplateColumns: "1fr",
+      gap: "15px",
+      padding: "0 15px",
+    },
   },
+  tableContainer: {
+    background: "#fff",
+    borderRadius: "12px",
+    padding: "25px",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
+    overflowX: "auto",
+    "@media (max-width: 768px)": {
+      padding: "15px",
+      margin: "0 10px",
+    },
+  },
+  analyticsContainer: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
+    gap: "25px",
+    "@media (max-width: 768px)": {
+      gridTemplateColumns: "1fr",
+      gap: "15px",
+      padding: "0 15px",
+    },
+  },
+
+  // ... rest of your existing styles remain the same
   statCard: {
     background: "#fff",
     padding: "25px",
@@ -359,13 +548,6 @@ const styles = {
   statChange: {
     fontSize: "13px",
     fontWeight: "500",
-  },
-  tableContainer: {
-    background: "#fff",
-    borderRadius: "12px",
-    padding: "25px",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-    overflowX: "auto",
   },
   table: {
     width: "100%",
@@ -413,11 +595,6 @@ const styles = {
     fontSize: "13px",
     fontWeight: "500",
     cursor: "pointer",
-  },
-  analyticsContainer: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(400px, 1fr))",
-    gap: "25px",
   },
   chartPlaceholder: {
     background: "#fff",

@@ -19,8 +19,6 @@ import { IoClipboard } from "react-icons/io5";
 import QueuePointsCard from "../../components/QueuePointsCard";
 
 export default function Dashboard({ qrCode }) {
-  // Get time
-
   const [dateTime, setDateTime] = useState("");
   const [ractivities, setRactivities] = useState([]);
   // console.log("what day fuck", ractivities)
@@ -154,7 +152,6 @@ export default function Dashboard({ qrCode }) {
           },
         }
       );
-      // console.log("what day fuck",res)
       setRactivities(res?.data?.data);
     } catch (error) {
       console.log(error);
@@ -341,7 +338,6 @@ export default function Dashboard({ qrCode }) {
           <div
             // style={quotas.length <= 0 ? styles.quotaList : styles.quotaList2}
 
-            // safe, clear
             style={quotas?.length === 0 ? styles.quotaList : styles.quotaList2}
           >
             {quotas.length <= 0 ? (
@@ -370,14 +366,11 @@ export default function Dashboard({ qrCode }) {
           </div>
         </div>
 
-        {/* Recent Activity */}
-
         <div style={styles.section}>
           <div style={styles.sectionHeader}>
             <h3 style={styles.sectionTitle}>Recent Activity</h3>
           </div>
           <div style={styles.activityList}>
-            {/* Empty or not */}
             {ractivities.length <= 0 ? (
               <div
                 style={{
@@ -448,7 +441,6 @@ export default function Dashboard({ qrCode }) {
       <div style={styles.QrSection}>
         <h3>Quick Actions</h3>
 
-        {/* Qr code and button */}
         <div
           style={{
             // border: "2px solid red",
@@ -458,7 +450,6 @@ export default function Dashboard({ qrCode }) {
             alignItems: "center",
           }}
         >
-          {/* Buttons */}
           <div style={styles.actionButtons}>
             <button style={styles.actionBtn}>Pause Queue</button>
             <button style={styles.actionBtn} onClick={() => nav("/queue_form")}>
@@ -480,16 +471,33 @@ const styles = {
     padding: "2rem",
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif',
+    "@media (max-width: 768px)": {
+      padding: "1rem",
+    },
+    "@media (max-width: 480px)": {
+      padding: "0.5rem",
+    },
   },
   header: {
     marginBottom: "1rem",
     display: "flex",
     justifyContent: "space-between",
+    "@media (max-width: 768px)": {
+      flexDirection: "column",
+      gap: "1rem",
+      alignItems: "flex-start",
+    },
   },
   title: {
     fontSize: "1.75rem",
     fontWeight: "600",
     marginBottom: "0.25rem",
+    "@media (max-width: 768px)": {
+      fontSize: "1.5rem",
+    },
+    "@media (max-width: 480px)": {
+      fontSize: "1.25rem",
+    },
   },
   date: {
     color: "#6b7280",
@@ -504,6 +512,12 @@ const styles = {
     alignItems: "center",
     marginBottom: "1rem",
     gap: "30px",
+    "@media (max-width: 768px)": {
+      flexDirection: "column",
+      gap: "1rem",
+      alignItems: "flex-start",
+      padding: "1rem",
+    },
   },
   upgradeBtn: {
     background: "#303bff",
@@ -517,6 +531,14 @@ const styles = {
     justifyContent: "space-between",
     cursor: "pointer",
     fontSize: "1.2rem",
+    "@media (max-width: 768px)": {
+      width: "100%",
+      justifyContent: "center",
+    },
+    "@media (max-width: 480px)": {
+      fontSize: "1rem",
+      padding: "0.75rem 1rem",
+    },
   },
   statsGrid: {
     display: "grid",
@@ -524,6 +546,10 @@ const styles = {
     gap: "1.5rem",
     marginBottom: "2rem",
     // border: "12px solid blue",
+    "@media (max-width: 768px)": {
+      gridTemplateColumns: "1fr",
+      gap: "1rem",
+    },
   },
   statCard: {
     background: "white",
@@ -578,6 +604,10 @@ const styles = {
     gridTemplateColumns: "1fr 1fr",
     gap: "2rem",
     marginBottom: "2rem",
+    "@media (max-width: 1024px)": {
+      gridTemplateColumns: "1fr",
+      gap: "1.5rem",
+    },
   },
   section1: {
     background: "white",
@@ -588,6 +618,15 @@ const styles = {
     width: "100%",
     height: "80vh",
     minHeight: "fit-content",
+    "@media (max-width: 1024px)": {
+      height: "auto",
+      minHeight: "400px",
+    },
+    "@media (max-width: 768px)": {
+      padding: "1rem",
+      height: "auto",
+      minHeight: "350px",
+    },
   },
 
   QrSection: {
@@ -599,16 +638,32 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
+    "@media (max-width: 768px)": {
+      padding: "1rem",
+    },
   },
 
   QrCode: {
     width: "20%",
     height: "50%",
+    "@media (max-width: 1024px)": {
+      width: "25%",
+      height: "auto",
+    },
+    "@media (max-width: 768px)": {
+      width: "30%",
+    },
+    "@media (max-width: 480px)": {
+      width: "40%",
+    },
   },
 
   section: {
     backgroundColor: "white",
     padding: "1rem",
+    "@media (max-width: 768px)": {
+      padding: "1rem",
+    },
   },
 
   sectionHeader: {
@@ -621,6 +676,9 @@ const styles = {
   sectionTitle: {
     fontSize: "1.125rem",
     fontWeight: "600",
+    "@media (max-width: 480px)": {
+      fontSize: "1rem",
+    },
   },
   viewLink: {
     color: "#ef4444",
@@ -690,11 +748,18 @@ const styles = {
     height: "90%",
     // display: "flex",
     justifyContent: "center",
+    "@media (max-width: 1024px)": {
+      height: "auto",
+      minHeight: "300px",
+    },
   },
   activityItem: {
     display: "flex",
     gap: "1rem",
     alignItems: "flex-start",
+    "@media (max-width: 480px)": {
+      gap: "0.75rem",
+    },
   },
   activityIcon: {
     width: "40px",
@@ -704,6 +769,10 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
+    "@media (max-width: 480px)": {
+      width: "35px",
+      height: "35px",
+    },
   },
   activityTime: {
     fontSize: "0.75rem",
@@ -724,6 +793,10 @@ const styles = {
     gap: "1rem",
     marginBottom: "1.5rem",
     marginTop: "1rem",
+    "@media (max-width: 768px)": {
+      flexDirection: "column",
+      width: "100%",
+    },
   },
   actionBtn: {
     flex: 1,
@@ -734,6 +807,10 @@ const styles = {
     fontWeight: "500",
     cursor: "pointer",
     minWidth: "10rem",
+    "@media (max-width: 768px)": {
+      minWidth: "auto",
+      width: "100%",
+    },
   },
   qrSection: {
     display: "flex",
