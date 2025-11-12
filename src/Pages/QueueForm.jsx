@@ -90,7 +90,7 @@ const QueueForm = () => {
   const [apiData, SetapiData] = useState({});
   const JoinQueue = async () => {
     try {
-      const { id } = useParams;
+      const { queue, id } = useParams;
       SetLoadingState(true);
       const res = await axios.post(
         // `
@@ -100,7 +100,7 @@ const QueueForm = () => {
         // `,
 
         `
-        ${BaseURl}/api/v1/create-queue/${id},
+        ${BaseURl}/api/v1/create-queue/${queue}/${id},
           
         `,
         {

@@ -22,7 +22,6 @@ const AdminDashboard = () => {
 
   const OrgDetials = JSON.parse(localStorage.getItem("OrgInfo"));
   console.log(OrgDetials);
-  
 
   // Hide scrollbar CSS
   React.useEffect(() => {
@@ -57,10 +56,11 @@ const AdminDashboard = () => {
   const Role =
     localStorage.getItem("OrgRole") || localStorage.getItem("UserRole");
 
-  const OrgID = localStorage.getItem("Org_ID") || localStorage.getItem('user_ID')
+  const OrgID =
+    localStorage.getItem("Org_ID") || localStorage.getItem("user_ID");
   const BranchID = localStorage.getItem("BranchID");
 
-  console.log("WHo",OrgID);
+  console.log("WHo", OrgID);
 
   const Org_ID = sessionStorage.getItem("user-recog");
   console.log(Org_ID);
@@ -91,6 +91,9 @@ const AdminDashboard = () => {
       console.log(error);
     }
   };
+
+  const adminInfo = JSON.parse(localStorage.getItem("adminInfo"));
+  console.log(adminInfo);
 
   useEffect(() => {
     GenerateQrCode();
@@ -147,18 +150,20 @@ const AdminDashboard = () => {
           <div style={styles.userProfile}>
             <div style={styles.userAvatar}>
               {/* Initials */}
-              AU
+              {adminInfo.name[0]}
               {/* {OrgDetials.businessName[0] ? OrgDetials.businessName[0] : "AU"} */}
             </div>
             <div>
               <p style={styles.userName}>
-                businessName
+                {/* businessName */}
+                {adminInfo.name}
                 {/* {OrgDetials.businessName
                   ? OrgDetials.businessName
                   : "business name"} */}
               </p>
               <p style={styles.userEmail}>
-                ajcool585@gmail.com
+                {/* ajcool585@gmail.com */}
+                {adminInfo.email}
                 {/* {OrgDetials.email ? OrgDetials.email : "email"} */}
               </p>
             </div>

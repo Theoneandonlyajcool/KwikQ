@@ -22,7 +22,7 @@ export default function Dashboard({ qrCode }) {
   // Get time
 
   const [dateTime, setDateTime] = useState("");
-  const [ractivities, setRactivities] = useState([])
+  const [ractivities, setRactivities] = useState([]);
   // console.log("what day fuck", ractivities)
 
   useEffect(() => {
@@ -93,6 +93,8 @@ export default function Dashboard({ qrCode }) {
 
   console.log(Role);
 
+  // const
+
   // console.log(`The role is ${Role}`);
 
   const [activeQuota, setActiveQuota] = useState(null);
@@ -142,23 +144,26 @@ export default function Dashboard({ qrCode }) {
 
   // Activities
 
-  const Activities = async ()=>{
+  const Activities = async () => {
     try {
-      const res =await axios.get(`${BaseUrl}/api/v1/recent-activity/${Org_ID}`, {
-        headers: {
-          Authorization: `Bearer ${SingleToken}`
+      const res = await axios.get(
+        `${BaseUrl}/api/v1/recent-activity/${Org_ID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${SingleToken}`,
+          },
         }
-      })
+      );
       // console.log("what day fuck",res)
-      setRactivities(res?.data?.data)
+      setRactivities(res?.data?.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  useEffect(()=> {
-    Activities()
-  }, [])
+  useEffect(() => {
+    Activities();
+  }, []);
 
   const activities = [
     // {
@@ -402,8 +407,6 @@ export default function Dashboard({ qrCode }) {
                       {/* <act.icon size={20} color="white" /> */}
                     </div>
                     <div>
-                      
-                      
                       <p style={styles.activityLabel}>{act?.queueNumber}</p>
                       <p style={styles.activityAction}>{act?.action}</p>
                       <p style={styles.activityTime}>{act?.timeAgo}</p>
@@ -463,7 +466,7 @@ export default function Dashboard({ qrCode }) {
             </button>
           </div>
 
-          <img style={styles.QrCode} src="" alt="Qr code" />
+          <img style={styles.QrCode} src={qrCode} alt="Qr code" />
         </div>
       </div>
     </div>

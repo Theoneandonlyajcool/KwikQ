@@ -54,7 +54,7 @@ const QueueFormNorm = () => {
   });
 
   const [PriorityStatus, SetPriorityStatus] = useState("");
-  const [userId] = useState(JSON.parse(localStorage.getItem("user_ID")));
+  // const userId = useState(JSON.parse(localStorage.getItem("user_ID")));
 
   const BaseURl = import.meta.env.VITE_API_BASE_URL;
 
@@ -83,9 +83,11 @@ const QueueFormNorm = () => {
   const Branchid = localStorage.getItem("BranchID");
   const ORGid = localStorage.getItem("Org_ID");
 
+  const UserID = localStorage.getItem("user_ID");
+
   const [LoadingState, SetLoadingState] = useState(false);
-  console.log(ORGid);
-  console.log(Branchid);
+  // console.log(ORGid);
+  // console.log(Branchid);
 
   const [ShowModal, SetShowModal] = useState(false);
   const [apiData, SetapiData] = useState({});
@@ -93,7 +95,7 @@ const QueueFormNorm = () => {
     try {
       SetLoadingState(true);
       const res = await axios.post(
-        `${BaseURl}/api/v1/create-queue/${userId}`,
+        `${BaseURl}/api/v1/create-queue/${UserID}`,
         {
           formDetails: {
             fullName: inputValues.fullName,
@@ -416,7 +418,7 @@ const QueueFormNorm = () => {
                 Clear Form
               </button>
               <button
-                onClick={JoinQueue}
+                onClick={() => JoinQueue()}
                 disabled={LoadingState}
                 style={{
                   cursor: `${LoadingState ? "not-allowed" : "pointer"}`,
