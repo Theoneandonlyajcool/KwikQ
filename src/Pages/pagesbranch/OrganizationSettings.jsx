@@ -107,7 +107,7 @@ const OrganizationSettings = () => {
         {"Content-Type": "application/json", Authorization: Bearer `${token}`}
       })
       console.log(res)
-      toast.success(res?.data?.message)
+      // toast.success(res?.data?.message)
         setTimeout(() => {
           // nav("/dashboard");
         }, 3000);
@@ -126,7 +126,7 @@ const OrganizationSettings = () => {
       });
       console.log("organization_Details", res);
       setOrgan_Details(res?.data?.data);
-      toast.success(res?.data?.message)
+      // toast.success(res?.data?.message)
     } catch (error) {
       console.log("organization_Details", error)
       toast.error(error?.response?.data?.message)

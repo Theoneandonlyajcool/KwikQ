@@ -55,7 +55,7 @@ const ForgetPassword = () => {
       localStorage.setItem("ResetEmail", JSON.stringify(useremail.email));
 
       setTimeout(() => {
-        nav("/verification");
+        nav("/verification_forgetpassword");
       }, 2000);
     } catch (error) {
       console.log(error);

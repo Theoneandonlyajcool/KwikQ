@@ -28,29 +28,33 @@ const BranchOverview = () => {
   const BaseUrl = import.meta.env.VITE_BaseUrl;
   // console.log("api",organization_metrics)
   // console.log("api", allbranches_in_an_organization)
+  const [branchesdata, setBranchesdata] = useState([])
+  const [meta, setMeta] = useState()
+  const [summary, setSummary] = useState()
+  // console.log("uinxhbhcbwgucbw",meta)
 
 
-  const allbranches_of_an_organization = async () => {
-    try {
-      const res = await axios.get(`${BaseUrl}/api/v1/getallbranches`, {
-        params:  { organizationId: ID },
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      console.log("data of all branches in an organization", res);
-      setAllbranches_in_an_organization(res?.data?.branches); 
-      // toast.success(res?.data?.message)
-    } catch (error) {
-      console.log("allbranches_in_an_organization", error)
-      toast.error(error?.response?.data?.message)
-    }
-  }
+  // const allbranches_of_an_organization = async () => {
+  //   try {
+  //     const res = await axios.get(`${BaseUrl}/api/v1/getallbranches`, {
+  //       params:  { organizationId: ID },
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+  //     // console.log("data of all branches in an organization", res);
+  //     setAllbranches_in_an_organization(res?.data?.branches); 
+  //     // toast.success(res?.data?.message)
+  //   } catch (error) {
+  //     console.log("allbranches_in_an_organization", error)
+  //     toast.error(error?.response?.data?.message)
+  //   }
+  // }
 
 
-  useEffect(()=> {
-    allbranches_of_an_organization() 
-  }, []);
+  // useEffect(()=> {
+  //   allbranches_of_an_organization() 
+  // }, []);
 
   
   const getname = async () => {
@@ -74,48 +78,50 @@ const BranchOverview = () => {
       getname() 
   }, []);
 
-  // const allbranches_of_an_organization = async () => {
-  //   try {
-  //     const res = await axios.get(`${BaseUrl}/api/v1/organizations/${ID}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`
-  //       }
-  //     });
-  //     // console.log("data of all branches in an organization", res);
-  //     setAllbranches_in_an_organization(res?.data?.oragnizationBranches); 
-  //     toast.success(res?.data?.message)
-  //   } catch (error) {
-  //     console.log("allbranches_in_an_organization", error)
-  //     toast.error(error?.response?.data?.message)
-  //   }
-  // }
-
-
-  // useEffect(()=> {
-  //   allbranches_of_an_organization() 
-  // }, []);
-
-
-  const organization_branches_metrics = async () => {
+  const allbranches_of_organization = async () => {
     try {
-      const res = await axios.get(`${BaseUrl}/api/v1/branch/management/${ID}`, {
+      const res = await axios.get(`${BaseUrl}/api/v1/branchoverview`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-      // console.log("organization_branches_metrics ", res);
-      setOrganization_metrics(res.data); 
-      toast.success(res?.data?.message)
+      // console.log("branchoverview", res);
+      setBranchesdata(res?.data?.branches);
+      setMeta(res?.data?.meta);
+      setSummary(res?.data?.summary);
+      // toast.success(res?.data?.message)
     } catch (error) {
-      console.log("organization_branches_metrics", error)
+      console.log("allbranches_in_an_organization", error)
       toast.error(error?.response?.data?.message)
     }
   }
 
 
   useEffect(()=> {
-    organization_branches_metrics() 
+    allbranches_of_organization() 
   }, []);
+
+
+  // const organization_branches_metrics = async () => {
+  //   try {
+  //     const res = await axios.get(`${BaseUrl}/api/v1/branch/management/${ID}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+  //     // console.log("organization_branches_metrics ", res);
+  //     setOrganization_metrics(res.data); 
+  //     // toast.success(res?.data?.message)
+  //   } catch (error) {
+  //     // console.log("organization_branches_metrics", error)
+  //     // toast.error(error?.response?.data?.message)
+  //   }
+  // }
+
+
+  // useEffect(()=> {
+  //   organization_branches_metrics() 
+  // }, []);
 
   return (
     <BranchOverviewContainer>
@@ -135,8 +141,8 @@ const BranchOverview = () => {
             </div>
             <div className="card_content">
               <p className="card_label">Total Branches</p>
-              <h2 className="card_value">{organization_metrics?.totalBranches}</h2>
-              <p className="card_change blue_text">+0 this month</p>
+              <h2 className="card_value">{summary?.totalBranches}</h2>
+              <p className="card_change blue_text">{summary?.totalBranchesChange}</p>
             </div>
           </div>
 
@@ -146,8 +152,8 @@ const BranchOverview = () => {
             </div>
             <div className="card_content">
               <p className="card_label">Total Active Queues</p>
-              <h2 className="card_value">{organization_metrics?.totalActiveQueues}</h2>
-              <p className="card_change purple_text">+00% from yesterday</p>
+              <h2 className="card_value">{summary?.activeQueues}</h2>
+              <p className="card_change purple_text">{summary?.activeQueuesChange}</p>
             </div>
           </div>
 
@@ -157,7 +163,7 @@ const BranchOverview = () => {
             </div>
             <div className="card_content">
               <p className="card_label">Avg. Wait Time (All)</p>
-              <h2 className="card_value">{organization_metrics?.avgWaitTime}</h2>
+              <h2 className="card_value">{summary?.avgWaitTime}</h2>
               <p className="card_change blue_text">-0% improvement</p>
             </div>
           </div>
@@ -168,8 +174,8 @@ const BranchOverview = () => {
             </div>
             <div className="card_content">
               <p className="card_label">Total Served Today</p>
-              <h2 className="card_value">{organization_metrics?.totalServedToday}</h2>
-              <p className="card_change purple_text">+0% from yesterday</p>
+              <h2 className="card_value">{summary?.servedToday}</h2>
+              <p className="card_change purple_text">{summary?.servedTodayChange}</p>
             </div>
           </div>
         </div>
@@ -193,7 +199,7 @@ const BranchOverview = () => {
                 onClick={() => allbranches_of_an_organization("active")}
                 style={{ cursor: "pointer" }}
               >
-                4 Active
+                {meta?.activeCount} Active
               </span>
 
               <span
@@ -201,13 +207,13 @@ const BranchOverview = () => {
                 onClick={() => allbranches_of_an_organization("inactive")}
                 style={{ cursor: "pointer" }}
               >
-                1 Offline
+                {meta?.offlineCount} Offline
               </span>
             </div>
           </div>
 
           <div className="branches_list">
-            {allbranches_in_an_organization?.map((branch) => (
+            {branchesdata?.map((branch) => (
               <div
                 key={branch.id}
                 className="branch_card"
@@ -244,7 +250,7 @@ const BranchOverview = () => {
                       <div className="branch_meta">
                         <span className="meta_item">
                           <MdLocationOn className="meta_icon" />
-                          {branch.location}
+                          {branch.state}
                         </span>
                         <span className="meta_separator">•</span>
                         <span className="meta_item">{branch.branchCode}</span>
@@ -291,7 +297,7 @@ const BranchOverview = () => {
                             branch.status === "Warning" ? "#dc2626" : "#f59e0b",
                         }}
                       />
-                      <span className="stat_number">{branch.avgWait}</span>
+                      <span className="stat_number">{branch.avgWaitTime}</span>
                     </div>
                     <p className="stat_label">Avg. Wait</p>
                   </div>

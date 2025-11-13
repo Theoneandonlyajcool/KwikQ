@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import {
   SidebarContainer,
   Footer,
@@ -6,6 +6,8 @@ import {
   Menu,
   Logo,
   MenuItem2,
+  ToggleButton,
+  Overlay,
 } from "./Sidebarstyled";
 import { useNavigate } from "react-router-dom";
 import {
@@ -14,67 +16,83 @@ import {
   FiGrid,
   FiLogOut,
   FiServer,
+  FiChevronRight,
+  FiChevronLeft,
 } from "react-icons/fi";
 import { LuShield } from "react-icons/lu";
 
 const Sidebar = ({ collapsed }) => {
   const nav = useNavigate();
   const setName = localStorage.getItem("Organ_Name");
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const handleOverlayClick = () => {
+    setMobileOpen(false);
+  };
+
+  const handleMenuItemClick = () => {
+    setMobileOpen(false);
+  };
 
   return (
-    <SidebarContainer collapsed={collapsed}>
-      <Logo>
-        <div className="logoContainer">
-          <div className="logoholder">
-            <img
-              src="https://res.cloudinary.com/dmqhseusw/image/upload/v1761358599/kwikq_text_only_ykdorm.png"
-              className="imagelogo"
-              alt="logo"
-            />
+    <>
+      <ToggleButton onClick={handleToggle} mobileOpen={mobileOpen}>
+        {mobileOpen ? <FiChevronLeft size={20} /> : <FiChevronRight size={20} />}
+      </ToggleButton>
+      <Overlay show={mobileOpen} onClick={handleOverlayClick} />
+      <SidebarContainer collapsed={collapsed} mobileOpen={mobileOpen}>
+        <Logo>
+          <div className="logoContainer">
+            <div className="logoholder">
+              <img
+                src="https://res.cloudinary.com/dmqhseusw/image/upload/v1761358599/kwikq_text_only_ykdorm.png"
+                className="imagelogo"
+                alt="logo"
+              />
+            </div>
+            <p>Super Admin Panel</p>
           </div>
-
-          <p>Super Admin Panel</p>
-        </div>
-      </Logo>
-      <Menu>
-        <MenuItem to="/dashboard/overview" end>
-          <FiGrid /> Branch Overview
-        </MenuItem>
-        <MenuItem to="/dashboard/analytics">
-          <FiBarChart2 /> Analytics
-        </MenuItem>
-        {/* <MenuItem to="/dashboard/allbranchview">
-          <FiServer /> Branch Details
-        </MenuItem> */}
-        {/* <MenuItem to="/dashboard/branch-management">
-          <FiServer /> Branch Management
-        </MenuItem> */}
-        <MenuItem to="/dashboard/settings">
-          <FiSettings /> Organization Settings
-        </MenuItem>
-      </Menu>
-      <Footer>
-        <div className="orgholder">
-          <div className="avater">
-            {/* {setName.toUpperCase().slice(0, 2)} */}
-            au
+        </Logo>
+        <Menu>
+          <MenuItem to="/dashboard/overview" end onClick={handleMenuItemClick}>
+            <FiGrid /> Branch Overview
+          </MenuItem>
+          <MenuItem to="/dashboard/analytics" onClick={handleMenuItemClick}>
+            <FiBarChart2 /> Analytics
+          </MenuItem>
+          {/* <MenuItem to="/dashboard/branch-management" onClick={handleMenuItemClick}>
+            <FiServer /> Branch Management
+          </MenuItem> */}
+          <MenuItem to="/dashboard/settings" onClick={handleMenuItemClick}>
+            <FiSettings /> Organization Settings
+          </MenuItem>
+        </Menu>
+        <Footer>
+          <div className="orgholder">
+            <div className="avater">
+              {setName.toUpperCase().slice(0, 2) || "AU"}
+            </div>
+            <div className="textorg">
+              <p className="admintext">
+                {setName}
+              </p>
+              <span className="supertext">
+                {" "}
+                <LuShield className="shield" /> Super Admin
+              </span>
+            </div>
           </div>
-          <div className="textorg">
-            <p className="admintext">
-              {/* {setName.toUpperCase()} */}
-              Name
-            </p>
-            <span className="supertext">
-              {" "}
-              <LuShield className="shield" /> Super Admin
-            </span>
-          </div>
-        </div>
-        <MenuItem2 to="/">
-          <FiLogOut /> Logout
-        </MenuItem2>
-      </Footer>
-    </SidebarContainer>
+          <MenuItem2 to="/" onClick={handleMenuItemClick}>
+            <FiLogOut /> Logout
+          </MenuItem2>
+        </Footer>
+      </SidebarContainer>
+    </>
   );
 };
+
 export default Sidebar;

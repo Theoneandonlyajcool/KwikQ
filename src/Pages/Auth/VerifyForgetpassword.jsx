@@ -18,7 +18,7 @@ const VerifyForgetpassword = ({ length = 6 }) => {
   const [otp, setOtp] = useState(new Array(length).fill(""));
   const inputRefs = useRef([]);
   const userEmail = JSON.parse(localStorage.getItem("ResetEmail"));
-  console.log(otp);
+  console.log("this is my email",userEmail);
 
   const handleInputChange = (element, index) => {
     const value = element.value.replace(/[^0-9]/g, "");
@@ -80,8 +80,8 @@ const VerifyForgetpassword = ({ length = 6 }) => {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
 
-    console.log(`${minutes}:${seconds < 10 ? "0" : ""}${seconds}`);
-    timeLeft--;
+    // console.log(`${minutes}:${seconds < 10 ? "0" : ""}${seconds}`);
+    // timeLeft--;
 
     if (timeLeft < 0) {
       clearInterval(countdown);

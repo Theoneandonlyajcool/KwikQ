@@ -6,6 +6,7 @@ const HeaderBar = styled.header`
   align-items: center;
   justify-content: space-between;
   background-color: #fff;
+  /* background-color: black; */
   padding: 0 16px;
   height: 64px;
   border-bottom: 1px solid #e6e6e6;

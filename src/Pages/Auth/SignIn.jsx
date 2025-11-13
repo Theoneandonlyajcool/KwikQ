@@ -313,8 +313,11 @@ const SignIn = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 border: "red",
+                fontSize: "16px",
+                gap: "15px",
               }}
             >
+              Signing In...
               <div
                 style={{
                   width: "60px",

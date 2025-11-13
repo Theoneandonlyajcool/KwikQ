@@ -128,8 +128,8 @@ export const BranchOverviewContainer = styled.div`
     }
 
      .add_branch_btn {
-          width: auto;
-          height: 30px;
+          width: 90%;
+          height: 35px;
           padding: 12px 20px;
           background: #5b5fef;
           border-radius: 8px;
@@ -149,14 +149,15 @@ export const BranchOverviewContainer = styled.div`
           @media ${device.android} {
             width: 100%;
             height: 42px;
-            font-size: 13px;
+            font-size: 11px;
             justify-content: center;
+            gap: 4px;
           }
 
           @media ${device.iphone} {
             width: 100%;
             height: 42px;
-            font-size: 13px;
+            font-size: 11px;
             justify-content: center;
           }
 
@@ -200,7 +201,7 @@ export const BranchOverviewContainer = styled.div`
 
     .stats_cards_wrapper {
       width: 100%;
-      max-height: 18%;
+      max-height: auto;
       display: flex;
       gap: 15px;
       /* background: blue; */
@@ -228,7 +229,7 @@ export const BranchOverviewContainer = styled.div`
 
       .stat_card {
         width: 37%;
-        max-height: 20vh;
+        max-height: 25vh;
         background: #ffffff;
         /* background: #af1b1b; */
         border-radius: 12px;
@@ -269,6 +270,7 @@ export const BranchOverviewContainer = styled.div`
           display: flex;
           justify-content: center;
           align-items: center;
+          /* background: black; */
 
           @media ${device.android} {
             width: 44px;
@@ -353,10 +355,10 @@ export const BranchOverviewContainer = styled.div`
 
           .card_label {
             font-family: Inter;
-            font-weight: 500;
+            font-weight: 400;
             font-style: Medium;
             font-size: 14px;
-            line-height: 140%;
+            line-height: 100%;
             color: #6b7280;
             margin: 0;
 
@@ -379,10 +381,10 @@ export const BranchOverviewContainer = styled.div`
 
           .card_value {
             font-family: Inter;
-            font-weight: 700;
+            font-weight: 600;
             font-style: Bold;
-            font-size: 26px;
-            line-height: 110%;
+            font-size: 20px;
+            line-height: 100%;
             color: #1f2937;
             /* background: red; */
             margin: 0;
@@ -472,6 +474,7 @@ export const BranchOverviewContainer = styled.div`
         justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
+        /* background: blue; */
 
         @media ${device.android} {
           flex-direction: column;
@@ -486,7 +489,8 @@ export const BranchOverviewContainer = styled.div`
         }
 
         @media ${device.tablet} {
-          flex-direction: row;
+          flex-direction: column;
+
         }
 
         @media ${device.desktop} {
@@ -496,6 +500,7 @@ export const BranchOverviewContainer = styled.div`
         .branches_title_wrapper {
           width: auto;
           height: auto;
+          /* background: black; */
 
           .branches_title {
             font-family: Inter;
@@ -552,10 +557,11 @@ export const BranchOverviewContainer = styled.div`
         }
 
         .status_badges {
-          width: auto;
+          width: 45%;
           height: auto;
           display: flex;
           gap: 10px;
+          /* background: pink; */
 
           .status_badge {
             padding: 6px 12px;
@@ -585,16 +591,36 @@ export const BranchOverviewContainer = styled.div`
             }
 
             &.active_badge {
+              width: 25%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 8px;
               background: #d1fae5;
               border: 1px solid #059669;
               color: #059669;
             }
 
             &.offline_badge {
+              width: 25%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
               background: #f3f4f6;
+              border-radius: 8px;
               border: 1px solid #585e68;
               color: #6b7280;
             }
+          }
+
+          @media ${device.android} {
+              width: 16rem;
+              gap: 5px;
+          }
+
+          @media ${device.tablet} {
+            font-size: 192px;
+            width: 25rem;
           }
         }
       }
