@@ -16,14 +16,12 @@ import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import { IoClipboard } from "react-icons/io5";
-import QueuePointsCard from "../../components/QueuePointsCard";
 
 export default function Dashboard({ qrCode }) {
   // Get time
 
   const [dateTime, setDateTime] = useState("");
   const [ractivities, setRactivities] = useState([]);
-  // console.log("what day fuck", ractivities)
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -52,18 +50,13 @@ export default function Dashboard({ qrCode }) {
 
   const [CardData, SetCardData] = useState({});
   const [LoadingState, SetLoadingState] = useState(false);
-  // console.log(CardData);
 
-  const BranchID = localStorage.getItem("BranchID");
+  const BranchID = localStorage.getItem("user_ID");
 
   const SingleToken =
     localStorage.getItem("singleToken") || localStorage.getItem("User");
-  // console.log(SingleToken);
-
-  // console.log(BranchID);
 
   const Org_ID = sessionStorage.getItem("user-recog");
-  // console.log(Org_ID);
 
   const GetMetricsCardData = async () => {
     try {
@@ -89,13 +82,8 @@ export default function Dashboard({ qrCode }) {
     localStorage.getItem("OrgRole") || localStorage.getItem("UserRole");
 
   const OrgID = localStorage.getItem("Org_ID");
-  console.log(OrgID);
-
-  console.log(Role);
 
   // const
-
-  // console.log(`The role is ${Role}`);
 
   const [activeQuota, setActiveQuota] = useState(null);
 
@@ -342,7 +330,10 @@ export default function Dashboard({ qrCode }) {
             // style={quotas.length <= 0 ? styles.quotaList : styles.quotaList2}
 
             // safe, clear
-            style={quotas?.length === 0 ? styles.quotaList : styles.quotaList2}
+            style={
+              (quotas?.length === 0 ? styles.quotaList : styles.quotaList2,
+              { height: "90%" })
+            }
           >
             {quotas.length <= 0 ? (
               <div
@@ -361,11 +352,75 @@ export default function Dashboard({ qrCode }) {
                 </p>
               </div>
             ) : (
-              <>
-                {quotas.map((quota) => (
-                  <QueuePointsCard />
-                ))}
-              </>
+              <div
+                style={{
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexDirection: "column",
+                }}
+              >
+                {quotas.map((quota) => {
+                  const progress_Value = quota.totalCustomers / 100;
+                  console.log(quota);
+                  return (
+                    <div
+                      style={{
+                        // border: "2px solid green",
+                        height: "30%",
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        backgroundColor: "#f9fafb",
+                        borderRadius: ".5rem",
+                        color: "",
+                        padding: ".5rem",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: "50%",
+                          // border: "2px solid blue",
+                          height: "100%",
+                          display: "flex",
+                          justifyContent: "space-around",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <div>
+                          <h4>{quota.name}</h4>
+                        </div>
+                        <p>Serving</p>
+                        <p>T-247</p>
+                      </div>
+
+                      {/* Progress */}
+
+                      <div
+                        style={{
+                          // border: "2px solid red",
+                          width: "50%",
+                          height: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-around",
+                        }}
+                      >
+                        <div style={{ textAlign: "center" }}>
+                          {/* Number of people in queue */}
+                          <p>{quota.totalCustomers}</p>
+                          {/* Status */}
+                          <p>Waiting</p>
+                        </div>
+                        <progress
+                          value={progress_Value}
+                          style={{ width: "40%" }}
+                        ></progress>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             )}
           </div>
         </div>
@@ -642,7 +697,8 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
-    border: "2px solid red",
+    // border: "2px solid red",
+    height: "50vh",
   },
 
   quotaItem: {
