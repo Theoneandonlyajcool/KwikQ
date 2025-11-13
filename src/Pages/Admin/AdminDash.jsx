@@ -82,7 +82,10 @@ const AdminDashboard = () => {
     localStorage.getItem("OrgRole") || localStorage.getItem("UserRole");
 
   const OrgID = localStorage.getItem("Org_ID");
-  const BranchID = localStorage.getItem("BranchID");
+  const BranchID = localStorage.getItem("user_ID");
+
+  const Org_ID = sessionStorage.getItem("user-recog");
+  console.log(Org_ID);
 
   const BaseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -93,11 +96,11 @@ const AdminDashboard = () => {
         `${BaseUrl}/api/v1/qrcode/generate`,
         Role == "multi"
           ? {
-              organizationId: OrgID,
+              organizationId: Org_ID,
               branchId: BranchID,
             }
           : {
-              organizationId: OrgID,
+              organizationId: Org_ID,
             }
       );
 

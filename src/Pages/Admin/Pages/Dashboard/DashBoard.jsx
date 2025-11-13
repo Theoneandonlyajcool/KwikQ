@@ -359,7 +359,7 @@ export default function Dashboard({ qrCode }) {
               >
                 {quotas.map((quota) => {
                   const progress_Value = quota.totalCustomers / 100;
-                  console.log(quota);
+                  // console.log(quota);
                   return (
                     <div
                       style={{
