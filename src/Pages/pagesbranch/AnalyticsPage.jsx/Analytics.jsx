@@ -28,7 +28,9 @@ const BranchAnalytics = () => {
   const [errors, setErrors] = useState(null);
   const token = localStorage.getItem("User");
   const BaseUrl = import.meta.env.VITE_BaseUrl;
-  // console.log("fuck up", analyticsData)
+  const [customersdata, setCustomersdata] = useState([]);
+  const [trendsData, setTrendsData] = useState([]);
+  // console.log("fuck up", customersdata)
 
 
   // const hasData = analyticsData && analyticsData.stats;
@@ -46,10 +48,12 @@ const BranchAnalytics = () => {
       const res = await axios.get(`${BaseUrl}/api/v1/getanalytics`, {
         headers: {Authorization: `Bearer ${token}`}
       })
-      console.log("analy work", res)
+      // console.log("analy work", res)
       setAnalyticsData(res?.data);
+      setCustomersdata(res?.data?.totalCustomers);
+      setTrendsData(res?.data?.trends);
       setStatus("success")
-      toast.success(res?.data?.message);
+      // toast.success(res?.data?.message);
     } catch (error) {
       console.log(error)
       setErrors(error?.response?.data?.message);
@@ -152,7 +156,7 @@ const BranchAnalytics = () => {
     )
   }
 
-  if(status === "success" && analyticsData){
+  if(status === "success" && trendsData){
   return (
     <BranchAnalyticsContainer>
     <ToastContainer />
@@ -186,7 +190,7 @@ const BranchAnalytics = () => {
             </div>
             <div className="stat_content">
               <p className="stat_label">Total Customers</p>
-              <h2 className="stat_value">{}</h2>
+              <h2 className="stat_value">{analyticsData?.customerChangePercent}</h2>
               <p className="stat_change positive">↑ {}% vs last week</p>
             </div>
           </div>
@@ -197,7 +201,7 @@ const BranchAnalytics = () => {
             </div>
             <div className="stat_content">
               <p className="stat_label">Avg. Wait Time</p>
-              <h2 className="stat_value">{} min</h2>
+              <h2 className="stat_value">{analyticsData?.avgWaitTime} min</h2>
               <p className="stat_change negative">↓ {}% improvement</p>
             </div>
           </div>
@@ -213,23 +217,37 @@ const BranchAnalytics = () => {
           </div>
         </div>
 
-        {/* <TrendsContainer className={activeTab === "Trends" ? "active" : ""}>
+        <TrendsContainer className={activeTab === "Trends" ? "active" : ""}>
           <div className="chart_section">
             <div className="chart_header">
               <h3 className="chart_title">Customer Flow Trends</h3>
               <p className="chart_subtitle">Weekly customer volume and wait times</p>
             </div>
-            {hasTrendData ? (
+            {trendsData ? (
               <div className="chart_container">
                 <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={analyticsData.trendData}>
+                  <LineChart data={trendsData}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                     <XAxis dataKey="day" stroke="#6b7280" />
                     <YAxis yAxisId="left" stroke="#3b82f6" />
                     <YAxis yAxisId="right" orientation="right" stroke="#ef4444" />
                     <Tooltip />
-                    <Line yAxisId="left" type="monotone" dataKey="customers" stroke="#3b82f6" strokeWidth={2} dot={{ fill: '#3b82f6', r: 4 }} />
-                    <Line yAxisId="right" type="monotone" dataKey="waitTime" stroke="#ef4444" strokeWidth={2} dot={{ fill: '#ef4444', r: 4 }} />
+                    <Line 
+                      yAxisId="left" 
+                      type="monotone" 
+                      dataKey="totalCustomers" 
+                      stroke="#3b82f6" 
+                      strokeWidth={2} 
+                      dot={{ fill: '#3b82f6', r: 4 }} 
+                    />
+                    <Line 
+                      yAxisId="right" 
+                      type="monotone" 
+                      dataKey="avgWait" 
+                      stroke="#ef4444" 
+                      strokeWidth={2} 
+                      dot={{ fill: '#ef4444', r: 4 }} 
+                    />
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -247,15 +265,15 @@ const BranchAnalytics = () => {
               <h3 className="chart_title">Hourly Distribution</h3>
               <p className="chart_subtitle">Peak hours and customer flow patterns</p>
             </div>
-            {hasHourlyData ? (
+            {customersdata ? (
               <div className="chart_container">
                 <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={}>
+                  <BarChart data={customersdata}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                    <XAxis dataKey="hour" stroke="#6b7280" />
+                    <XAxis dataKey="serviceTime" stroke="#6b7280" />
                     <YAxis stroke="#6b7280" />
                     <Tooltip />
-                    <Bar dataKey="customers" fill="#5b5fef" radius={[8, 8, 0, 0]} />
+                    <Bar dataKey="serialNumber" fill="#5b5fef" radius={[8, 8, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -267,7 +285,7 @@ const BranchAnalytics = () => {
               </div>
             )}
           </div>
-        </TrendsContainer> */}
+        </TrendsContainer>
 
         {/* <DistributionContainer className={activeTab === "Distribution" ? "active" : ""}>
           <div className="chart_section">

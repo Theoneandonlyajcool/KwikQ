@@ -14,8 +14,14 @@ const ResetPassword = () => {
     confirmPassword: "",
   });
 
+  const [passworderror, setPassworderroe] = useState({
+    passworderr: "",
+    confirmPassworderr: "",
+  });
+
   const [eyePassword, setEyePassword] = useState(false);
   const [eyePassword2, setEyePassword2] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const handlechange = (e) => {
     const { value, name } = e.target;
@@ -27,8 +33,37 @@ const ResetPassword = () => {
 
   const BaseUrl = import.meta.env.VITE_BaseUrl;
 
+  const validaton = ()=>{
+    let pass = {};
+    if(seset.password == ""){
+      pass.passworderr = "Password is required"
+    }
+    
+    if(seset.confirmPassword == ""){
+      pass.confirmPassworderr = "Confirm Password is required"
+    }
+
+    if(seset.password && seset.confirmPassword && seset.password !== seset.confirmPassword){
+      pass.confirmPassworderr = "Passwords do not match"
+    }
+
+    setPassworderroe(pass);
+    setTimeout(() => {
+      setPassworderroe({
+        passworderr: "",
+        confirmPassworderr: "",
+      });
+    }, 4000);
+
+    return Object.keys(pass).length === 0;
+  };
+
   const handlesubmit = async (e) => {
+    if(!validaton()){
+      return;
+    }
     try {
+      setLoading(true)
       const res = await axios.post(
         `${BaseUrl}/api/v1/reset-password`,
         {
@@ -40,13 +75,15 @@ const ResetPassword = () => {
           headers: { "Content-Type": "application/json" },
         }
       );
-      console.log(res);
+      // console.log(res);
+      setLoading(false)
       toast.success(res?.data?.message);
       setTimeout(() => {
         nav("/sign_in");
-      }, timeout);
+      }, 2000);
     } catch (error) {
       console.log(error);
+      setLoading(false)
       toast.error(error?.response?.data?.message);
     }
   };
@@ -100,6 +137,7 @@ const ResetPassword = () => {
                   <RiEyeOffFill className="EyeClosed" onClick={toggleEye} />
                 )}
               </div>
+              <p style={{color: "red", fontsize: "12px"}}>{passworderror.passworderr}</p>
 
               <label For="password">Confirm Password</label>
               <div className="for_eye2">
@@ -117,10 +155,14 @@ const ResetPassword = () => {
                   <RiEyeOffFill className="EyeClosed" onClick={toggleEye2} />
                 )}
               </div>
+              <span style={{color: "red", fontsize: "12px"}}>{passworderror.confirmPassworderr}</span>
 
               <div className="FG_Btn1rap">
-                <button className="FG_Btn2" onClick={() => handlesubmit()}>
-                  Reset Password
+                <button className="FG_Btn2" onClick={() => handlesubmit()} disabled={loading} style={{
+                backgroundColor: `${loading ? "gray" : "#303bff"}`,
+                color: "white",
+              }}>
+                 {loading ? ("Loading....") : ("Reset Password")}
                 </button>
               </div>
               <div className="FG_link">
