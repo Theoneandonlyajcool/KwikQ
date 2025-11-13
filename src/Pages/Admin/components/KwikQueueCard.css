@@ -1,0 +1,128 @@
+:root {
+  --kwikq-card-bg: #f6f9fb;
+  --kwikq-card-border: rgba(16, 24, 40, 0.04);
+  --kwikq-muted: #6b7280;
+  --kwikq-title-color: #0f172a;
+  --kwikq-progress-track: #e6e9ee;
+  --kwikq-progress-fill: #0b1226;
+}
+
+.kwikq-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 20px;
+  background: var(--kwikq-card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--kwikq-card-border);
+  box-shadow: 0 1px 0 rgba(16, 24, 40, 0.02);
+  min-width: 320px;
+  max-width: 680px;
+}
+
+.kwikq-card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 auto;
+}
+
+.kwikq-card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.kwikq-card-title-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--kwikq-title-color);
+}
+
+.kwikq-card-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.kwikq-card-serving {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.kwikq-card-serving-label {
+  font-size: 12px;
+  color: var(--kwikq-muted);
+}
+
+.kwikq-card-serving-number {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--kwikq-title-color);
+}
+
+.kwikq-card-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 210px;
+  flex-shrink: 0;
+  justify-content: flex-end;
+}
+
+.kwikq-card-waiting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.kwikq-card-waiting-number {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--kwikq-title-color);
+}
+
+.kwikq-card-waiting-label {
+  font-size: 12px;
+  color: var(--kwikq-muted);
+}
+
+.kwikq-card-progress-wrap {
+  width: 120px;
+}
+
+.kwikq-card-progress-track {
+  background: var(--kwikq-progress-track);
+  height: 10px;
+  border-radius: 999px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.kwikq-card-progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: var(--kwikq-progress-fill);
+  transition: width 400ms ease;
+}
+
+@media (max-width: 420px) {
+  .kwikq-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .kwikq-card-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .kwikq-card-progress-wrap {
+    width: 45%;
+  }
+}

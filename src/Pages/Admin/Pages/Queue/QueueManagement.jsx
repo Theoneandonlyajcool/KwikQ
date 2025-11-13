@@ -11,49 +11,12 @@ import { toast, ToastContainer } from "react-toastify";
 
 const QueueManagement = ({ qrCode }) => {
   const nav = useNavigate();
-  // const [userId] = useState(JSON.parse(localStorage.getItem("user_ID")));
   console.log(qrCode);
-  // const [queues, setQueues] = useState([
-  //   {
-  //     id: 1,
-  //     name: "T-001",
-  //     customer: "P. Johnson, 24/7/2025",
-  //     service: "Service: Account Opening",
-  //     added: "10:30 AM",
-  //     wait: "12 mins",
-  //     phone: "+234 802 243 7878",
-  //     active: true,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "T-002",
-  //     customer: "M. Lee",
-  //     service: "Service: Account Opening",
-  //     added: "10:45 AM",
-  //     wait: "1 hr",
-  //     phone: "+234 456 421 8841",
-  //     active: false,
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "T-003",
-  //     customer: "S. Chen Reeves",
-  //     service: "Service: Account Opening",
-  //     added: "11:04 AM",
-  //     wait: "1 min",
-  //     phone: "+234 456 421 8841",
-  //     active: false,
-  //   },
-  // ]);
 
   const [queues, setQueues] = useState([]);
-
   const BranchID = localStorage.getItem("BranchID");
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const [LoadingState, SetLoadingState] = useState(false);
-  // console.log(BranchID);
-  // console.log(BranchID);
-
   const ID = localStorage.getItem("user_ID");
 
   const GetAllQueues = async () => {
@@ -62,7 +25,6 @@ const QueueManagement = ({ qrCode }) => {
       const res = await axios.get(`${BaseURL}/api/v1/queues/${ID}`);
       toast.success(res?.data?.message);
       setQueues(res?.data?.data);
-      // console.log(res?.data.data);
       SetLoadingState(false);
     } catch (error) {
       SetLoadingState(false);
@@ -96,7 +58,6 @@ const QueueManagement = ({ qrCode }) => {
 
   return (
     <>
-      {/* <style>{styles}</style> */}
       <div className="queue-container">
         <ToastContainer />
         <div className="header">
@@ -104,14 +65,12 @@ const QueueManagement = ({ qrCode }) => {
             <h1>Queue Management</h1>
             <p className="date">{dateTime}</p>
           </div>
-          {/* <div className="header-right">
-            <button className="btn-faq">FAQ</button>
-          </div> */}
         </div>
+
         <div className="queue-info-section">
           <div className="queue-info-header">
             <h2>Queue Management</h2>
-            <div>
+            <div className="button-group">
               <button
                 style={{
                   backgroundColor: "#5f8aea",
@@ -140,6 +99,7 @@ const QueueManagement = ({ qrCode }) => {
             Manage and monitor customer queue in real-time
           </p>
         </div>
+
         <div className="filter-section">
           <div className="search-box">
             <span className="search-icon">🔍</span>
@@ -153,25 +113,11 @@ const QueueManagement = ({ qrCode }) => {
             <span className="dropdown-icon">▼</span>
           </div>
         </div>
-        {/* <div className="service-point-header">
-          <div className="service-point-left">
-            <div className="icon-circle blue">
-              <span className="icon-text">Q</span>
-            </div>
-            <span className="service-title">Queue Service Point</span>
-          </div>
-          <div className="active-indicator">
-            <span className="active-dot"></span>
-            <span className="active-text">Active</span>
-            <span className="active-count">{queues.length}</span>
-          </div>
-        </div> */}
 
         {LoadingState ? (
-          <div style={{ width: "100%", height: "100vh" }}>
+          <div className="skeleton-container">
             <Skeleton
               style={{
-                // border: "2px solid indigo",
                 width: "100%",
                 height: "15%",
               }}
@@ -182,14 +128,7 @@ const QueueManagement = ({ qrCode }) => {
           <>
             {queues.length <= 0 ? (
               <div className="empty_data">
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
+                <div className="empty-state">
                   <MdLayers style={{ fontSize: "6rem", color: "#6a7282" }} />
                   <p style={{ color: "gray" }}>No data found</p>
                 </div>
@@ -204,19 +143,15 @@ const QueueManagement = ({ qrCode }) => {
                 </p>
               </div>
             ) : (
-              <div>
+              <div className="queues-list">
                 {queues.map((ele, idx) => {
                   return (
-                    <div
-
-                    // style={{ border: "2px solid red", margin: ".5rem" }}
-                    >
+                    <div key={ele.id} className="queue-item">
                       <QueueCard
                         refresh={GetAllQueues}
                         data={ele}
                         key={ele.id}
                       />
-                      ;
                     </div>
                   );
                 })}
@@ -225,346 +160,358 @@ const QueueManagement = ({ qrCode }) => {
           </>
         )}
 
-        {/* <div className="quick-actions">
+        <div className="quick-actions-responsive">
           <h3>Quick Actions</h3>
-          <div className="actions-content">
-            <div className="action-buttons">
-              <button className="btn-action">Pause Queue</button>
-              <button className="btn-action">Add Manual Entry</button>
-            </div>
-            <div className="qr-section">
-              <div className="qr-code">
-                <div className="qr-pattern"></div>
-              </div>
-              <p className="qr-label">Scan Our QR</p>
-            </div>
-          </div>
-        </div> */}
-
-        <div style={styles.QrSection}>
-          <h3>Quick Actions</h3>
-
-          {/* Qr code and button */}
-          <div
-            style={{
-              // border: "2px solid red",
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            {/* Buttons */}
-            <div style={styles.actionButtons}>
-              <button style={styles.actionBtn}>Pause Queue</button>
+          <div className="actions-content-responsive">
+            <div className="action-buttons-responsive">
+              <button className="btn-action-responsive">Pause Queue</button>
               <button
-                style={styles.actionBtn}
+                className="btn-action-responsive"
                 onClick={() => nav(`/queue_form`)}
               >
                 Add Manual Entry
               </button>
             </div>
-
-            <img style={styles.QrCode} src={qrCode} alt="" />
+            <div className="qr-section-responsive">
+              <img className="qr-code-responsive" src={qrCode} alt="QR Code" />
+            </div>
           </div>
         </div>
-
-        {/* <div className="quick-actions">
-          <h3>Quick Actions</h3>
-          <div className="actions-content">
-            <div className="action-buttons">
-              <button className="btn-action">Pause Queue</button>
-              <button className="btn-action">Add Manual Entry</button>
-            </div>
-            <div className="qr-section">
-              <div className="qr-code">
-                <div className="qr-pattern"></div>
-              </div>
-              <p className="qr-label">Scan Our QR</p>
-            </div>
-          </div>
-        </div> */}
       </div>
+
+      <style jsx>{`
+        .queue-container {
+          width: 100%;
+          margin: 0 auto;
+          padding: 2rem;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+            "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+        }
+
+        .header {
+          margin-bottom: 1rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+        }
+
+        .header-left h1 {
+          font-size: 1.75rem;
+          font-weight: 600;
+          margin-bottom: 0.25rem;
+        }
+
+        .date {
+          color: #6b7280;
+          fontsize: 0.875rem;
+        }
+
+        .queue-info-section {
+          margin-bottom: 2rem;
+        }
+
+        .queue-info-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 0.5rem;
+        }
+
+        .queue-info-header h2 {
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+
+        .button-group {
+          display: flex;
+          gap: 0.5rem;
+        }
+
+        .btn-customize {
+          padding: 0.5rem 1.5rem;
+          border-radius: 8px;
+          font-weight: 600;
+          cursor: pointer;
+          border: none;
+          transition: all 0.3s ease;
+        }
+
+        .queue-subtitle {
+          color: #6b7280;
+          font-size: 1rem;
+        }
+
+        .filter-section {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 2rem;
+          gap: 1rem;
+        }
+
+        .search-box {
+          position: relative;
+          flex: 1;
+          max-width: 400px;
+        }
+
+        .search-icon {
+          position: absolute;
+          left: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+
+        .search-box input {
+          width: 100%;
+          padding: 0.75rem 1rem 0.75rem 2.5rem;
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
+          font-size: 1rem;
+        }
+
+        .filter-right {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          cursor: pointer;
+        }
+
+        .queue-count {
+          font-weight: 500;
+        }
+
+        .dropdown-icon {
+          font-size: 0.75rem;
+        }
+
+        .skeleton-container {
+          width: 100%;
+          min-height: 400px;
+        }
+
+        .empty_data {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 4rem 2rem;
+          text-align: center;
+        }
+
+        .empty-state {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 1rem;
+        }
+
+        .queues-list {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          margin-bottom: 2rem;
+        }
+
+        .queue-item {
+          margin: 0.5rem 0;
+        }
+
+        .quick-actions-responsive {
+          background: white;
+          padding: 1.5rem;
+          border-radius: 12px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .quick-actions-responsive h3 {
+          font-size: 1.125rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+        }
+
+        .actions-content-responsive {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+        }
+
+        .action-buttons-responsive {
+          display: flex;
+          gap: 1rem;
+        }
+
+        .btn-action-responsive {
+          flex: 1;
+          padding: 0.75rem;
+          border: 2px solid #e5e7eb;
+          background: white;
+          border-radius: 10px;
+          font-weight: 500;
+          cursor: pointer;
+          min-width: 10rem;
+          transition: all 0.3s ease;
+        }
+
+        .btn-action-responsive:hover {
+          background: #f9fafb;
+        }
+
+        .qr-section-responsive {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .qr-code-responsive {
+          width: 120px;
+          height: 120px;
+          border-radius: 8px;
+        }
+
+        @media (max-width: 768px) {
+          .queue-container {
+            padding: 1rem;
+          }
+
+          .header {
+            flex-direction: column;
+            gap: 1rem;
+          }
+
+          .header-left h1 {
+            font-size: 1.5rem;
+          }
+
+          .queue-info-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+
+          .queue-info-header h2 {
+            font-size: 1.25rem;
+          }
+
+          .button-group {
+            width: 100%;
+            justify-content: space-between;
+          }
+
+          .btn-customize {
+            flex: 1;
+            font-size: 0.9rem;
+            padding: 0.75rem 1rem;
+          }
+
+          .filter-section {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1rem;
+          }
+
+          .search-box {
+            max-width: 100%;
+          }
+
+          .filter-right {
+            align-self: flex-start;
+          }
+
+          .empty_data {
+            padding: 2rem 1rem;
+          }
+
+          .empty_data p {
+            font-size: 1.1rem;
+          }
+
+          .actions-content-responsive {
+            flex-direction: column;
+            gap: 1.5rem;
+          }
+
+          .action-buttons-responsive {
+            flex-direction: column;
+            width: 100%;
+          }
+
+          .btn-action-responsive {
+            min-width: auto;
+            width: 100%;
+          }
+
+          .qr-code-responsive {
+            width: 100px;
+            height: 100px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .queue-container {
+            padding: 0.5rem;
+          }
+
+          .header-left h1 {
+            font-size: 1.25rem;
+          }
+
+          .queue-info-header h2 {
+            font-size: 1.1rem;
+          }
+
+          .queue-subtitle {
+            font-size: 0.9rem;
+          }
+
+          .btn-customize {
+            font-size: 0.8rem;
+            padding: 0.6rem 0.8rem;
+          }
+
+          .empty_data {
+            padding: 1.5rem 0.5rem;
+          }
+
+          .empty_data p {
+            font-size: 1rem;
+          }
+
+          .quick-actions-responsive {
+            padding: 1rem;
+          }
+
+          .qr-code-responsive {
+            width: 80px;
+            height: 80px;
+          }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .queue-container {
+            padding: 1.5rem;
+          }
+
+          .queue-info-header {
+            gap: 2rem;
+          }
+
+          .qr-code-responsive {
+            width: 100px;
+            height: 100px;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .queue-container {
+            max-width: 1400px;
+          }
+        }
+      `}</style>
     </>
   );
 };
 
 export default QueueManagement;
-
-const styles = {
-  dashboard: {
-    width: "100%",
-    margin: "0 auto",
-    padding: "2rem",
-    fontFamily:
-      '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif',
-  },
-  header: {
-    marginBottom: "1rem",
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  title: {
-    fontSize: "1.75rem",
-    fontWeight: "600",
-    marginBottom: "0.25rem",
-  },
-  date: {
-    color: "#6b7280",
-    fontSize: "0.875rem",
-  },
-  trialBanner: {
-    // background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    // color: "white",
-    padding: "1rem 0rem",
-    borderRadius: "12px",
-    display: "flex",
-    alignItems: "center",
-    marginBottom: "1rem",
-    gap: "30px",
-  },
-  upgradeBtn: {
-    background: "#303bff",
-    color: "white",
-    border: "none",
-    padding: "0.5rem 1.5rem",
-    borderRadius: "8px",
-    fontWeight: "600",
-    display: "flex",
-    gap: "10px",
-    justifyContent: "space-between",
-    cursor: "pointer",
-    fontSize: "1.2rem",
-  },
-  statsGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: "1.5rem",
-    marginBottom: "2rem",
-    // border: "12px solid blue",
-  },
-  statCard: {
-    background: "white",
-    padding: "1.5rem",
-    borderRadius: "12px",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-    position: "relative",
-  },
-  statCardPurple: {
-    borderTop: "4px solid #8b5cf6",
-  },
-  statCardBlue: {
-    borderTop: "4px solid #3b82f6",
-  },
-  statCardGreen: {
-    borderTop: "4px solid #10b981",
-  },
-  statIcon: {
-    display: "inline-flex",
-    padding: "0.75rem",
-    borderRadius: "10px",
-    marginBottom: "1rem",
-  },
-  statIconPurple: {
-    background: "#ede9fe",
-    color: "#8b5cf6",
-  },
-  statIconBlue: {
-    background: "#dbeafe",
-    color: "#3b82f6",
-  },
-  statIconGreen: {
-    background: "#d1fae5",
-    color: "#10b981",
-  },
-  statLabel: {
-    fontSize: "0.875rem",
-    color: "#6b7280",
-    marginBottom: "0.5rem",
-  },
-  statValue: {
-    fontSize: "2rem",
-    fontWeight: "700",
-    marginBottom: "0.25rem",
-  },
-  statChange: {
-    fontSize: "0.875rem",
-    fontWeight: "600",
-  },
-  contentGrid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "2rem",
-    marginBottom: "2rem",
-  },
-  section1: {
-    background: "white",
-    padding: "1.5rem",
-    borderRadius: "12px",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-    // border: "2px solid red",
-    width: "100%",
-  },
-
-  QrSection: {
-    background: "white",
-    padding: "1.5rem",
-    borderRadius: "12px",
-    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-    // border: "2px solid blue",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  },
-
-  QrCode: {
-    width: "20%",
-    height: "50%",
-  },
-
-  sectionHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: "1.5rem",
-  },
-  sectionTitle: {
-    fontSize: "1.125rem",
-    fontWeight: "600",
-  },
-  viewLink: {
-    color: "#ef4444",
-    fontSize: "0.875rem",
-    cursor: "pointer",
-  },
-  quotaList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "1rem",
-  },
-  quotaItem: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "1rem",
-    border: "2px solid",
-    borderRadius: "10px",
-    cursor: "pointer",
-    transition: "all 0.3s",
-  },
-  quotaName: {
-    fontSize: "1rem",
-    fontWeight: "600",
-    marginBottom: "0.25rem",
-  },
-  quotaStatus: {
-    fontSize: "0.875rem",
-    color: "#6b7280",
-    marginBottom: "0.25rem",
-  },
-  quotaTime: {
-    fontSize: "0.75rem",
-    color: "#9ca3af",
-  },
-  quotaProgress: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "0.5rem",
-  },
-  progressCircle: {
-    position: "relative",
-  },
-  progressLabel: {
-    fontSize: "0.75rem",
-    color: "#6b7280",
-  },
-  activityList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "1rem",
-  },
-  activityItem: {
-    display: "flex",
-    gap: "1rem",
-    alignItems: "flex-start",
-  },
-  activityIcon: {
-    width: "40px",
-    height: "40px",
-    borderRadius: "8px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexShrink: 0,
-  },
-  activityTime: {
-    fontSize: "0.75rem",
-    color: "#9ca3af",
-    marginBottom: "0.25rem",
-  },
-  activityAction: {
-    fontSize: "0.875rem",
-    fontWeight: "600",
-    marginBottom: "0.25rem",
-  },
-  activityLabel: {
-    fontSize: "0.875rem",
-    color: "#6b7280",
-  },
-  actionButtons: {
-    display: "flex",
-    gap: "1rem",
-    marginBottom: "1.5rem",
-    marginTop: "1rem",
-  },
-  actionBtn: {
-    flex: 1,
-    padding: "0.75rem",
-    border: "2px solid #e5e7eb",
-    background: "white",
-    borderRadius: "10px",
-    fontWeight: "500",
-    cursor: "pointer",
-    minWidth: "10rem",
-  },
-  qrSection: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "1rem",
-  },
-  qrCode: {
-    width: "150px",
-    height: "150px",
-    background: "white",
-    border: "2px solid #e5e7eb",
-    borderRadius: "10px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  qrPlaceholder: {
-    width: "120px",
-    height: "120px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  qrGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(8, 1fr)",
-    gridTemplateRows: "repeat(8, 1fr)",
-    gap: "2px",
-    width: "100%",
-    height: "100%",
-  },
-  qrSquare: {
-    width: "100%",
-    height: "100%",
-  },
-  qrLabel: {
-    fontSize: "0.875rem",
-    color: "#6b7280",
-  },
-};

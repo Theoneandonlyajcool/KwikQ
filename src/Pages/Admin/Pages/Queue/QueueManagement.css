@@ -447,3 +447,219 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .queue-container {
+    padding: 12px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .header-left h1 {
+    font-size: 1.25rem;
+  }
+
+  .queue-info-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .queue-info-header h2 {
+    font-size: 1.1rem;
+  }
+
+  .btn-customize {
+    padding: 8px 16px;
+    font-size: 12px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .filter-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .search-box {
+    max-width: 100%;
+  }
+
+  .filter-right {
+    align-self: flex-start;
+  }
+
+  .service-point-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .queue-item-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn-serve {
+    width: 100%;
+    text-align: center;
+  }
+
+  .queue-item-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .queue-meta {
+    justify-content: space-between;
+  }
+
+  .btn-remove {
+    width: 100%;
+    text-align: center;
+  }
+
+  .actions-content {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-action {
+    width: 100%;
+  }
+
+  .qr-code {
+    width: 80px;
+    height: 80px;
+  }
+
+  .empty_data {
+    height: 50vh;
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .queue-container {
+    padding: 8px;
+  }
+
+  .header-left h1 {
+    font-size: 1.1rem;
+  }
+
+  .queue-info-header h2 {
+    font-size: 1rem;
+  }
+
+  .queue-subtitle {
+    font-size: 10px;
+  }
+
+  .search-box input {
+    padding: 6px 6px 6px 28px;
+    font-size: 10px;
+  }
+
+  .search-icon {
+    left: 8px;
+    font-size: 12px;
+  }
+
+  .queue-name {
+    font-size: 13px;
+  }
+
+  .customer-name,
+  .service-type {
+    font-size: 10px;
+  }
+
+  .meta-item {
+    font-size: 9px;
+  }
+
+  .btn-serve,
+  .btn-remove,
+  .btn-action {
+    font-size: 11px;
+    padding: 8px 12px;
+  }
+
+  .qr-code {
+    width: 70px;
+    height: 70px;
+  }
+
+  .qr-label {
+    font-size: 11px;
+  }
+
+  .empty_data {
+    height: 40vh;
+    padding: 1rem;
+  }
+}
+
+/* Tablet Responsive Styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .queue-container {
+    padding: 20px;
+    max-width: 900px;
+  }
+
+  .header-left h1 {
+    font-size: 1.4rem;
+  }
+
+  .queue-info-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .search-box input {
+    font-size: 12px;
+  }
+
+  .queue-count {
+    font-size: 12px;
+  }
+}
+
+/* Desktop Large Screens */
+@media (min-width: 1025px) {
+  .queue-container {
+    max-width: 1200px;
+    padding: 24px;
+  }
+}
+
+/* Landscape Mobile Optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .empty_data {
+    height: 70vh;
+    padding: 1rem;
+  }
+
+  .queue-container {
+    padding: 8px;
+  }
+}
+
+/* High DPI Screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .queue-container {
+    border-width: 0.5px;
+  }
+}
