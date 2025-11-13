@@ -7,9 +7,7 @@ import {
 } from "react-icons/fa";
 import { LuUser } from "react-icons/lu";
 import { LuClipboardList } from "react-icons/lu";
-
 import { IoArrowBackOutline } from "react-icons/io5";
-
 import "../Styles/QueueForm.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
