@@ -326,15 +326,11 @@ export default function Dashboard({ qrCode }) {
           <div
             // style={quotas.length <= 0 ? styles.quotaList : styles.quotaList2}
 
-<<<<<<< HEAD
-            style={quotas?.length === 0 ? styles.quotaList : styles.quotaList2}
-=======
             // safe, clear
             style={
               (quotas?.length === 0 ? styles.quotaList : styles.quotaList2,
               { height: "90%" })
             }
->>>>>>> 4c346e71df9a1ea1609871b570fd447e31f7bdcd
           >
             {quotas.length <= 0 ? (
               <div
