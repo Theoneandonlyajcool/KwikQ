@@ -4,7 +4,20 @@ import { InactiveAnalyticsContainer } from "./InactiveAnalyticsStyle";
 import { TrendsContainer } from "./TrendsStyle";
 import { DistributionContainer } from "./DistributionStyle";
 import { BranchComparisonContainer } from "./BranchComparisonStyle";
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import { IoCalendarOutline } from "react-icons/io5";
 import { MdStorefront } from "react-icons/md";
 import { IoMdPeople } from "react-icons/io";
@@ -17,9 +30,6 @@ import CurrentDateTime from "../CurrentDateTime";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 
-
-
-
 const BranchAnalytics = () => {
   const [activeTab, setActiveTab] = useState("Trends");
   // const [timeRange, setTimeRange] = useState("Last 7 Days");
@@ -30,7 +40,6 @@ const BranchAnalytics = () => {
   const BaseUrl = import.meta.env.VITE_BaseUrl;
   // console.log("fuck up", analyticsData)
 
-
   // const hasData = analyticsData && analyticsData.stats;
   // const hasTrendData = analyticsData?.trendData?.length > 0;
   // const hasHourlyData = analyticsData?.hourlyData?.length > 0;
@@ -39,29 +48,28 @@ const BranchAnalytics = () => {
 
   // const PIE_COLORS = ['#1e3a8a', '#3b82f6', '#60a5fa', '#93c5fd', '#dbeafe'];
 
-  const organAnalytics = async () =>{
-    setStatus("loading")
+  const organAnalytics = async () => {
+    setStatus("loading");
     setErrors(null);
     try {
       const res = await axios.get(`${BaseUrl}/api/v1/getanalytics`, {
-        headers: {Authorization: `Bearer ${token}`}
-      })
-      console.log("analy work", res)
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("analy work", res);
       setAnalyticsData(res?.data);
-      setStatus("success")
+      setStatus("success");
       toast.success(res?.data?.message);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setErrors(error?.response?.data?.message);
       toast.error(error?.response?.data?.message);
-      setStatus("error")
+      setStatus("error");
     }
-  }
+  };
 
-  useEffect(()=> {
-    organAnalytics()
-  }, [])
-  
+  useEffect(() => {
+    organAnalytics();
+  }, []);
 
   if (status === "inactive") {
     return (
@@ -70,7 +78,9 @@ const BranchAnalytics = () => {
         <div className="analytics_wrapper">
           <div className="header_section">
             <h1 className="main_title">Analytics</h1>
-            <p className="sub_title"><CurrentDateTime /></p>
+            <p className="sub_title">
+              <CurrentDateTime />
+            </p>
           </div>
 
           <div className="charts_grid">
@@ -79,7 +89,9 @@ const BranchAnalytics = () => {
               <div className="empty_chart">
                 <MdLayers className="empty_icon" />
                 <p className="empty_title">No Data Found</p>
-                <p className="empty_text">Weekly customer volume will be displayed here</p>
+                <p className="empty_text">
+                  Weekly customer volume will be displayed here
+                </p>
               </div>
             </div>
           </div>
@@ -88,14 +100,16 @@ const BranchAnalytics = () => {
     );
   }
 
-  if(status === "loading"){
+  if (status === "loading") {
     return (
       <InactiveAnalyticsContainer>
         <ToastContainer />
         <div className="analytics_wrapper">
           <div className="header_section">
             <h1 className="main_title">Analytics</h1>
-            <p className="sub_title"><CurrentDateTime /></p>
+            <p className="sub_title">
+              <CurrentDateTime />
+            </p>
           </div>
 
           <div className="charts_grid">
@@ -104,116 +118,135 @@ const BranchAnalytics = () => {
               <div className="empty_chart">
                 <MdLayers className="empty_icon" />
                 <p className="empty_title">Loading...</p>
-                <p className="empty_text">Fetching branch details, please wait</p>
+                <p className="empty_text">
+                  Fetching branch details, please wait
+                </p>
               </div>
             </div>
           </div>
         </div>
       </InactiveAnalyticsContainer>
-    )
+    );
   }
 
-  if(status === "error"){
+  if (status === "error") {
     return (
       <InactiveAnalyticsContainer>
         <ToastContainer />
         <div className="analytics_wrapper">
           <div className="header_section">
             <h1 className="main_title">Analytics</h1>
-            <p className="sub_title"><CurrentDateTime /></p>
+            <p className="sub_title">
+              <CurrentDateTime />
+            </p>
+          </div>
+
+          <div className="header_section">
+            <h1 className="main_title" style="background: red">
+              Analytics
+            </h1>
+            <p className="sub_title">
+              <CurrentDateTime />
+            </p>
           </div>
 
           <div className="charts_grid">
             <div className="chart_box">
               <h3 className="chart_box_title">Weekly Customer Volume</h3>
               <div className="empty_chart">
-                    <MdError className="empty_icon" style={{color: 'red'}} />
-                    <p className="empty_title">Error Loading Branch</p>
-                    <p className="empty_text">{errors}</p>
-                    <button 
-                      onClick={() => organAnalytics()} 
-                      style={{
-                        marginTop: '20px',
-                        padding: '10px 20px',
-                        background: '#007bff',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      Try Again
-                    </button>
+                <MdError className="empty_icon" style={{ color: "red" }} />
+                <p className="empty_title">Error Loading Branch</p>
+                <p className="empty_text">{errors}</p>
+                <button
+                  onClick={() => organAnalytics()}
+                  style={{
+                    marginTop: "20px",
+                    padding: "10px 20px",
+                    background: "#007bff",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Try Again
+                </button>
               </div>
             </div>
           </div>
         </div>
       </InactiveAnalyticsContainer>
-    )
+    );
   }
 
-  if(status === "success" && analyticsData){
-  return (
-    <BranchAnalyticsContainer>
-    <ToastContainer />
-      <div className="analytics_wrapper">
-        <div className="header_section">
-          <h1 className="main_title">Branch Analytics</h1>
-          <p className="sub_title"><CurrentDateTime /></p>
-        </div>
-
-        <div className="filters_section">
-          <div className="filter_item">
-            <MdStorefront className="filter_icon" />
-            <span className="filter_label">Branch:</span>
-            <select className="filter_select">
-              <option>All Branches</option>
-            </select>
+  if (status === "success" && analyticsData) {
+    return (
+      <BranchAnalyticsContainer>
+        <ToastContainer />
+        <div className="analytics_wrapper">
+          <div className="header_section">
+            <h1 className="main_title">Branch Analytics</h1>
+            <p className="sub_title">
+              <CurrentDateTime />
+            </p>
           </div>
-          <div className="filter_item">
-            <IoCalendarOutline className="filter_icon" />
-            <span className="filter_label">Time Range:</span>
-            <select className="filter_select">
-              <option>Today</option>
-            </select>
-          </div>
-        </div>
 
-        <div className="stats_cards">
-          <div className="stat_card">
-            <div className="stat_icon customers">
-              <IoMdPeople />
+          <div className="filters_section">
+            <div className="filter_item">
+              <MdStorefront className="filter_icon" />
+              <span className="filter_label">Branch:</span>
+              <select className="filter_select">
+                <option>All Branches</option>
+              </select>
             </div>
-            <div className="stat_content">
-              <p className="stat_label">Total Customers</p>
-              <h2 className="stat_value">{}</h2>
-              <p className="stat_change positive">↑ {}% vs last week</p>
+            <div className="filter_item">
+              <IoCalendarOutline className="filter_icon" />
+              <span className="filter_label">Time Range:</span>
+              <select className="filter_select">
+                <option>Today</option>
+              </select>
             </div>
           </div>
 
-          <div className="stat_card">
-            <div className="stat_icon wait">
-              <MdAccessTime />
-            </div>
-            <div className="stat_content">
-              <p className="stat_label">Avg. Wait Time</p>
-              <h2 className="stat_value">{} min</h2>
-              <p className="stat_change negative">↓ {}% improvement</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="tabs_section">
-          <div className="tabs_wrapper">
-            {["Trends", "Distribution", "Branch Comparison"].map((tab) => (
-              <div key={tab} className={`tab_item ${activeTab === tab ? "active" : ""}`} onClick={() => setActiveTab(tab)}>
-                {tab}
+          <div className="stats_cards">
+            <div className="stat_card">
+              <div className="stat_icon customers">
+                <IoMdPeople />
               </div>
-            ))}
-          </div>
-        </div>
+              <div className="stat_content">
+                <p className="stat_label">Total Customers</p>
+                <h2 className="stat_value">{}</h2>
+                <p className="stat_change positive">↑ {}% vs last week</p>
+              </div>
+            </div>
 
-        {/* <TrendsContainer className={activeTab === "Trends" ? "active" : ""}>
+            <div className="stat_card">
+              <div className="stat_icon wait">
+                <MdAccessTime />
+              </div>
+              <div className="stat_content">
+                <p className="stat_label">Avg. Wait Time</p>
+                <h2 className="stat_value">{} min</h2>
+                <p className="stat_change negative">↓ {}% improvement</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="tabs_section">
+            <div className="tabs_wrapper">
+              {["Trends", "Distribution", "Branch Comparison"].map((tab) => (
+                <div
+                  key={tab}
+                  className={`tab_item ${activeTab === tab ? "active" : ""}`}
+                  onClick={() => setActiveTab(tab)}
+                >
+                  {tab}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* <TrendsContainer className={activeTab === "Trends" ? "active" : ""}>
           <div className="chart_section">
             <div className="chart_header">
               <h3 className="chart_title">Customer Flow Trends</h3>
@@ -269,7 +302,7 @@ const BranchAnalytics = () => {
           </div>
         </TrendsContainer> */}
 
-        {/* <DistributionContainer className={activeTab === "Distribution" ? "active" : ""}>
+          {/* <DistributionContainer className={activeTab === "Distribution" ? "active" : ""}>
           <div className="chart_section">
             <div className="chart_header">
               <h3 className="chart_title">Service Distribution</h3>
@@ -298,7 +331,7 @@ const BranchAnalytics = () => {
           </div>
         </DistributionContainer> */}
 
-        {/* <BranchComparisonContainer className={activeTab === "Branch Comparison" ? "active" : ""}>
+          {/* <BranchComparisonContainer className={activeTab === "Branch Comparison" ? "active" : ""}>
           <div className="chart_section">
             <div className="chart_header">
               <h3 className="chart_title">Branch Performance Comparison</h3>
@@ -351,9 +384,10 @@ const BranchAnalytics = () => {
             )}
           </div>
         </BranchComparisonContainer> */}
-      </div>
-    </BranchAnalyticsContainer>
-  );}
+        </div>
+      </BranchAnalyticsContainer>
+    );
+  }
 };
 
 export default BranchAnalytics;
