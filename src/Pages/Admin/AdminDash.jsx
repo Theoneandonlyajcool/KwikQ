@@ -248,19 +248,55 @@ const AdminDashboard = () => {
       {BrowserLoadingState && (
         <div
           style={{
-            backgroundColor: "rgba(149, 148, 148, 0.484)",
             position: "fixed",
-            top: "0",
+            top: 0,
+            left: 0,
             width: "100%",
-            left: "0",
-            height: "100vh",
+            height: "100%",
+            background: "rgba(0, 0, 0, 0.5)",
             display: "flex",
-            alignItems: "center",
             justifyContent: "center",
-            zIndex: 1000,
+            alignItems: "center",
+            zIndex: 9999,
+            backdropFilter: "blur(3px)",
           }}
         >
-          <p>Generating QR code.....</p>
+          <div
+            style={{
+              width: "35%",
+              height: "40%",
+              background: "white",
+              borderRadius: "17px",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              border: "red",
+              fontSize: "16px",
+              gap: "15px",
+            }}
+          >
+            <div
+              style={{
+                width: "60px",
+                height: "60px",
+                border: "4px solid #f3f3f3",
+                borderTop: "4px solid #1466FF",
+                borderRadius: "50%",
+                animation: "spin 0.8s linear infinite",
+                background: "white",
+              }}
+            />
+            <style>
+              {`
+                  @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                  }
+                `}
+            </style>
+            <p style={{ fontSize: "1.1rem" }}>Generating Qr code</p>
+          </div>
         </div>
       )}
     </div>
