@@ -106,9 +106,9 @@ const QueueForm = () => {
             fullName: inputValues.fullName,
             email: inputValues.email,
             phone: inputValues.phone,
-            serviceNeeded: inputValues.serviceNeeded,
+            serviceNeeded: PurposeOfVisit,
             additionalInfo: inputValues.AdditionalInfo,
-            priorityStatus: "elderlyOrDisabled",
+            priorityStatus: PriorityStatus,
           },
         }
         // {
