@@ -36,13 +36,15 @@ const QueueForm = () => {
   const [EmergencyStatus, SEtEmergencyStatus] = useState(false);
 
   const [PurposeOfVisit, SetPurposeOfVisit] = useState("");
+  const [purpose, setPurpose] = useState(""); // stores camelCase keys like "loanCollection"
+
   const [inputValues, SetInputValues] = useState({
     fullName: "",
     phone: "",
     email: "",
     AdditionalInfo: "",
-    serviceNeeded: PurposeOfVisit,
-    // priorityStatus: "",
+    serviceNeeded: "",
+    priorityStatus: "",
   });
 
   const [ErrorMsg, SetErrorMsg] = useState({
@@ -50,6 +52,7 @@ const QueueForm = () => {
     serviceNeededError: "",
     elederlyStatusError: "",
     pregnantStatus: "",
+    priorityStatus: "",
   });
 
   const [PriorityStatus, SetPriorityStatus] = useState("");
@@ -106,7 +109,7 @@ const QueueForm = () => {
             fullName: inputValues.fullName,
             email: inputValues.email,
             phone: inputValues.phone,
-            serviceNeeded: PurposeOfVisit,
+            serviceNeeded: inputValues.serviceNeeded,
             additionalInfo: inputValues.AdditionalInfo,
             priorityStatus: PriorityStatus,
           },
@@ -134,8 +137,6 @@ const QueueForm = () => {
       console.log(error);
     }
   };
-
-  const [purpose, setPurpose] = useState(""); // stores camelCase keys like "loanCollection"
 
   const handleSelectChange = (e) => {
     setPurpose(e.target.value);
@@ -278,11 +279,16 @@ const QueueForm = () => {
                 <select
                   className="form-input form-select"
                   value={purpose}
-                  onChange={handleSelectChange}
+                  onChange={(e) =>
+                    SetInputValues({
+                      ...inputValues,
+                      serviceNeeded: e.target.value,
+                    })
+                  }
                   style={{ backgroundColor: "#f2f2f5" }}
                 >
                   <option value="">Select a service</option>
-                  <option value={toCamelCase("Account Opening")}>
+                  <option sevalue={toCamelCase("Account Opening")}>
                     Account Opening
                   </option>
                   <option value={toCamelCase("Loan Collection")}>
@@ -423,7 +429,11 @@ const QueueForm = () => {
                 Clear Form
               </button>
               <button
-                onClick={JoinQueue}
+                onClick={() => {
+                  JoinQueue();
+                  console.log(inputValues);
+                  // console.log(PurposeOfVisit);
+                }}
                 disabled={LoadingState}
                 style={{
                   cursor: `${LoadingState ? "not-allowed" : "pointer"}`,
