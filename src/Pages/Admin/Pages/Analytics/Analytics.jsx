@@ -290,7 +290,7 @@ const AnalyticsDashboard = () => {
 
             <div className="chart-card">
               <div className="chart-title">Service Type Distribution</div>
-              {serviceTypeData.length === 0 ? (
+              {serviceTypeData.length <= 0 ? (
                 <NoDataPlaceholder message="Service type distribution will be displayed here" />
               ) : (
                 <>
