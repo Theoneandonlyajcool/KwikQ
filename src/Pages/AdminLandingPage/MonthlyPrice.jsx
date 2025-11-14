@@ -56,7 +56,7 @@ const MonthlyPrice = () => {
             <h4>{starterPrice}</h4>
           </div>
           <button>
-            Start free Trial <TiArrowRight />
+            Subscribe <TiArrowRight />
           </button>
           <div className="ListHolder">
             <ul>
@@ -123,7 +123,7 @@ const MonthlyPrice = () => {
             <h4>{professionalPrice}</h4>
           </div>
           <button>
-            Start free Trial <TiArrowRight />
+            Subscribe <TiArrowRight />
           </button>
           <div className="ListHolder">
             <ul>
@@ -189,7 +189,7 @@ const MonthlyPrice = () => {
             <h4>Custom Pricing</h4>
           </div>
           <button>
-            Contact Sales <TiArrowRight />
+            Subscribe <TiArrowRight />
           </button>
           <div className="ListHolder">
             <ul>

@@ -221,7 +221,10 @@ export default function Dashboard({ qrCode }) {
       <div style={styles.trialBanner}>
         <h2>You're on a 7-Days Free Trial !</h2>
 
-        <button style={styles.upgradeBtn}>
+        <button
+          style={styles.upgradeBtn}
+          onClick={() => nav("/admin_landingpage")}
+        >
           Subscribe now <SlWallet />
         </button>
       </div>

@@ -21,7 +21,8 @@
   flex-shrink: 0;
   width: 2.75rem;
   height: 2.75rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
+  /* padding: */
   /* background: hsl(var(--avatar-bg)); */
   color: white;
   display: flex;

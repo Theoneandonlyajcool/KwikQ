@@ -16,18 +16,25 @@ import {
   SearchBox,
   SearchInput,
   FilterSelect,
+  TableWrapper,
+  LoadingText,
+  ErrorText,
+  NoDataText,
 } from "./HistoryStyles";
 import { IoMdCheckmarkCircleOutline, IoMdTime } from "react-icons/io";
 import { MdOutlineCancel } from "react-icons/md";
+import { BsDisplay } from "react-icons/bs";
 
 const QueueHistory = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All Status");
   const [branchFilter, setBranchFilter] = useState("All Branches");
+
   const [stats, setStats] = useState({
     completedToday: 0,
     avgWaitTime: 0,
@@ -37,88 +44,98 @@ const QueueHistory = () => {
   const branchId = localStorage.getItem("user_ID");
   const API_BASE_URL =
     import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
-
   useEffect(() => {
     const fetchQueueHistory = async () => {
       setLoading(true);
       setError(null);
+
       try {
         const response = await axios.get(
           `${API_BASE_URL}/api/v1/history/${branchId}`
         );
-        console.log(response);
 
-        if (response.data && response.data.data) {
-          setData(response.data.data);
-          setFilteredData(response.data.data);
-          calculateStats(response.data.data);
+        if (response.data?.data) {
+          const formatted = response.data.data.map((item) => {
+            const parts = item.joinedAt?.split(",") || [];
+            const date = parts[0]?.trim() || "-";
+            const time = parts[1]?.replace("UTC", "").trim() || "-";
+
+            return {
+              key: item.queueNumber,
+              queueNumber: item.queueNumber || "-",
+              customerName: item.fullName || "-",
+              serviceType: item.service || "-",
+              joinedDate: date,
+              joinedTime: time,
+              waitTime: item.waitTime || "-",
+              serviceTime: item.serviceTime || "-",
+              status: item.status || "-",
+              branch: item.branch || "Main Branch",
+            };
+          });
+
+          setData(formatted);
+          setFilteredData(formatted);
+
+          setStats({
+            completedToday: response.data.completedToday || 0,
+            avgWaitTime: response.data.metrics?.avgWaitTime || 0,
+            cancelledNoShow: response.data.metrics?.cancelledNoShow || 0,
+          });
         }
       } catch (err) {
         setError("Failed to fetch queue history. Please try again.");
-        console.error("Error fetching queue history:", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
 
-    if (branchId) {
-      fetchQueueHistory();
-    }
+    if (branchId) fetchQueueHistory();
   }, [branchId]);
-
-  const calculateStats = (queueData) => {
-    const completed = queueData.filter(
-      (item) => item.status === "completed"
-    ).length;
-
-    const waitTimes = queueData
-      .map((item) => Number.parseInt(item.waitTime) || 0)
-      .filter((time) => time > 0);
-    const avgWait =
-      waitTimes.length > 0
-        ? Math.round(waitTimes.reduce((a, b) => a + b, 0) / waitTimes.length)
-        : 0;
-
-    const cancelled = queueData.filter(
-      (item) => item.status === "cancelled" || item.status === "no-show"
-    ).length;
-
-    setStats({
-      completedToday: completed,
-      avgWaitTime: avgWait,
-      cancelledNoShow: cancelled,
-    });
-  };
-
-  const handleSearch = (value) => {
+  const searchData = (value) => {
     setSearchTerm(value);
-    filterData(value, statusFilter, branchFilter);
+
+    const lower = value.toLowerCase();
+
+    const result = data.filter(
+      (item) =>
+        item.customerName.toLowerCase().includes(lower) ||
+        item.queueNumber.toLowerCase().includes(lower) ||
+        item.serviceType.toLowerCase().includes(lower) ||
+        item.status.toLowerCase().includes(lower)
+    );
+
+    setFilteredData(result);
   };
 
   const handleStatusFilter = (value) => {
     setStatusFilter(value);
-    filterData(searchTerm, value, branchFilter);
+    applyFilters(searchTerm, value, branchFilter);
   };
 
   const handleBranchFilter = (value) => {
     setBranchFilter(value);
-    filterData(searchTerm, statusFilter, value);
+    applyFilters(searchTerm, statusFilter, value);
   };
 
-  const filterData = (search, status, branch) => {
-    let result = data;
+  const applyFilters = (search, status, branch) => {
+    let result = [...data];
 
     if (search) {
+      const lower = search.toLowerCase();
       result = result.filter(
         (item) =>
-          item.customerName.toLowerCase().includes(search.toLowerCase()) ||
-          item.queueNumber.toLowerCase().includes(search.toLowerCase()) ||
-          item.serviceType.toLowerCase().includes(search.toLowerCase())
+          item.customerName.toLowerCase().includes(lower) ||
+          item.queueNumber.toLowerCase().includes(lower) ||
+          item.serviceType.toLowerCase().includes(lower)
       );
     }
 
     if (status !== "All Status") {
-      result = result.filter((item) => item.status === status.toLowerCase());
+      result = result.filter(
+        (item) => item.status.toLowerCase() === status.toLowerCase()
+      );
     }
 
     if (branch !== "All Branches") {
@@ -127,15 +144,14 @@ const QueueHistory = () => {
 
     setFilteredData(result);
   };
-
   const getStatusColor = (status) => {
-    const statusMap = {
+    const map = {
       completed: "success",
       cancelled: "error",
       "no-show": "warning",
       pending: "processing",
     };
-    return statusMap[status?.toLowerCase()] || "default";
+    return map[status?.toLowerCase()] || "default";
   };
 
   const formatTime = (time) => {
@@ -148,31 +164,31 @@ const QueueHistory = () => {
       title: "Queue ID",
       dataIndex: "queueNumber",
       key: "queueNumber",
-      width: 100,
+      width: 120,
     },
     {
       title: "Customer",
       dataIndex: "customerName",
       key: "customerName",
-      width: 150,
+      width: 200,
     },
     {
       title: "Service",
       dataIndex: "serviceType",
       key: "serviceType",
-      width: 150,
+      width: 130,
     },
     {
-      title: "Date & Time",
+      title: "Date & Time,",
       key: "dateTime",
-      width: 140,
-      render: (_, record) => `${record.joinedDate} ${record.joinedTime}`,
+      width: 200,
+      render: (_, rec) => `${rec.joinedDate} ${rec.joinedTime}`,
     },
     {
       title: "Wait Time",
       dataIndex: "waitTime",
       key: "waitTime",
-      width: 100,
+      width: 120,
       render: formatTime,
     },
     {
@@ -186,7 +202,8 @@ const QueueHistory = () => {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      width: 120,
+      width: 150,
+      backgroundColor: "red",
       render: (status) => (
         <Badge
           status={getStatusColor(status)}
@@ -212,6 +229,7 @@ const QueueHistory = () => {
         </div>
       </Header>
 
+      {/* Stats */}
       <StatsGrid>
         <StatCard>
           <StatIcon style={{ backgroundColor: "#dcfce7", color: "#00a63e" }}>
@@ -220,6 +238,7 @@ const QueueHistory = () => {
           <StatValue>{stats.completedToday}</StatValue>
           <StatLabel>Completed Today</StatLabel>
         </StatCard>
+
         <StatCard>
           <StatIcon style={{ backgroundColor: "#DBEAFE", color: "#155DFC" }}>
             <IoMdTime />
@@ -227,12 +246,13 @@ const QueueHistory = () => {
           <StatValue>{stats.avgWaitTime} min</StatValue>
           <StatLabel>Avg Wait Time</StatLabel>
         </StatCard>
+
         <StatCard>
-          <StatIcon style={{ backgroundColor: "#fFE2E2", color: "#E7000B" }}>
+          <StatIcon style={{ backgroundColor: "#FFE2E2", color: "#E7000B" }}>
             <MdOutlineCancel />
           </StatIcon>
           <StatValue>{stats.cancelledNoShow}</StatValue>
-          <StatLabel>Cancelled/No-Show</StatLabel>
+          <StatLabel>Cancelled / No-Show</StatLabel>
         </StatCard>
       </StatsGrid>
 
@@ -240,11 +260,12 @@ const QueueHistory = () => {
         <SearchBox>
           <SearchInput
             type="text"
-            placeholder="Search by name, Queue ID, or queue number..."
+            placeholder="Search by name, queue ID, or service..."
             value={searchTerm}
-            onChange={(e) => handleSearch(e.target.value)}
+            onChange={(e) => searchData(e.target.value)}
           />
         </SearchBox>
+
         <FilterSelect
           value={statusFilter}
           onChange={(e) => handleStatusFilter(e.target.value)}
@@ -255,41 +276,31 @@ const QueueHistory = () => {
           <option>No-Show</option>
           <option>Pending</option>
         </FilterSelect>
+
         <FilterSelect
           value={branchFilter}
           onChange={(e) => handleBranchFilter(e.target.value)}
         >
           <option>All Branches</option>
-          <option>Branch 1</option>
-          <option>Branch 2</option>
-          <option>Branch 3</option>
+          <option>Main Branch</option>
         </FilterSelect>
       </FiltersContainer>
 
-      {/* Antd Table */}
-      {error ? (
-        <div style={{ color: "#dc2626", padding: "2rem", textAlign: "center" }}>
-          {error}
-        </div>
-      ) : (
-        <Table
-          columns={columns}
-          dataSource={filteredData.map((item, index) => ({
-            ...item,
-            key: index,
-          }))}
-          loading={loading}
-          pagination={{ pageSize: 10 }}
-          locale={{
-            emptyText: <Empty description="No queue records found." />,
-          }}
-          scroll={{ x: 1000 }}
-          style={{
-            background: "white",
-            borderRadius: "8px",
-          }}
-        />
-      )}
+      <TableWrapper>
+        {loading ? (
+          <LoadingText>Loading queue history...</LoadingText>
+        ) : error ? (
+          <ErrorText>{error}</ErrorText>
+        ) : filteredData.length === 0 ? (
+          <NoDataText>No queue records found.</NoDataText>
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={filteredData}
+            pagination={false}
+          />
+        )}
+      </TableWrapper>
     </Container>
   );
 };
