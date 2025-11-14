@@ -41,7 +41,11 @@ const Sidebar = ({ collapsed }) => {
   return (
     <>
       <ToggleButton onClick={handleToggle} mobileOpen={mobileOpen}>
-        {mobileOpen ? <FiChevronLeft size={20} /> : <FiChevronRight size={20} />}
+        {mobileOpen ? (
+          <FiChevronLeft size={20} />
+        ) : (
+          <FiChevronRight size={20} />
+        )}
       </ToggleButton>
       <Overlay show={mobileOpen} onClick={handleOverlayClick} />
       <SidebarContainer collapsed={collapsed} mobileOpen={mobileOpen}>
@@ -74,12 +78,10 @@ const Sidebar = ({ collapsed }) => {
         <Footer>
           <div className="orgholder">
             <div className="avater">
-              {setName.toUpperCase().slice(0, 2) || "AU"}
+              {setName?.toUpperCase().slice(0, 2) || "AU"}
             </div>
             <div className="textorg">
-              <p className="admintext">
-                {setName}
-              </p>
+              <p className="admintext">{setName}</p>
               <span className="supertext">
                 {" "}
                 <LuShield className="shield" /> Super Admin

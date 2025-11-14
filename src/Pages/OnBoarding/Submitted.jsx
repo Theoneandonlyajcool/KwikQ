@@ -67,7 +67,15 @@ const Submitted = () => {
           </div>
         </ContentWrapper>
         <Bottomholder>
-          <button className="Btn" onClick={() => nav("/dashboard/")}>
+          <button
+            className="Btn"
+            onClick={() => {
+              nav("/dashboard/");
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            }}
+          >
             DashBoard
           </button>
           <button>View Pricing Plans</button>
