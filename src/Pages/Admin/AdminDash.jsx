@@ -17,11 +17,14 @@ import QueueHistory from "../Admin/Pages/History/History";
 import NotificationsPage from "../Admin/Pages/Notifications/Notifications";
 import QueueSettings from "./Pages/Settings/Settings";
 import axios from "axios";
+import { IoMdLogOut } from "react-icons/io";
+import LogoutModal from "./components/LogoutModal";
 
 const AdminDashboard = () => {
   const [activeMenu, setActiveMenu] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [logoutModal, SetLogoutModal] = useState(false);
 
   const OrgDetials = JSON.parse(localStorage.getItem("OrgInfo"));
   console.log(OrgDetials);
@@ -88,6 +91,8 @@ const AdminDashboard = () => {
   console.log(Org_ID);
 
   const BaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+  const initials = JSON.parse(localStorage.getItem("adminInfo"));
 
   const GenerateQrCode = async () => {
     try {
@@ -221,15 +226,15 @@ const AdminDashboard = () => {
 
         <div style={styles.sidebarFooter}>
           <div style={styles.userProfile}>
-            <div style={styles.userAvatar}>AU</div>
+            <div style={styles.userAvatar}>{initials?.name[0]}</div>
             <div>
-              <p style={styles.userName}>businessName</p>
-              <p style={styles.userEmail}>ajcool585@gmail.com</p>
+              <p style={styles.userName}>{initials.name}</p>
+              <p style={styles.userEmail}>{initials.email}</p>
             </div>
           </div>
           <button style={styles.logoutBtn}>
             <LogOut size={18} />
-            <span>Logout</span>
+            <span onClick={() => SetLogoutModal(true)}>Logout</span>
           </button>
         </div>
       </aside>
@@ -299,6 +304,10 @@ const AdminDashboard = () => {
           </div>
         </div>
       )}
+
+      {/* Logout modal */}
+
+      {logoutModal && <LogoutModal closing={SetLogoutModal} />}
     </div>
   );
 };
@@ -313,7 +322,6 @@ const styles = {
     position: "relative",
   },
 
-  // Mobile Header Styles
   mobileHeader: {
     display: "flex",
     alignItems: "center",
@@ -372,7 +380,6 @@ const styles = {
     flex: "0 0 auto",
   },
 
-  // Overlay for mobile
   overlay: {
     position: "fixed",
     top: 0,
@@ -385,7 +392,7 @@ const styles = {
 
   // Sidebar Styles
   sidebar: {
-    width: "280px",
+    width: "250px",
     background: "#1a1d2e",
     color: "#fff",
     display: "flex",
@@ -427,6 +434,9 @@ const styles = {
   },
   sidebarNav: {
     flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
     padding: "12px 0",
     overflowY: "auto",
     scrollbarWidth: "none",
@@ -450,8 +460,9 @@ const styles = {
   },
   navItemActive: {
     background: "#3b4eed",
+    borderRadius: "14px",
     color: "#fff",
-    borderLeft: "3px solid #3b4eed",
+    width: "224px",
   },
   sidebarFooter: {
     padding: "16px 20px",
@@ -497,14 +508,14 @@ const styles = {
     background: "transparent",
     border: "1px solid rgba(255, 255, 255, 0.1)",
     borderRadius: "6px",
-    color: "#94a3b8",
+    color: "black",
+    backgroundColor: "white",
     cursor: "pointer",
     transition: "all 0.2s ease",
     fontSize: "13px",
     fontWeight: "500",
   },
 
-  // Main Content Styles
   mainContent: {
     flex: 1,
     overflowY: "auto",
@@ -527,7 +538,6 @@ const styles = {
     marginBottom: "30px",
   },
 
-  // Responsive styles for different screen sizes
   statsGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
@@ -561,7 +571,6 @@ const styles = {
     },
   },
 
-  // ... rest of your existing styles remain the same
   statCard: {
     background: "#fff",
     padding: "25px",

@@ -31,10 +31,24 @@ export const Header = styled.div`
   }
 `;
 
+export const DateTimeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+`;
+
 export const DateText = styled.p`
   font-size: 0.875rem;
   color: #6b7280;
   margin: 0;
+`;
+
+export const TimeText = styled.p`
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 500;
 `;
 
 export const StatsGrid = styled.div`
@@ -112,12 +126,11 @@ export const SearchInput = styled.input`
   border: 1px solid #d1d5db;
   border-radius: 0.375rem;
   font-size: 0.875rem;
-  background-color: #f3f4f6;
-  transition: all 0.2s ease;
+  background-color: white;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
   &:focus {
     outline: none;
-    background-color: white;
     border-color: #3b82f6;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
   }

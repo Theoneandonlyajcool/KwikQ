@@ -101,7 +101,7 @@ const QueueFormNorm = () => {
             fullName: inputValues.fullName,
             email: inputValues.email,
             phone: inputValues.phone,
-            serviceNeeded: inputValues.serviceNeeded,
+            serviceNeeded: purpose,
             additionalInfo: inputValues.AdditionalInfo,
             priorityStatus: "elderlyOrDisabled",
           },
@@ -129,6 +129,8 @@ const QueueFormNorm = () => {
       console.log(error);
     }
   };
+
+  // alert(inputValues.serviceNeeded);
 
   const [purpose, setPurpose] = useState(""); // stores camelCase keys like "loanCollection"
 

@@ -176,7 +176,7 @@ const QueueCard = ({ data, refresh }) => {
         className="service-card__avatar"
         style={{ backgroundColor: "#303bff" }}
       >
-        001
+        {data.serialNumber}
       </div>
 
       <div className="service-card__content">
