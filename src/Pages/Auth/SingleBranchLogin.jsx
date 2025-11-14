@@ -36,7 +36,11 @@ const LoginForm = () => {
       localStorage.setItem("BranchID", res?.data?.branch?.id);
       console.log(res?.data?.branch?.id);
       localStorage.setItem("singleToken", res?.data?.token);
-      localStorage.setItem("Org_ID", res?.data?.organization);
+      // localStorage.setItem("Org_ID", res?.data?.organization);
+
+      localStorage.setItem("adminInfo", JSON.stringify(res?.data?.branch));
+      localStorage.setItem("user_ID", res?.data?.branch?.id);
+
       console.log(res?.data?.token);
 
       setTimeout(() => {

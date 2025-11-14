@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from "react";
-import {
-  Clock,
-  CheckCircle,
-  Calendar,
-  Users,
-  FileText,
-  AlertCircle,
-} from "lucide-react";
-
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+import { useEffect, useState } from "react";
+import { Clock, CheckCircle } from "lucide-react";
 import { SlWallet } from "react-icons/sl";
 import QueueCard from "./DashCard";
 import axios from "axios";
@@ -16,10 +10,12 @@ import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import { IoClipboard } from "react-icons/io5";
+import { User } from "lucide-react";
 
 export default function Dashboard({ qrCode }) {
+  // Get time
+
   const [dateTime, setDateTime] = useState("");
-  const [ractivities, setRactivities] = useState([]);
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -48,23 +44,35 @@ export default function Dashboard({ qrCode }) {
 
   const [CardData, SetCardData] = useState({});
   const [LoadingState, SetLoadingState] = useState(false);
+  const [recentActivities, setRecentActivities] = useState([]);
+  const [activitiesLoading, setActivitiesLoading] = useState(false);
+  const [qrImageUrl, setQrImageUrl] = useState(null);
+  const [qrLoading, setQrLoading] = useState(false);
+  const [queuePoints, setQueuePoints] = useState([]);
+  const [queuePointsLoading, setQueuePointsLoading] = useState(false);
+  const [totalWaiting, setTotalWaiting] = useState(0);
 
-  const BranchID = localStorage.getItem("user_ID");
+  console.log(CardData);
+
+  const BranchID = localStorage.getItem("BranchID");
 
   const SingleToken =
     localStorage.getItem("singleToken") || localStorage.getItem("User");
+  console.log(SingleToken);
+
+  console.log(BranchID);
 
   const Org_ID = sessionStorage.getItem("user-recog");
+  console.log(Org_ID);
 
   const GetMetricsCardData = async () => {
     try {
       SetLoadingState(true);
-      const res = await axios.get(`${BaseUrl}/api/v1/dashboard/${BranchID}`, {
+      const res = await axios.get(`${BaseUrl}/api/v1/dashboard`, {
         headers: {
           Authorization: `Bearer ${SingleToken}`,
         },
       });
-      // console.log("come back ooo", res)
       SetCardData(res?.data?.data);
       SetLoadingState(false);
     } catch (error) {
@@ -74,120 +82,158 @@ export default function Dashboard({ qrCode }) {
     }
   };
 
-  // Get role
-
-  const Role =
-    localStorage.getItem("OrgRole") || localStorage.getItem("UserRole");
-
-  const OrgID = localStorage.getItem("Org_ID");
-
-  // const
-
-  const [activeQuota, setActiveQuota] = useState(null);
-
-  const [quotas, Setquotas] = useState([]);
-
-  const QueuePoints = async () => {
+  const GetRecentActivity = async () => {
     try {
-      const res = await axios.get(`${BaseUrl}/api/v1/queue-points/${Org_ID}`);
-      console.log(`These are the ${res?.data}`);
-      Setquotas(res?.data?.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    GetMetricsCardData();
-    QueuePoints();
-  }, []);
-
-  // quotas
-
-  // const quotas = [
-  // {
-  //   id: 1,
-  //   name: "Quota Part-1",
-  //   status: "Earning",
-  //   time: "T-24R",
-  //   progress: 65,
-  // },
-  // {
-  //   id: 2,
-  //   name: "Quota Part-2",
-  //   status: "Earning",
-  //   time: "T-24R",
-  //   progress: 45,
-  // },
-  // {
-  //   id: 3,
-  //   name: "Quota Part-3",
-  //   status: "Earning",
-  //   time: "T-24R",
-  //   progress: 80,
-  // },
-  // ];
-
-  // Activities
-
-  const Activities = async () => {
-    try {
+      setActivitiesLoading(true);
+      const userId = localStorage.getItem("user_ID");
       const res = await axios.get(
-        `${BaseUrl}/api/v1/recent-activity/${Org_ID}`,
+        `${BaseUrl}/api/v1/recent-activity/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${SingleToken}`,
           },
         }
       );
-      setRactivities(res?.data?.data);
+      setRecentActivities(res?.data?.data || []);
+      setActivitiesLoading(false);
     } catch (error) {
-      console.log(error);
+      setActivitiesLoading(false);
+      console.log("Error fetching recent activity:", error);
+      toast.error("Failed to fetch recent activity");
     }
   };
 
+  const GetQueuePoints = async () => {
+    try {
+      setQueuePointsLoading(true);
+      const userId = Org_ID || "691247bc234b01d1bcf698e9";
+      const res = await axios.get(
+        `https://kwikq-1.onrender.com/api/v1/queue-points/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${SingleToken}`,
+          },
+        }
+      );
+      setQueuePoints(res?.data?.data || []);
+      setTotalWaiting(res?.data?.totalWaiting || 0);
+      setQueuePointsLoading(false);
+    } catch (error) {
+      setQueuePointsLoading(false);
+      console.log("Error fetching queue points:", error);
+      toast.error("Failed to fetch queue points");
+    }
+  };
+
+  // Get role
+
+  const Role =
+    localStorage.getItem("OrgRole") || localStorage.getItem("UserRole");
+
+  const OrgID = localStorage.getItem("Org_ID");
+  console.log(OrgID);
+
   useEffect(() => {
-    Activities();
+    GetMetricsCardData();
+    GetRecentActivity();
+    GenerateQrCode();
+    GetQueuePoints();
   }, []);
 
-  const activities = [
+  // const [activeQuota, setActiveQuota] = useState(null)
+
+  const quotas = [
     // {
     //   id: 1,
+    //   name: "Quota Part-1",
+    //   status: "Earning",
     //   time: "T-24R",
-    //   action: "ADD",
-    //   label: "Started at Phase 1",
-    //   icon: CheckCircle,
-    //   color: "#10b981",
+    //   progress: 65,
     // },
     // {
     //   id: 2,
-    //   time: "T-24D",
-    //   action: "Info",
-    //   label: "Sent 4th request",
-    //   icon: AlertCircle,
-    //   color: "#3b82f6",
+    //   name: "Quota Part-2",
+    //   status: "Earning",
+    //   time: "T-24R",
+    //   progress: 45,
     // },
     // {
     //   id: 3,
-    //   time: "T-24-2",
-    //   action: "Waiting",
-    //   label: "Waiting at Phase 2",
-    //   icon: Clock,
-    //   color: "#8b5cf6",
-    // },
-    // {
-    //   id: 4,
-    //   time: "T-24-8",
-    //   action: "Other",
-    //   label: "Other Some Phase 1 ago",
-    //   icon: FileText,
-    //   color: "#f59e0b",
+    //   name: "Quota Part-3",
+    //   status: "Earning",
+    //   time: "T-24R",
+    //   progress: 80,
     // },
   ];
 
   const metricsValue = Object.keys(CardData);
 
-  const progressValue = 1;
+  const getActivityIcon = (action) => {
+    const actionLower = action.toLowerCase();
+
+    if (actionLower.includes("served")) {
+      return { icon: CheckCircle, color: "#10b981", bgColor: "#d1fae5" };
+    } else if (actionLower.includes("joined")) {
+      return { icon: "users", color: "#3b82f6", bgColor: "#dbeafe" };
+    } else if (actionLower.includes("alert")) {
+      return { icon: "alert", color: "#f59e0b", bgColor: "#fef3c7" };
+    } else {
+      return { icon: Clock, color: "#6b7280", bgColor: "#f3f4f6" };
+    }
+  };
+
+  const formatTimeAgo = (timeAgo) => {
+    if (!timeAgo) return "just now";
+
+    // If timeAgo is already formatted string, return it
+    if (typeof timeAgo === "string") {
+      return timeAgo;
+    }
+
+    // If it's a timestamp, calculate time ago
+    if (typeof timeAgo === "number") {
+      const now = new Date();
+      const activityTime = new Date(timeAgo);
+      const diffMs = now - activityTime;
+      const diffSecs = Math.floor(diffMs / 1000);
+      const diffMins = Math.floor(diffSecs / 60);
+      const diffHours = Math.floor(diffMins / 60);
+      const diffDays = Math.floor(diffHours / 24);
+
+      if (diffSecs < 60) return "just now";
+      if (diffMins < 60) return `${diffMins} min ago`;
+      if (diffHours < 24)
+        return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
+      return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
+    }
+
+    return "just now";
+  };
+
+  const GenerateQrCode = async () => {
+    try {
+      setQrLoading(true);
+      const userId = Org_ID || "691247bc234b01d1bcf698e9";
+      const res = await axios.post(
+        `https://kwikq-1.onrender.com/api/v1/qrcode/generate`,
+        {
+          individualId: userId,
+          branchId: BranchID || userId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${SingleToken}`,
+          },
+        }
+      );
+      setQrImageUrl(res?.data?.qrImageUrl);
+      setQrLoading(false);
+    } catch (error) {
+      setQrLoading(false);
+      console.log("Error fetching QR code:", error);
+      toast.error("Failed to fetch QR code");
+    }
+  };
 
   return (
     <div style={styles.dashboard}>
@@ -230,33 +276,6 @@ export default function Dashboard({ qrCode }) {
       </div>
 
       <div style={styles.statsGrid}>
-        {/* <div style={{ ...styles.statCard, ...styles.statCardPurple }}>
-          <div style={{ ...styles.statIcon, ...styles.statIconPurple }}>
-            <Users size={24} />
-          </div>
-          <p style={styles.statLabel}>Active in Queue</p>
-          <h2 style={styles.statValue}>32</h2>
-          <span style={{ ...styles.statChange, color: "#8b5cf6" }}>+6%</span>
-        </div>
-
-        <div style={{ ...styles.statCard, ...styles.statCardBlue }}>
-          <div style={{ ...styles.statIcon, ...styles.statIconBlue }}>
-            <Clock size={24} />
-          </div>
-          <p style={styles.statLabel}>Avg. Wait Time</p>
-          <h2 style={styles.statValue}>12 min</h2>
-          <span style={{ ...styles.statChange, color: "#ef4444" }}>-3%</span>
-        </div>
-
-        <div style={{ ...styles.statCard, ...styles.statCardGreen }}>
-          <div style={{ ...styles.statIcon, ...styles.statIconGreen }}>
-            <CheckCircle size={24} />
-          </div>
-          <p style={styles.statLabel}>Served Today</p>
-          <h2 style={styles.statValue}>247</h2>
-          <span style={{ ...styles.statChange, color: "#10b981" }}>+24%</span>
-        </div> */}
-
         {LoadingState ? (
           // Loading State of the cards
           <>
@@ -294,7 +313,7 @@ export default function Dashboard({ qrCode }) {
               Data={""}
               cardColor={"blue"}
               cardBgColor={"#e5e7fb"}
-              iconName={"LuUsersRound"}
+              iconName={User}
               cardData={CardData?.activeInQueue}
               text={metricsValue[0]}
             />
@@ -303,7 +322,7 @@ export default function Dashboard({ qrCode }) {
               cardValue={"12 min"}
               cardColor={"purple"}
               cardBgColor={"#ece2fb"}
-              iconName={"FaRegClock"}
+              iconName={Clock}
               text={metricsValue[1]}
               cardData={CardData?.averageWaitTime}
             />
@@ -311,34 +330,34 @@ export default function Dashboard({ qrCode }) {
               cardValue={"247"}
               cardColor={"green"}
               cardBgColor={"#e2f8e9"}
-              iconName={"AiOutlineCheckCircle"}
-              cardData={CardData?.servedToday}
+              iconName={CheckCircle}
               text={metricsValue[2]}
+              cardData={CardData?.servedToday}
             />
           </>
         )}
       </div>
 
-      {/* <progress value={progressValue % 10}></progress> */}
       <div style={styles.contentGrid}>
         <div style={styles.section1}>
           <div style={styles.sectionHeader}>
-            <h3 style={styles.sectionTitle}>Quota Points Status</h3>
-            <span style={styles.viewLink}>View</span>
+            <h3 style={styles.sectionTitle}>Queue Points Status</h3>
+            <span style={styles.liveIndicator}>Live</span>
           </div>
           <div
-            // style={quotas.length <= 0 ? styles.quotaList : styles.quotaList2}
-
-            // safe, clear
             style={
-              (quotas?.length === 0 ? styles.quotaList : styles.quotaList2,
-              { height: "90%" })
+              queuePoints.length === 0 ? styles.quotaList : styles.quotaList2
             }
           >
-            {quotas.length <= 0 ? (
+            {queuePointsLoading ? (
+              <Stack spacing={1} style={{ width: "100%" }}>
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                <Skeleton variant="rounded" width="100%" height={80} />
+                <Skeleton variant="rounded" width="100%" height={80} />
+              </Stack>
+            ) : queuePoints.length <= 0 ? (
               <div
                 style={{
-                  // border: "2px solid red",
                   display: "flex",
                   alignItems: "center",
                   flexDirection: "column",
@@ -352,70 +371,126 @@ export default function Dashboard({ qrCode }) {
                 </p>
               </div>
             ) : (
-              <div
-                style={{
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  flexDirection: "column",
-                }}
-              >
-                {quotas.map((quota) => {
-                  const progress_Value = quota.totalCustomers / 100;
-                  // console.log(quota);
-                  return (
-                    <div
-                      style={{
-                        // border: "2px solid green",
-                        height: "30%",
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        backgroundColor: "#f9fafb",
-                        borderRadius: ".5rem",
-                        color: "",
-                        padding: ".5rem",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: "50%",
-                          // border: "2px solid blue",
-                          height: "100%",
-                          display: "flex",
-                          justifyContent: "space-around",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <div>
-                          <h4>{quota.name}</h4>
-                        </div>
-                        <p>Serving</p>
-                        <p>T-247</p>
+              <div style={styles.queueGrid}>
+                {queuePoints.map((queue) => (
+                  <div key={queue._id} style={styles.queueCard}>
+                    <div style={styles.queueHeader}>
+                      <div style={styles.queueTitleContainer}>
+                        <h4 style={styles.queueTitle}>{queue.name}</h4>
+                        <div style={styles.statusIndicator}></div>
+                      </div>
+                      <p style={styles.servingLabel}>
+                        Serving: T-{Math.floor(Math.random() * 1000)}
+                      </p>
+                    </div>
+
+                    <div style={styles.queueFooter}>
+                      <div style={styles.waitingInfo}>
+                        <span style={styles.waitingCount}>
+                          {queue.waitingCount}
+                        </span>
+                        <span style={styles.waitingLabel}>waiting</span>
                       </div>
 
-                      {/* Progress */}
+                      <div style={styles.progressBarContainer}>
+                        <div style={styles.progressBar}>
+                          <div
+                            style={{
+                              ...styles.progressFill,
+                              width: `${
+                                (queue.waitingCount / queue.totalCustomers) *
+                                100
+                              }%`,
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
 
+        {/* Recent Activity */}
+
+        <div style={styles.section}>
+          <div style={styles.sectionHeader}>
+            <h3 style={styles.sectionTitle}>Recent Activity</h3>
+          </div>
+          <div style={styles.activityListContainer}>
+            {activitiesLoading ? (
+              <Stack spacing={1} style={{ width: "100%" }}>
+                <Skeleton variant="text" sx={{ fontSize: "1rem" }} />
+                <Skeleton variant="rounded" width="100%" height={60} />
+                <Skeleton variant="rounded" width="100%" height={60} />
+              </Stack>
+            ) : recentActivities.length <= 0 ? (
+              <div style={styles.emptyState}>
+                <IoClipboard style={{ fontSize: "4rem" }} />
+                <p style={{ marginTop: "1rem" }}>No data found</p>
+                <p style={{ fontSize: "1.1rem" }}>
+                  Recent activity records will be displayed here
+                </p>
+              </div>
+            ) : (
+              <div style={styles.activityItemsList}>
+                {recentActivities.map((activity, index) => {
+                  const activityInfo = getActivityIcon(activity.action);
+
+                  return (
+                    <div key={index} style={styles.activityItemNew}>
                       <div
                         style={{
-                          // border: "2px solid red",
-                          width: "50%",
-                          height: "100%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-around",
+                          ...styles.activityIconCircle,
+                          backgroundColor: activityInfo.bgColor,
                         }}
                       >
-                        <div style={{ textAlign: "center" }}>
-                          {/* Number of people in queue */}
-                          <p>{quota.totalCustomers}</p>
-                          {/* Status */}
-                          <p>Waiting</p>
+                        {activityInfo.icon === CheckCircle ? (
+                          <CheckCircle size={24} color={activityInfo.color} />
+                        ) : activityInfo.icon === "users" ? (
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke={activityInfo.color}
+                            strokeWidth="2"
+                          >
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                          </svg>
+                        ) : activityInfo.icon === "alert" ? (
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke={activityInfo.color}
+                            strokeWidth="2"
+                          >
+                            <circle cx="12" cy="13" r="1"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"></path>
+                          </svg>
+                        ) : (
+                          <Clock size={24} color={activityInfo.color} />
+                        )}
+                      </div>
+
+                      <div style={styles.activityContent}>
+                        <div style={styles.activityTicket}>
+                          {activity.ticketNumber || activity.queueNumber}
                         </div>
-                        <progress
-                          value={progress_Value}
-                          style={{ width: "40%" }}
-                        ></progress>
+                        <div style={styles.activityDescription}>
+                          {activity.action}
+                        </div>
+                        <div style={styles.activityTimeAgo}>
+                          {formatTimeAgo(activity.timeAgo)}
+                        </div>
                       </div>
                     </div>
                   );
@@ -424,91 +499,21 @@ export default function Dashboard({ qrCode }) {
             )}
           </div>
         </div>
-
-        <div style={styles.section}>
-          <div style={styles.sectionHeader}>
-            <h3 style={styles.sectionTitle}>Recent Activity</h3>
-          </div>
-          <div style={styles.activityList}>
-            {ractivities.length <= 0 ? (
-              <div
-                style={{
-                  // border: "2px solid red",
-                  display: "flex",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <IoClipboard style={{ fontSize: "4rem" }} />
-                <p style={{ marginTop: "1rem" }}>No data found</p>
-
-                <p style={{ fontSize: "1.1rem" }}>
-                  Queue points status records will be displayed here
-                </p>
-              </div>
-            ) : (
-              <>
-                {ractivities.slice(0, 5)?.map((act) => (
-                  <div key={act.id} style={styles.activityItem}>
-                    <div
-                      style={{
-                        ...styles.activityIcon,
-                        // backgroundColor: act.color,
-                      }}
-                    >
-                      {/* <act.icon size={20} color="white" /> */}
-                    </div>
-                    <div>
-                      <p style={styles.activityLabel}>{act?.queueNumber}</p>
-                      <p style={styles.activityAction}>{act?.action}</p>
-                      <p style={styles.activityTime}>{act?.timeAgo}</p>
-                    </div>
-                  </div>
-                ))}
-              </>
-            )}
-          </div>
-        </div>
       </div>
-
-      {/* <div style={styles.QrSection}>
-        <h3 style={styles.sectionTitle}>Quick Actions</h3>
-        <div style={styles.actionButtons}>
-          <button style={styles.actionBtn}>Pause Queue</button>
-          <button style={styles.actionBtn}>Add Manual Entry</button>
-        </div>
-        <div style={styles.qrSection}>
-          <div style={styles.qrCode}>
-            <div style={styles.qrPlaceholder}>
-              <div style={styles.qrGrid}>
-                {[...Array(64)].map((_, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      ...styles.qrSquare,
-                      background: i % 3 === 0 ? "transparent" : "#000",
-                    }}
-                  ></div>
-                ))}
-              </div>
-            </div>
-          </div>
-          <p style={styles.qrLabel}>Scan QR Manual Entry</p>
-        </div>
-      </div> */}
 
       <div style={styles.QrSection}>
         <h3>Quick Actions</h3>
 
+        {/* Qr code and button */}
         <div
           style={{
-            // border: "2px solid red",
             width: "100%",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
           }}
         >
+          {/* Buttons */}
           <div style={styles.actionButtons}>
             <button style={styles.actionBtn}>Pause Queue</button>
             <button style={styles.actionBtn} onClick={() => nav("/queue_form")}>
@@ -516,7 +521,23 @@ export default function Dashboard({ qrCode }) {
             </button>
           </div>
 
-          <img style={styles.QrCode} src={qrCode} alt="Qr code" />
+          <img
+            src={
+              qrLoading
+                ? undefined
+                : qrImageUrl ||
+                  `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
+                    Org_ID || "https://kwikq-1.onrender.com"
+                  )}`
+            }
+            alt="QR Code"
+            style={{
+              border: "10px solid white",
+              borderRadius: "8px",
+              padding: "5px",
+              backgroundColor: "white",
+            }}
+          />
         </div>
       </div>
     </div>
@@ -530,53 +551,28 @@ const styles = {
     padding: "2rem",
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif',
-    "@media (max-width: 768px)": {
-      padding: "1rem",
-    },
-    "@media (max-width: 480px)": {
-      padding: "0.5rem",
-    },
   },
   header: {
     marginBottom: "1rem",
     display: "flex",
     justifyContent: "space-between",
-    "@media (max-width: 768px)": {
-      flexDirection: "column",
-      gap: "1rem",
-      alignItems: "flex-start",
-    },
   },
   title: {
     fontSize: "1.75rem",
     fontWeight: "600",
     marginBottom: "0.25rem",
-    "@media (max-width: 768px)": {
-      fontSize: "1.5rem",
-    },
-    "@media (max-width: 480px)": {
-      fontSize: "1.25rem",
-    },
   },
   date: {
     color: "#6b7280",
     fontSize: "0.875rem",
   },
   trialBanner: {
-    // background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    // color: "white",
     padding: "1rem 0rem",
     borderRadius: "12px",
     display: "flex",
     alignItems: "center",
     marginBottom: "1rem",
     gap: "30px",
-    "@media (max-width: 768px)": {
-      flexDirection: "column",
-      gap: "1rem",
-      alignItems: "flex-start",
-      padding: "1rem",
-    },
   },
   upgradeBtn: {
     background: "#303bff",
@@ -590,25 +586,12 @@ const styles = {
     justifyContent: "space-between",
     cursor: "pointer",
     fontSize: "1.2rem",
-    "@media (max-width: 768px)": {
-      width: "100%",
-      justifyContent: "center",
-    },
-    "@media (max-width: 480px)": {
-      fontSize: "1rem",
-      padding: "0.75rem 1rem",
-    },
   },
   statsGrid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
     gap: "1.5rem",
     marginBottom: "2rem",
-    // border: "12px solid blue",
-    "@media (max-width: 768px)": {
-      gridTemplateColumns: "1fr",
-      gap: "1rem",
-    },
   },
   statCard: {
     background: "white",
@@ -663,29 +646,15 @@ const styles = {
     gridTemplateColumns: "1fr 1fr",
     gap: "2rem",
     marginBottom: "2rem",
-    "@media (max-width: 1024px)": {
-      gridTemplateColumns: "1fr",
-      gap: "1.5rem",
-    },
   },
   section1: {
     background: "white",
     padding: "1.5rem",
     borderRadius: "12px",
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-    // border: "2px solid red",
     width: "100%",
     height: "80vh",
     minHeight: "fit-content",
-    "@media (max-width: 1024px)": {
-      height: "auto",
-      minHeight: "400px",
-    },
-    "@media (max-width: 768px)": {
-      padding: "1rem",
-      height: "auto",
-      minHeight: "350px",
-    },
   },
 
   QrSection: {
@@ -693,36 +662,21 @@ const styles = {
     padding: "1.5rem",
     borderRadius: "12px",
     boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-    // border: "2px solid blue",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    "@media (max-width: 768px)": {
-      padding: "1rem",
-    },
   },
 
   QrCode: {
     width: "20%",
     height: "50%",
-    "@media (max-width: 1024px)": {
-      width: "25%",
-      height: "auto",
-    },
-    "@media (max-width: 768px)": {
-      width: "30%",
-    },
-    "@media (max-width: 480px)": {
-      width: "40%",
-    },
   },
 
   section: {
     backgroundColor: "white",
     padding: "1rem",
-    "@media (max-width: 768px)": {
-      padding: "1rem",
-    },
+    borderRadius: "12px",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
   },
 
   sectionHeader: {
@@ -730,14 +684,10 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: "1.5rem",
-    // border: "2px solid red",
   },
   sectionTitle: {
     fontSize: "1.125rem",
     fontWeight: "600",
-    "@media (max-width: 480px)": {
-      fontSize: "1rem",
-    },
   },
   viewLink: {
     color: "#ef4444",
@@ -748,9 +698,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
-    // border: "2px solid red",
     height: "100%",
-    // flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -760,7 +708,6 @@ const styles = {
     flexDirection: "column",
     gap: "1rem",
     // border: "2px solid red",
-    height: "50vh",
   },
 
   quotaItem: {
@@ -800,63 +747,74 @@ const styles = {
     fontSize: "0.75rem",
     color: "#6b7280",
   },
-  activityList: {
+  activityListContainer: {
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
-    // border: "2px solid red",
-    height: "90%",
-    // display: "flex",
-    justifyContent: "center",
-    "@media (max-width: 1024px)": {
-      height: "auto",
-      minHeight: "300px",
-    },
+    maxHeight: "100%",
+    overflowY: "auto",
   },
-  activityItem: {
+
+  emptyState: {
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "center",
+    minHeight: "300px",
+  },
+
+  activityItemsList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "1.25rem",
+  },
+
+  activityItemNew: {
     display: "flex",
     gap: "1rem",
     alignItems: "flex-start",
-    "@media (max-width: 480px)": {
-      gap: "0.75rem",
-    },
+    padding: "0.5rem 0",
   },
-  activityIcon: {
-    width: "40px",
-    height: "40px",
-    borderRadius: "8px",
+
+  activityIconCircle: {
+    width: "48px",
+    height: "48px",
+    minWidth: "48px",
+    borderRadius: "50%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     flexShrink: 0,
-    "@media (max-width: 480px)": {
-      width: "35px",
-      height: "35px",
-    },
   },
-  activityTime: {
-    fontSize: "0.75rem",
-    color: "#9ca3af",
-    marginBottom: "0.25rem",
+
+  activityContent: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.25rem",
+    flex: 1,
   },
-  activityAction: {
-    fontSize: "0.875rem",
+
+  activityTicket: {
+    fontSize: "1rem",
     fontWeight: "600",
-    marginBottom: "0.25rem",
+    color: "#1f2937",
   },
-  activityLabel: {
+
+  activityDescription: {
     fontSize: "0.875rem",
     color: "#6b7280",
   },
+
+  activityTimeAgo: {
+    fontSize: "0.75rem",
+    color: "#9ca3af",
+  },
+
   actionButtons: {
     display: "flex",
     gap: "1rem",
     marginBottom: "1.5rem",
     marginTop: "1rem",
-    "@media (max-width: 768px)": {
-      flexDirection: "column",
-      width: "100%",
-    },
   },
   actionBtn: {
     flex: 1,
@@ -867,10 +825,6 @@ const styles = {
     fontWeight: "500",
     cursor: "pointer",
     minWidth: "10rem",
-    "@media (max-width: 768px)": {
-      minWidth: "auto",
-      width: "100%",
-    },
   },
   qrSection: {
     display: "flex",
@@ -910,5 +864,104 @@ const styles = {
   qrLabel: {
     fontSize: "0.875rem",
     color: "#6b7280",
+  },
+  queueGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+    gap: "1.5rem",
+    width: "100%",
+  },
+
+  queueCard: {
+    display: "flex",
+    flexDirection: "column",
+    padding: "1.5rem",
+    backgroundColor: "#f9fafb",
+    borderRadius: "12px",
+    border: "1px solid #e5e7eb",
+  },
+
+  queueHeader: {
+    marginBottom: "1.5rem",
+  },
+
+  queueTitleContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.5rem",
+    marginBottom: "0.5rem",
+  },
+
+  queueTitle: {
+    fontSize: "1rem",
+    fontWeight: "600",
+    color: "#1f2937",
+    margin: 0,
+  },
+
+  statusIndicator: {
+    width: "8px",
+    height: "8px",
+    borderRadius: "50%",
+    backgroundColor: "#10b981",
+  },
+
+  servingLabel: {
+    fontSize: "0.875rem",
+    color: "#6b7280",
+    margin: "0.5rem 0 0 0",
+  },
+
+  queueFooter: {
+    display: "flex",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+    gap: "1rem",
+  },
+
+  waitingInfo: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "0.25rem",
+    minWidth: "60px",
+  },
+
+  waitingCount: {
+    fontSize: "1.5rem",
+    fontWeight: "700",
+    color: "#1f2937",
+  },
+
+  waitingLabel: {
+    fontSize: "0.75rem",
+    color: "#9ca3af",
+  },
+
+  progressBarContainer: {
+    flex: 1,
+    display: "flex",
+    alignItems: "center",
+  },
+
+  progressBar: {
+    width: "100%",
+    height: "8px",
+    backgroundColor: "#d1d5db",
+    borderRadius: "4px",
+    overflow: "hidden",
+  },
+
+  progressFill: {
+    height: "100%",
+    backgroundColor: "#1f2937",
+    borderRadius: "4px",
+    transition: "width 0.3s ease",
+  },
+
+  liveIndicator: {
+    color: "#ef4444",
+    fontSize: "0.875rem",
+    fontWeight: "600",
   },
 };

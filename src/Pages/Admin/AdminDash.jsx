@@ -226,15 +226,32 @@ const AdminDashboard = () => {
 
         <div style={styles.sidebarFooter}>
           <div style={styles.userProfile}>
-            <div style={styles.userAvatar}>{initials?.name[0]}</div>
+            <div style={styles.userAvatar}>
+              {/* {initials.name ? initials?.name?[0] : initials?.branchName?[0]} */}
+              {(
+                initials?.name?.[0] ||
+                initials?.branchName?.[0] ||
+                ""
+              ).toUpperCase()}
+
+              {/* {initials?.name[0]} || {initial?s?.branchName[0]}W */}
+            </div>
             <div>
-              <p style={styles.userName}>{initials.name}</p>
-              <p style={styles.userEmail}>{initials.email}</p>
+              <p style={styles.userName}>
+                {/* {initials.name} || {initials?.branchName} */}
+
+                {initials?.name || initials?.branchName}
+              </p>
+              <p style={styles.userEmail}>
+                {/* {initials.email} || {initials?.managerEmail} */}
+
+                {initials?.email || initials?.managerEmail}
+              </p>
             </div>
           </div>
-          <button style={styles.logoutBtn}>
+          <button onClick={() => SetLogoutModal(true)} style={styles.logoutBtn}>
             <LogOut size={18} />
-            <span onClick={() => SetLogoutModal(true)}>Logout</span>
+            <span>Logout</span>
           </button>
         </div>
       </aside>
