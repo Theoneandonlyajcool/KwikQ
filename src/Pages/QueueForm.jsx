@@ -27,7 +27,7 @@ const QueueForm = () => {
   // console.log(useLocation())
   const { search } = useLocation();
   // console.log(search?.split("&")[1].split("=")[1])
-  const { queue, id } = useParams;
+  const { queue, id } = useParams();
 
   const [FormLoadingState, SetFormLoadingState] = useState(false);
 
