@@ -27,6 +27,7 @@ const QueueForm = () => {
   // console.log(useLocation())
   const { search } = useLocation();
   // console.log(search?.split("&")[1].split("=")[1])
+  const { queue, id } = useParams;
 
   const [FormLoadingState, SetFormLoadingState] = useState(false);
 
@@ -62,7 +63,7 @@ const QueueForm = () => {
       SetFormLoadingState(true);
       const res = await axios.get(`${BaseURl}/api/v1/total-queues`);
       console.log(res?.data);
-      toast.success(res?.data?.message);
+      // toast.success(res?.data?.message);
       SetQueueNumber(res?.data?.data);
       SetFormLoadingState(false);
     } catch (error) {
@@ -88,7 +89,6 @@ const QueueForm = () => {
   const [apiData, SetapiData] = useState({});
   const JoinQueue = async () => {
     try {
-      const { queue, id } = useParams;
       SetLoadingState(true);
       const res = await axios.post(
         // `
@@ -98,7 +98,7 @@ const QueueForm = () => {
         // `,
 
         `
-        ${BaseURl}/api/v1/create-queue/${queue}/${id},
+        ${BaseURl}/api/v1/create-queue/${id},
           
         `,
         {
