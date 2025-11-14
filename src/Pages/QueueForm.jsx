@@ -61,7 +61,7 @@ const QueueForm = () => {
   const Fetch_Total_Number_In_Queue = async () => {
     try {
       SetFormLoadingState(true);
-      const res = await axios.get(`${BaseURl}/api/v1/total-queues`);
+      const res = await axios.get(`${BaseURl}/api/v1/total-queues/${id}`);
       console.log(res?.data);
       // toast.success(res?.data?.message);
       SetQueueNumber(res?.data?.data);
