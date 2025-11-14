@@ -98,7 +98,7 @@ const QueueForm = () => {
         // `,
 
         `
-        ${BaseURl}/api/v1/create-queue/${id},
+        ${BaseURl}/api/v1/create-queue/${id}
           
         `,
         {
