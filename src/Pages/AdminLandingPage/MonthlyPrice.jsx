@@ -17,13 +17,19 @@ import {
   CheckIcon,
   CancelIcon,
 } from "./MonthlyPriceStyle";
+
 import axios from "axios";
 import FreeTrialModal from "../Admin/components/MonthlyPricingCard";
 
 const MonthlyPrice = () => {
-  const [PaymentModal, ShowPaymentModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState(null);
 
   const [isAnnual, setIsAnnual] = useState(false);
+
+  const BaseUrl = import.meta.env.VITE_API_BASE_URL;
+  const Token = localStorage.getItem("User");
+  const ID = localStorage.getItem("user_ID");
 
   const plans = [
     {
@@ -41,11 +47,6 @@ const MonthlyPrice = () => {
         { text: "Basic analytics", available: true },
         { text: "QR code access", available: true },
         { text: "Standard support", available: true },
-        { text: "Priority queue management", available: false },
-        { text: "Advanced analytics & reports", available: false },
-        { text: "Custom branding", available: false },
-        { text: "API access", available: false },
-        { text: "Dedicated account manager", available: false },
       ],
     },
     {
@@ -64,10 +65,6 @@ const MonthlyPrice = () => {
         { text: "QR code access", available: true },
         { text: "Standard support", available: true },
         { text: "Priority queue management", available: true },
-        { text: "Advanced analytics & reports", available: true },
-        { text: "Custom branding", available: true },
-        { text: "API access", available: false },
-        { text: "Dedicated account manager", available: false },
       ],
     },
     {
@@ -86,35 +83,24 @@ const MonthlyPrice = () => {
         { text: "QR code access", available: true },
         { text: "Standard support", available: true },
         { text: "Priority queue management", available: true },
-        { text: "Advanced analytics & reports", available: true },
-        { text: "Custom branding", available: true },
-        { text: "API access", available: true },
-        { text: "Dedicated account manager", available: true },
       ],
     },
   ];
 
-  const ID = localStorage.getItem("user_ID");
-
-  const [ValuesToPost, SetValuesToPost] = useState({
-    individualId: null,
-    planType: null,
-    billingCycle: null,
-  });
-
-  const BaseUrl = import.meta.env.VITE_API_BASE_URL;
-
-  const Token = localStorage.getItem("User");
-
-  const ProceedToPayment = async (payload) => {
+  const handleContinuePayment = async (payload) => {
     try {
-      const res = await axios.post(`${BaseUrl}/api/v1/initialize`, payload, {
-        headers: {
-          Authorization: `Bearer ${Token}`,
-        },
-      });
+      const { data } = await axios.post(
+        `${BaseUrl}/api/v1/initialize`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+          },
+        }
+      );
 
-      console.log(res?.data);
+      const checkoutURL = data?.data?.url;
+      if (checkoutURL) window.location.href = checkoutURL;
     } catch (error) {
       console.log(error);
     }
@@ -127,23 +113,25 @@ const MonthlyPrice = () => {
           <ToggleButton active={!isAnnual} onClick={() => setIsAnnual(false)}>
             Monthly
           </ToggleButton>
+
           <ToggleButton active={isAnnual} onClick={() => setIsAnnual(true)}>
             Annual
           </ToggleButton>
         </div>
+
         <small>Save 20% on annual billing</small>
       </MonthlyWrapper>
 
-      {PaymentModal && <FreeTrialModal />}
+      {showPaymentModal && (
+        <FreeTrialModal
+          data={selectedPlan}
+          closeModal={() => setShowPaymentModal(false)}
+          proceed={(payload) => handleContinuePayment(payload)}
+        />
+      )}
 
       <MonthlyCardsHolder>
         {plans.map((plan, index) => {
-          const MonthlyPrice = plan.priceMonthly;
-          const MonthlyAmount = MonthlyPrice.replace(/[^\d]/g, "");
-
-          const AnnualPrice = plan.priceYearly;
-          const AnnualAmount = AnnualPrice.replace(/[^\d]/g, "");
-
           const PriceCard = plan.popular ? MiddleCard : Cards;
           const price = isAnnual ? plan.priceYearly : plan.priceMonthly;
 
@@ -154,6 +142,7 @@ const MonthlyPrice = () => {
                   <div className="Icons">{plan.icon}</div>
                   {plan.popular && <small>Most Popular</small>}
                 </div>
+
                 <h2>{plan.name}</h2>
                 <p>{plan.desc}</p>
               </div>
@@ -163,32 +152,17 @@ const MonthlyPrice = () => {
               </div>
 
               <PlanButton
+                popular={plan.popular}
                 onClick={() => {
-                  // console.log(MonthlyAmount);
-                  // console.log(AnnualAmount);
-                  // console.log(plan.name);
-
-                  // console.log(ID);
-                  // console.log(plan.name);
-
-                  // console.log(isAnnual ? "Annually" : "Monthly");
-                  // SetValuesToPost({
-                  //   individualId: ID,
-                  //   planType: plan.name,
-                  //   billingCycle: isAnnual ? "Annually" : "Monthly",
-                  // });
-                  ShowPaymentModal(true);
-
                   const payload = {
                     individualId: ID,
                     planType: plan.name,
                     billingCycle: isAnnual ? "Annually" : "Monthly",
                   };
-                  <FreeTrialModal data={payload} />;
 
-                  // ProceedToPayment(payload);
+                  setSelectedPlan(payload);
+                  setShowPaymentModal(true);
                 }}
-                popular={plan.popular}
               >
                 {plan.button} <TiArrowRight />
               </PlanButton>
