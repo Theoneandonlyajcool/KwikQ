@@ -118,11 +118,11 @@ const QueueCard = (props) => {
           <div className="icon-container">
             <Users size={28} color="#3f51b5" strokeWidth={2.5} />
           </div>
-          <span className="percentage-badge">{cardData?.percentageChange}</span>
+          <span className="percentage-badge">{cardData}</span>
         </div>
 
         <div className="card-label">{text}</div>
-        <div className="card-value">{cardData?.current}</div>
+        <div className="card-value">{cardData}</div>
       </div>
     </div>
   );

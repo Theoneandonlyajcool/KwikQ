@@ -18,8 +18,11 @@ import {
   CancelIcon,
 } from "./MonthlyPriceStyle";
 import axios from "axios";
+import FreeTrialModal from "../Admin/components/MonthlyPricingCard";
 
 const MonthlyPrice = () => {
+  const [PaymentModal, ShowPaymentModal] = useState(false);
+
   const [isAnnual, setIsAnnual] = useState(false);
 
   const plans = [
@@ -131,6 +134,8 @@ const MonthlyPrice = () => {
         <small>Save 20% on annual billing</small>
       </MonthlyWrapper>
 
+      {PaymentModal && <FreeTrialModal />}
+
       <MonthlyCardsHolder>
         {plans.map((plan, index) => {
           const MonthlyPrice = plan.priceMonthly;
@@ -172,14 +177,16 @@ const MonthlyPrice = () => {
                   //   planType: plan.name,
                   //   billingCycle: isAnnual ? "Annually" : "Monthly",
                   // });
+                  ShowPaymentModal(true);
 
                   const payload = {
                     individualId: ID,
                     planType: plan.name,
                     billingCycle: isAnnual ? "Annually" : "Monthly",
                   };
+                  <FreeTrialModal data={payload} />;
 
-                  ProceedToPayment(payload);
+                  // ProceedToPayment(payload);
                 }}
                 popular={plan.popular}
               >

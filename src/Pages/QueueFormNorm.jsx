@@ -59,11 +59,12 @@ const QueueFormNorm = () => {
   const BaseURl = import.meta.env.VITE_API_BASE_URL;
 
   const [QueueNumber, SetQueueNumber] = useState();
+  const id = sessionStorage.getItem("user-recog");
 
   const Fetch_Total_Number_In_Queue = async () => {
     try {
       SetFormLoadingState(true);
-      const res = await axios.get(`${BaseURl}/api/v1/total-queues`);
+      const res = await axios.get(`${BaseURl}/api/v1/total-queues/${id}`);
       console.log(res?.data);
       toast.success(res?.data?.message);
       SetQueueNumber(res?.data?.data);

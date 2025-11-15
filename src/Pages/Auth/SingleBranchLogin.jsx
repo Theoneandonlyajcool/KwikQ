@@ -35,7 +35,8 @@ const LoginForm = () => {
       toast.success(res?.data?.message);
       localStorage.setItem("BranchID", res?.data?.branch?.id);
       console.log(res?.data?.branch?.id);
-      localStorage.setItem("singleToken", res?.data?.token);
+      localStorage.setItem("User", res?.data?.token);
+      sessionStorage.setItem("user-recog", res?.data?.branch?.id);
       // localStorage.setItem("Org_ID", res?.data?.organization);
 
       localStorage.setItem("adminInfo", JSON.stringify(res?.data?.branch));
