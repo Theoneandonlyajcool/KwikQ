@@ -1,11 +1,11 @@
 import { X, ArrowRight, Info } from "lucide-react";
 
-export default function FreeTrialModal({ data }) {
-  console.log(data);
+export default function FreeTrialModal({ data, close, proceed }) {
   return (
     <div className="overlay">
       <div className="modal">
-        <button className="close-button">
+        {/* Close Modal */}
+        <button className="close-button" onClick={close}>
           <X size={20} />
         </button>
 
@@ -23,14 +23,17 @@ export default function FreeTrialModal({ data }) {
 
         <div className="plan-card">
           <div className="plan-header">
-            <h3 className="plan-title">Starter Plan</h3>
+            <h3 className="plan-title">{data.planType} Plan</h3>
             <span className="free-badge">14-Day Free Trial</span>
           </div>
 
-          <p className="billing-text">Billed monthly</p>
+          <p className="billing-text">Billed {data.billingCycle}</p>
 
           <div className="price">
-            ₦15,000<span className="price-unit">/month</span>
+            ₦{data.amount}
+            <span className="price-unit">
+              /{data.billingCycle === "Monthly" ? "month" : "year"}
+            </span>
           </div>
         </div>
 
@@ -47,17 +50,26 @@ export default function FreeTrialModal({ data }) {
         </div>
 
         <div className="actions">
-          <button className="cancel-button">
+          <button className="cancel-button" onClick={close}>
             <X size={16} />
             Cancel
           </button>
-          <button className="continue-button">
+
+          {/* 🔥 Trigger Payment */}
+          <button
+            className="continue-button"
+            onClick={() => {
+              proceed(data); // call payment
+              close(); // close modal
+            }}
+          >
             Continue
             <ArrowRight size={16} />
           </button>
         </div>
       </div>
 
+      {/* CSS below */}
       <style>{`
         .overlay {
           position: fixed;
@@ -67,7 +79,7 @@ export default function FreeTrialModal({ data }) {
           align-items: center;
           justify-content: center;
           padding: 20px;
-          z-index:1200;
+          z-index: 1200;
         }
 
         .modal {
@@ -76,14 +88,11 @@ export default function FreeTrialModal({ data }) {
           width: 100%;
           max-width: 40%;
           padding: 24px;
-          // height:100%;
           position: relative;
-          // max-height:80%;
           box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
           display:flex;
-          justify-content:space-around;
-          // align-items:center;
           flex-direction:column;
+          gap: 20px;
         }
 
         .close-button {
@@ -104,10 +113,6 @@ export default function FreeTrialModal({ data }) {
           color: #333;
         }
 
-        .header {
-          margin-bottom: 24px;
-        }
-
         .start-trial-button {
           background: white;
           border: 2px solid #6366f1;
@@ -124,10 +129,6 @@ export default function FreeTrialModal({ data }) {
 
         .start-trial-button:hover {
           background: #f8f9ff;
-        }
-
-        .star-icon {
-          font-size: 16px;
         }
 
         .title {
@@ -147,9 +148,7 @@ export default function FreeTrialModal({ data }) {
           border: 2px solid #e5e7eb;
           border-radius: 12px;
           padding: 20px;
-          margin-bottom: 16px;
           background: #fafafa;
-          position: relative;
         }
 
         .plan-header {
@@ -198,14 +197,9 @@ export default function FreeTrialModal({ data }) {
           border: 1px solid #dbeafe;
           border-radius: 12px;
           padding: 16px;
-          margin-bottom: 20px;
+          margin-bottom: 10px;
           display: flex;
           gap: 12px;
-        }
-
-        .info-icon {
-          color: #3b82f6;
-          flex-shrink: 0;
         }
 
         .info-text {
@@ -234,10 +228,6 @@ export default function FreeTrialModal({ data }) {
           gap: 8px;
         }
 
-        .cancel-button:hover {
-          background: #f9fafb;
-        }
-
         .continue-button {
           background: #4f46e5;
           border: none;
@@ -252,10 +242,6 @@ export default function FreeTrialModal({ data }) {
           align-items: center;
           justify-content: center;
           gap: 8px;
-        }
-
-        .continue-button:hover {
-          background: #4338ca;
         }
       `}</style>
     </div>
