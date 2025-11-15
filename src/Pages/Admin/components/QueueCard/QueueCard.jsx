@@ -69,7 +69,7 @@ const QueueCard = ({ data, refresh }) => {
   const DeleteCustomer = async () => {
     try {
       SetDelete(true);
-      const res = await axios.delete(
+      const res = await axios.get(
         `${BaseURL}/api/v1/delete-customer/${data.id}`,
         {
           headers: {
@@ -122,13 +122,42 @@ const QueueCard = ({ data, refresh }) => {
 
       toast.success(res?.data?.message);
       SetAlertLoadingState(false);
+      setTimeout(() => {
+        refresh();
+      }, 3000);
       // alert(
       //   `${response.data.message} to ${response.data.data.name} (${response.data.data.email})`
       // );
-      refresh();
     } catch (error) {
       SetAlertLoadingState(false);
       console.log(error);
+    }
+  };
+
+  const [ServingCustomer, SetServingCustomer] = useState(false);
+  const ServeCustomer = async () => {
+    try {
+      SetServingCustomer(true);
+      const res = await axios.patch(
+        `${BaseURL}/api/v1/serve/${data?.id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log(res?.data);
+      SetServingCustomer(false);
+      toast.success(res?.data?.message);
+      setTimeout(() => {
+        refresh();
+      }, 1000);
+    } catch (error) {
+      SetServingCustomer(false);
+      console.log(error);
+      toast.error("Serving Error");
     }
   };
 
@@ -232,7 +261,7 @@ const QueueCard = ({ data, refresh }) => {
         <button
           style={{ color: "green", border: "2px solid green" }}
           onClick={() => {
-            removeCustomer();
+            ServeCustomer();
           }}
           // onClick={async () => {
           //   // optionally confirm
@@ -248,8 +277,7 @@ const QueueCard = ({ data, refresh }) => {
           // onClick={onRemove}
         >
           {/* <X className="service-card__button-icon" /> */}
-
-          {RemoveLoadingState ? "Serving..." : "Served"}
+          {ServingCustomer ? "Serving" : "serve"}
         </button>
       </div>
     </div>

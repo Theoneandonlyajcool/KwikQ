@@ -33,6 +33,7 @@ import GetStarted2 from "../Pages/Auth/GetStarted2";
 import LoginForm from "../Pages/Auth/SingleBranchLogin";
 import Editbranch from "../Pages/pagesbranch/Editbranch";
 import Allbranch from "../Pages/pagesbranch/Allbranch";
+import ThankYouModal from "../Pages/SuccessPayment";
 
 // Hooks
 import { useState } from "react";
@@ -87,6 +88,7 @@ const Router = () => {
             <Route path="/branch_onboarding" element={<BranchOnboarding />} />
             <Route path="/review" element={<Review />} />
             <Route path="/submitted" element={<Submitted />} />
+            <Route path="/payment_succesful" element={<ThankYouModal />} />
 
             <Route path="/dashboard/*" element={<LayoutShell />}>
               <Route index element={<Navigate to="overview" />} />

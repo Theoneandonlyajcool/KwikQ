@@ -243,6 +243,8 @@ const NotificationsPage = () => {
 
   console.log("wewewe", Role);
 
+  // const thisRole = Role == "single" ? "br"
+
   const FetchNotifications = async () => {
     try {
       const res = await axios.get(

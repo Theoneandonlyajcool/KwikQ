@@ -52,27 +52,30 @@ export default function Dashboard({ qrCode }) {
   const [queuePointsLoading, setQueuePointsLoading] = useState(false);
   const [totalWaiting, setTotalWaiting] = useState(0);
 
-  console.log(CardData);
+  console.log("Me i Look", CardData);
 
   const BranchID = localStorage.getItem("BranchID");
 
   const SingleToken =
     localStorage.getItem("singleToken") || localStorage.getItem("User");
-  console.log(SingleToken);
+
+  const token = localStorage.getItem("User");
 
   console.log(BranchID);
 
   const Org_ID = sessionStorage.getItem("user-recog");
   console.log(Org_ID);
+  console.log(token);
 
   const GetMetricsCardData = async () => {
     try {
       SetLoadingState(true);
       const res = await axios.get(`${BaseUrl}/api/v1/dashboard`, {
         headers: {
-          Authorization: `Bearer ${SingleToken}`,
+          Authorization: `Bearer ${token}`,
         },
       });
+      // console.log("the data of ....", res);
       SetCardData(res?.data?.data);
       SetLoadingState(false);
     } catch (error) {
@@ -86,14 +89,11 @@ export default function Dashboard({ qrCode }) {
     try {
       setActivitiesLoading(true);
       const userId = localStorage.getItem("user_ID");
-      const res = await axios.get(
-        `${BaseUrl}/api/v1/recent-activity/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${SingleToken}`,
-          },
-        }
-      );
+      const res = await axios.get(`${BaseUrl}/api/v1/recent-activity`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setRecentActivities(res?.data?.data || []);
       setActivitiesLoading(false);
     } catch (error) {
@@ -111,7 +111,7 @@ export default function Dashboard({ qrCode }) {
         `https://kwikq-1.onrender.com/api/v1/queue-points/${userId}`,
         {
           headers: {
-            Authorization: `Bearer ${SingleToken}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -264,16 +264,18 @@ export default function Dashboard({ qrCode }) {
         />
       </header>
 
-      <div style={styles.trialBanner}>
-        <h2>You're on a 7-Days Free Trial !</h2>
+      {localStorage.getItem("UserRole") == "individual" && (
+        <div style={styles.trialBanner}>
+          <h2>You're on a 7-Days Free Trial !</h2>
 
-        <button
-          style={styles.upgradeBtn}
-          onClick={() => nav("/admin_landingpage")}
-        >
-          Subscribe now <SlWallet />
-        </button>
-      </div>
+          <button
+            style={styles.upgradeBtn}
+            onClick={() => nav("/admin_landingpage")}
+          >
+            Subscribe now <SlWallet />
+          </button>
+        </div>
+      )}
 
       <div style={styles.statsGrid}>
         {LoadingState ? (
@@ -314,7 +316,7 @@ export default function Dashboard({ qrCode }) {
               cardColor={"blue"}
               cardBgColor={"#e5e7fb"}
               iconName={User}
-              cardData={CardData?.activeInQueue}
+              cardData={CardData.activeInQueue}
               text={metricsValue[0]}
             />
 
@@ -324,7 +326,7 @@ export default function Dashboard({ qrCode }) {
               cardBgColor={"#ece2fb"}
               iconName={Clock}
               text={metricsValue[1]}
-              cardData={CardData?.averageWaitTime}
+              cardData={CardData.servedToday}
             />
             <QueueCard
               cardValue={"247"}
@@ -332,7 +334,7 @@ export default function Dashboard({ qrCode }) {
               cardBgColor={"#e2f8e9"}
               iconName={CheckCircle}
               text={metricsValue[2]}
-              cardData={CardData?.servedToday}
+              cardData={CardData.avgWaitTime}
             />
           </>
         )}

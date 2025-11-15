@@ -292,6 +292,13 @@ const GeneralTab = () => {
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+  const subscriptionPlan = {
+    name: "Enterprise Plan",
+    status: "Active",
+    features: "Unlimited branches • Advanced analytics • Priority support",
+    price: "₦150,000/month",
+  };
+
   return (
     <>
       {error && (
@@ -438,6 +445,41 @@ const GeneralTab = () => {
               <p className="days-hint">Click to toggle days</p>
             </div>
           </div>
+
+          {localStorage.getItem("UserRole") == "individual" && (
+            <div className="subscription_plan_section">
+              <div className="section_header_simple">
+                <h2 className="section_title">Subscription Plan</h2>
+              </div>
+
+              <div className="subscription_card">
+                <div className="subscription_card_content">
+                  <div className="subscription_info">
+                    <div className="subscription_name_badge">
+                      <span className="subscription_name">
+                        {subscriptionPlan.name}
+                      </span>
+                      <span className="subscription_status">
+                        {subscriptionPlan.status}
+                      </span>
+                    </div>
+                    <p className="subscription_features">
+                      {subscriptionPlan.features}
+                    </p>
+                    <p className="subscription_price">
+                      {subscriptionPlan.price}
+                    </p>
+                  </div>
+                  <button
+                    className="change_plan_btn"
+                    onClick={() => nav("/admin_landingpage")}
+                  >
+                    Change Plan
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div
             className="section"

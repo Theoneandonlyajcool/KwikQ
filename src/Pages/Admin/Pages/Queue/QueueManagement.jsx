@@ -18,6 +18,8 @@ const QueueManagement = ({ qrCode }) => {
   const BaseURL = import.meta.env.VITE_API_BASE_URL;
   const [LoadingState, SetLoadingState] = useState(false);
   const ID = localStorage.getItem("user_ID");
+  const [qrImageUrl, setQrImageUrl] = useState(null);
+  const [qrLoading, setQrLoading] = useState(false);
 
   const GetAllQueues = async () => {
     try {
@@ -33,6 +35,36 @@ const QueueManagement = ({ qrCode }) => {
   };
 
   const [dateTime, setDateTime] = useState("");
+
+  const SingleToken =
+    localStorage.getItem("singleToken") || localStorage.getItem("User");
+  console.log(SingleToken);
+  const Org_ID = sessionStorage.getItem("user-recog");
+
+  const GenerateQrCode = async () => {
+    try {
+      setQrLoading(true);
+      const userId = Org_ID || "691247bc234b01d1bcf698e9";
+      const res = await axios.post(
+        `https://kwikq-1.onrender.com/api/v1/qrcode/generate`,
+        {
+          individualId: userId,
+          branchId: BranchID || userId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${SingleToken}`,
+          },
+        }
+      );
+      setQrImageUrl(res?.data?.qrImageUrl);
+      setQrLoading(false);
+    } catch (error) {
+      setQrLoading(false);
+      console.log("Error fetching QR code:", error);
+      toast.error("Failed to fetch QR code");
+    }
+  };
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -173,7 +205,18 @@ const QueueManagement = ({ qrCode }) => {
               </button>
             </div>
             <div className="qr-section-responsive">
-              <img className="qr-code-responsive" src={qrCode} alt="QR Code" />
+              <img
+                className="qr-code-responsive"
+                src={
+                  qrLoading
+                    ? undefined
+                    : qrImageUrl ||
+                      `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
+                        Org_ID || "https://kwikq-1.onrender.com"
+                      )}`
+                }
+                alt="QR Code"
+              />
             </div>
           </div>
         </div>
