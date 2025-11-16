@@ -38,6 +38,8 @@ const MonthlyPrice = () => {
       desc: "Perfect for small businesses getting started",
       priceMonthly: "₦15,000/month",
       priceYearly: "₦144,000/year",
+      amountMonthly: 15000,
+      amountYearly: 144000,
       button: "Subscribe",
       popular: false,
       features: [
@@ -55,6 +57,8 @@ const MonthlyPrice = () => {
       desc: "Ideal for growing organizations",
       priceMonthly: "₦35,000/month",
       priceYearly: "₦336,000/year",
+      amountMonthly: 35000,
+      amountYearly: 336000,
       button: "Subscribe",
       popular: true,
       features: [
@@ -73,7 +77,9 @@ const MonthlyPrice = () => {
       desc: "For large organizations with complex needs",
       priceMonthly: "Custom Pricing",
       priceYearly: "Custom Pricing",
-      button: "Subscribe",
+      amountMonthly: 0,
+      amountYearly: 0,
+      button: "Contact Sales",
       popular: false,
       features: [
         { text: "Unlimited service points", available: true },
@@ -125,7 +131,7 @@ const MonthlyPrice = () => {
       {showPaymentModal && (
         <FreeTrialModal
           data={selectedPlan}
-          closeModal={() => setShowPaymentModal(false)}
+          close={() => setShowPaymentModal(false)}
           proceed={(payload) => handleContinuePayment(payload)}
         />
       )}
@@ -134,6 +140,7 @@ const MonthlyPrice = () => {
         {plans.map((plan, index) => {
           const PriceCard = plan.popular ? MiddleCard : Cards;
           const price = isAnnual ? plan.priceYearly : plan.priceMonthly;
+          const amount = isAnnual ? plan.amountYearly : plan.amountMonthly;
 
           return (
             <PriceCard key={index}>
@@ -158,9 +165,14 @@ const MonthlyPrice = () => {
                     individualId: ID,
                     planType: plan.name,
                     billingCycle: isAnnual ? "Annually" : "Monthly",
+                    amount: amount,
                   };
 
-                  setSelectedPlan(payload);
+                  setSelectedPlan({
+                    planType: plan.name,
+                    billingCycle: isAnnual ? "Annually" : "Monthly",
+                    amount: amount,
+                  });
                   setShowPaymentModal(true);
                 }}
               >

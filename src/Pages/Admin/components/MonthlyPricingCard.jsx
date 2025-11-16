@@ -1,11 +1,35 @@
 import { X, ArrowRight, Info } from "lucide-react";
+import { useState } from "react";
 
 export default function FreeTrialModal({ data, close, proceed }) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleContinue = async () => {
+    setIsLoading(true);
+    try {
+      await proceed(data);
+    } catch (error) {
+      console.error("Payment failed:", error);
+      alert("Payment failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleClose = () => {
+    if (!isLoading && close && typeof close === "function") {
+      close();
+    }
+  };
+
   return (
     <div className="overlay">
       <div className="modal">
-        {/* Close Modal */}
-        <button className="close-button" onClick={close}>
+        <button
+          className="close-button"
+          onClick={handleClose}
+          disabled={isLoading}
+        >
           <X size={20} />
         </button>
 
@@ -17,14 +41,14 @@ export default function FreeTrialModal({ data, close, proceed }) {
 
           <h2 className="title">Confirm Your Plan</h2>
           <p className="subtitle">
-            Review your selection and start your 14-day free trial
+            Review your selection and start your 7-day free trial
           </p>
         </div>
 
         <div className="plan-card">
           <div className="plan-header">
             <h3 className="plan-title">{data.planType} Plan</h3>
-            <span className="free-badge">14-Day Free Trial</span>
+            <span className="free-badge">7-Day Free Trial</span>
           </div>
 
           <p className="billing-text">Billed {data.billingCycle}</p>
@@ -44,32 +68,41 @@ export default function FreeTrialModal({ data, close, proceed }) {
           <p className="info-text">
             <strong>No charge today</strong>
             <br />
-            Your free trial starts now. You'll only be charged after 14 days,
-            and you can cancel anytime before then.
+            Your free trial starts now. You'll only be charged after 7 days, and
+            you can cancel anytime before then.
           </p>
         </div>
 
         <div className="actions">
-          <button className="cancel-button" onClick={close}>
+          <button
+            className="cancel-button"
+            onClick={handleClose}
+            disabled={isLoading}
+          >
             <X size={16} />
             Cancel
           </button>
 
-          {/* 🔥 Trigger Payment */}
           <button
             className="continue-button"
-            onClick={() => {
-              proceed(data); // call payment
-              close(); // close modal
-            }}
+            onClick={handleContinue}
+            disabled={isLoading}
           >
-            Continue
-            <ArrowRight size={16} />
+            {isLoading ? (
+              <>
+                <div className="loading-spinner"></div>
+                Processing...
+              </>
+            ) : (
+              <>
+                Continue
+                <ArrowRight size={16} />
+              </>
+            )}
           </button>
         </div>
       </div>
 
-      {/* CSS below */}
       <style>{`
         .overlay {
           position: fixed;
@@ -109,7 +142,12 @@ export default function FreeTrialModal({ data, close, proceed }) {
           justify-content: center;
         }
 
-        .close-button:hover {
+        .close-button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        .close-button:hover:not(:disabled) {
           color: #333;
         }
 
@@ -228,6 +266,11 @@ export default function FreeTrialModal({ data, close, proceed }) {
           gap: 8px;
         }
 
+        .cancel-button:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
         .continue-button {
           background: #4f46e5;
           border: none;
@@ -242,6 +285,121 @@ export default function FreeTrialModal({ data, close, proceed }) {
           align-items: center;
           justify-content: center;
           gap: 8px;
+          transition: all 0.2s ease;
+        }
+
+        .continue-button:disabled {
+          background: #9ca3af;
+          cursor: not-allowed;
+          transform: none;
+        }
+
+        .continue-button:not(:disabled):hover {
+          background: #4338ca;
+          transform: translateY(-1px);
+        }
+
+        .loading-spinner {
+          width: 16px;
+          height: 16px;
+          border: 2px solid transparent;
+          border-top: 2px solid white;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+          .modal {
+            max-width: 90%;
+            padding: 20px;
+            gap: 16px;
+          }
+          
+          .title {
+            font-size: 18px;
+          }
+          
+          .plan-card {
+            padding: 16px;
+          }
+          
+          .plan-title {
+            font-size: 16px;
+          }
+          
+          .price {
+            font-size: 18px;
+          }
+          
+          .actions {
+            flex-direction: column;
+          }
+          
+          .cancel-button, .continue-button {
+            justify-content: center;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .modal {
+            max-width: 95%;
+            padding: 16px;
+            gap: 12px;
+          }
+          
+          .overlay {
+            padding: 10px;
+          }
+          
+          .title {
+            font-size: 16px;
+          }
+          
+          .subtitle {
+            font-size: 13px;
+          }
+          
+          .plan-header {
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+          }
+          
+          .free-badge {
+            align-self: flex-start;
+          }
+          
+          .info-card {
+            padding: 12px;
+            gap: 8px;
+          }
+          
+          .info-text {
+            font-size: 12px;
+          }
+          
+          .start-trial-button {
+            font-size: 13px;
+            padding: 6px 12px;
+          }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .modal {
+            max-width: 60%;
+          }
+        }
+
+        @media (min-width: 1025px) {
+          .modal {
+            max-width: 40%;
+          }
         }
       `}</style>
     </div>
