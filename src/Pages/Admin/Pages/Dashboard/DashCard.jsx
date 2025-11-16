@@ -104,6 +104,125 @@ const QueueCard = (props) => {
             font-size: 14px;
           }
         }
+
+        /* Media Queries for Responsive Design */
+        @media (max-width: 768px) {
+          .queue-card {
+            max-width: 100%;
+            padding: 24px 20px;
+            border-radius: 20px;
+          }
+          
+          .card-value {
+            font-size: 2.5rem;
+          }
+          
+          .card-label {
+            font-size: 15px;
+            margin-bottom: 12px;
+          }
+          
+          .icon-container {
+            width: 52px;
+            height: 52px;
+            margin-bottom: 20px;
+          }
+          
+          .percentage-badge {
+            font-size: 14px;
+            top: 24px;
+            right: 20px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .queue-card {
+            padding: 20px 16px;
+            border-radius: 18px;
+          }
+          
+          .card-value {
+            font-size: 2rem;
+          }
+          
+          .card-label {
+            font-size: 14px;
+            margin-bottom: 10px;
+          }
+          
+          .icon-container {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 16px;
+          }
+          
+          .percentage-badge {
+            font-size: 13px;
+            top: 20px;
+            right: 16px;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          .queue-card {
+            max-width: 300px;
+            padding: 36px 28px;
+          }
+          
+          .card-value {
+            font-size: 3rem;
+          }
+          
+          .card-label {
+            font-size: 17px;
+          }
+          
+          .icon-container {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 28px;
+          }
+        }
+
+        @media (min-width: 1440px) {
+          .queue-card {
+            max-width: 320px;
+            padding: 40px 32px;
+          }
+          
+          .card-value {
+            font-size: 3.5rem;
+          }
+        }
+
+        /* Tablet specific adjustments */
+        @media (min-width: 769px) and (max-width: 1023px) {
+          .queue-card {
+            max-width: 260px;
+            padding: 28px 22px;
+          }
+          
+          .card-value {
+            font-size: 2.75rem;
+          }
+        }
+
+        /* Landscape mobile optimization */
+        @media (max-height: 500px) and (orientation: landscape) {
+          .queue-card {
+            padding: 20px 16px;
+          }
+          
+          .icon-container {
+            width: 44px;
+            height: 44px;
+            margin-bottom: 16px;
+          }
+          
+          .card-value {
+            font-size: 2rem;
+          }
+        }
       `}</style>
 
       <div

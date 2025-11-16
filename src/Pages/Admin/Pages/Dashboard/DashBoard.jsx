@@ -250,6 +250,208 @@ export default function Dashboard({ qrCode }) {
           background: #f8f9fa;
           color: #333;
         }
+
+        /* Enhanced Media Queries for React Inline Styles */
+        
+        /* Mobile Devices (max-width: 768px) */
+        @media (max-width: 768px) {
+          [style*="padding: 2rem"] {
+            padding: 1rem !important;
+          }
+          
+          [style*="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))"] {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+          }
+          
+          /* This is the key change - stack content grid as single column */
+          [style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
+          }
+          
+          [style*="justify-content: space-between"][style*="margin-bottom: 1rem"] {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 1rem !important;
+          }
+          
+          [style*="padding: 1rem 0rem"][style*="align-items: center"] {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 1rem !important;
+            padding: 1rem !important;
+          }
+          
+          [style*="display: flex"][style*="gap: 1rem"][style*="margin-bottom: 1.5rem"] {
+            flex-direction: column !important;
+            width: 100% !important;
+          }
+          
+          [style*="width: 100%"][style*="display: flex"][style*="justify-content: space-between"] {
+            flex-direction: column-reverse !important;
+            gap: 1.5rem !important;
+            align-items: center !important;
+          }
+          
+          [style*="height: 80vh"] {
+            height: auto !important;
+            min-height: 400px !important;
+          }
+          
+          [style*="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))"] {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+          }
+          
+          /* Font size adjustments for mobile */
+          [style*="font-size: 1.75rem"] {
+            font-size: 1.5rem !important;
+          }
+          
+          [style*="font-size: 1.125rem"] {
+            font-size: 1rem !important;
+          }
+          
+          [style*="min-width: 10rem"] {
+            min-width: 100% !important;
+          }
+        }
+
+        /* Tablet Devices (769px - 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+          [style*="padding: 2rem"] {
+            padding: 1.5rem !important;
+          }
+          
+          [style*="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))"] {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1.25rem !important;
+          }
+          
+          /* Stack as single column on tablet as well */
+          [style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
+          }
+          
+          [style*="height: 80vh"] {
+            height: auto !important;
+            min-height: 500px !important;
+          }
+          
+          [style*="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))"] {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+
+        /* Desktop Devices (min-width: 1025px) */
+        @media (min-width: 1025px) {
+          [style*="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))"] {
+            grid-template-columns: repeat(3, 1fr) !important;
+            gap: 1.5rem !important;
+          }
+          
+          /* Only show as two columns on desktop */
+          [style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 2rem !important;
+          }
+          
+          [style*="height: 80vh"] {
+            height: 80vh !important;
+            min-height: fit-content !important;
+          }
+        }
+
+        /* Small Mobile Devices (max-width: 480px) */
+        @media (max-width: 480px) {
+          [style*="padding: 2rem"] {
+            padding: 0.75rem !important;
+          }
+          
+          [style*="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))"] {
+            grid-template-columns: 1fr !important;
+            gap: 0.75rem !important;
+          }
+          
+          [style*="grid-template-columns: 1fr 1fr"] {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+          }
+          
+          [style*="height: 80vh"] {
+            height: auto !important;
+            min-height: 350px !important;
+            padding: 1rem !important;
+          }
+          
+          [style*="padding: 1.5rem"][style*="border-radius: 12px"]:last-child {
+            padding: 1rem !important;
+          }
+          
+          [style*="font-size: 1.75rem"] {
+            font-size: 1.25rem !important;
+          }
+          
+          [style*="padding: 0.5rem 1.5rem"] {
+            padding: 0.5rem 1rem !important;
+            font-size: 1rem !important;
+          }
+          
+          /* QR Code sizing for mobile */
+          img[alt="QR Code"] {
+            width: 120px !important;
+            height: 120px !important;
+          }
+        }
+
+        /* Medium Mobile Devices (481px - 768px) */
+        @media (min-width: 481px) and (max-width: 768px) {
+          [style*="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))"] {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+
+        /* Additional responsive adjustments for better mobile experience */
+        @media (max-width: 768px) {
+          /* Skeleton loader adjustments */
+          .MuiSkeleton-root {
+            width: 100% !important;
+          }
+          
+          /* Stack spacing adjustments */
+          .MuiStack-root {
+            width: 100% !important;
+          }
+          
+          /* Image sizing in header */
+          [style*="justify-content: space-between"] img {
+            width: 80px !important;
+            height: auto !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          /* Further mobile optimizations */
+          [style*="gap: 30px"] {
+            gap: 1rem !important;
+          }
+          
+          [style*="font-size: 1.2rem"] {
+            font-size: 1rem !important;
+          }
+          
+          [style*="padding: 0.75rem"] {
+            padding: 0.5rem !important;
+          }
+          
+          img[alt="QR Code"] {
+            width: 100px !important;
+            height: 100px !important;
+            border: 5px solid white !important;
+          }
+        }
       `}</style>
 
       <header style={styles.header}>
