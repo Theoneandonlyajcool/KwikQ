@@ -103,7 +103,7 @@ const QueueManagement = ({ qrCode }) => {
           <div className="queue-info-header">
             <h2>Queue Management</h2>
             <div className="button-group">
-              <button
+              {/* <button
                 style={{
                   backgroundColor: "#5f8aea",
                   color: "white",
@@ -112,7 +112,7 @@ const QueueManagement = ({ qrCode }) => {
                 className="btn-customize"
               >
                 Alert next
-              </button>
+              </button> */}
               <button
                 style={{
                   border: "1px solid black",
