@@ -26,22 +26,23 @@ import { InactiveAnalyticsContainer } from "../pagesbranch/AnalyticsPage.jsx/Ina
 import { MdLayers } from "react-icons/md";
 import { IoChevronBack } from "react-icons/io5";
 
-
 const BranchManagement = () => {
   const nav = useNavigate();
   const [status, setStatus] = useState("inactive");
   const [oneBranchData, setOneBranchData] = useState(null);
   const [error, setError] = useState(null);
-  
+
   const ID = sessionStorage.getItem("user-recog");
   const branchID = sessionStorage.getItem("selectedBranchId");
   const token = localStorage.getItem("User");
   const BaseUrl = import.meta.env.VITE_BaseUrl;
-  
+
   console.log("the data", oneBranchData);
   console.log(branchID);
 
-  const [selectedBranch, setSelectedBranch] = useState("Victoria Island Branch");
+  const [selectedBranch, setSelectedBranch] = useState(
+    "Victoria Island Branch"
+  );
   const [activeTab, setActiveTab] = useState("Branch Details");
 
   const tabs = ["Branch Details", "Operations", "Permissions", "Notifications"];
@@ -58,7 +59,7 @@ const BranchManagement = () => {
     name: oneBranchData?.managerName,
     email: oneBranchData?.managerEmail,
     phone: oneBranchData?.managerPhone,
-    lastLogin: oneBranchData?.lastUpdated ,
+    lastLogin: oneBranchData?.lastUpdated,
   };
 
   const operatingHours = [
@@ -135,19 +136,18 @@ const BranchManagement = () => {
   const onebranches = async () => {
     setStatus("loading");
     setError(null);
-    
+
     try {
       const res = await axios.get(`${BaseUrl}/api/v1/branch/${branchID}`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      
+
       // console.log("onebranches", res);
       setOneBranchData(res?.data?.data);
       setStatus("success");
       // toast.success(res?.data?.message);
-      
     } catch (error) {
       console.log("onebranches error", error);
       setError(error?.response?.data?.message || "Failed to fetch branch data");
@@ -166,7 +166,9 @@ const BranchManagement = () => {
         <div className="analytics_wrapper">
           <div className="header_section">
             <h1 className="main_title">Branch Management</h1>
-            <p className="sub_title"><CurrentDateTime /></p>
+            <p className="sub_title">
+              <CurrentDateTime />
+            </p>
           </div>
           <div className="charts_grid">
             <div className="chart_box">
@@ -174,7 +176,9 @@ const BranchManagement = () => {
               <div className="empty_chart">
                 <MdLayers className="empty_icon" />
                 <p className="empty_title">Initializing...</p>
-                <p className="empty_text">Preparing to load branch information</p>
+                <p className="empty_text">
+                  Preparing to load branch information
+                </p>
               </div>
             </div>
           </div>
@@ -189,7 +193,9 @@ const BranchManagement = () => {
         <div className="analytics_wrapper">
           <div className="header_section">
             <h1 className="main_title">Branch Management</h1>
-            <p className="sub_title"><CurrentDateTime /></p>
+            <p className="sub_title">
+              <CurrentDateTime />
+            </p>
           </div>
           <div className="charts_grid">
             <div className="chart_box">
@@ -197,7 +203,9 @@ const BranchManagement = () => {
               <div className="empty_chart">
                 <MdLayers className="empty_icon" />
                 <p className="empty_title">Loading...</p>
-                <p className="empty_text">Fetching branch details, please wait</p>
+                <p className="empty_text">
+                  Fetching branch details, please wait
+                </p>
               </div>
             </div>
           </div>
@@ -212,25 +220,27 @@ const BranchManagement = () => {
         <div className="analytics_wrapper">
           <div className="header_section">
             <h1 className="main_title">Branch Management</h1>
-            <p className="sub_title"><CurrentDateTime /></p>
+            <p className="sub_title">
+              <CurrentDateTime />
+            </p>
           </div>
           <div className="charts_grid">
             <div className="chart_box">
               <h3 className="chart_box_title">Branch Information</h3>
               <div className="empty_chart">
-                <MdError className="empty_icon" style={{color: 'red'}} />
+                <MdError className="empty_icon" style={{ color: "red" }} />
                 <p className="empty_title">Error Loading Branch</p>
                 <p className="empty_text">{error}</p>
-                <button 
-                  onClick={() => onebranches()} 
+                <button
+                  onClick={() => onebranches()}
                   style={{
-                    marginTop: '20px',
-                    padding: '10px 20px',
-                    background: '#007bff',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: 'pointer'
+                    marginTop: "20px",
+                    padding: "10px 20px",
+                    background: "#007bff",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
                   }}
                 >
                   Try Again
@@ -250,7 +260,9 @@ const BranchManagement = () => {
           <div className="header_section">
             <div className="header_text">
               <h1 className="main_title">Branch Management</h1>
-              <p className="sub_title"><CurrentDateTime /></p>
+              <p className="sub_title">
+                <CurrentDateTime />
+              </p>
             </div>
           </div>
 
@@ -260,12 +272,17 @@ const BranchManagement = () => {
                 <MdStorefront className="store_icon" />
                 <span className="selector_label">Select Branch:</span>
                 <div className="branch_dropdown">
-                  <span className="branch_name">{oneBranchData?.branchName || selectedBranch}</span>
+                  <span className="branch_name">
+                    {oneBranchData?.branchName || selectedBranch}
+                  </span>
                   <span className="active_badge">active</span>
                   <IoIosArrowDown className="dropdown_icon" />
                 </div>
               </div>
-              <button className="add_branch_btn" onClick={() => nav("/dashboard/overview")}>
+              <button
+                className="add_branch_btn"
+                onClick={() => nav("/dashboard/overview")}
+              >
                 <IoChevronBack className="add_icon" />
                 Back
               </button>
@@ -277,7 +294,9 @@ const BranchManagement = () => {
               {tabs.map((tab) => (
                 <div
                   key={tab}
-                  className={`tab_item ${activeTab === tab ? "active_tab" : ""}`}
+                  className={`tab_item ${
+                    activeTab === tab ? "active_tab" : ""
+                  }`}
                   onClick={() => setActiveTab(tab)}
                 >
                   {tab}
@@ -287,7 +306,9 @@ const BranchManagement = () => {
           </div>
 
           {/* Branch details */}
-          <BranchDetailsContainer className={activeTab === "Branch Details" ? "active" : ""}>
+          <BranchDetailsContainer
+            className={activeTab === "Branch Details" ? "active" : ""}
+          >
             <div className="branch_info_section">
               <div className="section_header">
                 <h2 className="section_title">Branch Information</h2>
@@ -365,7 +386,9 @@ const BranchManagement = () => {
                   </div>
                   <div className="info_field">
                     <label className="field_label">Last Login</label>
-                    <div className="field_value">{managerInfo.lastLogin || "N/A"}</div>
+                    <div className="field_value">
+                      {managerInfo.lastLogin || "N/A"}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -377,8 +400,8 @@ const BranchManagement = () => {
                 <span className="danger_title">Danger Zone</span>
               </div>
               <p className="danger_text">
-                Deactivating this branch will stop all queue operations and prevent
-                customer access.
+                Deactivating this branch will stop all queue operations and
+                prevent customer access.
               </p>
               <button className="deactivate_btn">
                 <MdDelete className="delete_icon" />
@@ -388,153 +411,171 @@ const BranchManagement = () => {
           </BranchDetailsContainer>
 
           {/* Operations Tab */}
-          <OperationsContainer className={activeTab === "Operations" ? "active" : ""}>
-             <div className="operating_hours_section">
-            <div className="section_header">
-              <h2 className="section_title">Operating Hours</h2>
+          <OperationsContainer
+            className={activeTab === "Operations" ? "active" : ""}
+          >
+            <div className="operating_hours_section">
+              <div className="section_header">
+                <h2 className="section_title">Operating Hours</h2>
+              </div>
+
+              <div className="hours_list">
+                {operatingHours.map((hour, index) => (
+                  <div key={index} className="hour_row">
+                    <div className="day_toggle">
+                      <span className="day_name">{hour.day}</span>
+                      <label className="toggle_switch">
+                        <input
+                          type="checkbox"
+                          checked={hour.enabled}
+                          readOnly
+                        />
+                        <span className="toggle_slider"></span>
+                      </label>
+                    </div>
+                    <div className="time_inputs">
+                      <input
+                        type="text"
+                        className="time_input"
+                        placeholder=""
+                        disabled={!hour.enabled}
+                      />
+                      <span className="time_separator">to</span>
+                      <input
+                        type="text"
+                        className="time_input"
+                        placeholder=""
+                        disabled={!hour.enabled}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="hours_list">
-              {operatingHours.map((hour, index) => (
-                <div key={index} className="hour_row">
-                  <div className="day_toggle">
-                    <span className="day_name">{hour.day}</span>
-                    <label className="toggle_switch">
-                      <input type="checkbox" checked={hour.enabled} readOnly />
-                      <span className="toggle_slider"></span>
-                    </label>
-                  </div>
-                  <div className="time_inputs">
-                    <input
-                      type="text"
-                      className="time_input"
-                      placeholder=""
-                      disabled={!hour.enabled}
-                    />
-                    <span className="time_separator">to</span>
-                    <input
-                      type="text"
-                      className="time_input"
-                      placeholder=""
-                      disabled={!hour.enabled}
-                    />
+            <div className="queue_settings_section">
+              <div className="section_header">
+                <h2 className="section_title">Queue Settings</h2>
+              </div>
+
+              <div className="settings_grid">
+                <div className="setting_field">
+                  <label className="setting_label">
+                    Number of Service Points
+                  </label>
+                  <div className="setting_value">
+                    {queueSettings.servicePoints}
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="queue_settings_section">
-            <div className="section_header">
-              <h2 className="section_title">Queue Settings</h2>
-            </div>
-
-            <div className="settings_grid">
-              <div className="setting_field">
-                <label className="setting_label">Number of Service Points</label>
-                <div className="setting_value">{queueSettings.servicePoints}</div>
-              </div>
-              <div className="setting_field">
-                <label className="setting_label">Maximum Queue Capacity</label>
-                <div className="setting_value">{queueSettings.maxCapacity}</div>
+                <div className="setting_field">
+                  <label className="setting_label">
+                    Maximum Queue Capacity
+                  </label>
+                  <div className="setting_value">
+                    {queueSettings.maxCapacity}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
           </OperationsContainer>
 
           {/* Notifications Tab */}
-          <NotificationsContainer className={activeTab === "Notifications" ? "active" : ""}>
-             <div className="notifications_section">
-            <div className="section_header">
-              <MdNotifications className="section_icon" />
-              <h2 className="section_title">Branch Notifications</h2>
-            </div>
+          <NotificationsContainer
+            className={activeTab === "Notifications" ? "active" : ""}
+          >
+            <div className="notifications_section">
+              <div className="section_header">
+                <MdNotifications className="section_icon" />
+                <h2 className="section_title">Branch Notifications</h2>
+              </div>
 
-            <div className="notifications_list">
-              {notifications.map((notif, index) => (
-                <div key={index} className="notification_item">
-                  <div className="notif_info">
-                    <h3 className="notif_title">{notif.title}</h3>
-                    <p className="notif_description">{notif.description}</p>
+              <div className="notifications_list">
+                {notifications.map((notif, index) => (
+                  <div key={index} className="notification_item">
+                    <div className="notif_info">
+                      <h3 className="notif_title">{notif.title}</h3>
+                      <p className="notif_description">{notif.description}</p>
+                    </div>
+                    <label className="toggle_switch">
+                      <input type="checkbox" checked={notif.enabled} readOnly />
+                      <span className="toggle_slider"></span>
+                    </label>
                   </div>
-                  <label className="toggle_switch">
-                    <input type="checkbox" checked={notif.enabled} readOnly />
-                    <span className="toggle_slider"></span>
-                  </label>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="alert_thresholds_section">
-            <div className="section_header">
-              <h2 className="section_title">Alert Thresholds</h2>
-            </div>
-
-            <div className="thresholds_grid">
-              <div className="threshold_field">
-                <label className="threshold_label">Queue Size Alert</label>
-                <div className="threshold_input_wrapper">
-                  <input
-                    type="text"
-                    className="threshold_input"
-                    value={alertThresholds.queueSize}
-                    readOnly
-                  />
-                  <span className="threshold_unit">customers</span>
-                </div>
+                ))}
               </div>
-              <div className="threshold_field">
-                <label className="threshold_label">Wait Time Alert</label>
-                <div className="threshold_input_wrapper">
-                  <input
-                    type="text"
-                    className="threshold_input"
-                    value={alertThresholds.waitTime}
-                    readOnly
-                  />
-                  <span className="threshold_unit">minutes</span>
+            </div>
+
+            <div className="alert_thresholds_section">
+              <div className="section_header">
+                <h2 className="section_title">Alert Thresholds</h2>
+              </div>
+
+              <div className="thresholds_grid">
+                <div className="threshold_field">
+                  <label className="threshold_label">Queue Size Alert</label>
+                  <div className="threshold_input_wrapper">
+                    <input
+                      type="text"
+                      className="threshold_input"
+                      value={alertThresholds.queueSize}
+                      readOnly
+                    />
+                    <span className="threshold_unit">customers</span>
+                  </div>
+                </div>
+                <div className="threshold_field">
+                  <label className="threshold_label">Wait Time Alert</label>
+                  <div className="threshold_input_wrapper">
+                    <input
+                      type="text"
+                      className="threshold_input"
+                      value={alertThresholds.waitTime}
+                      readOnly
+                    />
+                    <span className="threshold_unit">minutes</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           </NotificationsContainer>
 
           {/* Permissions Tab */}
-          <PermissionsContainer className={activeTab === "Permissions" ? "active" : ""}>
-             <div className="permissions_section">
-            <div className="section_header">
-              <IoShieldCheckmark className="section_icon" />
-              <h2 className="section_title">Branch Manager Permissions</h2>
+          <PermissionsContainer
+            className={activeTab === "Permissions" ? "active" : ""}
+          >
+            <div className="permissions_section">
+              <div className="section_header">
+                <IoShieldCheckmark className="section_icon" />
+                <h2 className="section_title">Branch Manager Permissions</h2>
+              </div>
+
+              <div className="permissions_list">
+                {permissions.map((perm, index) => (
+                  <div key={index} className="permission_item">
+                    <div className="perm_icon">
+                      {perm.status === "Granted" ? (
+                        <IoMdCheckmarkCircle className="granted_icon" />
+                      ) : (
+                        <IoMdCloseCircle className="denied_icon" />
+                      )}
+                    </div>
+                    <div className="perm_info">
+                      <h3 className="perm_title">{perm.title}</h3>
+                      <p className="perm_description">{perm.description}</p>
+                    </div>
+                    <span
+                      className={`perm_status ${
+                        perm.status === "Granted" ? "granted" : "denied"
+                      }`}
+                    >
+                      {perm.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="permissions_list">
-              {permissions.map((perm, index) => (
-                <div key={index} className="permission_item">
-                  <div className="perm_icon">
-                    {perm.status === "Granted" ? (
-                      <IoMdCheckmarkCircle className="granted_icon" />
-                    ) : (
-                      <IoMdCloseCircle className="denied_icon" />
-                    )}
-                  </div>
-                  <div className="perm_info">
-                    <h3 className="perm_title">{perm.title}</h3>
-                    <p className="perm_description">{perm.description}</p>
-                  </div>
-                  <span
-                    className={`perm_status ${
-                      perm.status === "Granted" ? "granted" : "denied"
-                    }`}
-                  >
-                    {perm.status}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* <div className="access_control_section">
+            {/* <div className="access_control_section">
             <div className="section_header">
               <h2 className="section_title">Access Control</h2>
             </div>

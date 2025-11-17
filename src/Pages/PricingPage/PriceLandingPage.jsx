@@ -6,7 +6,7 @@ import Faq from "./Faq";
 import GetStarted from "./GetStarted";
 import styled from "styled-components";
 import Footer from "../Footer/Footer";
-// import { MdMenu, MdClose } from "react-icons/md";
+import { MdMenu, MdClose } from "react-icons/md";
 import { useNavigate, Link } from "react-router-dom";
 
 const PriceLandingPage = () => {
