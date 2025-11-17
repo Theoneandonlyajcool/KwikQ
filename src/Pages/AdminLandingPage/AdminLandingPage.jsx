@@ -66,7 +66,7 @@ const AdminLandingPage = () => {
                   <li>Pricing</li>
                 </ul>
                 <MobileAuthButtons>
-                  <button onClick={() => nav("/admin_dashboard")}>Admin</button>
+                  <button onClick={() => nav(-1)}>Admin</button>
                 </MobileAuthButtons>
               </MobileMenuContent>
             </MobileMenuContainer>
