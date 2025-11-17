@@ -1,6 +1,3 @@
-import axios from "axios";
-import { useState, useEffect, useMemo } from "react";
-import { toast, ToastContainer } from "react-toastify";
 import {
   BarChart,
   Bar,
@@ -14,323 +11,351 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Legend,
 } from "recharts";
-import { IoClipboard } from "react-icons/io5";
-
 import "./Analytics.css";
-
-const NoDataPlaceholder = ({ message }) => (
-  <div className="no-data-placeholder">
-    <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
-    <p style={{ fontSize: ".8rem", marginTop: ".8rem" }}>No Data Found</p>
-    <p style={{ fontSize: "1.1rem" }}>{message}</p>
-  </div>
-);
+import axios from "axios";
+import { IoClipboard } from "react-icons/io5";
+import { useEffect, useState } from "react";
 
 const AnalyticsDashboard = () => {
-  const [dateTime, setDateTime] = useState("");
-  const [analyticsData, setAnalyticsData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // Sample data for Total Customer Income chart
+  // const WeeklyCustomerVolume = [
+  // { name: "Jan", value: 45 },
+  // { name: "Feb", value: 52 },
+  // { name: "Mar", value: 68 },
+  // { name: "Apr", value: 85 },
+  // { name: "May", value: 75 },
+  // { name: "Jun", value: 62 },
+  // { name: "Jul", value: 78 },
+  // ];
 
-  useEffect(() => {
-    const updateDateTime = () => {
-      const now = new Date();
-      const formattedDate = new Intl.DateTimeFormat("en-US", {
-        weekday: "long",
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-      }).format(now);
-      setDateTime(formattedDate);
-    };
+  const [WeeklyCustomerVolume, SeWeeklyCustomerVolume] = useState([]);
 
-    updateDateTime();
-    const interval = setInterval(updateDateTime, 60000);
-    return () => clearInterval(interval);
-  }, []);
+  // Sample data for Average Wait Time chart
+  // const AverageWaitTimeTrend = [
+  // { name: "Jan", value: 12.5 },
+  // { name: "Feb", value: 11.8 },
+  // { name: "Mar", value: 11.2 },
+  // { name: "Apr", value: 10.8 },
+  // { name: "May", value: 11.5 },
+  // { name: "Jun", value: 10.2 },
+  // { name: "Jul", value: 9.5 },
+  // ];
 
-  const fetchAnalytics = async () => {
+  const [AverageWaitTimeTrend, SetAverageWaitTimeTrend] = useState([]);
+
+  // Sample data for Total Seat in Waitlist chart
+  // const PeakHourAnalysis = [
+  // { name: "Mon", value: 65 },
+  // { name: "Tue", value: 72 },
+  // { name: "Wed", value: 85 },
+  // { name: "Thu", value: 78 },
+  // { name: "Fri", value: 92 },
+  // { name: "Sat", value: 68 },
+  // { name: "Sun", value: 55 },
+  // ];
+
+  const [PeakHourAnalysis, SetPeakHourAnalysis] = useState([]);
+
+  // Sample data for Service Type Distribution (Pie Chart)
+  // const ServiceTypeDistibution = [
+  // { name: "Category A", value: 33, color: "#1E90FF" },
+  // { name: "Category B", value: 17, color: "#FF7F50" },
+  // { name: "Category C", value: 25, color: "#FFD700" },
+  // { name: "Category D", value: 25, color: "#20C997" },
+  // ];
+
+  const [ServiceTypeDistibution, SetServiceTypeDistibution] = useState([]);
+
+  const Org_ID = sessionStorage.getItem("user-recog");
+  const token = localStorage.getItem("User");
+  const BaseUrl = import.meta.env.VITE_API_BASE_URL;
+  const ID = localStorage.getItem("user_ID");
+
+  // console.log(Org_ID, token, "Analytics");
+  const [TotalCustomers, SetTotalCustomers] = useState("");
+  const [AvgWaitTime, SetAvgWaitTime] = useState("");
+
+  const FetchAnalytics = async () => {
     try {
-      setLoading(true);
-      setError(null);
-
-      const token = localStorage.getItem("User");
-      const branchID =
-        localStorage.getItem("BranchID") || "671f72d8c9b9d32f0a1a4e5b";
-
-      if (!token) {
-        setError("Authentication token not found. Please log in again.");
-        toast.error("Please log in first");
-        setLoading(false);
-        return;
-      }
-
-      const apiUrl = `https://kwikq-1.onrender.com/api/v1/analytics/${branchID}?startDate=2025-10-01&endDate=2025-10-11`;
-
-      const response = await axios.get(apiUrl, {
+      const res = await axios.get(`${BaseUrl}/api/v1/analytics/${ID}`, {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
         },
       });
 
-      console.log("[Analytics] API Response:", response.data);
-      if (response.data.data) {
-        setAnalyticsData(response.data.data);
-        toast.success("Analytics loaded successfully");
-      }
-
-      setLoading(false);
-    } catch (err) {
-      console.error("[Analytics] Error fetching data:", err.message);
-      setError(
-        err.response?.data?.message ||
-          err.message ||
-          "Failed to fetch analytics"
-      );
-      toast.error(err.response?.data?.message || "Error loading analytics");
-      setLoading(false);
+      console.log(res?.data);
+      SetTotalCustomers(res?.data?.data?.totalCustomers);
+      SetAvgWaitTime(res?.data?.data?.avgWaitTime);
+      SeWeeklyCustomerVolume(res?.data?.data?.weeklyCustomerVolume);
+      SetPeakHourAnalysis(res?.data?.data?.peakHours);
+      SetAverageWaitTimeTrend(res?.data?.data?.averageWaitTimeTrend);
+      SetServiceTypeDistibution(res?.data?.data?.serviceTypeDistribution);
+    } catch (error) {
+      console("error");
     }
   };
 
+  const [dateTime, setDateTime] = useState("");
+
   useEffect(() => {
-    fetchAnalytics();
+    FetchAnalytics();
+    const now = new Date();
+    const formattedDate = new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    }).format(now);
+    setDateTime(formattedDate);
   }, []);
 
-  const steadyCustomerData = useMemo(
-    () => analyticsData?.weeklyCustomerVolume || [],
-    [analyticsData]
-  );
-  const peakHoursData = useMemo(
-    () =>
-      analyticsData?.peakHours?.map((peak) => ({
-        hour: `${peak.hour}:00`,
-        customers: peak.count,
-      })) || [],
-    [analyticsData]
-  );
-
-  const serviceTypeData = useMemo(() => {
-    const colors = ["#22D3EE", "#3B82F6", "#06B6D4", "#A3E635", "#F97316"];
-    return (
-      analyticsData?.serviceTypesDistribution?.map((service, index) => ({
-        name: `${service.serviceType} ${service.count}`,
-        value: service.count,
-        color: colors[index % colors.length],
-      })) || []
-    );
-  }, [analyticsData]);
-
-  const waitTimeTrendData = useMemo(
-    () => [
-      { time: "9:00", wait: 5 },
-      { time: "10:00", wait: 7 },
-      { time: "11:00", wait: 12 },
-      { time: "12:00", wait: 15 },
-      { time: "1:00", wait: 10 },
-      { time: "2:00", wait: 8 },
-      { time: "3:00", wait: 6 },
-      { time: "4:00", wait: 4 },
-    ],
-    []
-  );
-
   return (
-    <div className="dashboard-container">
-      <ToastContainer />
-
-      {error && (
-        <div className="error-container">
-          <span>Error: {error}</span>
-          <button onClick={fetchAnalytics} className="retry-button">
-            Retry
+    <div className="analytics-container">
+      {/* Header */}
+      <div className="analytics-header">
+        <h1>Analytics</h1>
+        {/* <div className="date-filter">
+          <button className="filter-btn">
+            <span className="calendar-icon">📅</span> Last 7 Days
           </button>
-        </div>
-      )}
+          <button className="pdf-btn">
+            <span className="pdf-icon">📄</span> PDF
+          </button>
+        </div> */}
+      </div>
 
-      {loading ? (
-        <div className="loading-container">
-          <div className="spinner" />
-          <p style={{ marginTop: "1rem", color: "#666" }}>
-            Loading analytics...
-          </p>
+      {/* Analytics Insights */}
+      <div className="insights-section">
+        <h2>Analytics & Insights</h2>
+        <div className="date-range">{dateTime}</div>
+      </div>
+
+      {/* Metrics Cards */}
+      <div className="metrics-grid">
+        <div className="metric-card">
+          <div className="metric-label">Total Customers</div>
+          <div className="metric-value">{TotalCustomers}</div>
         </div>
-      ) : (
-        <>
-          <div className="header">
-            <div className="header-top">
-              <h1 className="header-title">Analytics</h1>
-              <span className="header-date">{dateTime}</span>
-            </div>
-            <h2 className="header-subtitle">Analytics & Insights</h2>
-            <p className="header-description">
-              Monitor performance and identify trends
-            </p>
+        <div className="metric-card">
+          <div className="metric-label">Avg. Wait Time</div>
+          <div className="metric-value">{AvgWaitTime} min</div>
+        </div>
+      </div>
+
+      {/* Charts Grid */}
+      <div className="charts-grid">
+        {/* Total Customer Income Chart */}
+        <div className="chart-card">
+          <div className="chart-header">
+            <h3>Weekly Customer Volume</h3>
+            {/* <span className="view-details">View Details</span> */}
           </div>
 
-          <div className="stats-row">
-            <div className="stat-card">
-              <div className="stat-label">Total Customers</div>
-              <div className="stat-value">
-                {analyticsData?.totalCustomers || 0}
-              </div>
-              <div className="stat-change positive">
-                <span>▲ +5% this week</span>
+          {WeeklyCustomerVolume?.length <= 0 ? (
+            <div
+              style={{
+                // border: "2px solid red",
+                height: "90%",
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
+                <p style={{ marginTop: "1rem" }}>No Data Found</p>
               </div>
             </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={WeeklyCustomerVolume}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="name" stroke="#999" />
+                <YAxis stroke="#999" />
+                <Tooltip />
+                <Bar dataKey="value" fill="#2563EB" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </div>
 
-            <div className="stat-card">
-              <div className="stat-label">Avg. Wait Time</div>
-              <div className="stat-value">
-                {analyticsData?.avgWaitTime?.toFixed(1) || 0} min
-              </div>
-              <div className="stat-change negative">
-                <span>▼ +2 last week</span>
-              </div>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-label">Satisfaction Rate</div>
-              <div className="stat-value">
-                {analyticsData?.satisfactionRate?.toFixed(1) || 0}%
-              </div>
-              <div className="stat-change positive">
-                <span>▲ +2% from last month</span>
-              </div>
-            </div>
+        {/* Average Wait Time Chart */}
+        <div className="chart-card">
+          <div className="chart-header">
+            <h3>Average Wait Time Trend</h3>
+            {/* <span className="view-details">View Details</span> */}
           </div>
 
-          <div className="charts-grid">
-            <div className="chart-card">
-              <div className="chart-title">Peak Hours Analysis</div>
-              {peakHoursData.length === 0 ? (
-                <NoDataPlaceholder message="Peak hours analysis will be displayed here" />
-              ) : (
-                <div className="chart-container">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={peakHoursData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
-                      <XAxis
-                        dataKey="hour"
-                        stroke="#9CA3AF"
-                        style={{ fontSize: "12px" }}
-                      />
-                      <YAxis stroke="#9CA3AF" style={{ fontSize: "12px" }} />
-                      <Tooltip />
-                      <Bar
-                        dataKey="customers"
-                        fill="#3B82F6"
-                        radius={[8, 8, 0, 0]}
-                      />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              )}
+          {AverageWaitTimeTrend?.length <= 0 ? (
+            <div
+              style={{
+                // border: "2px solid red",
+                height: "90%",
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
+                <p style={{ marginTop: "1rem" }}>No Data Found</p>
+              </div>
             </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={200}>
+              <LineChart data={AverageWaitTimeTrend}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="name" stroke="#999" />
+                <YAxis stroke="#999" />
+                <Tooltip />
+                <Line
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#00BCD4"
+                  strokeWidth={3}
+                  dot={{ fill: "#00BCD4", r: 4 }}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
+        </div>
 
-            <div className="chart-card">
-              <div className="chart-title">Average Wait Time Trend</div>
-              {waitTimeTrendData.length === 0 ? (
-                <NoDataPlaceholder message="Average Wait time will be displayed here" />
-              ) : (
-                <div className="chart-container">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={waitTimeTrendData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
-                      <XAxis
-                        dataKey="time"
-                        stroke="#9CA3AF"
-                        style={{ fontSize: "12px" }}
-                      />
-                      <YAxis stroke="#9CA3AF" style={{ fontSize: "12px" }} />
-                      <Tooltip />
-                      <Line
-                        type="monotone"
-                        dataKey="wait"
-                        stroke="#06B6D4"
-                        strokeWidth={3}
-                        dot={{ fill: "#06B6D4", r: 4 }}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              )}
+        {/* Total Seat in Waitlist Chart */}
+        <div className="chart-card">
+          <div className="chart-header">
+            <h3>Peak Hours Analysis</h3>
+            {/* <span className="view-details">View Details</span> */}
+          </div>
+
+          {PeakHourAnalysis?.length <= 0 ? (
+            <div
+              style={{
+                // border: "2px solid red",
+                height: "90%",
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
+                <p style={{ marginTop: "1rem" }}>No Data Found</p>
+              </div>
             </div>
+          ) : (
+            <ResponsiveContainer width="100%" height="90%">
+              <BarChart data={PeakHourAnalysis}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                <XAxis dataKey="name" stroke="#999" />
+                <YAxis stroke="#999" />
+                <Tooltip />
+                <Bar dataKey="value" fill="#2563EB" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
+        </div>
 
-            <div className="chart-card">
-              <div className="chart-title">Weekly Customer Volume</div>
-              {steadyCustomerData.length === 0 ? (
-                <NoDataPlaceholder message="Weekly customer volume will be displayed here" />
-              ) : (
-                <div className="chart-container">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={steadyCustomerData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
-                      <XAxis
-                        dataKey="day"
-                        stroke="#9CA3AF"
-                        style={{ fontSize: "12px" }}
-                      />
-                      <YAxis stroke="#9CA3AF" style={{ fontSize: "12px" }} />
-                      <Tooltip />
-                      <Bar
-                        dataKey="count"
-                        fill="#3B82F6"
-                        radius={[8, 8, 0, 0]}
-                      />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              )}
+        {/* Service Type Distribution Chart */}
+        <div className="chart-card">
+          <div className="chart-header">
+            <h3>Service Type Distribution</h3>
+            {/* <span className="view-details">View Details</span> */}
+          </div>
+
+          {ServiceTypeDistibution?.length <= 0 ? (
+            <div
+              style={{
+                // border: "2px solid red",
+                height: "90%",
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                }}
+              >
+                <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
+                <p style={{ marginTop: "1rem" }}>No Data Found</p>
+              </div>
             </div>
-
-            <div className="chart-card">
-              <div className="chart-title">Service Type Distribution</div>
-              {serviceTypeData.length <= 0 ? (
-                <NoDataPlaceholder message="Service type distribution will be displayed here" />
-              ) : (
-                <>
-                  <div className="chart-container">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={serviceTypeData}
-                          cx="50%"
-                          cy="50%"
-                          innerRadius={60}
-                          outerRadius={100}
-                          paddingAngle={2}
-                          dataKey="value"
-                        >
-                          {serviceTypeData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </Pie>
-                        <Tooltip />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  </div>
-                  <div className="legend-container">
-                    {serviceTypeData.map((item, index) => (
-                      <div key={index} className="legend-item">
-                        <div
-                          className="legend-dot"
-                          style={{ backgroundColor: item.color }}
-                        ></div>
-                        <span>{item.name}</span>
-                      </div>
+          ) : (
+            <div className="pie-chart-container">
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie
+                    data={ServiceTypeDistibution}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={100}
+                    paddingAngle={0}
+                    dataKey="value"
+                    label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
+                    labelLine={false}
+                  >
+                    {ServiceTypeDistibution.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={entry.color}
+                        stroke="#ffffff"
+                        strokeWidth={2}
+                      />
                     ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="pie-legend">
+                {ServiceTypeDistibution.map((entry, index) => (
+                  <div key={index} className="legend-item">
+                    <span
+                      className="legend-color"
+                      style={{ backgroundColor: entry.color }}
+                    ></span>
+                    <span className="legend-label">{entry.name}</span>
+                    <span className="legend-value">{entry.value}%</span>
                   </div>
-                </>
-              )}
+                ))}
+              </div>
             </div>
-          </div>
-        </>
-      )}
+          )}
+        </div>
+      </div>
     </div>
   );
 };

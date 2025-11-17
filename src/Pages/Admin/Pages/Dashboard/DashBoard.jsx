@@ -107,14 +107,11 @@ export default function Dashboard({ qrCode }) {
     try {
       setQueuePointsLoading(true);
       const userId = Org_ID || "691247bc234b01d1bcf698e9";
-      const res = await axios.get(
-        `https://kwikq-1.onrender.com/api/v1/queue-points/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.get(`${BaseUrl}/api/v1/queue-points/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setQueuePoints(res?.data?.data || []);
       setTotalWaiting(res?.data?.totalWaiting || 0);
       setQueuePointsLoading(false);
