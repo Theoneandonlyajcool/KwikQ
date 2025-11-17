@@ -5,6 +5,10 @@ const device = {
   iphone: "(min-width: 375px)",
   tablet: "(min-width: 768px)",
   desktop: "(min-width: 1024px)",
+  largeDesktop: "(min-width: 1440px)",
+  extraLargeDesktop: "(min-width: 1920px)",
+  smallMobile: "(max-width: 359px)",
+  landscape: "(max-height: 600px) and (orientation: landscape)",
 };
 
 export const Loginbackground = styled.div`
@@ -13,6 +17,20 @@ export const Loginbackground = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  /* ADDED: Small Mobile Devices */
+  @media ${device.smallMobile} {
+    height: 100vh;
+    align-items: flex-start;
+    padding-top: 1rem;
+  }
+
+  /* ADDED: Landscape Mobile */
+  @media ${device.landscape} {
+    height: auto;
+    min-height: 100vh;
+    padding: 1rem 0;
+  }
 
   .loginrap {
     width: 88%;
@@ -23,6 +41,19 @@ export const Loginbackground = styled.div`
     box-shadow: 0px 35px 77px 0px #0000001a, 0px 140px 140px 0px #00000017,
       0px 315px 189px 0px #0000000d, 0px 561px 224px 0px #00000003,
       0px 876px 245px 0px #00000000;
+
+    /* ADDED: Large Desktop */
+    @media ${device.largeDesktop} {
+      width: 80%;
+      height: 85%;
+    }
+
+    /* ADDED: Extra Large Desktop */
+    @media ${device.extraLargeDesktop} {
+      width: 70%;
+      height: 80%;
+      max-width: 1400px;
+    }
 
     @media ${device.android} {
       width: 100%;
@@ -61,6 +92,16 @@ export const Loginbackground = styled.div`
       /* background: red; */
       border-radius: 5px;
 
+      /* ADDED: Large Desktop */
+      @media ${device.largeDesktop} {
+        width: 50%;
+      }
+
+      /* ADDED: Extra Large Desktop */
+      @media ${device.extraLargeDesktop} {
+        width: 45%;
+      }
+
       @media ${device.android} {
         width: 100%;
         height: 100%;
@@ -90,6 +131,18 @@ export const Loginbackground = styled.div`
         /* background: white; */
         display: flex;
         justify-content: start;
+
+        /* ADDED: Large Desktop */
+        @media ${device.largeDesktop} {
+          width: 30%;
+          height: 12%;
+        }
+
+        /* ADDED: Extra Large Desktop */
+        @media ${device.extraLargeDesktop} {
+          width: 25%;
+          height: 10%;
+        }
 
         @media ${device.android} {
           width: 35%;
@@ -136,6 +189,25 @@ export const Loginbackground = styled.div`
         flex-direction: column;
         gap: 5px;
 
+        /* ADDED: Large Desktop */
+        @media ${device.largeDesktop} {
+          padding-left: 50px;
+          padding-right: 50px;
+        }
+
+        /* ADDED: Extra Large Desktop */
+        @media ${device.extraLargeDesktop} {
+          padding-left: 60px;
+          padding-right: 60px;
+          gap: 8px;
+        }
+
+        /* ADDED: Small Mobile */
+        @media ${device.smallMobile} {
+          padding: 15px;
+          gap: 8px;
+        }
+
         @media ${device.android} {
           height: auto;
           padding: 20px;
@@ -165,6 +237,16 @@ export const Loginbackground = styled.div`
           /* background: blue; */
           font-family: "Inter", sans-serif;
 
+          /* ADDED: Large Desktop */
+          @media ${device.largeDesktop} {
+            height: 15%;
+          }
+
+          /* ADDED: Extra Large Desktop */
+          @media ${device.extraLargeDesktop} {
+            height: 12%;
+          }
+
           @media ${device.android} {
             height: auto;
             margin-bottom: 15px;
@@ -190,6 +272,21 @@ export const Loginbackground = styled.div`
             line-height: 100%;
             font-style: Bold;
 
+            /* ADDED: Large Desktop */
+            @media ${device.largeDesktop} {
+              font-size: 40px;
+            }
+
+            /* ADDED: Extra Large Desktop */
+            @media ${device.extraLargeDesktop} {
+              font-size: 45px;
+            }
+
+            /* ADDED: Small Mobile */
+            @media ${device.smallMobile} {
+              font-size: 26px;
+            }
+
             @media ${device.android} {
               font-size: 28px;
               line-height: 110%;
@@ -214,6 +311,21 @@ export const Loginbackground = styled.div`
             font-weight: 400;
             line-height: 150%;
             font-style: Regular;
+
+            /* ADDED: Large Desktop */
+            @media ${device.largeDesktop} {
+              font-size: 12px;
+            }
+
+            /* ADDED: Extra Large Desktop */
+            @media ${device.extraLargeDesktop} {
+              font-size: 13px;
+            }
+
+            /* ADDED: Small Mobile */
+            @media ${device.smallMobile} {
+              font-size: 11px;
+            }
 
             @media ${device.android} {
               font-size: 12px;
@@ -244,6 +356,21 @@ export const Loginbackground = styled.div`
           display: flex;
           flex-direction: column;
           gap: 15.5px;
+
+          /* ADDED: Large Desktop */
+          @media ${device.largeDesktop} {
+            gap: 18px;
+          }
+
+          /* ADDED: Extra Large Desktop */
+          @media ${device.extraLargeDesktop} {
+            gap: 20px;
+          }
+
+          /* ADDED: Small Mobile */
+          @media ${device.smallMobile} {
+            gap: 12px;
+          }
 
           @media ${device.android} {
             height: auto;
@@ -280,6 +407,25 @@ export const Loginbackground = styled.div`
             line-height: 100%;
             letter-spacing: 0%;
             /* border: none; */
+
+            /* ADDED: Large Desktop */
+            @media ${device.largeDesktop} {
+              height: 3.2rem;
+              font-size: 12px;
+            }
+
+            /* ADDED: Extra Large Desktop */
+            @media ${device.extraLargeDesktop} {
+              height: 3.5rem;
+              font-size: 13px;
+              padding: 13px;
+            }
+
+            /* ADDED: Small Mobile */
+            @media ${device.smallMobile} {
+              height: 2.8rem;
+              font-size: 12px;
+            }
 
             @media ${device.android} {
               height: 3.2rem;
@@ -319,6 +465,25 @@ export const Loginbackground = styled.div`
             line-height: 200%;
             letter-spacing: 0%;
 
+            /* ADDED: Large Desktop */
+            @media ${device.largeDesktop} {
+              height: 3.1rem;
+              font-size: 12px;
+            }
+
+            /* ADDED: Extra Large Desktop */
+            @media ${device.extraLargeDesktop} {
+              height: 3.3rem;
+              font-size: 13px;
+              padding: 15px;
+            }
+
+            /* ADDED: Small Mobile */
+            @media ${device.smallMobile} {
+              height: 2.7rem;
+              font-size: 12px;
+            }
+
             @media ${device.android} {
               height: 2.8rem;
               font-size: 14px;
@@ -353,6 +518,23 @@ export const Loginbackground = styled.div`
             outline: 3px;
             background: #eeeeee;
 
+            /* ADDED: Large Desktop */
+            @media ${device.largeDesktop} {
+              height: 3.2rem;
+            }
+
+            /* ADDED: Extra Large Desktop */
+            @media ${device.extraLargeDesktop} {
+              height: 3.5rem;
+              font-size: 22px;
+            }
+
+            /* ADDED: Small Mobile */
+            @media ${device.smallMobile} {
+              height: 2.8rem;
+              font-size: 18px;
+            }
+
             @media ${device.android} {
               height: 3.2rem;
               font-size: 22px;
@@ -380,6 +562,14 @@ export const Loginbackground = styled.div`
             background: white;
             display: flex;
             justify-content: space-between;
+
+            /* ADDED: Small Mobile */
+            @media ${device.smallMobile} {
+              height: auto;
+              flex-direction: column;
+              gap: 10px;
+              align-items: center;
+            }
 
             @media ${device.android} {
               height: auto;
@@ -413,6 +603,12 @@ export const Loginbackground = styled.div`
               letter-spacing: 0%;
               gap: 5px;
 
+              /* ADDED: Small Mobile */
+              @media ${device.smallMobile} {
+                width: 100%;
+                justify-content: center;
+              }
+
               @media ${device.android} {
                 width: auto;
                 font-size: 13px;
@@ -435,6 +631,12 @@ export const Loginbackground = styled.div`
               .checkbox {
                 width: 14px;
                 height: 14px;
+
+                /* ADDED: Small Mobile */
+                @media ${device.smallMobile} {
+                  width: 16px;
+                  height: 16px;
+                }
 
                 @media ${device.android} {
                   width: 16px;
@@ -462,6 +664,12 @@ export const Loginbackground = styled.div`
               display: flex;
               justify-content: end;
               cursor: pointer;
+
+              /* ADDED: Small Mobile */
+              @media ${device.smallMobile} {
+                width: 100%;
+                justify-content: center;
+              }
 
               @media ${device.android} {
                 width: auto;
@@ -491,6 +699,12 @@ export const Loginbackground = styled.div`
             flex-direction: column;
             gap: 2px;
             background: white;
+
+            /* ADDED: Small Mobile */
+            @media ${device.smallMobile} {
+              height: auto;
+              gap: 10px;
+            }
 
             @media ${device.android} {
               height: auto;
@@ -526,6 +740,11 @@ export const Loginbackground = styled.div`
               letter-spacing: 0%;
               text-align: center;
               color: #000000;
+
+              /* ADDED: Small Mobile */
+              @media ${device.smallMobile} {
+                padding: 5px 0;
+              }
 
               @media ${device.android} {
                 height: auto;
@@ -567,6 +786,11 @@ export const Loginbackground = styled.div`
               gap: 7px;
               cursor: pointer;
 
+              /* ADDED: Small Mobile */
+              @media ${device.smallMobile} {
+                height: 3rem;
+              }
+
               @media ${device.android} {
                 height: 3.2rem;
                 font-size: 14px;
@@ -587,6 +811,11 @@ export const Loginbackground = styled.div`
 
               .gogole_icon {
                 font-size: 22px;
+
+                /* ADDED: Small Mobile */
+                @media ${device.smallMobile} {
+                  font-size: 20px;
+                }
 
                 @media ${device.android} {
                   font-size: 24px;
@@ -616,6 +845,25 @@ export const Loginbackground = styled.div`
             letter-spacing: 0%;
             cursor: pointer;
             margin-top: 45px;
+
+            /* ADDED: Large Desktop */
+            @media ${device.largeDesktop} {
+              height: 55px;
+              font-size: 22px;
+            }
+
+            /* ADDED: Extra Large Desktop */
+            @media ${device.extraLargeDesktop} {
+              height: 60px;
+              font-size: 24px;
+            }
+
+            /* ADDED: Small Mobile */
+            @media ${device.smallMobile} {
+              height: 3.2rem;
+              font-size: 18px;
+              margin-top: 35px;
+            }
 
             @media ${device.android} {
               height: 3.5rem;
@@ -652,6 +900,14 @@ export const Loginbackground = styled.div`
             justify-content: center;
             align-items: center;
             gap: 3px;
+
+            /* ADDED: Small Mobile */
+            @media ${device.smallMobile} {
+              height: auto;
+              padding: 20px 0;
+              flex-direction: column;
+              gap: 5px;
+            }
 
             @media ${device.android} {
               height: auto;
@@ -693,6 +949,16 @@ export const Loginbackground = styled.div`
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
 
+      /* ADDED: Large Desktop */
+      @media ${device.largeDesktop} {
+        width: 50%;
+      }
+
+      /* ADDED: Extra Large Desktop */
+      @media ${device.extraLargeDesktop} {
+        width: 55%;
+      }
+
       @media ${device.android} {
         display: none;
       }
@@ -724,6 +990,19 @@ export const Loginbackground = styled.div`
         align-items: center;
         gap: 10px;
 
+        /* ADDED: Large Desktop */
+        @media ${device.largeDesktop} {
+          width: 75%;
+          height: 75%;
+        }
+
+        /* ADDED: Extra Large Desktop */
+        @media ${device.extraLargeDesktop} {
+          width: 70%;
+          height: 70%;
+          margin-top: 60px;
+        }
+
         @media ${device.tablet} {
           width: 85%;
           height: 75%;
@@ -742,6 +1021,19 @@ export const Loginbackground = styled.div`
           background: white;
           border-radius: 50%;
           padding: 25px;
+
+          /* ADDED: Large Desktop */
+          @media ${device.largeDesktop} {
+            width: 75%;
+            height: 70%;
+          }
+
+          /* ADDED: Extra Large Desktop */
+          @media ${device.extraLargeDesktop} {
+            width: 70%;
+            height: 65%;
+            padding: 30px;
+          }
 
           @media ${device.tablet} {
             width: 90%;
@@ -774,6 +1066,17 @@ export const Loginbackground = styled.div`
           color: white;
           gap: 5px;
 
+          /* ADDED: Large Desktop */
+          @media ${device.largeDesktop} {
+            height: 20%;
+          }
+
+          /* ADDED: Extra Large Desktop */
+          @media ${device.extraLargeDesktop} {
+            height: 25%;
+            gap: 8px;
+          }
+
           @media ${device.tablet} {
             height: auto;
           }
@@ -783,6 +1086,16 @@ export const Loginbackground = styled.div`
             font-weight: 600;
             line-height: 110%;
             font-style: Semi Bold;
+
+            /* ADDED: Large Desktop */
+            @media ${device.largeDesktop} {
+              font-size: 26px;
+            }
+
+            /* ADDED: Extra Large Desktop */
+            @media ${device.extraLargeDesktop} {
+              font-size: 28px;
+            }
 
             @media ${device.tablet} {
               font-size: 18px;
@@ -798,6 +1111,16 @@ export const Loginbackground = styled.div`
             font-weight: 400;
             line-height: 150%;
             font-style: Regular;
+
+            /* ADDED: Large Desktop */
+            @media ${device.largeDesktop} {
+              font-size: 13px;
+            }
+
+            /* ADDED: Extra Large Desktop */
+            @media ${device.extraLargeDesktop} {
+              font-size: 14px;
+            }
 
             @media ${device.tablet} {
               font-size: 11px;

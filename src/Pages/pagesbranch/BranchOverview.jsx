@@ -18,21 +18,20 @@ import { toast, ToastContainer } from "react-toastify";
 import CurrentDateTime from "./CurrentDateTime";
 
 const BranchOverview = () => {
-  
   const nav = useNavigate();
-  const [allbranches_in_an_organization, setAllbranches_in_an_organization] = useState()
-  const [organization_metrics, setOrganization_metrics] = useState()
-  const [Organ_Name, setOrgan_Name] = useState()
+  const [allbranches_in_an_organization, setAllbranches_in_an_organization] =
+    useState();
+  const [organization_metrics, setOrganization_metrics] = useState();
+  const [Organ_Name, setOrgan_Name] = useState();
   const ID = sessionStorage.getItem("user-recog");
   const token = localStorage.getItem("User");
   const BaseUrl = import.meta.env.VITE_BaseUrl;
   // console.log("api",organization_metrics)
   // console.log("api", allbranches_in_an_organization)
-  const [branchesdata, setBranchesdata] = useState([])
-  const [meta, setMeta] = useState()
-  const [summary, setSummary] = useState()
+  const [branchesdata, setBranchesdata] = useState([]);
+  const [meta, setMeta] = useState();
+  const [summary, setSummary] = useState();
   // console.log("uinxhbhcbwgucbw",meta)
-
 
   // const allbranches_of_an_organization = async () => {
   //   try {
@@ -43,7 +42,7 @@ const BranchOverview = () => {
   //       }
   //     });
   //     // console.log("data of all branches in an organization", res);
-  //     setAllbranches_in_an_organization(res?.data?.branches); 
+  //     setAllbranches_in_an_organization(res?.data?.branches);
   //     // toast.success(res?.data?.message)
   //   } catch (error) {
   //     console.log("allbranches_in_an_organization", error)
@@ -51,39 +50,40 @@ const BranchOverview = () => {
   //   }
   // }
 
-
   // useEffect(()=> {
-  //   allbranches_of_an_organization() 
+  //   allbranches_of_an_organization()
   // }, []);
 
-  
   const getname = async () => {
-      try {
-        const res = await axios.get(`${BaseUrl}/api/v1/organization-details/${ID}`, {
+    try {
+      const res = await axios.get(
+        `${BaseUrl}/api/v1/organization-details/${ID}`,
+        {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        // console.log("organization_Name", res);
-        localStorage.setItem("Organ_Name", res?.data?.data?.businessName)
-        setOrgan_Name(res?.data?.data); 
-        // toast.success(res?.data?.message)
-      } catch (error) {
-        console.log("organization_Name", error)
-        // toast.error(error?.response?.data?.message)
-      }
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // console.log("organization_Name", res);
+      localStorage.setItem("Organ_Name", res?.data?.data?.businessName);
+      setOrgan_Name(res?.data?.data);
+      // toast.success(res?.data?.message)
+    } catch (error) {
+      console.log("organization_Name", error);
+      // toast.error(error?.response?.data?.message)
     }
-    
-  useEffect(()=> { 
-      getname() 
+  };
+
+  useEffect(() => {
+    getname();
   }, []);
 
   const allbranches_of_organization = async () => {
     try {
       const res = await axios.get(`${BaseUrl}/api/v1/branchoverview`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
       // console.log("branchoverview", res);
       setBranchesdata(res?.data?.branches);
@@ -91,16 +91,14 @@ const BranchOverview = () => {
       setSummary(res?.data?.summary);
       // toast.success(res?.data?.message)
     } catch (error) {
-      console.log("allbranches_in_an_organization", error)
-      toast.error(error?.response?.data?.message)
+      console.log("allbranches_in_an_organization", error);
+      toast.error(error?.response?.data?.message);
     }
-  }
+  };
 
-
-  useEffect(()=> {
-    allbranches_of_organization() 
+  useEffect(() => {
+    allbranches_of_organization();
   }, []);
-
 
   // const organization_branches_metrics = async () => {
   //   try {
@@ -110,7 +108,7 @@ const BranchOverview = () => {
   //       }
   //     });
   //     // console.log("organization_branches_metrics ", res);
-  //     setOrganization_metrics(res.data); 
+  //     setOrganization_metrics(res.data);
   //     // toast.success(res?.data?.message)
   //   } catch (error) {
   //     // console.log("organization_branches_metrics", error)
@@ -118,19 +116,20 @@ const BranchOverview = () => {
   //   }
   // }
 
-
   // useEffect(()=> {
-  //   organization_branches_metrics() 
+  //   organization_branches_metrics()
   // }, []);
 
   return (
     <BranchOverviewContainer>
-    <ToastContainer />
+      <ToastContainer />
       <div className="branch_wrapper">
         <div className="header_section">
           <div className="header_text">
             <h1 className="main_title">Branch Overview</h1>
-            <p className="sub_title"><CurrentDateTime /></p>
+            <p className="sub_title">
+              <CurrentDateTime />
+            </p>
           </div>
         </div>
 
@@ -142,7 +141,9 @@ const BranchOverview = () => {
             <div className="card_content">
               <p className="card_label">Total Branches</p>
               <h2 className="card_value">{summary?.totalBranches}</h2>
-              <p className="card_change blue_text">{summary?.totalBranchesChange}</p>
+              <p className="card_change blue_text">
+                {summary?.totalBranchesChange}
+              </p>
             </div>
           </div>
 
@@ -153,7 +154,9 @@ const BranchOverview = () => {
             <div className="card_content">
               <p className="card_label">Total Active Queues</p>
               <h2 className="card_value">{summary?.activeQueues}</h2>
-              <p className="card_change purple_text">{summary?.activeQueuesChange}</p>
+              <p className="card_change purple_text">
+                {summary?.activeQueuesChange}
+              </p>
             </div>
           </div>
 
@@ -175,7 +178,9 @@ const BranchOverview = () => {
             <div className="card_content">
               <p className="card_label">Total Served Today</p>
               <h2 className="card_value">{summary?.servedToday}</h2>
-              <p className="card_change purple_text">{summary?.servedTodayChange}</p>
+              <p className="card_change purple_text">
+                {summary?.servedTodayChange}
+              </p>
             </div>
           </div>
         </div>
@@ -189,10 +194,13 @@ const BranchOverview = () => {
               </p>
             </div>
             <div className="status_badges">
-              <button className="add_branch_btn" onClick={()=> nav("/branch_onboarding")}>
-              <MdAdd className="add_icon" />
-              Add New Branch
-            </button>
+              <button
+                className="add_branch_btn"
+                onClick={() => nav("/branch_onboarding")}
+              >
+                <MdAdd className="add_icon" />
+                Add New Branch
+              </button>
 
               <span
                 className="status_badge active_badge"
@@ -322,21 +330,27 @@ const BranchOverview = () => {
                     className="action_btn view_details_btn"
                     onClick={() => {
                       sessionStorage.setItem("selectedBranchId", branch?._id);
-                      window.location.href = "/#/dashboard/branch-management"
+                      window.location.href = "/#/dashboard/branch-management";
                     }}
                   >
                     View Details
                   </button>
-                    <button className="action_btn secondary_btn"  onClick={() => {
-                      window.location.href = "/#/dashboard/analytics"
-                    }}>
-                      Analytics
-                    </button>
-                    <button className="action_btn secondary_btn"  onClick={() =>
+                  <button
+                    className="action_btn secondary_btn"
+                    onClick={() => {
+                      window.location.href = "/#/dashboard/analytics";
+                    }}
+                  >
+                    Analytics
+                  </button>
+                  <button
+                    className="action_btn secondary_btn"
+                    onClick={() =>
                       (window.location.href = "/#/dashboard/settings")
-                    }>
-                      Settings
-                    </button>
+                    }
+                  >
+                    Settings
+                  </button>
                 </div>
               </div>
             ))}
