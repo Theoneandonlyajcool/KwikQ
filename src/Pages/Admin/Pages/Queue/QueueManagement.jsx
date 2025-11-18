@@ -177,12 +177,14 @@ const QueueManagement = ({ qrCode }) => {
             ) : (
               <div className="queues-list">
                 {queues.map((ele, idx) => {
+                  // console.log(idx);
                   return (
                     <div key={ele.id} className="queue-item">
                       <QueueCard
                         refresh={GetAllQueues}
                         data={ele}
                         key={ele.id}
+                        index={idx}
                       />
                     </div>
                   );

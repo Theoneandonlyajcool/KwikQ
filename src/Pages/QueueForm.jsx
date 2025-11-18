@@ -276,19 +276,15 @@ const QueueForm = () => {
                 <label className="form-label">
                   Purpose of Visit <span className="required">*</span>
                 </label>
+
                 <select
                   className="form-input form-select"
                   value={purpose}
-                  onChange={(e) =>
-                    SetInputValues({
-                      ...inputValues,
-                      serviceNeeded: e.target.value,
-                    })
-                  }
+                  onChange={handleSelectChange}
                   style={{ backgroundColor: "#f2f2f5" }}
                 >
                   <option value="">Select a service</option>
-                  <option sevalue={toCamelCase("Account Opening")}>
+                  <option value={toCamelCase("Account Opening")}>
                     Account Opening
                   </option>
                   <option value={toCamelCase("Loan Collection")}>
