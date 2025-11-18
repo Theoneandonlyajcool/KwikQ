@@ -8,6 +8,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import axios, { Axios } from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import ExportQrcode from "../../components/QrCode/ExportQrcode";
+import { IoIosRefresh } from "react-icons/io";
 
 const QueueManagement = ({ qrCode }) => {
   const nav = useNavigate();
@@ -66,6 +68,13 @@ const QueueManagement = ({ qrCode }) => {
     }
   };
 
+  const The_QrCode = qrLoading
+    ? undefined
+    : qrImageUrl ||
+      `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
+        Org_ID || "https://kwikq-1.onrender.com"
+      )}`;
+
   useEffect(() => {
     const updateDateTime = () => {
       const now = new Date();
@@ -85,8 +94,18 @@ const QueueManagement = ({ qrCode }) => {
     const interval = setInterval(updateDateTime, 60000);
 
     GetAllQueues();
+    GenerateQrCode();
     return () => clearInterval(interval);
   }, []);
+
+  const [ExportQrModal, SetExportQrModal] = useState(false);
+
+  const TheQrCode = qrLoading
+    ? undefined
+    : qrImageUrl ||
+      `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
+        Org_ID || "https://kwikq-1.onrender.com"
+      )}`;
 
   return (
     <>
@@ -103,16 +122,21 @@ const QueueManagement = ({ qrCode }) => {
           <div className="queue-info-header">
             <h2>Queue Management</h2>
             <div className="button-group">
-              {/* <button
+              <button
                 style={{
                   backgroundColor: "#5f8aea",
                   color: "white",
                   fontSize: "1rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: ".5rem",
                 }}
                 className="btn-customize"
+                onClick={GetAllQueues}
               >
-                Alert next
-              </button> */}
+                Refresh <IoIosRefresh />
+              </button>
               <button
                 style={{
                   border: "1px solid black",
@@ -198,7 +222,7 @@ const QueueManagement = ({ qrCode }) => {
           <h3>Quick Actions</h3>
           <div className="actions-content-responsive">
             <div className="action-buttons-responsive">
-              <button className="btn-action-responsive">Pause Queue</button>
+              {/* <button className="btn-action-responsive">Pause Queue</button> */}
               <button
                 className="btn-action-responsive"
                 onClick={() => nav(`/queue_form`)}
@@ -206,22 +230,23 @@ const QueueManagement = ({ qrCode }) => {
                 Add Manual Entry
               </button>
             </div>
-            <div className="qr-section-responsive">
+            <div
+              className="qr-section-responsive"
+              style={{ cursor: "pointer" }}
+              onClick={() => SetExportQrModal(true)}
+            >
               <img
                 className="qr-code-responsive"
-                src={
-                  qrLoading
-                    ? undefined
-                    : qrImageUrl ||
-                      `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
-                        Org_ID || "https://kwikq-1.onrender.com"
-                      )}`
-                }
+                src={TheQrCode}
                 alt="QR Code"
               />
             </div>
           </div>
         </div>
+
+        {ExportQrModal && (
+          <ExportQrcode PropsQrCode={TheQrCode} close={SetExportQrModal} />
+        )}
       </div>
 
       <style jsx>{`
