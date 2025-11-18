@@ -340,7 +340,7 @@ const AnalyticsDashboard = () => {
                     {ServiceTypeDistibution.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
-                        fill={colorState}
+                        fill={entry.color}
                         stroke="#84fdff"
                         strokeWidth={2}
                       />
