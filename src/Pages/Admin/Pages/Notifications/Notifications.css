@@ -5,9 +5,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", sans-serif;
-  background-color: #f5f7fa;
+  background-color: #e5e7eb;
 }
 
 .notifications-container {
@@ -16,27 +14,32 @@ body {
   margin: 0 auto;
   padding: 24px;
   background-color: #f5f7fa;
+  background-color: #e5e7eb;
+
   width: 100%;
 }
 
 .header {
   background-color: white;
-  border: 1px solid #e5e7eb;
   border-radius: 8px;
   padding: 20px 24px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .header-title {
-  font-size: 24px;
-  font-weight: 600;
   color: #111827;
-  margin-bottom: 4px;
+  font-size: 31px;
+  font-weight: 600;
+  line-height: 110%;
 }
 
 .header-date {
-  font-size: 14px;
-  color: #6b7280;
+  color: #4a5565;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 140%;
 }
 
 .stats-container {
@@ -47,23 +50,26 @@ body {
 }
 
 .stat-card {
-  background-color: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
   padding: 20px;
   display: flex;
-  align-items: center;
   gap: 16px;
+  display: flex;
+  flex-direction: column;
+  width: 263.887px;
+  height: 162.422px;
+  border-radius: 16px;
+  border: 1.25px solid #e5e7eb;
+  background: #ffffff;
 }
 
 .stat-icon {
   width: 48px;
   height: 48px;
-  border-radius: 8px;
+  border-radius: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .stat-icon.bell {
@@ -86,7 +92,7 @@ body {
 }
 
 .stat-number {
-  font-size: 28px;
+  font-size: 25px;
   font-weight: 700;
   color: #111827;
   line-height: 1;
@@ -154,13 +160,17 @@ body {
 }
 
 .notification-card {
-  background-color: white;
-  border: 1px solid #e5e7eb;
+  background: #fff;
   border-radius: 8px;
   padding: 20px;
   display: flex;
   gap: 16px;
   position: relative;
+  border-radius: 16px;
+  border-top: 1.8px solid var(--Foundation-Primary-primary-500, #303bff);
+  border-right: 1.8px solid var(--Foundation-Primary-primary-500, #303bff);
+  border-bottom: 1.8px solid var(--Foundation-Primary-primary-500, #303bff);
+  border-left: 4px solid var(--Foundation-Primary-primary-500, #303bff);
 }
 
 .notification-card.alert-type {
@@ -300,5 +310,405 @@ body {
 
   .filters-left {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .notifications-container {
+    padding: 20px;
+  }
+
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .stat-card {
+    width: 100%;
+    height: auto;
+    min-height: 150px;
+  }
+
+  .header-title {
+    font-size: 28px;
+  }
+
+  .header-date {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 641px) {
+  .notifications-container {
+    padding: 18px;
+  }
+
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .stat-card {
+    width: 100%;
+    height: auto;
+    min-height: 140px;
+    padding: 16px;
+  }
+
+  .header {
+    padding: 16px 20px;
+  }
+
+  .header-title {
+    font-size: 26px;
+  }
+
+  .header-date {
+    font-size: 16px;
+  }
+
+  .filters-container {
+    padding: 14px 20px;
+  }
+}
+
+@media (max-width: 640px) and (min-width: 481px) {
+  .notifications-container {
+    padding: 16px;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-card {
+    width: 100%;
+    height: auto;
+    min-height: 130px;
+    padding: 16px;
+  }
+
+  .header {
+    padding: 16px 18px;
+  }
+
+  .header-title {
+    font-size: 24px;
+  }
+
+  .header-date {
+    font-size: 15px;
+  }
+
+  .notification-card {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .notification-meta {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) and (min-width: 376px) {
+  .notifications-container {
+    padding: 12px;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .stat-card {
+    width: 100%;
+    height: auto;
+    min-height: 120px;
+    padding: 14px;
+  }
+
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .stat-number {
+    font-size: 22px;
+  }
+
+  .header {
+    padding: 14px 16px;
+    margin-bottom: 16px;
+  }
+
+  .header-title {
+    font-size: 22px;
+  }
+
+  .header-date {
+    font-size: 14px;
+  }
+
+  .filters-container {
+    padding: 12px 16px;
+    margin-bottom: 16px;
+  }
+
+  .notification-card {
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .notification-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .notification-title {
+    font-size: 15px;
+  }
+
+  .notification-description {
+    font-size: 13px;
+  }
+
+  .menu-button {
+    top: 14px;
+    right: 14px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 375px) and (min-width: 321px) {
+  .notifications-container {
+    padding: 10px;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .stat-card {
+    width: 100%;
+    height: auto;
+    min-height: 110px;
+    padding: 12px;
+  }
+
+  .stat-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .stat-number {
+    font-size: 20px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+
+  .header {
+    padding: 12px 14px;
+    margin-bottom: 14px;
+  }
+
+  .header-title {
+    font-size: 20px;
+  }
+
+  .header-date {
+    font-size: 13px;
+  }
+
+  .filters-container {
+    padding: 10px 14px;
+    margin-bottom: 14px;
+  }
+
+  .filter-button,
+  .mark-read-button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .notification-card {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .notification-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .notification-title {
+    font-size: 14px;
+  }
+
+  .notification-description {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .badge {
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+
+  .notification-time {
+    font-size: 11px;
+  }
+
+  .menu-button {
+    top: 12px;
+    right: 12px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 320px) {
+  .notifications-container {
+    padding: 8px;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .stat-card {
+    width: 100%;
+    height: auto;
+    min-height: 100px;
+    padding: 10px;
+  }
+
+  .stat-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+
+  .stat-number {
+    font-size: 18px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+  }
+
+  .header {
+    padding: 10px 12px;
+    margin-bottom: 12px;
+  }
+
+  .header-title {
+    font-size: 18px;
+  }
+
+  .header-date {
+    font-size: 12px;
+  }
+
+  .filters-container {
+    padding: 8px 12px;
+    margin-bottom: 12px;
+  }
+
+  .filter-button,
+  .mark-read-button {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .notification-card {
+    padding: 10px;
+    gap: 6px;
+  }
+
+  .notification-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .notification-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .notifications-container {
+    padding: 10px;
+  }
+
+  .stats-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .stat-card {
+    height: auto;
+    min-height: 100px;
+    padding: 12px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .notifications-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .stats-container {
+    gap: 20px;
+  }
+
+  .stat-card {
+    width: 100%;
+    height: 170px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .notifications-container {
+    max-width: 1400px;
+    padding: 32px;
+  }
+
+  .header {
+    padding: 24px 32px;
+  }
+
+  .header-title {
+    font-size: 36px;
+  }
+
+  .header-date {
+    font-size: 22px;
+  }
+
+  .stats-container {
+    gap: 24px;
+  }
+
+  .stat-card {
+    height: 180px;
+    padding: 24px;
+  }
+
+  .stat-number {
+    font-size: 28px;
+  }
+
+  .stat-label {
+    font-size: 14px;
   }
 }
