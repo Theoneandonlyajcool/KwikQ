@@ -6,12 +6,95 @@ import { RiProfileLine } from "react-icons/ri";
 import { FaUserGroup } from "react-icons/fa6";
 import { SlRocket } from "react-icons/sl";
 import { MdCancel } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const MonthlyPrice = () => {
+  const nav = useNavigate();
+
   const [isAnnual, setIsAnnual] = useState(false);
 
-  const starterPrice = isAnnual ? "₦144,000/year" : "₦15,000/month";
-  const professionalPrice = isAnnual ? "₦336,000/year" : "₦35,000/month";
+  const pricingPlans = [
+    {
+      id: 1,
+      name: "Starter",
+      description: "Perfect for small businesses getting started",
+      icon: FaUserGroup,
+      price: {
+        monthly: "₦15,000/month",
+        annual: "₦144,000/year",
+      },
+      buttonText: "Start free Trial",
+      isPopular: false,
+      features: [
+        { text: "Up to 5 service queue points", included: true },
+        { text: "2,000 monthly queue entries", included: true },
+        { text: "Email notifications", included: true },
+        { text: "Basic analytics", included: true },
+        { text: "QR code access", included: true },
+        { text: "Standard support", included: true },
+        { text: "Priority queue management", included: false },
+        { text: "Advanced analytics & reports", included: false },
+        { text: "Custom branding", included: false },
+        { text: "API access", included: false },
+        { text: "Dedicated account manager", included: false },
+      ],
+    },
+    {
+      id: 2,
+      name: "Professional",
+      description: "Ideal for growing organizations",
+      icon: RiProfileLine,
+      price: {
+        monthly: "₦35,000/month",
+        annual: "₦336,000/year",
+      },
+      buttonText: "Start free Trial",
+      isPopular: true,
+      features: [
+        { text: "Up to 2 service queue points", included: true },
+        { text: "500 monthly queue entries", included: true },
+        { text: "Email notifications", included: true },
+        { text: "Basic analytics", included: true },
+        { text: "QR code access", included: true },
+        { text: "Standard support", included: true },
+        { text: "Priority queue management", included: true },
+        { text: "Advanced analytics & reports", included: true },
+        { text: "Custom branding", included: true },
+        { text: "API access", included: false },
+        { text: "Dedicated account manager", included: false },
+      ],
+    },
+    {
+      id: 3,
+      name: "Enterprise",
+      description: "For large organizations with complex needs",
+      icon: SlRocket,
+      price: {
+        custom: "Custom Pricing",
+      },
+      buttonText: "Contact Sales",
+      isPopular: false,
+      features: [
+        { text: "Unlimited service points", included: true },
+        { text: "Unlimited queue entries", included: true },
+        { text: "Email notifications", included: true },
+        { text: "Basic analytics", included: true },
+        { text: "QR code access", included: true },
+        { text: "Standard support", included: true },
+        { text: "Priority queue management", included: true },
+        { text: "Advanced analytics & reports", included: true },
+        { text: "Custom branding", included: true },
+        { text: "Dedicated account manager", included: true },
+      ],
+    },
+  ];
+
+  const getPriceDisplay = (plan) => {
+    if (plan.price.custom) {
+      return plan.price.custom;
+    }
+    return isAnnual ? plan.price.annual : plan.price.monthly;
+  };
 
   return (
     <MonthlyPriceContainer>
@@ -42,207 +125,57 @@ const MonthlyPrice = () => {
       </MonthlyWrapper>
 
       <MonthlyCardsHolder>
-        <Cards>
-          <div className="Top">
-            <div className="Icons_holder">
-              <div className="Icons">
-                <FaUserGroup />
-              </div>
-            </div>
-            <h2>Starter</h2>
-            <p>Perfect for small businesses getting started</p>
-          </div>
-          <div className="price">
-            <h4>{starterPrice}</h4>
-          </div>
-          <button>
-            Start free Trial <TiArrowRight />
-          </button>
-          <div className="ListHolder">
-            <ul>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Up to 5 service queue points
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                2,000 monthly queue entries
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Email notifications
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Basic analytics
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                QR code access
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Standard support
-              </li>
-              <li style={{ color: "#eaebff" }}>
-                <MdCancel style={{ color: "#303fbe" }} />
-                Priority queue management
-              </li>
-              <li style={{ color: "#eaebff" }}>
-                <MdCancel style={{ color: "#303fbe" }} />
-                Advanced analytics & reports
-              </li>
-              <li style={{ color: "#eaebff" }}>
-                <MdCancel style={{ color: "#303fbe" }} />
-                Custom branding
-              </li>
-              <li style={{ color: "#eaebff" }}>
-                <MdCancel style={{ color: "#303fbe" }} />
-                API access
-              </li>
-              <li style={{ color: "#eaebff" }}>
-                <MdCancel style={{ color: "#303fbe" }} />
-                Dedicated account manager
-              </li>
-            </ul>
-          </div>
-        </Cards>
+        {pricingPlans.map((plan) => {
+          const CardComponent = plan.isPopular ? MiddleCard : Cards;
+          const IconComponent = plan.icon;
 
-        <MiddleCard>
-          <div className="Top">
-            <div className="Icons_holder">
-              <div className="Icons">
-                <RiProfileLine />
+          return (
+            <CardComponent key={plan.id}>
+              <div className="Top">
+                <div className="Icons_holder">
+                  <div className="Icons">
+                    <IconComponent />
+                  </div>
+                  {plan.isPopular && <small>Most Popular</small>}
+                </div>
+                <h2>{plan.name}</h2>
+                <p>{plan.description}</p>
               </div>
-              <small>Most Popular</small>
-            </div>
-            <h2>Professional</h2>
-            <p>Ideal for growing organizations</p>
-          </div>
-          <div className="price">
-            <h4>{professionalPrice}</h4>
-          </div>
-          <button>
-            Start free Trial <TiArrowRight />
-          </button>
-          <div className="ListHolder">
-            <ul>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Up to 2 service queue points
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                500 monthly queue entries
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Email notifications
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Basic analytics
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                QR code access
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Standard support
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Priority queue management
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Advanced analytics & reports
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Custom branding
-              </li>
-              <li style={{ color: "#eaebff" }}>
-                <MdCancel style={{ color: "#303fbe" }} />
-                API access
-              </li>
-              <li style={{ color: "#eaebff" }}>
-                <MdCancel style={{ color: "#303fbe" }} />
-                Dedicated account manager
-              </li>
-            </ul>
-          </div>
-        </MiddleCard>
-
-        <Cards>
-          <div className="Top">
-            <div className="Icons_holder">
-              <div className="Icons">
-                <SlRocket />
+              <div className="price">
+                <h4>{getPriceDisplay(plan)}</h4>
               </div>
-            </div>
-            <h2>Enterprise</h2>
-            <p>For large organizations with complex needs</p>
-          </div>
-          <div className="price">
-            <h4>Custom Pricing</h4>
-          </div>
-          <button>
-            Contact Sales <TiArrowRight />
-          </button>
-          <div className="ListHolder">
-            <ul>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Unlimited service points
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Unlimited queue entries
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Email notifications
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Basic analytics
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                QR code access
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Standard support
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Priority queue management
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Advanced analytics & reports
-              </li>
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Custom branding
-              </li>
-
-              <li>
-                <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
-                Dedicated account manager
-              </li>
-            </ul>
-          </div>
-        </Cards>
+              <button onClick={() => nav("/sign_up/")}>
+                {plan.buttonText} <TiArrowRight />
+              </button>
+              <div className="ListHolder">
+                <ul>
+                  {plan.features.map((feature, index) => (
+                    <li
+                      key={index}
+                      style={{
+                        color: feature.included ? "#222222" : "#eaebff",
+                      }}
+                    >
+                      {feature.included ? (
+                        <IoIosCheckmarkCircle style={{ color: "#303fbe" }} />
+                      ) : (
+                        <MdCancel style={{ color: "#303fbe" }} />
+                      )}
+                      {feature.text}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </CardComponent>
+          );
+        })}
       </MonthlyCardsHolder>
     </MonthlyPriceContainer>
   );
 };
 
 export default MonthlyPrice;
+
 const MonthlyPriceContainer = styled.div`
   width: 100%;
   min-height: 100vh;
@@ -945,14 +878,12 @@ const MiddleCard = styled.div`
     align-items: center;
     gap: 10px;
 
-    /* Large Desktop */
     @media (min-width: 1441px) {
       width: 333px;
       height: 50.37px;
       font-size: 16px;
     }
 
-    /* Standard Desktop */
     @media (min-width: 1025px) and (max-width: 1440px) {
       width: 333px;
       height: 50.37px;

@@ -1,14 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const GetStarted = () => {
+  const nav = useNavigate();
   return (
     <GetStartedBody>
       <GetStartedWrapper>
         <HeroText>
           <h1>Get rid of long lines and wait times</h1>
-          <button>
+          <button onClick={() => nav("/businessCategory2")}>
             Get started today
             <MdKeyboardArrowRight className="arrow-icon" />
           </button>
