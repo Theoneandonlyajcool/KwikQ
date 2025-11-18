@@ -535,6 +535,8 @@ export default function Dashboard({ qrCode }) {
               text={metricsValue[2]}
               cardData={CardData.avgWaitTime}
             />
+
+            {/* {CardData} */}
           </>
         )}
       </div>
