@@ -288,7 +288,7 @@ const QueueForm = () => {
                     Account Opening
                   </option>
                   <option value={toCamelCase("Loan Collection")}>
-                    Loan Collection
+                    cd Loan Collection
                   </option>
                   <option value={toCamelCase("Card Collection")}>
                     Card Collection
