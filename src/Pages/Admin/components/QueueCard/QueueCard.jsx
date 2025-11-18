@@ -289,18 +289,7 @@ const QueueCard = ({ data, refresh, index }) => {
             onClick={() => {
               ServeCustomer();
             }}
-            // onClick={async () => {
-            //   // optionally confirm
-            //   if (!confirm("Remove this customer?")) return;
-            //   const result = await RemoveCustomer(data.id);
-            //   if (result.ok) {
-            //     refresh(); // call parent refresh or update UI
-            //   } else {
-            //     alert("Delete failed");
-            //   }
-            // }}
             className="service-card__button service-card__button--destructive"
-            // onClick={onRemove}
           >
             {/* <X className="service-card__button-icon" /> */}
             {/* {ServingCustomer ? "Serving" : "serve"} */}

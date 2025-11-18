@@ -11,6 +11,7 @@ import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import { IoClipboard } from "react-icons/io5";
 import { User } from "lucide-react";
+import ExportQrcode from "../../components/QrCode/ExportQrcode";
 
 export default function Dashboard({ qrCode }) {
   // Get time
@@ -231,6 +232,15 @@ export default function Dashboard({ qrCode }) {
       toast.error("Failed to fetch QR code");
     }
   };
+
+  const [ExportQrModal, SetExportQrModal] = useState(false);
+
+  const The_QrCode = qrLoading
+    ? undefined
+    : qrImageUrl ||
+      `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
+        Org_ID || "https://kwikq-1.onrender.com"
+      )}`;
 
   return (
     <div style={styles.dashboard}>
@@ -718,31 +728,30 @@ export default function Dashboard({ qrCode }) {
         >
           {/* Buttons */}
           <div style={styles.actionButtons}>
-            <button style={styles.actionBtn}>Pause Queue</button>
+            {/* <button style={styles.actionBtn}>Pause Queue</button> */}
             <button style={styles.actionBtn} onClick={() => nav("/queue_form")}>
               Add Manual Entry
             </button>
           </div>
 
           <img
-            src={
-              qrLoading
-                ? undefined
-                : qrImageUrl ||
-                  `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
-                    Org_ID || "https://kwikq-1.onrender.com"
-                  )}`
-            }
+            src={The_QrCode}
             alt="QR Code"
+            onClick={() => SetExportQrModal(true)}
             style={{
               border: "10px solid white",
               borderRadius: "8px",
               padding: "5px",
               backgroundColor: "white",
+              cursor: "pointer",
             }}
           />
         </div>
       </div>
+
+      {ExportQrModal && (
+        <ExportQrcode close={SetExportQrModal} PropsQrCode={The_QrCode} />
+      )}
     </div>
   );
 }
