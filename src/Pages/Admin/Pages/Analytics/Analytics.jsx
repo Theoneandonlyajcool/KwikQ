@@ -98,6 +98,14 @@ const AnalyticsDashboard = () => {
   };
 
   const [dateTime, setDateTime] = useState("");
+  const [colorState, SetColorstate] = useState("");
+
+  const randomRgbColor = () => {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return SetColorstate(`rgb(${r}, ${g}, ${b})`);
+  };
 
   useEffect(() => {
     FetchAnalytics();
@@ -112,6 +120,7 @@ const AnalyticsDashboard = () => {
       hour12: true,
     }).format(now);
     setDateTime(formattedDate);
+    randomRgbColor();
   }, []);
 
   return (
@@ -331,8 +340,8 @@ const AnalyticsDashboard = () => {
                     {ServiceTypeDistibution.map((entry, index) => (
                       <Cell
                         key={`cell-${index}`}
-                        fill={entry.color}
-                        stroke="#ffffff"
+                        fill={colorState}
+                        stroke="#84fdff"
                         strokeWidth={2}
                       />
                     ))}
