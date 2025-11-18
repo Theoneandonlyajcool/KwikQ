@@ -237,6 +237,26 @@ const QueueCard = ({ data, refresh, index }) => {
             <Phone className="service-card__meta-icon" />
             <span>{data.phone}</span>
           </div>
+          <div
+            className="customer_status"
+            style={
+              data.status == "in_service"
+                ? {
+                    backgroundColor: "#4af681",
+                    padding: ".5rem",
+                    borderRadius: ".5rem 1rem",
+                    color: "#2d2d2d",
+                  }
+                : {
+                    backgroundColor: "#f64a4a",
+                    padding: ".5rem",
+                    borderRadius: ".5rem 1rem",
+                    color: "white",
+                  }
+            }
+          >
+            {data.status == "in_service" ? "serving" : data.status}
+          </div>
         </div>
       </div>
 
@@ -283,7 +303,7 @@ const QueueCard = ({ data, refresh, index }) => {
           {Delete ? "Deleteing" : "Delete"}
         </button>
 
-        {index == 0 && Servingstatus && (
+        {data.status == "in_service" && (
           <button
             style={{ color: "green", border: "2px solid green" }}
             onClick={() => {
@@ -293,7 +313,7 @@ const QueueCard = ({ data, refresh, index }) => {
           >
             {/* <X className="service-card__button-icon" /> */}
             {/* {ServingCustomer ? "Serving" : "serve"} */}
-            serving
+            serve
             {/* {Servingstatus && "Serving"} */}
           </button>
         )}

@@ -3,14 +3,61 @@ import "./ExportQrcode.css";
 import { IoMdCloseCircle } from "react-icons/io";
 
 const ExportQrcode = ({ close, PropsQrCode }) => {
-  // Temporary hardcoded base64 (later you will replace with props.qrCode)
+  // keep using the same prop name you passed from the parent
   const qrCode = PropsQrCode;
 
-  const handleDownload = () => {
-    const link = document.createElement("a");
-    link.href = qrCode; // later use props.qrCode
-    link.download = "qrcode.png"; // filename
-    link.click();
+  // helper to trigger a download from a blob
+  const downloadBlob = (blob, filename = "qrcode.png") => {
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = filename;
+    document.body.appendChild(a); // firefox needs it in DOM
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 1500);
+  };
+
+  // single handleDownload function (no nested duplicates)
+  const handleDownload = async () => {
+    try {
+      const src = qrCode;
+      if (!src) return alert("No QR source available.");
+
+      // 1) If data URL (base64)
+      if (/^data:/i.test(src)) {
+        const res = await fetch(src); // fetch data: to get a Response we can .blob()
+        const blob = await res.blob();
+        downloadBlob(blob, "qrcode.png");
+        return;
+      }
+
+      // 2) If http/https URL (Cloudinary or other)
+      if (/^https?:\/\//i.test(src)) {
+        // If Cloudinary is public this should work. If protected, you might need credentials.
+        const res = await fetch(src, {
+          mode: "cors" /*, credentials: "include" */,
+        });
+        if (!res.ok) throw new Error(`Image fetch failed: ${res.status}`);
+        const blob = await res.blob();
+        const filename = src.split("/").pop().split("?")[0] || "qrcode.png";
+        downloadBlob(blob, filename);
+        return;
+      }
+
+      // 3) Fallback: open in new tab
+      const a = document.createElement("a");
+      a.href = src;
+      a.target = "_blank";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } catch (err) {
+      console.error("Download failed:", err);
+      alert(
+        "Download failed — check console. Common causes: CORS or auth required for the image."
+      );
+    }
   };
 
   return (
