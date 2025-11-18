@@ -696,7 +696,8 @@ export default function Dashboard({ qrCode }) {
 
                       <div style={styles.activityContent}>
                         <div style={styles.activityTicket}>
-                          {activity.ticketNumber || activity.queueNumber}
+                          {/* {activity.ticketNumber || activity.queueNumber} */}
+                          {activity?.fullName}
                         </div>
                         <div style={styles.activityDescription}>
                           {activity.action}
