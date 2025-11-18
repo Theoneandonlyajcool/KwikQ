@@ -180,7 +180,7 @@ const AnalyticsDashboard = () => {
               </div>
             </div>
           ) : (
-            <ResponsiveContainer width="100%" height={200}>
+            <ResponsiveContainer width="100%" height="100%">
               <BarChart data={WeeklyCustomerVolume}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis dataKey="day" stroke="#999" />
@@ -223,7 +223,7 @@ const AnalyticsDashboard = () => {
               </div>
             </div>
           ) : (
-            <ResponsiveContainer width="100%" height={200}>
+            <ResponsiveContainer width="100%" height="100%">
               <LineChart data={AverageWaitTimeTrend}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
                 <XAxis dataKey="day" stroke="#999" />

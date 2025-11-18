@@ -128,6 +128,10 @@ const QueueCard = ({ data, refresh, index }) => {
       SetDisabledState(true);
       SetServingStatus(true);
       SetAlertLoadingState(false);
+
+      setTimeout(() => {
+        refresh();
+      }, 3000);
       // setTimeout(() => {
       //   refresh();
       // }, 3000);
