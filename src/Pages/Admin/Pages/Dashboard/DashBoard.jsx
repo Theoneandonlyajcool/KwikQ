@@ -11,6 +11,7 @@ import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import { IoClipboard } from "react-icons/io5";
 import { User } from "lucide-react";
+import ExportQrcode from "../../components/QrCode/ExportQrcode";
 
 export default function Dashboard({ qrCode }) {
   // Get time
@@ -107,14 +108,11 @@ export default function Dashboard({ qrCode }) {
     try {
       setQueuePointsLoading(true);
       const userId = Org_ID || "691247bc234b01d1bcf698e9";
-      const res = await axios.get(
-        `https://kwikq-1.onrender.com/api/v1/queue-points/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.get(`${BaseUrl}/api/v1/queue-points/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setQueuePoints(res?.data?.data || []);
       setTotalWaiting(res?.data?.totalWaiting || 0);
       setQueuePointsLoading(false);
@@ -234,6 +232,15 @@ export default function Dashboard({ qrCode }) {
       toast.error("Failed to fetch QR code");
     }
   };
+
+  const [ExportQrModal, SetExportQrModal] = useState(false);
+
+  const The_QrCode = qrLoading
+    ? undefined
+    : qrImageUrl ||
+      `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
+        Org_ID || "https://kwikq-1.onrender.com"
+      )}`;
 
   return (
     <div style={styles.dashboard}>
@@ -538,6 +545,8 @@ export default function Dashboard({ qrCode }) {
               text={metricsValue[2]}
               cardData={CardData.avgWaitTime}
             />
+
+            {/* {CardData} */}
           </>
         )}
       </div>
@@ -687,7 +696,8 @@ export default function Dashboard({ qrCode }) {
 
                       <div style={styles.activityContent}>
                         <div style={styles.activityTicket}>
-                          {activity.ticketNumber || activity.queueNumber}
+                          {/* {activity.ticketNumber || activity.queueNumber} */}
+                          {activity?.fullName}
                         </div>
                         <div style={styles.activityTicketss}>
                           {activity.fullName}
@@ -722,31 +732,30 @@ export default function Dashboard({ qrCode }) {
         >
           {/* Buttons */}
           <div style={styles.actionButtons}>
-            <button style={styles.actionBtn}>Pause Queue</button>
+            {/* <button style={styles.actionBtn}>Pause Queue</button> */}
             <button style={styles.actionBtn} onClick={() => nav("/queue_form")}>
               Add Manual Entry
             </button>
           </div>
 
           <img
-            src={
-              qrLoading
-                ? undefined
-                : qrImageUrl ||
-                  `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
-                    Org_ID || "https://kwikq-1.onrender.com"
-                  )}`
-            }
+            src={The_QrCode}
             alt="QR Code"
+            onClick={() => SetExportQrModal(true)}
             style={{
               border: "10px solid white",
               borderRadius: "8px",
               padding: "5px",
               backgroundColor: "white",
+              cursor: "pointer",
             }}
           />
         </div>
       </div>
+
+      {ExportQrModal && (
+        <ExportQrcode close={SetExportQrModal} PropsQrCode={The_QrCode} />
+      )}
     </div>
   );
 }

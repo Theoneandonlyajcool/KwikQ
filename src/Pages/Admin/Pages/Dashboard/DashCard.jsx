@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Users } from "lucide-react";
 import { LuUsersRound } from "react-icons/lu";
 import { FaRegClock } from "react-icons/fa6";
@@ -15,6 +15,9 @@ const QueueCard = (props) => {
   } = props;
 
   console.log(`This is the data ${text}`);
+
+  const [Text, SetText] = useState("");
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <style>{`
@@ -24,10 +27,10 @@ const QueueCard = (props) => {
           border: 2px solid #5c6bc0;
           padding: 32px 24px;
           width: 100%;
-          max-width: 280px;
+          max-width: 100%;
+          border:"2px solid red";
           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
           transition: transform 0.2s ease;
-          border:"2px solid red";
         }
 
 
@@ -165,7 +168,7 @@ const QueueCard = (props) => {
 
         @media (min-width: 1024px) {
           .queue-card {
-            max-width: 300px;
+            max-width: 100%;
             padding: 36px 28px;
           }
           
@@ -186,7 +189,7 @@ const QueueCard = (props) => {
 
         @media (min-width: 1440px) {
           .queue-card {
-            max-width: 320px;
+            max-width: 100%;
             padding: 40px 32px;
           }
           
@@ -240,7 +243,7 @@ const QueueCard = (props) => {
           <span className="percentage-badge">{cardData}</span>
         </div>
 
-        <div className="card-label">{text}</div>
+        <div className="card-label">{text} </div>
         <div className="card-value">{cardData}</div>
       </div>
     </div>

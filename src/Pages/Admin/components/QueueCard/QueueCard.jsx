@@ -7,12 +7,14 @@ import { RemoveCustomer } from "../../../Services/APICalls";
 import { Await } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
-const QueueCard = ({ data, refresh }) => {
+const QueueCard = ({ data, refresh, index }) => {
   const [mappedCustomers, SetMappedCustomers] = useState([]);
   // SetMappedCustomers(data?.customers);
   console.log(data);
 
   const Id = data.id;
+
+  console.log(index);
 
   const [TimeJoined, SetTimeJoined] = useState("");
 
@@ -110,6 +112,8 @@ const QueueCard = ({ data, refresh }) => {
   // };
 
   const [AlertLoadingState, SetAlertLoadingState] = useState(false);
+  const [DisabledState, SetDisabledState] = useState(false);
+  const [Servingstatus, SetServingStatus] = useState(false);
 
   const AlertCustomer = async () => {
     try {
@@ -121,16 +125,25 @@ const QueueCard = ({ data, refresh }) => {
       );
 
       toast.success(res?.data?.message);
+      SetDisabledState(true);
+      SetServingStatus(true);
       SetAlertLoadingState(false);
+
       setTimeout(() => {
         refresh();
       }, 3000);
+      // setTimeout(() => {
+      //   refresh();
+      // }, 3000);
       // alert(
       //   `${response.data.message} to ${response.data.data.name} (${response.data.data.email})`
       // );
     } catch (error) {
       SetAlertLoadingState(false);
       console.log(error);
+      toast.error(error?.response?.data?.message);
+      SetDisabledState(true);
+      SetServingStatus(true);
     }
   };
 
@@ -228,25 +241,61 @@ const QueueCard = ({ data, refresh }) => {
             <Phone className="service-card__meta-icon" />
             <span>{data.phone}</span>
           </div>
+          <div
+            className="customer_status"
+            style={
+              data.status == "in_service"
+                ? {
+                    backgroundColor: "#4af681",
+                    padding: ".5rem",
+                    borderRadius: ".5rem 1rem",
+                    color: "#2d2d2d",
+                  }
+                : {
+                    backgroundColor: "#f64a4a",
+                    padding: ".5rem",
+                    borderRadius: ".5rem 1rem",
+                    color: "white",
+                  }
+            }
+          >
+            {data.status == "in_service" ? "serving" : data.status}
+          </div>
         </div>
       </div>
 
       <div className="service-card__actions">
-        <button
-          disabled={AlertLoadingState}
-          onClick={() => AlertCustomer()}
-          style={{
-            backgroundColor: `${AlertLoadingState ? "#0915fc" : "#303bff"}`,
-            color: "white",
-            cursor: `${AlertLoadingState ? "not-allowed" : "pointer"}`,
-          }}
-          // style={{ backgroundColor: "#303bff", color: "white" }}
-          className="service-card__button service-card__button--primary "
-          // onClick={AlertUser}
-        >
-          <Bell className="service-card__button-icon" />
-          {AlertLoadingState ? "Alerting.." : "Alert"}
-        </button>
+        {index == 0 && (
+          <button
+            disabled={DisabledState}
+            onClick={() => AlertCustomer()}
+            style={
+              DisabledState
+                ? {
+                    backgroundColor: "#4049f8",
+                    cursor: "not-allowed",
+                    color: "white",
+                  }
+                : {
+                    backgroundColor: `${
+                      AlertLoadingState ? "#0915fc" : "#303bff"
+                    }`,
+                    color: "white",
+                    cursor: `${AlertLoadingState ? "not-allowed" : "pointer"}`,
+                  }
+            }
+            // style={{ backgroundColor: "#303bff", color: "white" }}
+            className="service-card__button service-card__button--primary "
+            // onClick={AlertUser}
+          >
+            <Bell className="service-card__button-icon" />
+            {DisabledState
+              ? "Alerted"
+              : AlertLoadingState
+              ? "Alerting.."
+              : "Alert"}
+          </button>
+        )}
 
         <button
           disabled={Delete}
@@ -258,27 +307,20 @@ const QueueCard = ({ data, refresh }) => {
           {Delete ? "Deleteing" : "Delete"}
         </button>
 
-        <button
-          style={{ color: "green", border: "2px solid green" }}
-          onClick={() => {
-            ServeCustomer();
-          }}
-          // onClick={async () => {
-          //   // optionally confirm
-          //   if (!confirm("Remove this customer?")) return;
-          //   const result = await RemoveCustomer(data.id);
-          //   if (result.ok) {
-          //     refresh(); // call parent refresh or update UI
-          //   } else {
-          //     alert("Delete failed");
-          //   }
-          // }}
-          className="service-card__button service-card__button--destructive"
-          // onClick={onRemove}
-        >
-          {/* <X className="service-card__button-icon" /> */}
-          {ServingCustomer ? "Serving" : "serve"}
-        </button>
+        {data.status == "in_service" && (
+          <button
+            style={{ color: "green", border: "2px solid green" }}
+            onClick={() => {
+              ServeCustomer();
+            }}
+            className="service-card__button service-card__button--destructive"
+          >
+            {/* <X className="service-card__button-icon" /> */}
+            {/* {ServingCustomer ? "Serving" : "serve"} */}
+            serve
+            {/* {Servingstatus && "Serving"} */}
+          </button>
+        )}
       </div>
     </div>
   );

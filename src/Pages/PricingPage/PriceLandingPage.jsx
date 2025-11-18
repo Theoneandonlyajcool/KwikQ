@@ -6,7 +6,7 @@ import Faq from "./Faq";
 import GetStarted from "./GetStarted";
 import styled from "styled-components";
 import Footer from "../Footer/Footer";
-// import { MdMenu, MdClose } from "react-icons/md";
+import { MdMenu, MdClose } from "react-icons/md";
 import { useNavigate, Link } from "react-router-dom";
 
 const PriceLandingPage = () => {
@@ -43,7 +43,7 @@ const PriceLandingPage = () => {
 
             <DesktopMenu className="Menu">
               <ul>
-                <li>Home</li>
+                <li onClick={() => nav("/")}>Home</li>
                 <li>About</li>
                 <li>How it works</li>
                 <li>Pricing</li>
@@ -58,7 +58,7 @@ const PriceLandingPage = () => {
             <MobileMenuContainer isOpen={isMenuOpen} onClick={toggleMenu}>
               <MobileMenuContent onClick={(e) => e.stopPropagation()}>
                 <ul>
-                  <li>Home</li>
+                  <li onClick={() => nav("/")}>Home</li>
                   <li>About</li>
                   <li>How it works</li>
                   <li>Pricing</li>
@@ -78,7 +78,9 @@ const PriceLandingPage = () => {
             branch, KwikQ offers flexible, cost-effective plans that grow with
             you.
           </h3>
-          <button>Start Your Free Trial</button>
+          <button onClick={() => nav("/businessCategory2")}>
+            Start Your Free Trial
+          </button>
           <p>Choose the Perfect Plan for your business</p>
         </Text>
         <DesignHolder></DesignHolder>
@@ -98,7 +100,7 @@ export default PriceLandingPage;
 const LandingContainer = styled.div`
   width: 100%;
   min-height: 100vh;
-  height: auto;
+  /* height: auto; */
   display: flex;
   background-image: url(https://i.postimg.cc/ZKgTqRjG/background.png);
   flex-direction: column;
@@ -504,7 +506,7 @@ const MobileAuthButtons = styled.div`
 
 const Text = styled.div`
   width: 90%;
-  min-height: 500px;
+  min-height: 387px;
   display: flex;
   justify-content: center;
   align-items: center;

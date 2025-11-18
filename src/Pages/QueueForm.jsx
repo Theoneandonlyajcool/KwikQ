@@ -154,7 +154,7 @@ const QueueForm = () => {
               alt="kwikQlogo"
             />
             <div className="header-content">
-              <h1 className="form-title">Add user manually</h1>
+              <h1 className="form-title">Add user</h1>
               <p className="form-subtitle">
                 Fill in your details to get in line
               </p>
@@ -276,23 +276,19 @@ const QueueForm = () => {
                 <label className="form-label">
                   Purpose of Visit <span className="required">*</span>
                 </label>
+
                 <select
                   className="form-input form-select"
                   value={purpose}
-                  onChange={(e) =>
-                    SetInputValues({
-                      ...inputValues,
-                      serviceNeeded: e.target.value,
-                    })
-                  }
+                  onChange={handleSelectChange}
                   style={{ backgroundColor: "#f2f2f5" }}
                 >
                   <option value="">Select a service</option>
-                  <option sevalue={toCamelCase("Account Opening")}>
+                  <option value={toCamelCase("Account Opening")}>
                     Account Opening
                   </option>
                   <option value={toCamelCase("Loan Collection")}>
-                    Loan Collection
+                    cd Loan Collection
                   </option>
                   <option value={toCamelCase("Card Collection")}>
                     Card Collection
