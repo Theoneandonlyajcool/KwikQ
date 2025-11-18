@@ -154,7 +154,7 @@ const QueueForm = () => {
               alt="kwikQlogo"
             />
             <div className="header-content">
-              <h1 className="form-title">Add user manually</h1>
+              <h1 className="form-title">Add user</h1>
               <p className="form-subtitle">
                 Fill in your details to get in line
               </p>

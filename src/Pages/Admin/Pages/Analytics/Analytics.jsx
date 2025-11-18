@@ -183,10 +183,10 @@ const AnalyticsDashboard = () => {
             <ResponsiveContainer width="100%" height={200}>
               <BarChart data={WeeklyCustomerVolume}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="name" stroke="#999" />
+                <XAxis dataKey="day" stroke="#999" />
                 <YAxis stroke="#999" />
                 <Tooltip />
-                <Bar dataKey="value" fill="#2563EB" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="count" fill="#2563EB" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}
@@ -226,7 +226,7 @@ const AnalyticsDashboard = () => {
             <ResponsiveContainer width="100%" height={200}>
               <LineChart data={AverageWaitTimeTrend}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="name" stroke="#999" />
+                <XAxis dataKey="day" stroke="#999" />
                 <YAxis stroke="#999" />
                 <Tooltip />
                 <Line
@@ -275,10 +275,10 @@ const AnalyticsDashboard = () => {
             <ResponsiveContainer width="100%" height="90%">
               <BarChart data={PeakHourAnalysis}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="name" stroke="#999" />
+                <XAxis dataKey="hour" stroke="#999" />
                 <YAxis stroke="#999" />
                 <Tooltip />
-                <Bar dataKey="value" fill="#2563EB" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="count" fill="#2563EB" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           )}

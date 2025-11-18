@@ -113,6 +113,7 @@ const QueueCard = ({ data, refresh, index }) => {
 
   const [AlertLoadingState, SetAlertLoadingState] = useState(false);
   const [DisabledState, SetDisabledState] = useState(false);
+  const [Servingstatus, SetServingStatus] = useState(false);
 
   const AlertCustomer = async () => {
     try {
@@ -125,6 +126,7 @@ const QueueCard = ({ data, refresh, index }) => {
 
       toast.success(res?.data?.message);
       SetDisabledState(true);
+      SetServingStatus(true);
       SetAlertLoadingState(false);
       // setTimeout(() => {
       //   refresh();
@@ -136,6 +138,8 @@ const QueueCard = ({ data, refresh, index }) => {
       SetAlertLoadingState(false);
       console.log(error);
       toast.error(error?.response?.data?.message);
+      SetDisabledState(true);
+      SetServingStatus(true);
     }
   };
 
@@ -279,7 +283,7 @@ const QueueCard = ({ data, refresh, index }) => {
           {Delete ? "Deleteing" : "Delete"}
         </button>
 
-        {index == 0 && (
+        {index == 0 && Servingstatus && (
           <button
             style={{ color: "green", border: "2px solid green" }}
             onClick={() => {
@@ -299,7 +303,9 @@ const QueueCard = ({ data, refresh, index }) => {
             // onClick={onRemove}
           >
             {/* <X className="service-card__button-icon" /> */}
-            {ServingCustomer ? "Serving" : "serve"}
+            {/* {ServingCustomer ? "Serving" : "serve"} */}
+            serving
+            {/* {Servingstatus && "Serving"} */}
           </button>
         )}
       </div>
