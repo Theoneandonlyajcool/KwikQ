@@ -34,6 +34,8 @@ import LoginForm from "../Pages/Auth/SingleBranchLogin";
 import Editbranch from "../Pages/pagesbranch/Editbranch";
 import Allbranch from "../Pages/pagesbranch/Allbranch";
 import ThankYouModal from "../Pages/SuccessPayment";
+import SalesTeamModal from "../Pages/SalesTeamModal";
+import InterestModal from "../Pages/InterestModal";
 
 // Hooks
 import { useState } from "react";
@@ -83,6 +85,8 @@ const Router = () => {
             <Route path="/admin_landingpage" element={<AdminLandingPage />} />
             <Route path="/orgform" element={<Orgform />} />
             <Route path="/branch" element={<Branch />} />
+            <Route path="/salesteam_modal" element={<SalesTeamModal />} />
+            <Route path="/Interest_Modal" element={<InterestModal />} />
 
             <Route path="/organization_onboarding" element={<Organization />} />
             <Route path="/branch_onboarding" element={<BranchOnboarding />} />

@@ -687,7 +687,7 @@ export const Loginbackground = styled.div`
     .imagelogin {
       width: 45%;
       height: 100%;
-      background: #303bff;
+      background: #303BFF;
       display: flex;
       justify-content: center;
       border-top-right-radius: 5px;

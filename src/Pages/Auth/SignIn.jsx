@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { PreviousPage } from "../../Components/ReUsableFunction";
+import { LoadingOverlay, LoadingContent, Spinner } from "./LoadingStyled";
 
 const SignIn = () => {
   const nav = useNavigate();
@@ -286,61 +287,14 @@ const SignIn = () => {
             </form>
           </div>
         </div>
-
         {isLoading && (
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              background: "rgba(0, 0, 0, 0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              zIndex: 9999,
-              backdropFilter: "blur(3px)",
-            }}
-          >
-            <div
-              style={{
-                width: "35%",
-                height: "40%",
-                background: "white",
-                borderRadius: "17px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                border: "red",
-                fontSize: "16px",
-                gap: "15px",
-              }}
-            >
+          <LoadingOverlay>
+            <LoadingContent>
               Signing In...
-              <div
-                style={{
-                  width: "60px",
-                  height: "60px",
-                  border: "4px solid #f3f3f3",
-                  borderTop: "4px solid #1466FF",
-                  borderRadius: "50%",
-                  animation: "spin 0.8s linear infinite",
-                  background: "white",
-                }}
-              />
-              <style>
-                {`
-                  @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                  }
-                `}
-              </style>
-            </div>
-          </div>
+              <Spinner />
+            </LoadingContent>
+          </LoadingOverlay>
         )}
-
         <div className="imagelogin">
           <div className="holdimageandtext">
             <div className="imageholder">

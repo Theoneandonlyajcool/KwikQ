@@ -689,6 +689,9 @@ export default function Dashboard({ qrCode }) {
                         <div style={styles.activityTicket}>
                           {activity.ticketNumber || activity.queueNumber}
                         </div>
+                        <div style={styles.activityTicketss}>
+                          {activity.fullName}
+                        </div>
                         <div style={styles.activityDescription}>
                           {activity.action}
                         </div>
@@ -1001,6 +1004,12 @@ const styles = {
   activityTicket: {
     fontSize: "1rem",
     fontWeight: "600",
+    color: "#1f2937",
+  },
+
+  activityTicketss: {
+    fontSize: "0.8rem",
+    fontWeight: "400",
     color: "#1f2937",
   },
 
