@@ -130,22 +130,25 @@
   margin-bottom: 6px;
   display: block;
 }
+.form-grid {
+  display: flex;
+  flex-direction: column; /* stack items vertically */
+  gap: 10px; /* space between full name and phone/email row */
+  width: 100%;
+}
+
+.form-group.full-width {
+  width: 100%;
+}
 
 .optional-form {
-  width: 100%;
   display: flex;
-  flex-direction: row;
-  gap: 10px;
+  gap: 10px; /* space between phone and email */
+  width: 100%;
 }
 
 .form-group-opt {
-  width: 40%;
-  height: 50%;
-}
-
-.form-input-opt {
-  width: 100%;
-  height: 50%;
+  width: 50%;
 }
 
 .form-input,
@@ -472,4 +475,14 @@
   .stat-icon {
     font-size: 1.2rem;
   }
+}
+.input-error {
+  border: 1px solid red !important;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
 }

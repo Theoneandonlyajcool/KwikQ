@@ -7,9 +7,7 @@ import {
 } from "react-icons/fa";
 import { LuUser } from "react-icons/lu";
 import { LuClipboardList } from "react-icons/lu";
-
 import { IoArrowBackOutline } from "react-icons/io5";
-
 import "../Styles/QueueForm.css";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -26,40 +24,144 @@ const toCamelCase = (str) =>
 
 const QueueFormNorm = () => {
   const nav = useNavigate();
-  // console.log(useLocation())
-  //   const {search} = useLocation()
-  //   console.log(search?.split("&")[1].split("=")[1])
 
   const [FormLoadingState, SetFormLoadingState] = useState(false);
-
   const [ElederlyStatus, SetElderlyStatus] = useState(false);
   const [PregnantStaus, SetPregnantStatus] = useState(false);
   const [EmergencyStatus, SEtEmergencyStatus] = useState(false);
-
   const [PurposeOfVisit, SetPurposeOfVisit] = useState("");
+
   const [inputValues, SetInputValues] = useState({
     fullName: "",
     phone: "",
     email: "",
     AdditionalInfo: "",
     serviceNeeded: PurposeOfVisit,
-    // priorityStatus: "",
   });
 
   const [ErrorMsg, SetErrorMsg] = useState({
-    FirstNameError: "",
+    fullNameError: "",
+    phoneError: "",
+    emailError: "",
     serviceNeededError: "",
-    elederlyStatusError: "",
-    pregnantStatus: "",
+    priorityStatusError: "",
   });
 
   const [PriorityStatus, SetPriorityStatus] = useState("");
-  // const userId = useState(JSON.parse(localStorage.getItem("user_ID")));
-
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const BaseURl = import.meta.env.VITE_API_BASE_URL;
-
   const [QueueNumber, SetQueueNumber] = useState();
   const id = sessionStorage.getItem("user-recog");
+
+  // Validation functions
+  const validateFullName = (name) => {
+    if (!name.trim()) {
+      return "Full name is required";
+    }
+    if (name.trim().length < 2) {
+      return "Name must be at least 2 characters long";
+    }
+    if (!/^[a-zA-Z\s]+$/.test(name)) {
+      return "Name should only contain letters and spaces";
+    }
+    return "";
+  };
+
+  const validatePhone = (phone) => {
+    if (!phone.trim()) {
+      return "Phone number is required";
+    }
+    const cleanPhone = phone.replace(/[\s\-\(\)]/g, "");
+    if (!/^(\+234|0)[0-9]{10}$/.test(cleanPhone)) {
+      return "Please enter a valid Nigerian phone number";
+    }
+    return "";
+  };
+
+  const validateEmail = (email) => {
+    if (!email.trim()) {
+      return "Email is required";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return "Please enter a valid email address";
+    }
+    return "";
+  };
+
+  const validateServiceNeeded = (service) => {
+    if (!service || service === "") {
+      return "Please select a service";
+    }
+    return "";
+  };
+
+  const validatePriorityStatus = (status) => {
+    if (!status.trim()) {
+      return "Priority status details are required";
+    }
+    if (status.trim().length < 5) {
+      return "Please provide more details (at least 5 characters)";
+    }
+    return "";
+  };
+
+  // Real-time validation on blur
+  const handleBlur = (field, value) => {
+    let error = "";
+    switch (field) {
+      case "fullName":
+        error = validateFullName(value);
+        break;
+      case "phone":
+        error = validatePhone(value);
+        break;
+      case "email":
+        error = validateEmail(value);
+        break;
+      case "serviceNeeded":
+        error = validateServiceNeeded(value);
+        break;
+      case "priorityStatus":
+        error = validatePriorityStatus(value);
+        break;
+      default:
+        break;
+    }
+    SetErrorMsg((prev) => ({ ...prev, [`${field}Error`]: error }));
+  };
+
+  // Clear error on focus
+  const handleFocus = (field) => {
+    SetErrorMsg((prev) => ({ ...prev, [`${field}Error`]: "" }));
+  };
+
+  // Validate entire form
+  const validateForm = () => {
+    const errors = {
+      fullNameError: validateFullName(inputValues.fullName),
+      phoneError: validatePhone(inputValues.phone),
+      emailError: validateEmail(inputValues.email),
+      serviceNeededError: validateServiceNeeded(purpose),
+      priorityStatusError: validatePriorityStatus(PriorityStatus),
+    };
+
+    SetErrorMsg(errors);
+
+    const hasErrors = Object.values(errors).some((error) => error !== "");
+
+    if (!termsAccepted) {
+      toast.error("Please accept the terms and conditions");
+      return false;
+    }
+
+    if (hasErrors) {
+      toast.error("Please fix all form errors before submitting");
+      return false;
+    }
+
+    return true;
+  };
 
   const Fetch_Total_Number_In_Queue = async () => {
     try {
@@ -83,47 +185,52 @@ const QueueFormNorm = () => {
   const Formtoken = localStorage.getItem("User");
   const Branchid = localStorage.getItem("BranchID");
   const ORGid = localStorage.getItem("Org_ID");
-
   const UserID = localStorage.getItem("user_ID");
 
   const [LoadingState, SetLoadingState] = useState(false);
-  // console.log(ORGid);
-  // console.log(Branchid);
-
   const [ShowModal, SetShowModal] = useState(false);
   const [apiData, SetapiData] = useState({});
+
   const JoinQueue = async () => {
+    // Validate form before submission
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       SetLoadingState(true);
-      const res = await axios.post(
-        `${BaseURl}/api/v1/create-queue/${UserID}`,
-        {
-          formDetails: {
-            fullName: inputValues.fullName,
-            email: inputValues.email,
-            phone: inputValues.phone,
-            serviceNeeded: purpose,
-            additionalInfo: inputValues.AdditionalInfo,
-            priorityStatus: "elderlyOrDisabled",
-          },
-        }
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${Formtoken}`,
-        //   },
-        // }
-      );
+      const res = await axios.post(`${BaseURl}/api/v1/create-queue/${UserID}`, {
+        formDetails: {
+          fullName: inputValues.fullName,
+          email: inputValues.email,
+          phone: inputValues.phone,
+          serviceNeeded: purpose,
+          additionalInfo: inputValues.AdditionalInfo,
+          priorityStatus: "elderlyOrDisabled",
+        },
+      });
       SetLoadingState(false);
       SetShowModal(true);
-      // console.log(res?.data?.data);
-      // SetInputValues({
-      //   fullName: "",
-      //   phone: "",
-      //   email: "",
-      //   AdditionalInfo: "",
-      //   serviceNeeded: PurposeOfVisit,
-      // });
       SetapiData(res?.data?.data);
+
+      // Reset form after successful submission
+      SetInputValues({
+        fullName: "",
+        phone: "",
+        email: "",
+        AdditionalInfo: "",
+        serviceNeeded: PurposeOfVisit,
+      });
+      setPurpose("");
+      SetPriorityStatus("");
+      setTermsAccepted(false);
+      SetErrorMsg({
+        fullNameError: "",
+        phoneError: "",
+        emailError: "",
+        serviceNeededError: "",
+        priorityStatusError: "",
+      });
     } catch (error) {
       SetLoadingState(false);
       toast.error(error?.response?.data?.message);
@@ -131,13 +238,31 @@ const QueueFormNorm = () => {
     }
   };
 
-  // alert(inputValues.serviceNeeded);
-
-  const [purpose, setPurpose] = useState(""); // stores camelCase keys like "loanCollection"
+  const [purpose, setPurpose] = useState("");
 
   const handleSelectChange = (e) => {
     setPurpose(e.target.value);
     console.log("Selected value (camelCase):", e.target.value);
+  };
+
+  const handleClearForm = () => {
+    SetInputValues({
+      fullName: "",
+      phone: "",
+      email: "",
+      AdditionalInfo: "",
+      serviceNeeded: PurposeOfVisit,
+    });
+    setPurpose("");
+    SetPriorityStatus("");
+    setTermsAccepted(false);
+    SetErrorMsg({
+      fullNameError: "",
+      phoneError: "",
+      emailError: "",
+      serviceNeededError: "",
+      priorityStatusError: "",
+    });
   };
 
   return (
@@ -177,7 +302,6 @@ const QueueFormNorm = () => {
             <Skeleton />
             <Skeleton
               style={{
-                // border: "2px solid indigo",
                 width: "100%",
                 height: "15%",
               }}
@@ -204,7 +328,9 @@ const QueueFormNorm = () => {
                   </label>
                   <input
                     type="text"
-                    className="form-input"
+                    className={`form-input ${
+                      ErrorMsg.fullNameError ? "input-error" : ""
+                    }`}
                     value={inputValues.fullName}
                     onChange={(e) =>
                       SetInputValues({
@@ -212,9 +338,16 @@ const QueueFormNorm = () => {
                         fullName: e.target.value,
                       })
                     }
+                    onBlur={(e) => handleBlur("fullName", e.target.value)}
+                    onFocus={() => handleFocus("fullName")}
                     placeholder="Enter your full name"
                     style={{ backgroundColor: "#f2f2f5" }}
                   />
+                  {ErrorMsg.fullNameError && (
+                    <span className="error-message">
+                      {ErrorMsg.fullNameError}
+                    </span>
+                  )}
                 </div>
                 <div className="optional-form">
                   <div className="form-group-opt">
@@ -223,7 +356,9 @@ const QueueFormNorm = () => {
                     </label>
                     <input
                       type="tel"
-                      className="form-input"
+                      className={`form-input ${
+                        ErrorMsg.phoneError ? "input-error" : ""
+                      }`}
                       value={inputValues.phone}
                       onChange={(e) =>
                         SetInputValues({
@@ -231,9 +366,16 @@ const QueueFormNorm = () => {
                           phone: e.target.value,
                         })
                       }
+                      onBlur={(e) => handleBlur("phone", e.target.value)}
+                      onFocus={() => handleFocus("phone")}
                       placeholder="+234 XXX XXX XXXX"
                       style={{ backgroundColor: "#f2f2f5" }}
                     />
+                    {ErrorMsg.phoneError && (
+                      <span className="error-message">
+                        {ErrorMsg.phoneError}
+                      </span>
+                    )}
                   </div>
 
                   <div className="form-group-opt">
@@ -242,7 +384,9 @@ const QueueFormNorm = () => {
                     </label>
                     <input
                       type="email"
-                      className="form-input"
+                      className={`form-input ${
+                        ErrorMsg.emailError ? "input-error" : ""
+                      }`}
                       value={inputValues.email}
                       onChange={(e) =>
                         SetInputValues({
@@ -250,9 +394,16 @@ const QueueFormNorm = () => {
                           email: e.target.value,
                         })
                       }
+                      onBlur={(e) => handleBlur("email", e.target.value)}
+                      onFocus={() => handleFocus("email")}
                       style={{ backgroundColor: "#f2f2f5" }}
                       placeholder="your-email@example.com"
                     />
+                    {ErrorMsg.emailError && (
+                      <span className="error-message">
+                        {ErrorMsg.emailError}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -274,9 +425,13 @@ const QueueFormNorm = () => {
                   Purpose of Visit <span className="required">*</span>
                 </label>
                 <select
-                  className="form-input form-select"
+                  className={`form-input form-select ${
+                    ErrorMsg.serviceNeededError ? "input-error" : ""
+                  }`}
                   value={purpose}
                   onChange={handleSelectChange}
+                  onBlur={(e) => handleBlur("serviceNeeded", e.target.value)}
+                  onFocus={() => handleFocus("serviceNeeded")}
                   style={{ backgroundColor: "#f2f2f5" }}
                 >
                   <option value="">Select a service</option>
@@ -300,6 +455,11 @@ const QueueFormNorm = () => {
                   </option>
                   <option value={toCamelCase("Other")}>Other</option>
                 </select>
+                {ErrorMsg.serviceNeededError && (
+                  <span className="error-message">
+                    {ErrorMsg.serviceNeededError}
+                  </span>
+                )}
               </div>
 
               <div className="form-group">
@@ -331,77 +491,40 @@ const QueueFormNorm = () => {
                 </div>
               </div>
 
-              {/* <div className="priority-options">
-                <label className="priority-option">
-                  <input
-                    type="radio"
-                    name="priority"
-                    value="regular"
-                    defaultChecked
-                  />
-                  <div className="priority-content">
-                    <span className="priority-label">Regular</span>
-                    <span className="priority-description">
-                      Standard queue priority
-                    </span>
-                  </div>
-                </label>
-
-                <label className="priority-option">
-                  <input
-                    type="radio"
-                    name="priority"
-                    value="elderly_disabled"
-                  />
-                  <div className="priority-content">
-                    <span className="priority-label">Elderly or Disabled</span>
-                    <span className="priority-description">
-                      Priority service for special needs
-                    </span>
-                  </div>
-                </label>
-
-                <label className="priority-option">
-                  <input type="radio" name="priority" value="pregnant_woman" />
-                  <div className="priority-content">
-                    <span className="priority-label">Pregnant Woman</span>
-                    <span className="priority-description">
-                      Priority service for expectant mothers
-                    </span>
-                  </div>
-                </label>
-
-                <label className="priority-option">
-                  <input type="radio" name="priority" value="emergency" />
-                  <div className="priority-content">
-                    <span className="priority-label">Emergency</span>
-                    <span className="priority-description">
-                      Urgent assistance required
-                    </span>
-                  </div>
-                </label>
-              </div> */}
-
               <textarea
+                value={PriorityStatus}
+                onChange={(e) => SetPriorityStatus(e.target.value)}
+                onBlur={(e) => handleBlur("priorityStatus", e.target.value)}
+                onFocus={() => handleFocus("priorityStatus")}
+                className={ErrorMsg.priorityStatusError ? "input-error" : ""}
                 style={{
                   width: "100%",
                   height: "6rem",
                   backgroundColor: "#f2f2f5",
-                  border: "none",
+                  border: ErrorMsg.priorityStatusError
+                    ? "1px solid red"
+                    : "none",
                   outline: "none",
                   padding: ".5rem",
                   borderRadius: ".5rem",
                   resize: "none",
                 }}
                 placeholder="Any specific details or requirements........"
-                name=""
-                id=""
-              ></textarea>
+              />
+              {ErrorMsg.priorityStatusError && (
+                <span className="error-message">
+                  {ErrorMsg.priorityStatusError}
+                </span>
+              )}
             </section>
 
             <div className="terms-section">
               <label className="terms-checkbox">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                />
                 <span className="terms-text">
                   I agree to the{" "}
                   <a href="#" className="terms-link">
@@ -417,9 +540,6 @@ const QueueFormNorm = () => {
             </div>
 
             <div className="form-actions">
-              <button type="button" className="btn btn-secondary">
-                Clear Form
-              </button>
               <button
                 onClick={() => JoinQueue()}
                 disabled={LoadingState}
@@ -432,6 +552,13 @@ const QueueFormNorm = () => {
               >
                 {LoadingState ? "Joining....." : " Join Queue"}
               </button>
+              <button
+                type="button"
+                onClick={handleClearForm}
+                className="btn btn-secondary"
+              >
+                Clear Form
+              </button>
             </div>
           </form>
         )}
@@ -440,16 +567,9 @@ const QueueFormNorm = () => {
           <div className="stat-card">
             {FormLoadingState ? (
               <Stack spacing={1}>
-                {/* For variant="text", adjust the height via font-size */}
                 <MuiSkeleton variant="text" sx={{ fontSize: "1rem" }} />
-                {/* For other variants, adjust the size with `width` and `height` */}
                 <MuiSkeleton variant="rectangular" width={210} height={60} />
-                <MuiSkeleton
-                  style={{ width: "100%" }}
-                  variant="rounded"
-                  // width={210}
-                  // height={60}
-                />
+                <MuiSkeleton style={{ width: "100%" }} variant="rounded" />
               </Stack>
             ) : (
               <>
@@ -469,16 +589,9 @@ const QueueFormNorm = () => {
             {FormLoadingState ? (
               <>
                 <Stack spacing={1}>
-                  {/* For variant="text", adjust the height via font-size */}
                   <MuiSkeleton variant="text" sx={{ fontSize: "1rem" }} />
-                  {/* For other variants, adjust the size with `width` and `height` */}
                   <MuiSkeleton variant="rectangular" width={210} height={60} />
-                  <MuiSkeleton
-                    style={{ width: "100%" }}
-                    variant="rounded"
-                    // width={210}
-                    // height={60}
-                  />
+                  <MuiSkeleton style={{ width: "100%" }} variant="rounded" />
                 </Stack>
               </>
             ) : (
