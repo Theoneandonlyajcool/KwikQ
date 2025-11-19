@@ -9,6 +9,7 @@ export const BranchContainer = styled.form`
   align-items: center;
   justify-content: center;
   gap: 20px;
+  background-color: white;
 
   @media (min-width: 1440px) {
     height: 110vh;

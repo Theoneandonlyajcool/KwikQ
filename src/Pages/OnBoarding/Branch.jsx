@@ -111,10 +111,7 @@ const Branch = () => {
         <ToastContainer />
         <div className="back">
           <Link to="/organization_onboarding">
-            <div
-              className="circle"
-              onClick={() => nav("/organization_onboarding")}
-            >
+            <div className="circle" onClick={() => nav(-1)}>
               <IoIosArrowRoundBack />
             </div>
           </Link>
