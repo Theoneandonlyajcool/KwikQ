@@ -52,7 +52,7 @@ const AdminLandingPage = () => {
             </DesktopMenu>
 
             <DesktopLogin className="login">
-              <button onClick={() => nav("/admin_dashboard")}>
+              <button onClick={() => nav(-1)}>
                 Admin <HiUser style={{ color: "white" }} />
               </button>
             </DesktopLogin>
