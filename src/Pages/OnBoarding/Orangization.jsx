@@ -294,7 +294,6 @@ const Orangization = () => {
             <div className="primary">
               <p>Primary Contact Person</p>
             </div>
-
             <div className="LastInputHolder">
               <div>
                 <p>Full Name *</p>
@@ -336,7 +335,6 @@ const Orangization = () => {
                 )}
               </div>
             </div>
-
             <div>
               <p>Phone Number *</p>
               <div className="input_holder">

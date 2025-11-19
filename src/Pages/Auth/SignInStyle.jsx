@@ -13,6 +13,7 @@ export const Loginbackground = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
 
   .loginrap {
     width: 88%;
@@ -687,7 +688,7 @@ export const Loginbackground = styled.div`
     .imagelogin {
       width: 45%;
       height: 100%;
-      background: #303BFF;
+      background: #303bff;
       display: flex;
       justify-content: center;
       border-top-right-radius: 5px;

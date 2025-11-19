@@ -7,6 +7,7 @@ export const OrangizationContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: white;
 
   @media (min-width: 1440px) {
     height: 110vh;

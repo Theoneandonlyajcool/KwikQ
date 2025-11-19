@@ -263,10 +263,10 @@ const SignIn = () => {
               )}
 
               <div className="forgetpass">
-                <div className="checkbox-rpass">
+                {/* <div className="checkbox-rpass">
                   <input type="checkbox" className="checkbox" />
                   <span>Remember password</span>
-                </div>
+                </div> */}
                 <div
                   className="Forgot_password"
                   onClick={() => nav("/forget_password")}
