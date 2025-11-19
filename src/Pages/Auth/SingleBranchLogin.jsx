@@ -56,7 +56,7 @@ const LoginForm = () => {
 
   const goBack = PreviousPage();
   return (
-    <div className="login-container">
+    <div className="login-container" style={{ backgroundColor: "white" }}>
       <ToastContainer />
       <div className="holder_content">
         <div className="logo-container">
@@ -121,7 +121,8 @@ const LoginForm = () => {
               className="submit-button"
               disabled={LoadingState}
               style={{
-                backgroundColor: `${LoadingState ? "gray" : ""}`,
+                backgroundColor: `${LoadingState ? "gray" : "black"}`,
+                color: "white",
                 cursor: `${LoadingState ? "not-allowed" : "pointer"}`,
               }}
             >
