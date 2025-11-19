@@ -676,7 +676,7 @@ export default function Dashboard({ qrCode }) {
               </div>
             ) : (
               <div style={styles.activityItemsList}>
-                {recentActivities.map((activity, index) => {
+                {recentActivities.slice(0, 5).map((activity, index) => {
                   const activityInfo = getActivityIcon(activity.action);
 
                   return (
