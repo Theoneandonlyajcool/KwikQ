@@ -60,7 +60,7 @@ export default function Dashboard({ qrCode }) {
   const SingleToken =
     localStorage.getItem("singleToken") || localStorage.getItem("User");
 
-  const token = localStorage.getItem("User");
+  const token = localStorage.getItem("user_token");
 
   console.log(BranchID);
 
@@ -699,6 +699,9 @@ export default function Dashboard({ qrCode }) {
                           {/* {activity.ticketNumber || activity.queueNumber} */}
                           {activity?.fullName}
                         </div>
+                        {/* <div style={styles.activityTicketss}>
+                          {activity.fullName}
+                        </div> */}
                         <div style={styles.activityDescription}>
                           {activity.action}
                         </div>
@@ -1010,6 +1013,12 @@ const styles = {
   activityTicket: {
     fontSize: "1rem",
     fontWeight: "600",
+    color: "#1f2937",
+  },
+
+  activityTicketss: {
+    fontSize: "0.8rem",
+    fontWeight: "400",
     color: "#1f2937",
   },
 

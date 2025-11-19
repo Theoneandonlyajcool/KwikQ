@@ -41,7 +41,7 @@ const Footer = () => {
             <li>Careers</li>
             <li>Blogs</li>
             <li>Contact</li>
-            <li>Dev Dashboard</li>
+            {/* <li>Dev Dashboard</li> */}
           </ul>
         </div>
         <div className="footer_support">

@@ -44,7 +44,7 @@ const FeaturesContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #eaedff;
+  background-color: #ffffff;
 
   @media (min-width: 1441px) {
     height: 100vh;
