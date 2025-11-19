@@ -60,7 +60,7 @@ export default function Dashboard({ qrCode }) {
   const SingleToken =
     localStorage.getItem("singleToken") || localStorage.getItem("User");
 
-  const token = localStorage.getItem("User");
+  const token = localStorage.getItem("user_token");
 
   console.log(BranchID);
 
@@ -699,9 +699,9 @@ export default function Dashboard({ qrCode }) {
                           {/* {activity.ticketNumber || activity.queueNumber} */}
                           {activity?.fullName}
                         </div>
-                        <div style={styles.activityTicketss}>
+                        {/* <div style={styles.activityTicketss}>
                           {activity.fullName}
-                        </div>
+                        </div> */}
                         <div style={styles.activityDescription}>
                           {activity.action}
                         </div>

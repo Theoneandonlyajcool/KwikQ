@@ -36,6 +36,10 @@ import Allbranch from "../Pages/pagesbranch/Allbranch";
 import ThankYouModal from "../Pages/SuccessPayment";
 import SalesTeamModal from "../Pages/SalesTeamModal";
 import InterestModal from "../Pages/InterestModal";
+import MultiStepModal from "../Pages/CustomModal/CustomModal";
+import CustomStep1 from "../Pages/CustomModal/CustomStep1";
+import CustomStep2 from "../Pages/CustomModal/CustomStep2";
+import FinalStep from "../Pages/CustomModal/FinalStep";
 
 // Hooks
 import { useState } from "react";
@@ -87,6 +91,10 @@ const Router = () => {
             <Route path="/branch" element={<Branch />} />
             <Route path="/salesteam_modal" element={<SalesTeamModal />} />
             <Route path="/Interest_Modal" element={<InterestModal />} />
+            <Route path="/Custom_path" element={<MultiStepModal />} />
+            <Route path="/Custom_step1" element={<CustomStep1 />} />
+            <Route path="/Custom_step2" element={<CustomStep2 />} />
+            <Route path="/Final_step" element={<FinalStep />} />
 
             <Route path="/organization_onboarding" element={<Organization />} />
             <Route path="/branch_onboarding" element={<BranchOnboarding />} />

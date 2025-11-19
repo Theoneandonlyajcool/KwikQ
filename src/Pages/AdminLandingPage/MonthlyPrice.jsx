@@ -3,6 +3,7 @@ import { TiArrowRight } from "react-icons/ti";
 import { FaUsers } from "react-icons/fa";
 import { RiProfileLine } from "react-icons/ri";
 import { SlRocket } from "react-icons/sl";
+import { useNavigate } from "react-router-dom";
 
 import {
   MonthlyPriceContainer,
@@ -22,6 +23,7 @@ import axios from "axios";
 import FreeTrialModal from "../Admin/components/MonthlyPricingCard";
 
 const MonthlyPrice = () => {
+  const nav = useNavigate();
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
 
@@ -168,12 +170,18 @@ const MonthlyPrice = () => {
                     amount: amount,
                   };
 
-                  setSelectedPlan({
-                    planType: plan.name,
-                    billingCycle: isAnnual ? "Annually" : "Monthly",
-                    amount: amount,
-                  });
-                  setShowPaymentModal(true);
+                  if (payload.planType == "Enterprise") {
+                    console.log("Custom Payement");
+                    nav("/Custom_step1");
+                  } else {
+                    setSelectedPlan({
+                      planType: plan.name,
+                      billingCycle: isAnnual ? "Annually" : "Monthly",
+                      amount: amount,
+                    });
+                    setShowPaymentModal(true);
+                  }
+                  console.log(payload);
                 }}
               >
                 {plan.button} <TiArrowRight />
