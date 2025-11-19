@@ -159,7 +159,7 @@ const SignIn = () => {
     <Loginbackground>
       <section className="loginrap">
         <div className="login_context">
-          {DisplayRole && (
+          {/* {DisplayRole && (
             <div
               style={{
                 position: "fixed",
@@ -192,7 +192,7 @@ const SignIn = () => {
                 </h3>
               </div>
             </div>
-          )}
+          )} */}
 
           <div className="loginlogo" onClick={() => goBack()}>
             <img

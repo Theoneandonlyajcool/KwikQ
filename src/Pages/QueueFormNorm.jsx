@@ -197,7 +197,16 @@ const QueueFormNorm = () => {
                 </div>
               </div>
 
-              <div className="form-grid">
+              <div
+                className="form-grid"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                  // maxWidth: "90%",
+                  // border: "2px solid green",
+                }}
+              >
                 <div className="form-group full-width">
                   <label className="form-label">
                     Full Name <span className="required">*</span>
@@ -216,8 +225,11 @@ const QueueFormNorm = () => {
                     style={{ backgroundColor: "#f2f2f5" }}
                   />
                 </div>
-                <div className="optional-form">
-                  <div className="form-group-opt">
+                <div
+                  className="optional-form"
+                  // style={{ border: "2px solid red" }}
+                >
+                  <div className="form-group-opt" style={{ width: "50%" }}>
                     <label className="form-label-opt">
                       Phone Number <span className="required">*</span>
                     </label>
@@ -236,7 +248,7 @@ const QueueFormNorm = () => {
                     />
                   </div>
 
-                  <div className="form-group-opt">
+                  <div className="form-group-opt" style={{ width: "50%" }}>
                     <label className="form-label-opt">
                       Email <span className="required">*</span>
                     </label>
@@ -399,7 +411,7 @@ const QueueFormNorm = () => {
               ></textarea>
             </section>
 
-            <div className="terms-section">
+            {/* <div className="terms-section">
               <label className="terms-checkbox">
                 <input type="checkbox" />
                 <span className="terms-text">
@@ -414,12 +426,12 @@ const QueueFormNorm = () => {
                 and email. You understand that estimated wait times are
                 approximate and may vary.
               </p>
-            </div>
+            </div> */}
 
             <div className="form-actions">
-              <button type="button" className="btn btn-secondary">
+              {/* <button type="button" className="btn btn-secondary">
                 Clear Form
-              </button>
+              </button> */}
               <button
                 onClick={() => JoinQueue()}
                 disabled={LoadingState}
