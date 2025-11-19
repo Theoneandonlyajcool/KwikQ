@@ -14,9 +14,40 @@ const QueueCard = (props) => {
     text,
   } = props;
 
-  console.log(`This is the data ${text}`);
+  // console.log(`This is the data ${text}`);
 
   const [Text, SetText] = useState("");
+  console.log(typeof cardData);
+
+  const ChangeValues = () => {
+    if (text == "activeInQueue") {
+      SetText("Active in queue");
+    }
+
+    if (text == "avgWaitTime") {
+      SetText("Avg. wait time");
+    }
+
+    if (text == "servedToday") {
+      SetText("Served today");
+    }
+  };
+
+  useEffect(() => {
+    ChangeValues();
+  }, []);
+
+  // if (text == "activeInQueue") {
+  //   SetText("Active in queue");
+  // }
+
+  // if (text == "avgWaitTime") {
+  //   SetText("Avg. wait time");
+  // }
+
+  // if (text == "servedToday") {
+  //   SetText("Served today");
+  // }
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
@@ -240,10 +271,10 @@ const QueueCard = (props) => {
           <div className="icon-container">
             <Users size={28} color="#3f51b5" strokeWidth={2.5} />
           </div>
-          <span className="percentage-badge">{cardData}</span>
+          <span className="percentage-badge"></span>
         </div>
 
-        <div className="card-label">{text} </div>
+        <div className="card-label">{Text} </div>
         <div className="card-value">{cardData}</div>
       </div>
     </div>

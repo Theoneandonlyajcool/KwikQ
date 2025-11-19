@@ -180,33 +180,33 @@ export default function Dashboard({ qrCode }) {
     }
   };
 
-  const formatTimeAgo = (timeAgo) => {
-    if (!timeAgo) return "just now";
+  // const formatRecentTime = (timeAgo) => {
+  //   if (!timeAgo) return "just now";
 
-    // If timeAgo is already formatted string, return it
-    if (typeof timeAgo === "string") {
-      return timeAgo;
-    }
+  //   // If timeAgo is already formatted string, return it
+  //   if (typeof timeAgo === "string") {
+  //     return timeAgo;
+  //   }
 
-    // If it's a timestamp, calculate time ago
-    if (typeof timeAgo === "number") {
-      const now = new Date();
-      const activityTime = new Date(timeAgo);
-      const diffMs = now - activityTime;
-      const diffSecs = Math.floor(diffMs / 1000);
-      const diffMins = Math.floor(diffSecs / 60);
-      const diffHours = Math.floor(diffMins / 60);
-      const diffDays = Math.floor(diffHours / 24);
+  //   // If it's a timestamp, calculate time ago
+  //   if (typeof timeAgo === "number") {
+  //     const now = new Date();
+  //     const activityTime = new Date(timeAgo);
+  //     const diffMs = now - activityTime;
+  //     const diffSecs = Math.floor(diffMs / 1000);
+  //     const diffMins = Math.floor(diffSecs / 60);
+  //     const diffHours = Math.floor(diffMins / 60);
+  //     const diffDays = Math.floor(diffHours / 24);
 
-      if (diffSecs < 60) return "just now";
-      if (diffMins < 60) return `${diffMins} min ago`;
-      if (diffHours < 24)
-        return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
-      return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
-    }
+  //     if (diffSecs < 60) return "just now";
+  //     if (diffMins < 60) return `${diffMins} min ago`;
+  //     if (diffHours < 24)
+  //       return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
+  //     return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
+  //   }
 
-    return "just now";
-  };
+  //   return "just now";
+  // };
 
   const GenerateQrCode = async () => {
     try {
@@ -241,6 +241,33 @@ export default function Dashboard({ qrCode }) {
       `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(
         Org_ID || "https://kwikq-1.onrender.com"
       )}`;
+
+  const FormattedTime = () => {
+    const totalMinutes = CardData.avgWaitTime;
+
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    console.log(`${hours}h ${minutes}m`);
+  };
+
+  function formatRecentTime(minutes) {
+    if (minutes < 60) {
+      return `${minutes} min ago`;
+    }
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) {
+      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    }
+
+    const days = Math.floor(hours / 24);
+    return `${days} day${days > 1 ? "s" : ""} ago`;
+  }
+
+  useEffect(() => {
+    FormattedTime();
+  }, []);
 
   return (
     <div style={styles.dashboard}>
@@ -706,7 +733,9 @@ export default function Dashboard({ qrCode }) {
                           {activity.action}
                         </div>
                         <div style={styles.activityTimeAgo}>
-                          {formatTimeAgo(activity.timeAgo)}
+                          {/* {formatTimeAgo(activity.timeAgo)} */}
+
+                          {formatRecentTime(activity.timeAgo)}
                         </div>
                       </div>
                     </div>
