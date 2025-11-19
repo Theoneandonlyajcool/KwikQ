@@ -58,7 +58,7 @@ const Card = ({ image, title, desc, role }) => {
     <div
       className="card"
       onClick={() => {
-        localStorage.setItem("OrgRole", role);
+        localStorage.setItem("UserRole", role);
 
         nav("/sign_up");
       }}

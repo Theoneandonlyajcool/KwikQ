@@ -288,7 +288,7 @@ const QueueForm = () => {
                     Account Opening
                   </option>
                   <option value={toCamelCase("Loan Collection")}>
-                    cd Loan Collection
+                    Loan Collection
                   </option>
                   <option value={toCamelCase("Card Collection")}>
                     Card Collection
@@ -403,27 +403,7 @@ const QueueForm = () => {
               ></textarea>
             </section>
 
-            <div className="terms-section">
-              <label className="terms-checkbox">
-                <input type="checkbox" />
-                <span className="terms-text">
-                  I agree to the{" "}
-                  <a href="#" className="terms-link">
-                    terms and conditions
-                  </a>
-                </span>
-              </label>
-              <p className="terms-notice">
-                By joining the queue, you agree to receive notifications via SMS
-                and email. You understand that estimated wait times are
-                approximate and may vary.
-              </p>
-            </div>
-
             <div className="form-actions">
-              <button type="button" className="btn btn-secondary">
-                Clear Form
-              </button>
               <button
                 onClick={() => {
                   JoinQueue();
