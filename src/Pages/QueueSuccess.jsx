@@ -238,7 +238,7 @@ const QueueSuccess = ({ details, queueInfo, closeModal }) => {
             </div>
           </div>
 
-          {/* <button
+          <button
             className="done-button"
             onClick={() => {
               // if (location.pathname.includes("admin_dashboard")) {
@@ -253,7 +253,7 @@ const QueueSuccess = ({ details, queueInfo, closeModal }) => {
             }}
           >
             Done
-          </button> */}
+          </button>
         </div>
       </div>
     </div>
