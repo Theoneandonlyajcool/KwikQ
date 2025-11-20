@@ -155,7 +155,7 @@ export const MenuItem2 = styled(NavLink)`
   justify-content: center;
   gap: 10px;
   padding: 22px 20px;
-  color: black;
+  color: #222222;
   text-decoration: none;
   border-radius: 8px;
   margin: 0 12px;
@@ -163,8 +163,9 @@ export const MenuItem2 = styled(NavLink)`
   background: #fff;
 
   &.active {
-    background: linear-gradient(90deg, #303bff 0%, #96f7e4 100%);
-    color: #fff;
+    background: #fff;
+    /* background: linear-gradient(90deg, #303bff 0%, #96f7e4 100%); */
+    color: #222222;
   }
 `;
 

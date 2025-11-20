@@ -20,11 +20,13 @@ import {
   FiChevronLeft,
 } from "react-icons/fi";
 import { LuShield } from "react-icons/lu";
+import LogoutModal from "../Admin/components/LogoutModal";
 
 const Sidebar = ({ collapsed }) => {
   const nav = useNavigate();
   const setName = localStorage.getItem("Organ_Name");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [logoutmodal, setLogoutmodal] = useState(false)
 
   const handleToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -58,7 +60,7 @@ const Sidebar = ({ collapsed }) => {
                 alt="logo"
               />
             </div>
-            <p>Super Admin Panel</p>
+            <p>Admin Panel</p>
           </div>
         </Logo>
         <Menu>
@@ -84,14 +86,15 @@ const Sidebar = ({ collapsed }) => {
               <p className="admintext">{setName}</p>
               <span className="supertext">
                 {" "}
-                <LuShield className="shield" /> Super Admin
+                <LuShield className="shield" /> Admin
               </span>
             </div>
           </div>
-          <MenuItem2 to="/" onClick={handleMenuItemClick}>
+          <MenuItem2 onClick={()=> setLogoutmodal(true)}>
             <FiLogOut /> Logout
           </MenuItem2>
         </Footer>
+        {logoutmodal && <LogoutModal closing={setLogoutmodal} />}
       </SidebarContainer>
     </>
   );

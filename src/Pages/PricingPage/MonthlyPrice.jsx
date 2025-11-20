@@ -89,6 +89,22 @@ const MonthlyPrice = () => {
     },
   ];
 
+const token = localStorage.getItem("User");
+const Role = localStorage.getItem("UserRole")
+const setRole = Role
+
+const checktoken =()=>{
+    if(setRole == "individual" && token ){
+      nav("/admin_dashboard")
+    }
+    else if(setRole == "multi" && token ){
+      nav("/dashboard/")
+    }
+    else if(!setRole && !token){
+      nav("/sign_up/")
+    }
+  }
+
   const getPriceDisplay = (plan) => {
     if (plan.price.custom) {
       return plan.price.custom;
@@ -144,7 +160,7 @@ const MonthlyPrice = () => {
               <div className="price">
                 <h4>{getPriceDisplay(plan)}</h4>
               </div>
-              <button onClick={() => nav("/sign_up/")}>
+              <button onClick={() => checktoken()}>
                 {plan.buttonText} <TiArrowRight />
               </button>
               <div className="ListHolder">
