@@ -1,9 +1,9 @@
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { useFormContext } from "../contexts/FormContext";
 import "./FinalStep.css";
 
 const FinalStep = () => {
-  //   const navigate = useNavigate();
+  const nav = useNavigate();
   //   const { formData, resetFormData } = useFormContext();
 
   //   const handleDone = () => {
@@ -16,6 +16,11 @@ const FinalStep = () => {
   //     resetFormData();
   //     navigate("/");
   //   };
+
+  const Details = JSON.parse(localStorage.getItem("CustomPricingDetails"));
+  console.log(Details);
+  const UserRole = localStorage.getItem("UserRole");
+  console.log(UserRole);
 
   const infoCards = [
     {
@@ -44,9 +49,7 @@ const FinalStep = () => {
         </svg>
       ),
       title: "Check Your Email",
-      //   description: `We've sent a confirmation to ${
-      //     formData.workEmail || "your email"
-      //   }`,
+      description: `We've sent a confirmation to ${Details?.WorkEmail}`,
     },
     {
       icon: (
@@ -74,9 +77,7 @@ const FinalStep = () => {
         </svg>
       ),
       title: "Expect a Call",
-      //   description: `Our team will reach out to ${
-      //     formData.phoneNumber || "your number"
-      //   }`,
+      description: `Our team will reach out to ${Details?.PhoneNumber}`,
     },
     {
       icon: (
@@ -144,8 +145,8 @@ const FinalStep = () => {
               <div className="info-text">
                 <h3 className="info-title">{card.title}</h3>
                 <p className="info-description">
-                  {/* {card.description} */}
-                  decription
+                  {card.description}
+                  {/* decription */}
                 </p>
               </div>
             </div>
@@ -153,8 +154,21 @@ const FinalStep = () => {
         </div>
 
         <div className="success-buttons">
-          <button className="btn-primary full-width">Done</button>
-          <button className="btn-text">Back to Home</button>
+          <button
+            className="btn-primary full-width"
+            onClick={() => {
+              if (UserRole == "multi") {
+                nav("/dashboard");
+              } else {
+                nav("/admin_dashboard");
+              }
+            }}
+          >
+            Done
+          </button>
+          <button className="btn-text" onClick={() => nav("/")}>
+            Back to Home
+          </button>
         </div>
       </div>
     </div>

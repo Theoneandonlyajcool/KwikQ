@@ -64,18 +64,8 @@ const PriceLandingPage = () => {
                   <li>Pricing</li>
                 </ul>
                 <MobileAuthButtons>
-                  <button
-                    className="sign-in"
-                    onClick={() => nav("/businessCategory")}
-                  >
-                    Sign in
-                  </button>
-                  <button
-                    className="sign-up"
-                    onClick={() => nav("/businessCategory2")}
-                  >
-                    Sign up
-                  </button>
+                  <button className="sign-in">Sign in</button>
+                  <button className="sign-up">Sign up</button>
                 </MobileAuthButtons>
               </MobileMenuContent>
             </MobileMenuContainer>
@@ -110,7 +100,6 @@ export default PriceLandingPage;
 const LandingContainer = styled.div`
   width: 100%;
   min-height: 100vh;
-  /* height: auto; */
   display: flex;
   background-image: url(https://i.postimg.cc/ZKgTqRjG/background.png);
   flex-direction: column;
@@ -120,6 +109,7 @@ const LandingContainer = styled.div`
   background-position: center;
   padding-top: 100px;
   position: relative;
+  background-color: red;
 
   @media (min-width: 1440px) {
     min-height: 110vh;
@@ -516,7 +506,7 @@ const MobileAuthButtons = styled.div`
 
 const Text = styled.div`
   width: 90%;
-  min-height: 387px;
+  min-height: 65vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -666,6 +656,7 @@ const Text = styled.div`
 const DesignHolder = styled.div`
   width: 100%;
   min-height: 20vh;
+  align-self: center;
   display: flex;
   background-image: url(https://i.postimg.cc/bJNFLbND/mm-1-1.png);
   background-size: cover;

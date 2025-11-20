@@ -121,3 +121,80 @@
     min-height: 120px;
   }
 }
+
+.cards-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+.checkbox--checked {
+  background: #ffffff;
+  border: 2px solid transparent;
+}
+
+.checkmark {
+  width: 14px;
+  height: 14px;
+  stroke: #4c1d95; /* purple check color */
+  stroke: currentColor;
+  color: #4c1d95;
+}
+
+/* Text */
+.card__text {
+  flex: 1 1 auto;
+  min-width: 0; /* allow truncation */
+}
+
+.card__title {
+  font-size: 16px;
+  line-height: 1.1;
+  color: #111827;
+  font-weight: 600;
+}
+
+.card__subtitle {
+  font-size: 15px;
+  line-height: 1.05;
+  color: #374151;
+  margin-top: 4px;
+}
+
+/* Circular badge on the top-right when selected */
+.card__badge {
+  margin-left: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #111827;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Reference image styling */
+.reference img {
+  width: 220px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* Responsive: shrink card width on smaller screens */
+@media (max-width: 720px) {
+  .card {
+    width: 100%;
+  }
+  .cards-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .reference {
+    display: none;
+  }
+}

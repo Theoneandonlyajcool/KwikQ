@@ -150,7 +150,7 @@
 
 .dashboard-button {
   width: 100%;
-  background-color: hsl(var(--primary));
+  background-color: blue;
   color: hsl(var(--primary-foreground));
   border: none;
   border-radius: calc(var(--radius) - 2px);
