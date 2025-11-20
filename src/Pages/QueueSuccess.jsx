@@ -202,22 +202,22 @@ const QueueSuccess = ({ details, queueInfo, closeModal }) => {
               <h3 className="info-list-title">Your Information</h3>
 
               <div className="info-item">
-                <LuUser className="info-icon" />
+                <LuUser style={{ fontSize: "1.5rem" }} />
                 <span className="info-text">{details?.fullName || ""}</span>
               </div>
 
               <div className="info-item">
-                <LuPhone className="info-icon" />
+                <LuPhone style={{ fontSize: "1.5rem" }} />
                 <span className="info-text">{details?.phone || ""}</span>
               </div>
 
               <div className="info-item">
-                <LuMail className="info-icon" />
+                <LuMail style={{ fontSize: "1.5rem" }} />
                 <span className="info-text">{details?.email || ""}</span>
               </div>
 
               <div className="info-item">
-                <LuClipboardList className="info-icon" />
+                <LuClipboardList style={{ fontSize: "1.5rem" }} />
                 <span className="info-text">
                   {details?.serviceNeeded || ""}
                 </span>
@@ -238,7 +238,7 @@ const QueueSuccess = ({ details, queueInfo, closeModal }) => {
             </div>
           </div>
 
-          <button
+          {/* <button
             className="done-button"
             onClick={() => {
               // if (location.pathname.includes("admin_dashboard")) {
@@ -253,7 +253,7 @@ const QueueSuccess = ({ details, queueInfo, closeModal }) => {
             }}
           >
             Done
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
