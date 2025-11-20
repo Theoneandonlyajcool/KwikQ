@@ -100,7 +100,7 @@ const Router = () => {
             <Route path="/branch_onboarding" element={<BranchOnboarding />} />
             <Route path="/review" element={<Review />} />
             <Route path="/submitted" element={<Submitted />} />
-            <Route path="/payment_succesful/" element={<ThankYouModal />} />
+            <Route path="/payment_succesful/:id" element={<ThankYouModal />} />
 
             <Route path="/dashboard/*" element={<LayoutShell />}>
               <Route index element={<Navigate to="overview" />} />
