@@ -4,12 +4,12 @@
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  background-color: hsl(var(--background));
+  background-color: white;
 }
 
 .subscription-success-card {
   background: hsl(var(--card));
-  border-radius: var(--radius);
+  border-radius: 1rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   padding: 3rem 2rem;
   max-width: 500px;
@@ -125,8 +125,8 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background-color: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
+  background-color: #4f7fff;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -150,7 +150,7 @@
 
 .dashboard-button {
   width: 100%;
-  background-color: blue;
+  background-color: #4f7fff;
   color: hsl(var(--primary-foreground));
   border: none;
   border-radius: calc(var(--radius) - 2px);
@@ -163,6 +163,8 @@
   justify-content: center;
   gap: 0.5rem;
   transition: all 0.2s ease;
+  color: white;
+  border-radius: 0.5rem;
 }
 
 .dashboard-button:hover {
