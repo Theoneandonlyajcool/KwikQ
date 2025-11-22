@@ -22,7 +22,13 @@ const LogoutModal = ({ closing }) => {
           <button className="cancel-btn" onClick={() => closing(false)}>
             Cancel
           </button>
-          <button className="logout-btn" onClick={() => nav("/")}>
+          <button
+            className="logout-btn"
+            onClick={() => {
+              sessionStorage.removeItem("user-recog");
+              nav("/");
+            }}
+          >
             Log Out
           </button>
         </div>
