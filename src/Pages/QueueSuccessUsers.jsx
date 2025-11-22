@@ -139,7 +139,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../Styles/QueueSuccess.css";
 
-const QueueSuccess = ({ details, queueInfo, closeModal }) => {
+const QueueSuccessUsers = ({ details, queueInfo, closeModal }) => {
   console.log(details);
   console.log(queueInfo);
 
@@ -260,4 +260,4 @@ const QueueSuccess = ({ details, queueInfo, closeModal }) => {
   );
 };
 
-export default QueueSuccess;
+export default QueueSuccessUsers;
