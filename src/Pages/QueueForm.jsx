@@ -16,7 +16,7 @@ import Stack from "@mui/material/Stack";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router-dom";
-import QueueSuccess from "./QueueSuccess";
+import QueueSuccessUsers from "./QueueSuccessUsers";
 import { useParams, useLocation } from "react-router-dom";
 
 const toCamelCase = (str) =>
@@ -486,7 +486,7 @@ const QueueForm = () => {
       </div>
 
       {ShowModal && (
-        <QueueSuccess
+        <QueueSuccessUsers
           closeModal={SetShowModal}
           details={inputValues}
           queueInfo={apiData}

@@ -13,7 +13,7 @@ import Landing from "../Pages/Landing";
 import ResetPassword from "../Pages/Auth/ResetPassword";
 import Sevendayfree from "../Pages/Auth/Sevendayfree";
 import QueueForm from "../Pages/QueueForm";
-import QueueSuccess from "../Pages/QueueSuccess";
+import QueueSuccessUsers from "../Pages/QueueSuccessUsers";
 import LayoutShell from "../Pages/branchdashboard/LayoutShell";
 import BranchOverview from "../Pages/pagesbranch/BranchOverview";
 import Analytics from "../Pages/pagesbranch/AnalyticsPage.jsx/Analytics";
@@ -76,7 +76,7 @@ const Router = () => {
             <Route path="/singleBranch" element={<LoginForm />} />
             <Route path="/Sevenday_free" element={<Sevendayfree />} />
             <Route path="/businessCategory2" element={<GetStarted2 />} />
-            <Route path="/queue_success" element={<QueueSuccess />} />
+            <Route path="/queue_success" element={<QueueSuccessUsers />} />
             <Route path="/singleBranch" element={<LoginForm />} />
 
             {/* Privates' */}
@@ -87,7 +87,7 @@ const Router = () => {
               <Route path="/reset_password" element={<ResetPassword />} />
               <Route path="/Sevenday_free" element={<Sevendayfree />} />
               <Route path="/queue_form" element={<QueueFormNorm />} />
-              <Route path="/queue_success" element={<QueueSuccess />} />
+              <Route path="/queue_success" element={<QueueSuccessUsers />} />
               <Route path="/edit_branch" element={<Editbranch />} />
               <Route path="/pricing" element={<Pricepage />} />
               <Route path="/admin_landingpage" element={<AdminLandingPage />} />

@@ -139,7 +139,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../Styles/QueueSuccess.css";
 
-const QueueSuccess = ({ details, queueInfo, closeModal }) => {
+const QueueSuccessUsers = ({ details, queueInfo, closeModal }) => {
   console.log(details);
   console.log(queueInfo);
 
@@ -238,7 +238,7 @@ const QueueSuccess = ({ details, queueInfo, closeModal }) => {
             </div>
           </div>
 
-          <button
+          {/* <button
             className="done-button"
             onClick={() => {
               // if (location.pathname.includes("admin_dashboard")) {
@@ -253,11 +253,11 @@ const QueueSuccess = ({ details, queueInfo, closeModal }) => {
             }}
           >
             Done
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
   );
 };
 
-export default QueueSuccess;
+export default QueueSuccessUsers;
