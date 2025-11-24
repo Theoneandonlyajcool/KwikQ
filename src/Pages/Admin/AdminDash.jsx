@@ -175,7 +175,7 @@ const AdminDashboard = () => {
 
           <div style={styles.logoContainer}>
             <h2 style={styles.mobileLogo}>KwikQ</h2>
-            <p style={styles.mobileSubtitle}>Admin Panel</p>
+            <p style={styles.mobileSubtitle}>Dash board</p>
           </div>
 
           <button
@@ -192,7 +192,7 @@ const AdminDashboard = () => {
         <div style={styles.overlay} onClick={() => setIsSidebarOpen(false)} />
       )}
 
-      {/* Sidebar */}
+      {/*Dash board Sidebar */}
       <aside
         style={{
           ...styles.sidebar,
@@ -204,7 +204,7 @@ const AdminDashboard = () => {
         {!isMobile && (
           <div style={styles.sidebarHeader}>
             <h2 style={styles.logo}>KwikQ</h2>
-            <p style={styles.subtitle}>Admin Panel</p>
+            <p style={styles.subtitle}>Dash Board</p>
           </div>
         )}
 

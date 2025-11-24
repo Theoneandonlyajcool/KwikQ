@@ -3,13 +3,15 @@ import QueueCard from "../../components/QueueCard/QueueCard";
 import "./QueueManagement.css";
 import { TbLayersSubtract } from "react-icons/tb";
 import { MdLayers } from "react-icons/md";
-import Skeleton from "react-loading-skeleton";
+// import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios, { Axios } from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import ExportQrcode from "../../components/QrCode/ExportQrcode";
 import { IoIosRefresh } from "react-icons/io";
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 
 const QueueManagement = ({ qrCode }) => {
   const nav = useNavigate();
@@ -123,19 +125,27 @@ const QueueManagement = ({ qrCode }) => {
             <h2>Queue Management</h2>
             <div className="button-group">
               <button
+                disabled={LoadingState}
                 style={{
-                  backgroundColor: "#5f8aea",
+                  backgroundColor: `${LoadingState ? "#135cf8" : "#5f8aea"}`,
                   color: "white",
                   fontSize: "1rem",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                   gap: ".5rem",
+                  cursor: `${LoadingState ? "not-allowed" : "pointer"}`,
                 }}
                 className="btn-customize"
                 onClick={GetAllQueues}
               >
-                Refresh <IoIosRefresh />
+                {LoadingState ? (
+                  "Refreshing...."
+                ) : (
+                  <>
+                    Refresh <IoIosRefresh />
+                  </>
+                )}
               </button>
               <button
                 style={{
@@ -172,13 +182,19 @@ const QueueManagement = ({ qrCode }) => {
 
         {LoadingState ? (
           <div className="skeleton-container">
-            <Skeleton
-              style={{
-                width: "100%",
-                height: "15%",
-              }}
-              count={6}
-            />
+            <Box sx={{ width: "100%" }}>
+              <Skeleton style={{ height: "5rem" }} />
+              <Skeleton style={{ height: "5rem" }} animation="wave" />
+            </Box>
+            <Box sx={{ width: "100%" }}>
+              <Skeleton style={{ height: "5rem" }} />
+              <Skeleton style={{ height: "5rem" }} animation="wave" />
+            </Box>
+
+            <Box sx={{ width: "100%" }}>
+              <Skeleton style={{ height: "5rem" }} />
+              <Skeleton style={{ height: "5rem" }} animation="wave" />
+            </Box>
           </div>
         ) : (
           <>

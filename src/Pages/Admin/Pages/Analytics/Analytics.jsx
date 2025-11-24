@@ -17,55 +17,12 @@ import "./Analytics.css";
 import axios from "axios";
 import { IoClipboard } from "react-icons/io5";
 import { useEffect, useState } from "react";
+import { ThreeCircles } from "react-loader-spinner";
 
 const AnalyticsDashboard = () => {
-  // Sample data for Total Customer Income chart
-  // const WeeklyCustomerVolume = [
-  // { name: "Jan", value: 45 },
-  // { name: "Feb", value: 52 },
-  // { name: "Mar", value: 68 },
-  // { name: "Apr", value: 85 },
-  // { name: "May", value: 75 },
-  // { name: "Jun", value: 62 },
-  // { name: "Jul", value: 78 },
-  // ];
-
   const [WeeklyCustomerVolume, SeWeeklyCustomerVolume] = useState([]);
-
-  // Sample data for Average Wait Time chart
-  // const AverageWaitTimeTrend = [
-  // { name: "Jan", value: 12.5 },
-  // { name: "Feb", value: 11.8 },
-  // { name: "Mar", value: 11.2 },
-  // { name: "Apr", value: 10.8 },
-  // { name: "May", value: 11.5 },
-  // { name: "Jun", value: 10.2 },
-  // { name: "Jul", value: 9.5 },
-  // ];
-
   const [AverageWaitTimeTrend, SetAverageWaitTimeTrend] = useState([]);
-
-  // Sample data for Total Seat in Waitlist chart
-  // const PeakHourAnalysis = [
-  // { name: "Mon", value: 65 },
-  // { name: "Tue", value: 72 },
-  // { name: "Wed", value: 85 },
-  // { name: "Thu", value: 78 },
-  // { name: "Fri", value: 92 },
-  // { name: "Sat", value: 68 },
-  // { name: "Sun", value: 55 },
-  // ];
-
   const [PeakHourAnalysis, SetPeakHourAnalysis] = useState([]);
-
-  // Sample data for Service Type Distribution (Pie Chart)
-  // const ServiceTypeDistibution = [
-  // { name: "Category A", value: 33, color: "#1E90FF" },
-  // { name: "Category B", value: 17, color: "#FF7F50" },
-  // { name: "Category C", value: 25, color: "#FFD700" },
-  // { name: "Category D", value: 25, color: "#20C997" },
-  // ];
-
   const [ServiceTypeDistibution, SetServiceTypeDistibution] = useState([]);
 
   const Org_ID = sessionStorage.getItem("user-recog");
@@ -76,9 +33,11 @@ const AnalyticsDashboard = () => {
   // console.log(Org_ID, token, "Analytics");
   const [TotalCustomers, SetTotalCustomers] = useState("");
   const [AvgWaitTime, SetAvgWaitTime] = useState("");
+  const [LoadingState, SetLoadingState] = useState(false);
 
   const FetchAnalytics = async () => {
     try {
+      SetLoadingState(true);
       const res = await axios.get(`${BaseUrl}/api/v1/analytics/${ID}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -92,8 +51,10 @@ const AnalyticsDashboard = () => {
       SetPeakHourAnalysis(res?.data?.data?.peakHours);
       SetAverageWaitTimeTrend(res?.data?.data?.averageWaitTimeTrend);
       SetServiceTypeDistibution(res?.data?.data?.serviceTypeDistribution);
+      SetLoadingState(false);
     } catch (error) {
       console("error");
+      SetLoadingState(false);
     }
   };
 
@@ -148,7 +109,7 @@ const AnalyticsDashboard = () => {
       <div className="metrics-grid">
         <div className="metric-card">
           <div className="metric-label">Total Customers</div>
-          <div className="metric-value">{TotalCustomers}</div>
+          <div className="metric-value"> {TotalCustomers}</div>
         </div>
         <div className="metric-card">
           <div className="metric-label">Avg. Wait Time</div>
@@ -165,39 +126,63 @@ const AnalyticsDashboard = () => {
             {/* <span className="view-details">View Details</span> */}
           </div>
 
-          {WeeklyCustomerVolume?.length <= 0 ? (
+          {LoadingState ? (
             <div
               style={{
-                // border: "2px solid red",
-                height: "90%",
                 width: "100%",
+                height: "100%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
-                <p style={{ marginTop: "1rem" }}>No Data Found</p>
-              </div>
+              <ThreeCircles
+                visible={true}
+                height="100"
+                width="100"
+                color="#4f7eff"
+                ariaLabel="three-circles-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
             </div>
           ) : (
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={WeeklyCustomerVolume}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="day" stroke="#999" />
-                <YAxis stroke="#999" />
-                <Tooltip />
-                <Bar dataKey="count" fill="#2563EB" radius={[8, 8, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            <>
+              {WeeklyCustomerVolume?.length <= 0 ? (
+                <div
+                  style={{
+                    // border: "2px solid red",
+                    height: "90%",
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
+                    <p style={{ marginTop: "1rem" }}>No Data Found</p>
+                  </div>
+                </div>
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={WeeklyCustomerVolume}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                    <XAxis dataKey="day" stroke="#999" />
+                    <YAxis stroke="#999" />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="#2563EB" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+            </>
           )}
         </div>
 
@@ -208,45 +193,69 @@ const AnalyticsDashboard = () => {
             {/* <span className="view-details">View Details</span> */}
           </div>
 
-          {AverageWaitTimeTrend?.length <= 0 ? (
+          {LoadingState ? (
             <div
               style={{
-                // border: "2px solid red",
-                height: "90%",
                 width: "100%",
+                height: "100%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
-                <p style={{ marginTop: "1rem" }}>No Data Found</p>
-              </div>
+              <ThreeCircles
+                visible={true}
+                height="100"
+                width="100"
+                color="#4f7eff"
+                ariaLabel="three-circles-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
             </div>
           ) : (
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={AverageWaitTimeTrend}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="day" stroke="#999" />
-                <YAxis stroke="#999" />
-                <Tooltip />
-                <Line
-                  type="monotone"
-                  dataKey="value"
-                  stroke="#00BCD4"
-                  strokeWidth={3}
-                  dot={{ fill: "#00BCD4", r: 4 }}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+            <>
+              {AverageWaitTimeTrend?.length <= 0 ? (
+                <div
+                  style={{
+                    // border: "2px solid red",
+                    height: "90%",
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
+                    <p style={{ marginTop: "1rem" }}>No Data Found</p>
+                  </div>
+                </div>
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={AverageWaitTimeTrend}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                    <XAxis dataKey="day" stroke="#999" />
+                    <YAxis stroke="#999" />
+                    <Tooltip />
+                    <Line
+                      type="monotone"
+                      dataKey="value"
+                      stroke="#00BCD4"
+                      strokeWidth={3}
+                      dot={{ fill: "#00BCD4", r: 4 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
+            </>
           )}
         </div>
 
@@ -257,39 +266,63 @@ const AnalyticsDashboard = () => {
             {/* <span className="view-details">View Details</span> */}
           </div>
 
-          {PeakHourAnalysis?.length <= 0 ? (
+          {LoadingState ? (
             <div
               style={{
-                // border: "2px solid red",
-                height: "90%",
                 width: "100%",
+                height: "100%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
-                <p style={{ marginTop: "1rem" }}>No Data Found</p>
-              </div>
+              <ThreeCircles
+                visible={true}
+                height="100"
+                width="100"
+                color="#4f7eff"
+                ariaLabel="three-circles-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
             </div>
           ) : (
-            <ResponsiveContainer width="100%" height="90%">
-              <BarChart data={PeakHourAnalysis}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                <XAxis dataKey="hour" stroke="#999" />
-                <YAxis stroke="#999" />
-                <Tooltip />
-                <Bar dataKey="count" fill="#2563EB" radius={[8, 8, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            <>
+              {PeakHourAnalysis?.length <= 0 ? (
+                <div
+                  style={{
+                    // border: "2px solid red",
+                    height: "90%",
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
+                    <p style={{ marginTop: "1rem" }}>No Data Found</p>
+                  </div>
+                </div>
+              ) : (
+                <ResponsiveContainer width="100%" height="90%">
+                  <BarChart data={PeakHourAnalysis}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+                    <XAxis dataKey="hour" stroke="#999" />
+                    <YAxis stroke="#999" />
+                    <Tooltip />
+                    <Bar dataKey="count" fill="#2563EB" radius={[8, 8, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              )}
+            </>
           )}
         </div>
 
@@ -300,68 +333,94 @@ const AnalyticsDashboard = () => {
             {/* <span className="view-details">View Details</span> */}
           </div>
 
-          {ServiceTypeDistibution?.length <= 0 ? (
+          {LoadingState ? (
             <div
               style={{
-                // border: "2px solid red",
-                height: "90%",
                 width: "100%",
+                height: "100%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
-                <p style={{ marginTop: "1rem" }}>No Data Found</p>
-              </div>
+              <ThreeCircles
+                visible={true}
+                height="100"
+                width="100"
+                color="#4f7eff"
+                ariaLabel="three-circles-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
             </div>
           ) : (
-            <div className="pie-chart-container">
-              <ResponsiveContainer width="100%" height={250}>
-                <PieChart>
-                  <Pie
-                    data={ServiceTypeDistibution}
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={100}
-                    paddingAngle={0}
-                    dataKey="value"
-                    label={({ percent }) => `${(percent * 100).toFixed(0)}%`}
-                    labelLine={false}
+            <>
+              {ServiceTypeDistibution?.length <= 0 ? (
+                <div
+                  style={{
+                    // border: "2px solid red",
+                    height: "90%",
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
                   >
-                    {ServiceTypeDistibution.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={entry.color}
-                        stroke="#84fdff"
-                        strokeWidth={2}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="pie-legend">
-                {ServiceTypeDistibution.map((entry, index) => (
-                  <div key={index} className="legend-item">
-                    <span
-                      className="legend-color"
-                      style={{ backgroundColor: entry.color }}
-                    ></span>
-                    <span className="legend-label">{entry.name}</span>
-                    <span className="legend-value">{entry.value}%</span>
+                    <IoClipboard style={{ fontSize: "4rem", color: "gray" }} />
+                    <p style={{ marginTop: "1rem" }}>No Data Found</p>
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
+              ) : (
+                <div className="pie-chart-container">
+                  <ResponsiveContainer width="100%" height={250}>
+                    <PieChart>
+                      <Pie
+                        data={ServiceTypeDistibution}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={100}
+                        paddingAngle={0}
+                        dataKey="value"
+                        label={({ percent }) =>
+                          `${(percent * 100).toFixed(0)}%`
+                        }
+                        labelLine={false}
+                      >
+                        {ServiceTypeDistibution.map((entry, index) => (
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={entry.color}
+                            stroke="#84fdff"
+                            strokeWidth={2}
+                          />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                    </PieChart>
+                  </ResponsiveContainer>
+                  <div className="pie-legend">
+                    {ServiceTypeDistibution.map((entry, index) => (
+                      <div key={index} className="legend-item">
+                        <span
+                          className="legend-color"
+                          style={{ backgroundColor: entry.color }}
+                        ></span>
+                        <span className="legend-label">{entry.name}</span>
+                        <span className="legend-value">{entry.value}%</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
