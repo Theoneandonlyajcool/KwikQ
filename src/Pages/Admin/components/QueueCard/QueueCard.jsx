@@ -44,29 +44,6 @@ const QueueCard = ({ data, refresh, index }) => {
 
   const [RemoveLoadingState, SetRemoveLoadingState] = useState(false);
 
-  const removeCustomer = async () => {
-    try {
-      SetRemoveLoadingState(true);
-      const res = await axios.delete(
-        `${BaseURL}/api/v1/delete-customer/${data.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      toast.success(res?.data?.message);
-      SetRemoveLoadingState(false);
-      setTimeout(() => {
-        refresh();
-      }, 1000);
-      // console.log(res?.data);
-    } catch (error) {
-      SetRemoveLoadingState(false);
-      console.log(error);
-    }
-  };
-
   const [Delete, SetDelete] = useState(false);
   const DeleteCustomer = async () => {
     try {
@@ -89,27 +66,6 @@ const QueueCard = ({ data, refresh, index }) => {
       console.log(error);
     }
   };
-
-  // const onAlert = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       `${BaseURL}/api/v1/alert/${data.id}`,
-  //       {},
-  //       { headers: { Authorization: `Bearer ${token}` } }
-  //     );
-  //     alert(
-  //       `${response.data.message} to ${response.data.data.name} (${response.data.data.email})`
-  //     );
-  //     refresh();
-  //   } catch (error) {
-  //     console.error("Error sending alert:", error);
-  //     if (error.response?.status === 404) {
-  //       alert("Customer not found in queue");
-  //     } else {
-  //       alert("Failed to send alert. Try again.");
-  //     }
-  //   }
-  // };
 
   const [AlertLoadingState, SetAlertLoadingState] = useState(false);
   const [DisabledState, SetDisabledState] = useState(false);
@@ -315,10 +271,7 @@ const QueueCard = ({ data, refresh, index }) => {
             }}
             className="service-card__button service-card__button--destructive"
           >
-            {/* <X className="service-card__button-icon" /> */}
-            {/* {ServingCustomer ? "Serving" : "serve"} */}
-            serve
-            {/* {Servingstatus && "Serving"} */}
+            Serve
           </button>
         )}
       </div>

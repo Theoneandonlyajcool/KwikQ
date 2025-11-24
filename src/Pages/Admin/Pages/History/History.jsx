@@ -297,7 +297,7 @@ const QueueHistory = () => {
           <Table
             columns={columns}
             dataSource={filteredData}
-            pagination={false}
+            pagination={true}
           />
         )}
       </TableWrapper>

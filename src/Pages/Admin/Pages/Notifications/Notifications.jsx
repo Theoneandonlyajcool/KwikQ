@@ -6,6 +6,8 @@ import CurrentDateTime from "../../../pagesbranch/CurrentDateTime";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { FaRegEnvelope } from "react-icons/fa6";
 import { CgDanger } from "react-icons/cg";
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 
 const NotificationsPage = () => {
   const [notdata, setNotdata] = useState([]);
@@ -69,18 +71,38 @@ const NotificationsPage = () => {
 
   // const thisRole = Role == "single" ? "br"
 
+  const [LoadingState, SetLoadingState] = useState(true);
+
   const FetchNotifications = async () => {
     try {
+      SetLoadingState(true);
       const res = await axios.get(
         `${BaseURL}/api/v1/notifications/${Branchss}?role=${Role}`
       );
       console.log(res?.data);
       setNotdata(res?.data?.data);
       setMatrice(res?.data);
+      SetLoadingState(false);
     } catch (error) {
       console.log(error);
+      SetLoadingState(false);
     }
   };
+
+  function formatTimeAgo(timestamp) {
+    const now = new Date();
+    const past = new Date(timestamp);
+    const diffMs = now - past;
+
+    const minutes = Math.floor(diffMs / (1000 * 60));
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    if (minutes < 1) return "Just now";
+    if (minutes < 60) return `${minutes}m ago`;
+    if (hours < 24) return `${hours}h ago`;
+    return `${days}d ago`;
+  }
 
   useEffect(() => {
     FetchNotifications();
@@ -143,55 +165,90 @@ const NotificationsPage = () => {
         </div>
 
         <div className="notifications-list">
-          {notdata?.map((notification) => (
-            <div
-              key={notification.id}
-              className={`notification-card ${notification.type}-type`}
-            >
-              <div className={`notification-icon ${notification.type}`}>
-                {notification.type === "alert" && "⚠️"}
-                {notification.type === "info" && "ℹ️"}
-                {notification.type === "warning" && "⏰"}
-              </div>
+          {LoadingState ? (
+            <Box sx={{ width: "100%" }}>
+              <Skeleton style={{ height: "4rem" }} />
+              <Skeleton style={{ height: "4rem" }} animation="wave" />
+              <Skeleton style={{ height: "4rem" }} animation={false} />
+              <Skeleton style={{ height: "4rem" }} animation={false} />
+              <Skeleton style={{ height: "4rem" }} animation={false} />
+              <Skeleton style={{ height: "4rem" }} animation={false} />
+            </Box>
+          ) : (
+            <>
+              {notdata.slice(0, 10).map((notification) => (
+                <div
+                  key={notification.id}
+                  className={`notification-card ${notification.type}-type`}
+                >
+                  <div className={`notification-icon ${notification.type}`}>
+                    {notification.type === "alert" && "⚠️"}
+                    {notification.type === "info" && "ℹ️"}
+                    {notification.type === "warning" && "⏰"}
+                  </div>
 
-              <div className="notification-content">
-                <div className="notification-header">
-                  <h3 className="notification-title">{notification.message}</h3>
-                  {notification.isRead && (
-                    <span className="star-icon" style={{ background: "red" }}>
-                      <IoMdStar />
-                    </span>
-                  )}
+                  <div className="notification-content">
+                    <div className="notification-header">
+                      <h3 className="notification-title">
+                        {notification.message}
+                      </h3>
+                      {notification.isRead && (
+                        <span
+                          className="star-icon"
+                          style={{ background: "red" }}
+                        >
+                          <IoMdStar />
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="notification-description">
+                      {notification.queueNumber}
+                    </p>
+
+                    <div className="notification-meta">
+                      <span
+                        className={`badge ${
+                          notification.priority === "High Priority"
+                            ? "high-priority"
+                            : notification.priority === "Medium"
+                            ? "medium"
+                            : "normal"
+                        }`}
+                      >
+                        {notification.priority}
+                      </span>
+                      <span className="badge category">
+                        {notification.category}
+                      </span>
+                      <span className="notification-time">
+                        <span>⏱</span> {formatTimeAgo(notification.createdAt)}
+                      </span>
+                    </div>
+                  </div>
+
+                  <button className="menu-button">⋮</button>
                 </div>
+              ))}
+            </>
+          )}
+        </div>
 
-                <p className="notification-description">
-                  {notification.queueNumber}
-                </p>
+        <div className="pagination_btn_cont">
+          {notdata.length > 10 && (
+            <>
+              <button className="note_pag_btn">prev</button>
+              <button className="note_pag_btn">1</button>
+              {notdata.length > 20 && (
+                <button className="note_pag_btn">2</button>
+              )}
 
-                <div className="notification-meta">
-                  <span
-                    className={`badge ${
-                      notification.priority === "High Priority"
-                        ? "high-priority"
-                        : notification.priority === "Medium"
-                        ? "medium"
-                        : "normal"
-                    }`}
-                  >
-                    {notification.priority}
-                  </span>
-                  <span className="badge category">
-                    {notification.category}
-                  </span>
-                  <span className="notification-time">
-                    <span>⏱</span> {notification.createdAt}
-                  </span>
-                </div>
-              </div>
-
-              <button className="menu-button">⋮</button>
-            </div>
-          ))}
+              {notdata.length > 40 && (
+                <button className="note_pag_btn">3</button>
+              )}
+              <button className="note_pag_btn">next</button>
+            </>
+          )}
         </div>
       </div>
     </>
