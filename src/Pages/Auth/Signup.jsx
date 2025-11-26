@@ -9,7 +9,7 @@ import axios from "axios";
 const Signup = () => {
   const nav = useNavigate();
   const BaseUrl = import.meta.env.VITE_API_BASE_URL;
-  const OrgRole = localStorage.getItem("OrgRole");
+  const OrgRole = localStorage.getItem("UserRole");
   console.log(OrgRole);
 
   const [inputValues, SetInputValues] = useState({
